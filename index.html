@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Norton Reader</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="/app/images/favicon.png">
+
+    <style type="text/css" data-href="app.css"></style>
+    <script src="/bundle.js"></script>
+    <script src="/app/js/vendor/codyhouse-modernizr.js"></script>
+    <script src="/app/js/vendor/codyhouse-sliding-panel.js"></script>
+</head>
+<body>
+<div id="container"></div>
+
+
+<script>
+    $(function() {
+        // NOTE: When using npm FastClick module, the function FastClick.attach gets exported as THE FastClick object. Well, OK then...
+        FastClick(document.body);
+        $(window).scroll(scrollHandler);
+        stickyRelocate();
+    });
+</script>
+
+</body>
+</html>

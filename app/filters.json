@@ -1,0 +1,47 @@
+[
+  {
+    "id":1,
+    "name":"Theme 1",
+    "category":"Theme"
+  },
+  {
+    "id":2,
+    "name":"Theme 2",
+    "category":"Theme"
+  },
+  {
+    "id":3,
+    "name":"Theme 3",
+    "category":"Theme"
+  },
+  {
+    "id":4,
+    "name":"Theme 4",
+    "category":"Theme"
+  },
+  {
+    "id":5,
+    "name":"Mode 1",
+    "category":"Modes"
+  },
+  {
+    "id":6,
+    "name":"Mode 2",
+    "category":"Modes"
+  },
+  {
+    "id":7,
+    "name":"Mode 3",
+    "category":"Modes"
+  },
+  {
+    "id":8,
+    "name":"Genre 1",
+    "category":"Genre"
+  },
+  {
+    "id":9,
+    "name":"Genre 2",
+    "category":"Genre"
+  }
+]
