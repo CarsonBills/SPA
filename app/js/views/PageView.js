@@ -12,25 +12,36 @@ Backbone.$ = $;
 var PageView = Backbone.View.extend({
     el: $('#detailPage'),
     template: require("../../templates/PageTemplate.hbs"),
+    templateReplace: require("../../templates/PageReplaceTemplate.hbs"),
     initialize: function(){
         this.model.on('change', this.render, this);
     },
     render: function () {
-        /**
-         * The next block will get next/prev links only if a next/prev link was clicked; else it uses next/prev from the article list.
-         */
-        if (Norton.pageClick == "page") {
-            this.getNextPrevIds();
-        }
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
 
         var pageTemplate = this.template(this.model.toJSON());
-        if (Norton.pageClick == "page") {
-            //pageTemplate = pageTemplate.replace('<div id="pageContainer" class="modal fade" role="dialog">', '<div id="pageContainer">');
-        }
-
         this.$el.append(pageTemplate);
+
+        Norton.currArticle = this.model.attributes.id;
+
+        return this;
+    },
+    renderReplace: function() {
+        this.getNextPrevIds();
+        this.model.attributes.prevId = Norton.prevArticle;
+        this.model.attributes.nextId = Norton.nextArticle;
+
+        // got this technique from http://stackoverflow.com/questions/14623232/re-rendering-handlebars-partial-from-backbone-view
+        // doesn't use partials so maybe we can do that once we figure out how to find Handlebars at runtime...
+        var pageReplaceTemplate = this.templateReplace(this.model.toJSON());
+        var selector = ".modal-content";
+        this.$el.find(selector).replaceWith(pageReplaceTemplate);
+
+        // fade in between new articles load
+        $(selector).css("opacity", 0);
+        $(selector).fadeTo( "slow" , 1.0);
+
         Norton.currArticle = this.model.attributes.id;
 
         return this;

@@ -113,7 +113,9 @@ $(function() {
     NortonApp.filterItem = new NortonApp.Models.Filter();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
-    NortonApp.pageItem;
+    //NortonApp.pageItem;
+    //NortonApp.pageView;
+    NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.pageView;
 
     NortonApp.AppRouter = require("./app/js/routes/router.js");

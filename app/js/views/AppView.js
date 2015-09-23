@@ -81,12 +81,7 @@ var AppView = Backbone.View.extend({
         },
         "click #loadMore": function() {
             this.getArticles();
-        },
-
-
-
-        "click #prevArticleX": "getNextPrevFromPageX",
-        "click #nextArticleX": "getNextPrevFromPageX",
+        }
     },
     changeView: function(typ) {
         if (Norton.toggleGridFormat === typ) {
@@ -159,8 +154,8 @@ var AppView = Backbone.View.extend({
         $('.your-favs-view-section').css({"display":"inline"});
         this.renderYourFavs();
     },
-    showDetailPage: function(id) {
-        $('#pageContainer').remove();   // get rid of old page if it exists
+    showDetailPage: function(id, create) {
+
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 
         NortonApp.pageItem.fetch({
@@ -168,8 +163,14 @@ var AppView = Backbone.View.extend({
                 NortonApp.pageView = new NortonApp.Views.Page({
                     model: NortonApp.pageItem
                 });
-                NortonApp.pageView.$el = this.$("#detailPage");
-                NortonApp.pageView.render();
+                NortonApp.pageView.$el = $("#detailPage");
+                if (create) {
+                    $('#pageContainer').remove();   // get rid of old page if it exists
+                    NortonApp.pageView.render();
+                } else {
+                    NortonApp.pageView.renderReplace(); // replace modal-content but do not recreate modal
+                }
+
             }, this)
         });
     },
@@ -191,15 +192,8 @@ var AppView = Backbone.View.extend({
          * Otherwise, they are determined above in getNextPrevFromList
          */
         Norton.pageClick = "page";
-    },
-    getNextPrevFromPageX: function(e) {
-        /**
-         * Next/prev links are determined in pageView.js when a next prev link was clicked.
-         * Otherwise, they are determined above in getNextPrevFromList
-         */
-        Norton.pageClick = "page";
 
-        this.showDetailPage($(e.currentTarget).attr('data-next-id'))
+        this.showDetailPage($(e.currentTarget).attr('data-next-id'), false)
     },
     showResultsTotals: function() {
         /**

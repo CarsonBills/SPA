@@ -1,12 +1,11 @@
-<!--   MODAL CONTENT   -->
 <div id="pageContainer" class="modal fade" role="dialog">
+
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-arrow-container">
                 {{#if prevId}}
-                    <a href="#/page/{{prevId}}" class="glyphicon glyphicon-triangle-left modal-arrow" id="prevArticle" data-prev-id="{{prevId}}"></a><br><br><br>
-                    <div class="glyphicon glyphicon-triangle-left modal-arrow" id="prevArticleX" data-prev-id="{{prevId}}" data-id="{{id}}"></div>
+                    <div class="glyphicon glyphicon-triangle-left modal-arrow" id="prevArticle" data-prev-id="{{prevId}}" data-id="{{id}}"></div>
                 {{/if}}
             </div>
             <div class="modal-container">
@@ -26,12 +25,12 @@
             </div>
             <div class="modal-arrow-container">
                 {{#if nextId}}
-                    <a href="#/page/{{nextId}}" class="glyphicon glyphicon-triangle-right modal-arrow" id="nextArticle" data-next-id="{{nextId}}"></a><br><br><br>
-                    <div class="glyphicon glyphicon-triangle-right modal-arrow" id="nextArticleX" data-next-id="{{nextId}}" data-id="{{id}}"></div>
+                    <div class="glyphicon glyphicon-triangle-right modal-arrow" id="nextArticle" data-next-id="{{nextId}}" data-id="{{id}}"></div>
                 {{/if}}
             </div>
         </div>
     </div>
+
 </div>
 
 <script>

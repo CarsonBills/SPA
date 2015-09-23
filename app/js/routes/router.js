@@ -25,7 +25,7 @@ var AppRouter = Backbone.Router.extend({
 
     },
     page: function(id) {
-        this.appView.showDetailPage(id);
+        this.appView.showDetailPage(id, true);
     },
     filter: function() {
 
