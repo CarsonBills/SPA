@@ -14,7 +14,6 @@
  * npm install --save-dev jquery-ui-touch-punch@0.2.3
  * npm install --save-dev hbsfy
  * npm install --save-dev fastclick
- * npm install --save-dev magnific-popup
  * npm install --save-dev uglifyify
 
  * ************************************************************************************************************************
@@ -61,6 +60,9 @@ window.NortonApp = {
     Collections: {},
     Views: {}
 };
+
+// Get constants file
+Norton.Constants = require("./app/js/constants.js")
 
 $(function() {
     /**

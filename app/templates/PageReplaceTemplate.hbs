@@ -9,8 +9,8 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">{{title}} by {{authorFirst}} {{authorLast}}</h4>
         </div>
-        <div class="modal-subheader" data-filter-item-id='{{id}}'>
-            <button class="btn-savetolist favs-lnk" data-filter-item-id='{{id}}'>SAVE TO MY ITEMS</button>
+        <div class="modal-subheader" data-item-id='{{id}}'>
+            <button class="btn-savetolist favs-lnk" data-item-id='{{id}}'>SAVE TO MY ITEMS</button>
             {{#if ebookUrl}}
                 <a class="ebook-lnk" href="{{ebookUrl}}" target="_new">View Ebook</a>
             {{/if}}

@@ -18,7 +18,7 @@ var YourFavsView = Backbone.View.extend({
                 this.$el.append(yourFavsTemplate);
             }, this);
         } else {
-            this.$el.append('<h5>You have not added any items to your List yet.</h5>');
+            this.$el.append(Norton.Constants.noMyItems);
         }
 
         yourFavsDragNDrop('#yourFavs');
@@ -48,8 +48,6 @@ var YourFavsView = Backbone.View.extend({
         document.body.appendChild(lnk);
         lnk.click();
         document.body.removeChild(lnk);
-
-//        console.log(data);
     }
 });
 

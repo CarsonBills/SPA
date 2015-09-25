@@ -1,3 +1,9 @@
+/**
+ * AppView.js is the main view for the app. Since we don't really have routes as such (just modal popups), almost everything clickable happens in the AppTemplate.
+ *
+ * @type {exports|module.exports}
+ */
+
 var Backbone = require("backbone");
 var $ = require('jquery');
 Backbone.$ = $;
@@ -155,6 +161,14 @@ var AppView = Backbone.View.extend({
         this.renderYourFavs();
     },
     showDetailPage: function(id, create) {
+        /**
+         * load spinner
+         */
+        if (!create) {
+            console.log($("#detailPage"))
+            var template = require("../../templates/LoadingSpinnerTemplate.hbs");
+            $("#detailPage").find(".modal-content").replaceWith(template);
+        }
 
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 

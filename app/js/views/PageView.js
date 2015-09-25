@@ -33,10 +33,18 @@ var PageView = Backbone.View.extend({
         this.model.attributes.nextId = Norton.nextArticle;
 
         // got this technique from http://stackoverflow.com/questions/14623232/re-rendering-handlebars-partial-from-backbone-view
-        // doesn't use partials so maybe we can do that once we figure out how to find Handlebars at runtime...
+        // This doesn't use HB partials so maybe we can do that once we figure out how to find Handlebars at runtime...
         var pageReplaceTemplate = this.templateReplace(this.model.toJSON());
         var selector = ".modal-content";
-        this.$el.find(selector).replaceWith(pageReplaceTemplate);
+//  settimeout is just there for dev purposes to see loading spinner
+        setTimeout(function(){
+            $("#detailPage").find(selector).replaceWith(pageReplaceTemplate);
+        }, 500);
+
+        /**
+         * Change the URL
+         */
+        window.history.pushState(null,null,"/#/page/" + this.model.attributes.id);
 
         // fade in between new articles load
         $(selector).css("opacity", 0);

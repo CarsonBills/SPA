@@ -45,10 +45,10 @@ var ArticleView = Backbone.View.extend({
 
         return this;
     },
-    addYourFavs: function(e, tempalte) {
+    addYourFavs: function(e, template) {
 
         // add item to yourFavsList collection
-        var id = $(e.target).parent().attr('data-filter-item-id');
+        var id = $(e.target).attr('data-item-id');
 
         // Don't add again
         if (NortonApp.yourFavsList.get(NortonApp.articlesList.get(id)) !== undefined) {
