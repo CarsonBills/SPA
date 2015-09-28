@@ -39,8 +39,11 @@ window.FastClick = require('fastclick');
 window.bootstrap = require('bootstrap');
 
 // Backbone and underscore
-var Backbone = require('backbone');
+window.Backbone = require('backbone');
 Backbone.$ = $;
+
+// Underscore
+window._ = require('backbone/node_modules/underscore');
 
 //Handlebars
 window.Handlebars = require('handlebars');
@@ -115,8 +118,6 @@ $(function() {
     NortonApp.filterItem = new NortonApp.Models.Filter();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
-    //NortonApp.pageItem;
-    //NortonApp.pageView;
     NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.pageView;
 
@@ -189,5 +190,3 @@ window.stickyRelocate = function() {
         $('.container').removeClass('stick');
     }
 }
-
-$()

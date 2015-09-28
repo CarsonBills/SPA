@@ -37,6 +37,43 @@ var AppView = Backbone.View.extend({
         this.topNavView.$el = this.$("#topNav");
         this.topNavView.render();
     },
+    events: {
+        "click .icon-grid-view": function() {
+            this.changeView(true);
+        },
+        "click .icon-list-view": function() {
+            this.changeView(false);
+        },
+        "click .filter-item-name": function(e) {
+            this.filtersView.showSelectedFilter(e);
+        },
+        "change #sortArticles": "sortArticles",
+        "click #navFilters": function() {
+            $('#filters').toggle();
+        },
+        "click #searchButton": "searchArticles",
+        "keypress #searchTextInput": function(e) {
+            if (e.keyCode == 13) {
+                this.searchArticles();
+            }
+        },
+        "click .icon-add.favs-lnk": function(e) {
+            this.articleView.addYourFavs(e, 'article');
+        },
+        "click .btn-savetolist.favs-lnk": function(e) {
+            this.articleView.addYourFavs(e, 'page');
+        },
+        "click #navYourFavs": "showYourFavs",
+        "click .details": "getNextPrevFromList",
+        "click #prevArticle": "getNextPrevFromPage",
+        "click #nextArticle": "getNextPrevFromPage",
+        "click .download-favs": function() {
+            this.yourFavsView.downloadYourFavs();
+        },
+        "click #loadMore": function() {
+            this.getArticles();
+        }
+    },
     renderArticles: function() {
         this.articleView.$el = this.$("#articles");
         this.articleView.render();
@@ -56,38 +93,6 @@ var AppView = Backbone.View.extend({
                 this.renderArticles();
             }, this)
         });
-    },
-    events: {
-        "click .icon-grid-view": function() {
-            this.changeView(true);
-        },
-        "click .icon-list-view": function() {
-            this.changeView(false);
-        },
-        "click .filter-item-name": function(e) {
-            this.filtersView.showSelectedFilter(e);
-        },
-        "change #sortArticles": "sortArticles",
-        "click #navFilters": function() {
-            $('#filters').toggle();
-        },
-        "click #searchButton": "searchArticles",
-        "click .icon-add.favs-lnk": function(e) {
-            this.articleView.addYourFavs(e, 'article');
-        },
-        "click .btn-savetolist.favs-lnk": function(e) {
-            this.articleView.addYourFavs(e, 'page');
-        },
-        "click #navYourFavs": "showYourFavs",
-        "click .details": "getNextPrevFromList",
-        "click #prevArticle": "getNextPrevFromPage",
-        "click #nextArticle": "getNextPrevFromPage",
-        "click .download-favs": function() {
-            this.yourFavsView.downloadYourFavs();
-        },
-        "click #loadMore": function() {
-            this.getArticles();
-        }
     },
     changeView: function(typ) {
         if (Norton.toggleGridFormat === typ) {
@@ -120,6 +125,7 @@ var AppView = Backbone.View.extend({
         NortonApp.articlesList.sort();
         $('.listFormat').remove();
         $('.gridFormat').remove();
+        Norton.lastArticleLoaded = 0;
         this.renderArticles();
     },
     searchArticles: function() {
@@ -132,13 +138,14 @@ var AppView = Backbone.View.extend({
         // This iterates all models and returns those selected in "filtered"
         var filtered = _.filter(NortonApp.articlesList.models,  $.proxy (function(item) {
             var title =  item.attributes.title.toLowerCase();
-            var name =  item.fullName().toLowerCase();
+            var name =  item.attributes.fullName.toLowerCase();
             var extract = item.attributes.extract.toLowerCase();
 
             if (title.indexOf(searchTerm) >= 0 ||
                 name.indexOf(searchTerm) >= 0 ||
                 extract.indexOf(searchTerm) >= 0
             ) {
+                Norton.lastArticleLoaded = 0;
                 return item;
             }
         }, this));

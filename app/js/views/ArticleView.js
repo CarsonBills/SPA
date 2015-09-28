@@ -13,11 +13,14 @@ var ArticleView = Backbone.View.extend({
         var nbr = 0;
         this.model.each(function (article) {
             /**
-             * only grab nbr-per-page
+             * only get nbr-per-page articles
              */
             if (nbr == Norton.perPage) {
                 return false; // we're done, get out
             }
+            /**
+             * Probably don't need this once we are getting searchinzed results
+             */
             if (article.attributes.id <= Norton.lastArticleLoaded) {
                 return true; // continue with next model
             }
