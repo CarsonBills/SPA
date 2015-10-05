@@ -172,7 +172,6 @@ var AppView = Backbone.View.extend({
          * load spinner
          */
         if (!create) {
-            console.log($("#detailPage"))
             var template = require("../../templates/LoadingSpinnerTemplate.hbs");
             $("#detailPage").find(".modal-content").replaceWith(template);
         }
@@ -214,7 +213,12 @@ var AppView = Backbone.View.extend({
          */
         Norton.pageClick = "page";
 
-        this.showDetailPage($(e.currentTarget).attr('data-next-id'), false)
+        if ($(e.currentTarget).attr('data-next-id') != undefined) {
+            this.showDetailPage($(e.currentTarget).attr('data-next-id'), false);
+        } else {
+            this.showDetailPage($(e.currentTarget).attr('data-prev-id'), false);
+        }
+
     },
     showResultsTotals: function() {
         /**
