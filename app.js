@@ -64,8 +64,9 @@ window.NortonApp = {
     Views: {}
 };
 
-// Get constants file
+// Get constants and utils files
 Norton.Constants = require("./app/js/constants.js")
+Norton.Utils = require("./app/js/utils.js")
 
 $(function() {
     /**
@@ -84,7 +85,20 @@ $(function() {
     Norton.saveUrl = null;
     Norton.scrollTrigger = false;
 
+    /**
+     * Authentication setup
+     */
+    // get rid of before commiting...
+    document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
+
+    Norton.isLoggedIn = (document.cookie.replace(/(?:(?:^|.*;\s*)IISPROTECTLOGIN\s*\=\s*([^;]*).*$)|^.*$/, "$1")) ? true : false;
     Norton.baseUrl = $(location).attr("href");
+    Norton.siteCode = ($(location).attr("href").indexOf("nortonreader.dev")) ? "nortonreader" : window.location.pathname.match(/^\/([^\/]*).*$/);
+
+    // Can't allow IIG URL without a site code.
+    if (!Norton.siteCode) {
+        window.location.href = Norton.Constants.invalidSiteCodeUrl;
+    }
 
     /**
      * Models

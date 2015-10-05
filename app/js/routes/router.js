@@ -14,18 +14,8 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
-        NortonApp.headerConfigItem.fetch({
-            success: $.proxy (function() {
-                var versions = NortonApp.headerConfigItem.attributes.versions;
-                for (var key in versions) {
+        this.handleSiteConfig();
 
-                }
-                console.log(NortonApp.headerConfigItem.attributes);
-            }, this),
-            error: function(){
-
-            }
-        });
         this.appView = new NortonApp.Views.App();
         this.start();
     },
@@ -47,6 +37,31 @@ var AppRouter = Backbone.Router.extend({
     },
     start: function() {
         Backbone.history.start();
+    },
+    handleSiteConfig: function() {
+        var lsSiteConfig = false;
+
+        try {
+            lsSiteConfig = localStorage.getItem('config_' + Norton.siteCode);
+        } catch(e) {}
+
+        if (lsSiteConfig) {
+            NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem('config_' + Norton.siteCode))
+        } else {
+            NortonApp.headerConfigItem.fetch({
+                success: $.proxy (function() {
+                    if (NortonApp.headerConfigItem.attributes.siteMode == "protected" && !Norton.isLoggedIn) {
+                        window.location.href = Norton.Constants.loginUrl;
+                    }
+                    // save config in localstorage
+                    try {
+                        localStorage.setItem('config_' + Norton.siteCode, JSON.stringify(NortonApp.headerConfigItem.attributes));
+                    } catch (e) {}
+
+                }, this),
+                error: function(){}
+            });
+        }
     }
 });
 
