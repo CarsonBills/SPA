@@ -37,4 +37,3 @@ var ArticlesCollection = Backbone.Collection.extend({
 });
 
 module.exports = ArticlesCollection;
-

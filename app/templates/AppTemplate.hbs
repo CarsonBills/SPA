@@ -4,7 +4,7 @@
         <div class="cover">
             <div class="top-bar">
                 <div class="norton-logo"><img src="/app/images/norton-logo.png" alt="Norton Reader Home"></div>
-                <a href="/"><h1>Norton Reader</h1></a>
+                <a href="{{baseUrl}}"><h1>Norton Reader</h1></a>
                 <div class="my-account"><a><span class="glyphicons glyphicons-user"></span><div class="icon-label">someone@somewhere.com</div></a></div>
             </div>
             <div class="title">Norton Reader</div>
@@ -44,4 +44,18 @@
     <div class="footer">
         Copyright &copy; W.W. Norton &amp; Company, Inc. 2015
     </div>
+
+    <script>
+        // modals don't detect close event from back button so use event handler to close with popstate change
+        $(window).bind("popstate", function() {
+            if (window.location.href == Norton.baseUrl) {
+                try {
+                    $('#pageContainer').modal('hide');
+                } catch(e) {
+
+                }
+
+            }
+        });
+    </script>
 </div>

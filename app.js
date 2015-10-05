@@ -84,6 +84,8 @@ $(function() {
     Norton.saveUrl = null;
     Norton.scrollTrigger = false;
 
+    Norton.baseUrl = $(location).attr("href");
+
     /**
      * Models
      */
@@ -91,6 +93,7 @@ $(function() {
     NortonApp.Models.Article = require('./app/js/models/ArticleModel.js');
     NortonApp.Models.YourFavs = require("./app/js/models/YourFavsModel.js");
     NortonApp.Models.Page = require("./app/js/models/PageModel.js");
+    NortonApp.Models.HeaderConfig = require("./app/js/models/HeaderConfigModel.js");
 
     /**
      * Collections
@@ -119,6 +122,7 @@ $(function() {
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     NortonApp.pageItem = new NortonApp.Models.Page();
+    NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
     NortonApp.pageView;
 
     NortonApp.AppRouter = require("./app/js/routes/router.js");
@@ -143,7 +147,7 @@ window.launchEbookIframe = function (url, title) {
  */
 
 /**
- * re-order Your List
+ * re-order My Items
  * @param elem
  */
 window.yourFavsDragNDrop = function (elem) {

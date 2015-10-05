@@ -33,7 +33,8 @@ var AppView = Backbone.View.extend({
         this.render();
     },
     render: function(){
-        this.$el.html(this.template());
+        var data = {baseUrl: Norton.baseUrl};
+        this.$el.html(this.template(data));
         this.topNavView.$el = this.$("#topNav");
         this.topNavView.render();
     },

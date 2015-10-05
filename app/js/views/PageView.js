@@ -19,6 +19,7 @@ var PageView = Backbone.View.extend({
     render: function () {
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
+        this.model.attributes.baseUrl = Norton.baseUrl;
 
         var pageTemplate = this.template(this.model.toJSON());
         this.$el.append(pageTemplate);
@@ -31,6 +32,7 @@ var PageView = Backbone.View.extend({
         this.getNextPrevIds();
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
+        this.model.attributes.baseUrl = Norton.baseUrl;
 
         // got this technique from http://stackoverflow.com/questions/14623232/re-rendering-handlebars-partial-from-backbone-view
         // This doesn't use HB partials so maybe we can do that once we figure out how to find Handlebars at runtime...
@@ -44,7 +46,7 @@ var PageView = Backbone.View.extend({
         /**
          * Change the URL
          */
-        window.history.pushState(null,null,"/#/page/" + this.model.attributes.id);
+        window.history.pushState(null,null,"#/page/" + this.model.attributes.id);
 
         // fade in between new articles load
         $(selector).css("opacity", 0);

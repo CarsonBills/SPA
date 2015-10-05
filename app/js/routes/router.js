@@ -14,6 +14,18 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
+        NortonApp.headerConfigItem.fetch({
+            success: $.proxy (function() {
+                var versions = NortonApp.headerConfigItem.attributes.versions;
+                for (var key in versions) {
+
+                }
+                console.log(NortonApp.headerConfigItem.attributes);
+            }, this),
+            error: function(){
+
+            }
+        });
         this.appView = new NortonApp.Views.App();
         this.start();
     },

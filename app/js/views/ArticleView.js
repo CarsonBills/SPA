@@ -33,6 +33,7 @@ var ArticleView = Backbone.View.extend({
              */
             article.attributes.prevId = NortonApp.articlesList.prev(article);
             article.attributes.nextId = NortonApp.articlesList.next(article);
+            article.attributes.baseUrl = Norton.baseUrl;
 
             var articleTemplate;
             if (Norton.toggleGridFormat) {

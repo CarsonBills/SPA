@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-arrow-container">
                 {{#if prevId}}
-                    <div class="glyphicon glyphicon-triangle-left modal-arrow" id="prevArticle" data-prev-id="{{prevId}}" data-id="{{id}}"></div>
+                    <div class="glyphicons glyphicons-left-arrow modal-arrow" id="prevArticle" data-prev-id="{{prevId}}" data-id="{{id}}">Prev</div>
                 {{/if}}
             </div>
             <div class="modal-container">
@@ -25,7 +25,7 @@
             </div>
             <div class="modal-arrow-container">
                 {{#if nextId}}
-                    <div class="glyphicon glyphicon-triangle-right modal-arrow" id="nextArticle" data-next-id="{{nextId}}" data-id="{{id}}"></div>
+                    <div class="glyphicons glyphicons-right-arrow modal-arrow" id="nextArticle" data-next-id="{{nextId}}" data-id="{{id}}">Next</div>
                 {{/if}}
             </div>
         </div>
@@ -42,7 +42,7 @@
 
     $('#pageContainer').on('hide.bs.modal', function (e) {
         // load different URL without refreshing page
-        window.history.pushState(null,null,"/");
+        window.history.pushState(null,null,"{{baseUrl}}");
         $('.modal-backdrop').remove(); // WHY THE F does this not disappear on it's own???? I hate idiotic hacks
     });
 
