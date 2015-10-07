@@ -63,18 +63,54 @@ gulp.task('fileinclude', function () {
         .pipe($.connect.reload());
 });
 
+
+gulp.task('jscs', function () {
+     return gulp.src([proj.js + '/**/*.js',
+        '!' + proj.js + '/vendor/**/*.js'
+        ])
+        .pipe($.jscs({
+            fix: true
+         }))
+        .pipe($.notify({
+            title: 'JSCS',
+            message: 'JSCS Passed'
+        }))
+        .pipe(gulp.dest('app/scripts/'));
+ });
+
 /*
     https://github.com/linnovate/mean/blob/master/.jshintrc
 */
-
 gulp.task('lint', function () {
     return gulp.src([proj.js + '/**/*.js',
-            '!' + proj.js + '/vendor/*.js'
+        '!' + proj.js + '/vendor/**/*.js'
         ])
+        .pipe($.plumber())
         .pipe($.jshint({
-            //"strict" : true
+            globals: {
+               console: true,
+               jQuery: true,
+               require: false
+            },
+            strict : true,
+            sub: true,
+            white: false,
+            bitwise: true,
+            curly: true,
+            eqeqeq: true,
+            latedef: true,
+            forin: true,
+            immed: true,
+            newcap: true,
+            noarg: true,
+            noempty: true,
+            nonew: true,
+            regexp: true,
+            trailing: true,
+            undef: true,
+            unused: true
         }))
-        .pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('browserify', function () {

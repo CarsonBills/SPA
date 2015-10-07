@@ -27,6 +27,7 @@
     "gulp-file-include": "^0.13.7",
     "gulp-if": "^2.0.0",
     "gulp-if-else": "^1.0.3",
+    "gulp-jscs": "^3.0.1",
     "gulp-jshint": "^1.11.2",
     "gulp-livereload": "^3.8.1",
     "gulp-load-plugins": "^1.0.0-rc.1",
