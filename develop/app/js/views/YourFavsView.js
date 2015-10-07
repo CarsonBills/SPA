@@ -6,10 +6,12 @@ var YourFavsView = Backbone.View.extend({
     el: $('#yourFavs'),
     templateHdr: require("../../templates/YourFavsHeaderTemplate.hbs"),
     template: require("../../templates/YourFavsTemplate.hbs"),
-    initialize: function(){
+    initialize: function() {
+        "use strict";
         this.on('change', this.render, this);
     },
     render: function () {
+        "use strict";
         var yourFavsTemplate = this.templateHdr();
         this.$el.append(yourFavsTemplate);
         if (this.model.length > 0) {
@@ -25,6 +27,7 @@ var YourFavsView = Backbone.View.extend({
         return this;
     },
     downloadYourFavs: function() {
+        "use strict";
         var data = $("#yourFavsTitle").text() + "\t\t\n" +
             "Title\tAuthor\tExtract\n";
         this.model.each(function (article) {

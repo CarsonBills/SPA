@@ -6,10 +6,12 @@ var IntroPanelView = Backbone.View.extend({
     el: '#introPanel',
     template: require('../../templates/IntroPanelTemplate.hbs'),
     initialize: function() {
+        'use strict';
         this.on('change', this.render, this);
     },
     render: function() {
-        console.log('render')
+        'use strict';
+        console.log('render');
         var introPanelTemplate = this.template(NortonApp.headerConfigItem.toJSON());
         this.$el.append(introPanelTemplate);
     },

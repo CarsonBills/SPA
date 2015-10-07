@@ -11,6 +11,7 @@ var AppView = Backbone.View.extend({
     el: $('#container'),
     template: require('../../templates/AppTemplate.hbs'),
     initialize: function() {
+        'use strict';
         this.topNavView = new NortonApp.Views.TopNav();
 
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
@@ -39,6 +40,7 @@ var AppView = Backbone.View.extend({
         this.render();
     },
     render: function() {
+        'use strict';
         var data = {baseUrl: Norton.baseUrl};
         this.$el.html(this.template(data));
 
@@ -48,7 +50,7 @@ var AppView = Backbone.View.extend({
         this.topNavView.$el = this.$('#topNav');
         this.topNavView.render();
 
-        if (Norton.siteCode == 'nortonreader' && Norton.showIntro) {
+        if (Norton.siteCode === 'nortonreader' && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
                 model: NortonApp.headerConfigItem,
             });
@@ -58,28 +60,35 @@ var AppView = Backbone.View.extend({
     },
     events: {
         'click .icon-grid-view': function() {
+            'use strict';
             this.changeView(true);
         },
         'click .icon-list-view': function() {
+            'use strict';
             this.changeView(false);
         },
         'click .filter-item-name': function(e) {
+            'use strict';
             this.filtersView.showSelectedFilter(e);
         },
         'change #sortArticles': 'sortArticles',
         'click #navFilters': function() {
+            'use strict';
             $('#filters').toggle();
         },
         'click #searchButton': 'searchArticles',
         'keypress #searchTextInput': function(e) {
-            if (e.keyCode == 13) {
+            'use strict';
+            if (e.keyCode === 13) {
                 this.searchArticles();
             }
         },
         'click .icon-add.favs-lnk': function(e) {
+            'use strict';
             this.articleView.addYourFavs(e, 'article');
         },
         'click .btn-savetolist.favs-lnk': function(e) {
+            'use strict';
             this.articleView.addYourFavs(e, 'page');
         },
         'click #navYourFavs': 'showYourFavs',
@@ -87,21 +96,26 @@ var AppView = Backbone.View.extend({
         'click #prevArticle': 'getNextPrevFromPage',
         'click #nextArticle': 'getNextPrevFromPage',
         'click .download-favs': function() {
+            'use strict';
             this.yourFavsView.downloadYourFavs();
         },
         'click #loadMore': function() {
+            'use strict';
             this.getArticles();
         },
     },
     renderArticles: function() {
+        'use strict';
         this.articleView.$el = this.$('#articles');
         this.articleView.render();
     },
     renderFilters: function() {
+        'use strict';
         this.filtersView.$el = this.$('#filters');
         this.filtersView.render();
     },
     getArticles: function() {
+        'use strict';
         NortonApp.articlesList.fetch({
             success: $.proxy (function() {
                 this.showResultsTotals();
@@ -110,6 +124,7 @@ var AppView = Backbone.View.extend({
         });
     },
     changeView: function(typ) {
+        'use strict';
         if (Norton.toggleGridFormat === typ) {
             return;
         }
@@ -129,6 +144,7 @@ var AppView = Backbone.View.extend({
         this.articleView.render();
     },
     sortArticles: function() {
+        'use strict';
         var sortby = $('#sortArticles option:selected').val();
         if (!sortby) {
             return;
@@ -146,6 +162,7 @@ var AppView = Backbone.View.extend({
         this.renderArticles();
     },
     searchArticles: function() {
+        'use strict';
         /**
          * THis whole thing will be replaced since our search results will come back from Searchandiser
          */
@@ -178,6 +195,7 @@ var AppView = Backbone.View.extend({
         this.renderArticles();
     },
     showYourFavs: function() {
+        'use strict';
         $('#filters').css({display: 'none'});
         $('#articles').css({display: 'none'});
         $('.your-favs-view-section').css({display: 'inline'});
@@ -186,6 +204,7 @@ var AppView = Backbone.View.extend({
         this.yourFavsView.render();
     },
     showDetailPage: function(id, create) {
+        'use strict';
         /**
          * Load spinner
          */
@@ -213,10 +232,11 @@ var AppView = Backbone.View.extend({
         });
     },
     getNextPrevFromList: function(e) {
+        'use strict';
         /**
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone's
          */
-        if (Backbone.history.fragment == 'page/' + $(e.currentTarget).attr('data-id')) {
+        if (Backbone.history.fragment === 'page/' + $(e.currentTarget).attr('data-id')) {
             NortonApp.router.navigate('#/page/' + $(e.currentTarget).attr('data-id'), true);
         }
 
@@ -225,13 +245,14 @@ var AppView = Backbone.View.extend({
         Norton.nextArticle = $(e.currentTarget).attr('data-next-id');
     },
     getNextPrevFromPage: function(e) {
+        'use strict';
         /**
          * Next/prev links are determined in pageView.js when a next prev link was clicked.
          * Otherwise, they are determined above in getNextPrevFromList
          */
         Norton.pageClick = 'page';
 
-        if ($(e.currentTarget).attr('data-next-id') != undefined) {
+        if ($(e.currentTarget).attr('data-next-id') !== undefined) {
             this.showDetailPage($(e.currentTarget).attr('data-next-id'), false);
         } else {
             this.showDetailPage($(e.currentTarget).attr('data-prev-id'), false);
@@ -239,6 +260,7 @@ var AppView = Backbone.View.extend({
 
     },
     showResultsTotals: function() {
+        'use strict';
         $('#perPage').html(Norton.perPage * Norton.pageNbr);
         $('#nbrRecords').html(Norton.nbrRecords);
     },

@@ -13,10 +13,12 @@ var PageView = Backbone.View.extend({
     el: $('#detailPage'),
     template: require("../../templates/PageTemplate.hbs"),
     templateReplace: require("../../templates/PageReplaceTemplate.hbs"),
-    initialize: function(){
+    initialize: function() {
+        "use strict";
         this.model.on('change', this.render, this);
     },
     render: function () {
+        "use strict";
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
         this.model.attributes.baseUrl = Norton.baseUrl;
@@ -29,6 +31,7 @@ var PageView = Backbone.View.extend({
         return this;
     },
     renderReplace: function() {
+        "use strict";
         this.getNextPrevIds();
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
@@ -57,6 +60,7 @@ var PageView = Backbone.View.extend({
         return this;
     },
     getNextPrevIds: function() {
+        "use strict";
         //window.history.pushState(null,null,"#/page/"+this.model.attributes.id);
         var mdl = NortonApp.articlesList.get(this.model.attributes.id);
         Norton.prevArticle = NortonApp.articlesList.prev(mdl);

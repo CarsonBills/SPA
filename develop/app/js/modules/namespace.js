@@ -1,4 +1,5 @@
 module.exports = (function () {
+    "use strict";
 	// Define Namespaces
 	window.Norton = {};
 

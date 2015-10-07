@@ -13,6 +13,7 @@ var ArticleModel = Backbone.Model.extend({
         fullName: ''
     },
     initialize: function() {
+        "use strict";
         this.set({
             "shortExtract": this.get("extract").substr(0,100),
             "fullName": this.get("authorFirst") + " " + this.get("authorLast")

@@ -15,6 +15,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
+        "use strict";
         this.handleSiteConfig();
 
         Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
@@ -24,24 +25,31 @@ var AppRouter = Backbone.Router.extend({
     },
 
     index: function() {
+        "use strict";
 
     },
     search: function() {
+        "use strict";
 
     },
     page: function(id) {
+        "use strict";
         this.appView.showDetailPage(id, true);
     },
     filter: function() {
+        "use strict";
 
     },
     favs: function() {
+        "use strict";
 
     },
     start: function() {
+        "use strict";
         Backbone.history.start();
     },
     handleSiteConfig: function() {
+        "use strict";
         var lsSiteConfig = false;
 
         try {
@@ -69,7 +77,8 @@ var AppRouter = Backbone.Router.extend({
         }
     },
     protectedContentCheck: function() {
-        if (NortonApp.headerConfigItem.attributes.siteMode == "protected" && !Norton.isLoggedIn) {
+        "use strict";
+        if (NortonApp.headerConfigItem.attributes.siteMode === "protected" && !Norton.isLoggedIn) {
            window.location.href = Norton.Constants.loginUrl;
         }
     }

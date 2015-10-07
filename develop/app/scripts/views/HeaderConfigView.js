@@ -7,11 +7,13 @@ var HeaderConfigView = Backbone.View.extend({
     templateNR: require('../../templates/NortonReaderHeaderTemplate.hbs'),
     templateIig: require('../../templates/IigHeaderTemplate.hbs'),
     initialize: function() {
+        'use strict';
         this.on('change', this.render, this);
     },
     render: function() {
+        'use strict';
         var headerConfigTemplate;
-        if (Norton.siteCode == 'nortonreader') {
+        if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(this.model.toJSON());
         } else {
             headerConfigTemplate = this.templateIig(this.model.toJSON());

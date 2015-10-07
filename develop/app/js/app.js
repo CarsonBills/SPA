@@ -1,10 +1,11 @@
+/* jshint -W030 */
 /* declare here to build into bundle */
 
 window.$ = require('jquery');
 window.jQuery = $;
 
 var Backbone = require('backbone'),
-	FastClick = require('fastclick'),
+	fastClick = require('fastclick'),
 	jQuery_UI = require('jquery-ui'),
 	bootstrap = require('bootstrap-sass'),
 	jQuery_UI_Touch = require('jquery-ui-touch-punch'),
@@ -19,7 +20,7 @@ Norton.Constants = require('./modules/js_constants');
 Norton.Utils = require('./modules/js_utils');
 
 $(function() {
-
+    "use strict";
 	/**
      * Global primitives
      */
@@ -112,7 +113,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
 
 	
 
-	FastClick(document.body);
+	fastClick(document.body);
     $(window).scroll(scrollHandler);
     stickyRelocate();
 
@@ -140,6 +141,7 @@ window.launchEbookIframe = function (url, title) {
  * @param elem
  */
 window.yourFavsDragNDrop = function (elem) {
+    "use strict";
     $(elem).sortable();
 };
 
@@ -147,6 +149,7 @@ window.yourFavsDragNDrop = function (elem) {
  * handle window scroll events for Sticky and for Load-More
  */
 window.scrollHandler = function() {
+    "use strict";
     stickyRelocate();
 
     if(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
@@ -163,6 +166,7 @@ window.scrollHandler = function() {
  * Sticky for navbar to remain at top when scrolling
  */
 window.stickyRelocate = function() {
+    "use strict";
     var window_top = $(window).scrollTop();
     var div_top = $('#sticky-anchor').offset().top;
     if (window_top > div_top) {

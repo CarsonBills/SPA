@@ -7,15 +7,17 @@ var ArticleView = Backbone.View.extend({
     templateGrid: require('../../templates/ArticlesGridTemplate.hbs'),
     templateList: require('../../templates/ArticlesListTemplate.hbs'),
     initialize: function() {
+        'use strict';
         this.model.on('change', this.render, this);
     },
     render: function() {
+        'use strict';
         var nbr = 0;
         this.model.each(function(article) {
             /**
              * Only get nbr-per-page articles
              */
-            if (nbr == Norton.perPage) {
+            if (nbr === Norton.perPage) {
                 return false; // We're done, get out
             }
             /**
@@ -50,6 +52,7 @@ var ArticleView = Backbone.View.extend({
         return this;
     },
     addYourFavs: function(e, template) {
+        'use strict';
 
         // Add item to yourFavsList collection
         var id = $(e.target).attr('data-item-id');

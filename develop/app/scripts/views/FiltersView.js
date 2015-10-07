@@ -8,9 +8,11 @@ var FiltersView = Backbone.View.extend({
     cat: '',
     filterContent: '',
     initialize: function() {
+        'use strict';
         this.on('change', this.render, this);
     },
     render: function() {
+        'use strict';
         this.model.each(function(filter) {
             var filterTemplate = this.template(filter.toJSON());
             this.$el.append(filterTemplate);
@@ -19,6 +21,7 @@ var FiltersView = Backbone.View.extend({
         return this;
     },
     showSelectedFilter: function(e) {
+        'use strict';
         var html = '<ul class="selected-filters"><li>' + $(e.target).text() + '</li><li>X</li></ul>';
         $('#selectedFilters').append(html);
     },

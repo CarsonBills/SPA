@@ -4,6 +4,7 @@ var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
     url: '/json/articles.json',
     parse: function(response) {
+        "use strict";
         Norton.perPage = response.per_page;
         Norton.pageNbr = response.page;
         Norton.nbrRecords = response.total;
@@ -16,6 +17,7 @@ var ArticlesCollection = Backbone.Collection.extend({
      * @returns {*}
      */
     prev: function (model) {
+        "use strict";
         var idx = this.curr(model);
         if (idx > 0) {
             return this.at(idx - 1).id;
@@ -24,6 +26,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         return null;
     },
     next: function (model) {
+        "use strict";
         var idx = this.curr(model);
         if (idx < (this.length - 1)) {
             return this.at(idx + 1).id;
@@ -32,6 +35,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         return null;
     },
     curr: function(model) {
+        "use strict";
         return this.indexOf(model);
     }
 });
