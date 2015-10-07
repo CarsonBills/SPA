@@ -107,8 +107,8 @@ gulp.task('lint', function () {
             nonew: true,
             regexp: true,
             trailing: true,
-            undef: true,
-            unused: true
+            undef: false,
+            unused: false
         }))
         .pipe($.jshint.reporter('jshint-stylish'));
 });
