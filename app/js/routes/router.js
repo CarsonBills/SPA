@@ -16,6 +16,8 @@ var AppRouter = Backbone.Router.extend({
     initialize: function() {
         this.handleSiteConfig();
 
+        Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
+
         this.appView = new NortonApp.Views.App();
         this.start();
     },
@@ -46,21 +48,28 @@ var AppRouter = Backbone.Router.extend({
         } catch(e) {}
 
         if (lsSiteConfig) {
-            NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem('config_' + Norton.siteCode))
+            NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem('config_' + Norton.siteCode));
+            this.protectedContentCheck();
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function() {
-                    if (NortonApp.headerConfigItem.attributes.siteMode == "protected" && !Norton.isLoggedIn) {
-                        window.location.href = Norton.Constants.loginUrl;
-                    }
+                    this.protectedContentCheck();
+
                     // save config in localstorage
                     try {
                         localStorage.setItem('config_' + Norton.siteCode, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                    } catch (e) {}
+                    } catch (e) { }
 
                 }, this),
-                error: function(){}
+                error: function(){
+                    // go to generic error page
+                }
             });
+        }
+    },
+    protectedContentCheck: function() {
+        if (NortonApp.headerConfigItem.attributes.siteMode == "protected" && !Norton.isLoggedIn) {
+           window.location.href = Norton.Constants.loginUrl;
         }
     }
 });

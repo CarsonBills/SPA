@@ -1,8 +1,8 @@
 var Backbone = require("backbone");
 
 var HeaderConfigModel = Backbone.Model.extend({
-    //urlRoot: Norton.Constants.siteConfigUrl + Norton.siteCode + "/full",
-    urlRoot: "/app/siteconfig.json",
+    urlRoot: Norton.Constants.siteConfigUrl + Norton.siteCode + "/" + Norton.version,
+    //urlRoot: "/app/siteconfig.json",
 
     defaults: {
         "displayTitle": "",
@@ -39,53 +39,7 @@ var HeaderConfigModel = Backbone.Model.extend({
 
         ],
         "footer": ""
-    },
-    parse: function(response) {
-//        this.set({
-//            // flatten this nested object
-//            "welcome_card_callout": response.welcome_card.callout_action
-//        });
-
-        return response;
     }
 });
 
 module.exports = HeaderConfigModel;
-
-/*
- defaultsOld: {
- displayTitle: null,
- siteCode: '',
- welcome_card: {
- subhead: '',
- content: '',
- layout: ''
- },
- welcome_card_callout: [{
- action_text: '',
- action_link: ''
- }],
- versions: [{
- version: '',
- mode: 'public',
- display_label: 'Short Version',
- is_default: 'false'
- }],
- ebook: {
- base_url: '',
- live_date: '',
- sunset_date: ''
- },
- dimensions_header: '',
- header_links: [{
- label: '',
- link: ''
- }],
- footer_links: [{
- label: '',
- link: ''
- }],
- footer: ''
- },
-
- */

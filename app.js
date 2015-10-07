@@ -65,8 +65,8 @@ window.NortonApp = {
 };
 
 // Get constants and utils files
-Norton.Constants = require("./app/js/constants.js")
-Norton.Utils = require("./app/js/utils.js")
+Norton.Constants = require("./app/js/constants.js");
+Norton.Utils = require("./app/js/utils.js");
 
 $(function() {
     /**
@@ -84,20 +84,34 @@ $(function() {
     Norton.pageClick = null;
     Norton.saveUrl = null;
     Norton.scrollTrigger = false;
+    Norton.siteCode = null;
+    Norton.version = null;
 
     /**
      * Authentication setup
      */
-    // get rid of before commiting...
-    document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
+    // get rid of before moving to wwnorton.com environment...
+document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
 
-    Norton.isLoggedIn = (document.cookie.replace(/(?:(?:^|.*;\s*)IISPROTECTLOGIN\s*\=\s*([^;]*).*$)|^.*$/, "$1")) ? true : false;
+    Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
+
     Norton.baseUrl = $(location).attr("href");
-    Norton.siteCode = ($(location).attr("href").indexOf("nortonreader.dev")) ? "nortonreader" : window.location.pathname.match(/^\/([^\/]*).*$/);
 
-    // Can't allow IIG URL without a site code.
-    if (!Norton.siteCode) {
-        window.location.href = Norton.Constants.invalidSiteCodeUrl;
+    /**
+     * Get Site Code and version
+     */
+    var paths = window.location.pathname.split("/");
+    if ($(location).attr("href").indexOf("nortonreader.dev") >= 0) {
+        Norton.siteCode = "nortonreader";
+        Norton.version = paths[1];
+    } else {
+        Norton.siteCode = paths[1];
+        Norton.version = paths[2];
+    }
+
+    // Can't allow IIG URL without a site code and version.
+    if (!Norton.siteCode || !Norton.version) {
+       window.location.href = Norton.Constants.invalidSiteCodeUrl;
     }
 
     /**
@@ -124,6 +138,8 @@ $(function() {
     NortonApp.Views.Filters = require("./app/js/views/FiltersView.js");
     NortonApp.Views.YourFavs = require("./app/js/views/YourFavsView.js");
     NortonApp.Views.Page = require("./app/js/views/PageView.js");
+    NortonApp.Views.HeaderConfig = require("./app/js/views/HeaderConfigView.js");
+    NortonApp.Views.IntroPanel = require("./app/js/views/IntroPanelView.js");
     NortonApp.Views.App = require("./app/js/views/AppView.js");
 
     /**
@@ -138,6 +154,7 @@ $(function() {
     NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
     NortonApp.pageView;
+    NortonApp.introPanelView;
 
     NortonApp.AppRouter = require("./app/js/routes/router.js");
     NortonApp.router = new NortonApp.AppRouter();
@@ -165,7 +182,7 @@ window.launchEbookIframe = function (url, title) {
  * @param elem
  */
 window.yourFavsDragNDrop = function (elem) {
-    $( elem ).sortable();
+    $(elem).sortable();
 };
 
 /**
@@ -181,18 +198,6 @@ window.scrollHandler = function() {
 
         var scroll_to_new = (Norton.lastArticleLoaded + 1);
         $("[data-id="+scroll_to_new+"]").focus();
-
-
-       /* this will make a LoadMore event scroll to the first article of the new set. In a SetTimeout so there is enough
-        time for Backbone to render the next set.
-
-       setTimeout(
-            function() {
-                $('html, body').animate({
-                    scrollTop: $("[data-id="+scroll_to_new+"]").offset().top
-                    }, 700);
-            }, 100
-        );*/
     }
 }
 

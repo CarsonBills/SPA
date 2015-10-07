@@ -3,7 +3,6 @@
  *
  * @type {exports|module.exports}
  */
-
 var Backbone = require("backbone");
 var $ = require('jquery');
 Backbone.$ = $;
@@ -13,6 +12,10 @@ var AppView = Backbone.View.extend({
     template: require("../../templates/AppTemplate.hbs"),
     initialize: function(){
         this.topNavView = new NortonApp.Views.TopNav();
+        
+        this.headerConfigView = new NortonApp.Views.HeaderConfig({
+            model: NortonApp.headerConfigItem
+        });
 
         this.articleView = new NortonApp.Views.Article({
             model: NortonApp.articlesList
@@ -21,22 +24,37 @@ var AppView = Backbone.View.extend({
         this.filtersView = new NortonApp.Views.Filters({
             model: NortonApp.filtersList
         });
+
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
         });
+
         this.getArticles();
         NortonApp.filtersList.fetch({
             success: $.proxy (function() {
                 this.renderFilters();
             }, this)
         });
+
         this.render();
     },
     render: function(){
         var data = {baseUrl: Norton.baseUrl};
         this.$el.html(this.template(data));
+
+        this.headerConfigView.$el = this.$("#siteHeader");
+        this.headerConfigView.render();
+
         this.topNavView.$el = this.$("#topNav");
         this.topNavView.render();
+
+        if (Norton.siteCode == "nortonreader" && Norton.showIntro) {
+            this.introPanelView = new NortonApp.Views.IntroPanel({
+                model: NortonApp.headerConfigItem
+            });
+            this.introPanelView.$el = this.$("#introPanel");
+            this.introPanelView.render();
+        }
     },
     events: {
         "click .icon-grid-view": function() {
@@ -83,10 +101,6 @@ var AppView = Backbone.View.extend({
         this.filtersView.$el = this.$("#filters");
         this.filtersView.render();
     },
-    renderYourFavs: function() {
-        this.yourFavsView.$el = this.$("#yourFavs");
-        this.yourFavsView.render();
-    },
     getArticles: function() {
         NortonApp.articlesList.fetch({
             success: $.proxy (function() {
@@ -116,7 +130,9 @@ var AppView = Backbone.View.extend({
     },
     sortArticles: function() {
         var sortby = $( "#sortArticles option:selected" ).val();
-        if (!sortby) return;
+        if (!sortby) {
+            return;
+        }
 
         NortonApp.articlesList.comparator = function(model) {
             return model.get(sortby);
@@ -144,8 +160,8 @@ var AppView = Backbone.View.extend({
 
             if (title.indexOf(searchTerm) >= 0 ||
                 name.indexOf(searchTerm) >= 0 ||
-                extract.indexOf(searchTerm) >= 0
-            ) {
+                extract.indexOf(searchTerm) >= 0 )
+            {
                 Norton.lastArticleLoaded = 0;
                 return item;
             }
@@ -166,7 +182,9 @@ var AppView = Backbone.View.extend({
         $('#filters').css({"display":"none"});
         $('#articles').css({"display":"none"});
         $('.your-favs-view-section').css({"display":"inline"});
-        this.renderYourFavs();
+
+        this.yourFavsView.$el = this.$("#yourFavs");
+        this.yourFavsView.render();
     },
     showDetailPage: function(id, create) {
         /**
@@ -222,11 +240,6 @@ var AppView = Backbone.View.extend({
 
     },
     showResultsTotals: function() {
-        /**
-         * NOTE: REMOVE THIS WHEN WE START QUERYING SEARCHANDIZER
-         */
- //       if (Norton.lastArticleLoaded > 0) Norton.pageNbr++;
-        // END
         $('#perPage').html(Norton.perPage * Norton.pageNbr);
         $('#nbrRecords').html(Norton.nbrRecords);
     }

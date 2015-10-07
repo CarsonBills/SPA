@@ -16,7 +16,7 @@ var ArticleModel = Backbone.Model.extend({
         this.set({
             "shortExtract": this.get("extract").substr(0,100),
             "fullName": this.get("authorFirst") + " " + this.get("authorLast")
-        })
+        });
     }
 });
 

@@ -32,7 +32,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         return null;
     },
     curr: function(model) {
-        return this.indexOf(model)
+        return this.indexOf(model);
     }
 });
 
