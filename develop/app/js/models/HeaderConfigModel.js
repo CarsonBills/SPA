@@ -2,7 +2,7 @@ var Backbone = require("backbone");
 
 var HeaderConfigModel = Backbone.Model.extend({
     urlRoot: Norton.Constants.siteConfigUrl + Norton.siteCode + "/" + Norton.version,
-    //urlRoot: "/app/siteconfig.json",
+    //urlRoot: "/json/siteconfig.json",
 
     defaults: {
         "displayTitle": "",

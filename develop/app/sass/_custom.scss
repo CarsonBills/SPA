@@ -112,6 +112,7 @@ nav a:hover {
     display: table;
     margin: 0 auto;
     /* max-width: 400px; */
+    width: 400px;
     color: #003A4C;
     font-size: 3em;
     font-weight: 700;
@@ -129,7 +130,6 @@ nav a:hover {
 .title.sticky {
     top: 24px;
     margin: 0 auto;
-    /* max-width: 400px; */
     color: #FDFEFE;
     font-size: 1.4em;
     font-weight: 700;

@@ -1,10 +1,9 @@
 /* declare here to build into bundle */
 
+window.$ = require('jquery');
+window.jQuery = $;
 
-window.jQuery = require('jquery');
-
-var $ = jQuery,
-	Backbone = require('backbone'),
+var Backbone = require('backbone'),
 	FastClick = require('fastclick'),
 	jQuery_UI = require('jquery-ui'),
 	bootstrap = require('bootstrap-sass'),
@@ -13,6 +12,8 @@ var $ = jQuery,
 
 	// settings
 	namespace = require('./modules/namespace');
+
+Backbone.$ = $;
 
 Norton.Constants = require('./modules/js_constants');
 Norton.Utils = require('./modules/js_utils');
@@ -103,8 +104,8 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
-    NortonApp.pageView();
-    NortonApp.introPanelView();
+    NortonApp.pageView;
+    NortonApp.introPanelView;
 
     NortonApp.AppRouter = require("./routes/router.js");
     NortonApp.router = new NortonApp.AppRouter();
@@ -112,8 +113,8 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
 	
 
 	FastClick(document.body);
-    //$(window).scroll(scrollHandler);
-    //stickyRelocate();
+    $(window).scroll(scrollHandler);
+    stickyRelocate();
 
 });
 

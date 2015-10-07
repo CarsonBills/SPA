@@ -105,7 +105,6 @@ gulp.task('sass:develop', function () {
         .on("error", $.notify.onError(function (error) {
             return "Error: " + error.message;
          }))
-
         .pipe($.postcss([
             require('autoprefixer')({browsers: ['last 2 version']})
         ]))

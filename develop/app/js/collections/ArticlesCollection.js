@@ -2,7 +2,7 @@ var Backbone = require("backbone");
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
-    url: '/app/articles.json',
+    url: '/json/articles.json',
     parse: function(response) {
         Norton.perPage = response.per_page;
         Norton.pageNbr = response.page;
