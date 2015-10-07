@@ -228,16 +228,17 @@ gulp.task('server', function () {
     
     var url = ifElse(argv.deploy,
         function () { 
-           return proj.gulpdist;
+           return proj.gulpdist + '/';
         },
         function () { 
-           return proj.gulptmp;
+           return proj.gulptmp + '/';
         });
 
     $.connect.server({
     	root: url,
     	port: port,
-    	livereload: true
+    	livereload: true,
+        fallback: 'index.html'
     });
 
     require('opn')('http://' + server + ':' + port + wip);
