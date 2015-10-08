@@ -19,3 +19,6 @@ bower_components
 /libpeerconnection.log
 npm-debug.log
 testem.log
+
+# vagrant
+.vagrant

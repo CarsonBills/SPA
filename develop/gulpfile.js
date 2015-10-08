@@ -22,6 +22,7 @@ var gulp = require('gulp'),
     wip 		= '/index.html',
     proj 		= {
     	app: 'app',
+        config: app + '/config',
         images: app + '/images',
     	fonts: app + '/fonts',
     	php: app + '/php',
@@ -197,6 +198,16 @@ gulp.task('copy_fonts', function () {
 });
 
 gulp.task('copy_data', function () {
+    gulp.src([
+            proj.config + '/dot_htaccess'
+        ])
+        .pipe($.rename(function (path) {
+            path.basename = '.htaccess';
+        }))
+        .pipe(gulpif(argv.deploy,
+            gulp.dest(proj.gulpdist),
+            gulp.dest(proj.gulptmp)
+        ));
     return gulp.src([
             proj.json + '/**/*.json'
         ])
@@ -303,7 +314,7 @@ gulp.task('build', function () {
 
 gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
 
-    gulp.start('server');
+    //gulp.start('server');
 
     gulp.watch([proj.page_templates + '/**/*.html'], ['fileinclude']);
     gulp.watch([proj.templates + '/**/*.hbs'], ['browserify']);
