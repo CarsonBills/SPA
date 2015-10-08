@@ -1,5 +1,5 @@
 <?php
-$articles = file_get_contents("/data/web/nr/app/details.json");
+$articles = file_get_contents("../json/details.json");
 $json_str = json_decode($articles, true);
 
 $url_components = explode("/",$_SERVER["REQUEST_URI"]);

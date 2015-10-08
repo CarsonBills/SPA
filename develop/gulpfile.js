@@ -181,6 +181,16 @@ gulp.task('copy_images', function () {
         ));
 });
 
+gulp.task('copy_php', function () {
+    return gulp.src([
+            proj.php + '/**/*.php'
+        ])
+        .pipe(gulpif(argv.deploy,
+            gulp.dest(proj.gulpdist + '/php'),
+            gulp.dest(proj.gulptmp + '/php')
+        ));
+});
+
 gulp.task('copy_fonts', function () {
     return gulp.src([
             // bootstrap glyphicon
@@ -302,6 +312,7 @@ gulp.task('build', function () {
         .pipe($.shell([
             'gulp wiredep --deploy',
             'gulp copy_data --deploy',
+            'gulp copy_php --deploy',
             'gulp copy_images --deploy',
             'gulp copy_fonts --deploy',
             'gulp browserify --deploy',
@@ -312,7 +323,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
+gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
 
     //gulp.start('server');
 
