@@ -61,7 +61,7 @@ gulp.task('fileinclude', function () {
             gulp.dest(proj.gulptmp)
         ))
         .pipe($.size())
-        .pipe($.connect.reload());
+        .pipe(gulpif(!argv.deploy, $.livereload()))
 });
 
 
@@ -126,7 +126,7 @@ gulp.task('browserify', function () {
         }))
         .pipe(gulpif(argv.deploy, $.uglify()))
         .pipe($.rename({basename: 'bundle', extname: '.min.js'}))
-        .pipe(gulpif(!argv.deploy, $.connect.reload()))
+        .pipe(gulpif(!argv.deploy, $.livereload()))
         .pipe(gulpif(argv.deploy,
             gulp.dest(proj.gulpdist + '/js'),
             gulp.dest(proj.gulptmp + '/js')
@@ -148,7 +148,7 @@ gulp.task('sass:develop', function () {
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(proj.gulptmp + '/css'))
         .pipe($.size())
-        .pipe($.connect.reload());
+        .pipe(gulpif(!argv.deploy, $.livereload()))
 });
 
 gulp.task('sass:deploy', function () {
@@ -326,6 +326,8 @@ gulp.task('build', function () {
 gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
 
     //gulp.start('server');
+
+    $.livereload.listen();
 
     gulp.watch([proj.page_templates + '/**/*.html'], ['fileinclude']);
     gulp.watch([proj.templates + '/**/*.hbs'], ['browserify']);
