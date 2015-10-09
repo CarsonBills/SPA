@@ -4,10 +4,13 @@
 // override bootstrap glyphicon variable
 $bootstrap-sass-asset-helper: false;
 $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default;
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "./vendor/bootstrap";
+// local override
+@import "./vendor/glyphicons";
 
-@import "vendor/codyhouse-sliding-panel";
-@import "vendor/skeleton";
+@import "./vendor/codyhouse-sliding-panel";
+@import "./vendor/skeleton";
 
 // custom css from here
 @import "sprite/png_sprite";

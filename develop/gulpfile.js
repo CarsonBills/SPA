@@ -150,7 +150,7 @@ gulp.task('sass:develop', function () {
             return "Error: " + error.message;
          }))
         .pipe($.postcss([
-            require('autoprefixer')({browsers: ['last 2 version']})
+            require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(proj.gulptmp + '/css'))
@@ -165,7 +165,7 @@ gulp.task('sass:deploy', function () {
             outputStyle: 'compressed'
         }))
         .pipe($.postcss([
-            require('autoprefixer')({browsers: ['last 2 version']})
+            require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
         .pipe(gulp.dest(proj.gulpdist + '/css'))
         .pipe($.size());
@@ -281,12 +281,12 @@ gulp.task('copy_php', function () {
 gulp.task('copy_fonts', function () {
     return gulp.src([
             // bootstrap glyphicon
-            proj.bower + '/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)'
-            //proj.fonts + '/glyphicons-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)',
-            //proj.fonts + '/glyphicons-halflings-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)'
+            //proj.bower + '/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)'
+            proj.fonts + '/glyphicons-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)',
+            proj.fonts + '/glyphicons-halflings-regular*(*.svg|*.eot|*.woff|*.woff2|*.ttf)'
         ])
         .pipe($.rename(function (path) {
-            path.basename = 'glyphicons-halflings-regular';
+            path.basename = 'glyphicons-regular';
         }))
         .pipe(gulpif(argv.deploy,
             gulp.dest(proj.gulpdist + '/fonts'),
