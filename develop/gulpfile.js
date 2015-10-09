@@ -42,7 +42,7 @@ var gulp = require('gulp'),
     };
 
 gulp.task('fileinclude', function () {
-    return gulp.src([proj.page_templates + '/*.html'])
+    return gulp.src([proj.page_templates + '/**/*.html'])
         .pipe($.plumber(function (error) {
             $.util.beep();
             $.util.log($.util.colors.red(error));
@@ -87,7 +87,7 @@ gulp.task('jscs', function () {
 */
 gulp.task('lint', function () {
     return gulp.src([proj.js + '/**/*.js',
-        '!' + proj.js + '/vendor/**/*.js'
+            '!' + proj.vendor + '/**/*.js'
         ])
         .pipe($.plumber())
         .pipe($.jshint({
@@ -118,12 +118,12 @@ gulp.task('lint', function () {
 });
 
 gulp.task('browserify', function () {
-    return gulp.src([proj.js + '/app.js'//,
-            //'!' + proj.vendor + '/**/*.js',
-
+    return gulp.src([
+            proj.js + '/app.js',
+            '!' + proj.vendor + '/**/*.js'
         ])
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish'))
+        //.pipe($.jshint())
+        //.pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.browserify({
             transform: ['debowerify', hbsfy]
         }))

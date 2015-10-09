@@ -1,0 +1,5 @@
+@mixin athelas($size: 1rem, $height: 1) {
+	font-family: athelas, serif;
+	font-size: $size;
+	line-height: $height;
+}

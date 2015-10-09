@@ -38,7 +38,13 @@ var HeaderConfigModel = Backbone.Model.extend({
         "footerLinks":[
 
         ],
-        "footer": ""
+        "footer": "",
+        "otherVersions": [
+            {
+                "siteVersionLabel": "view shorter edition",
+                "siteVersion": "short"
+            }
+        ]
     }
 });
 
