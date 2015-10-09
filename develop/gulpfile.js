@@ -18,14 +18,14 @@ var gulp = require('gulp'),
     wiredep     = require('wiredep').stream,
     php = require('gulp-connect-php'),
     app 		= 'app',
-    server      = 'nortonreader.dev',
+    server      = 'localhost',
     port   		= 9000,
-    wip 		= '/index.html',
+    wip 		= '/full',
     proj 		= {
     	app: 'app',
         config: app + '/config',
         images: app + '/images',
-        svg: app + '/svg',
+        svg: app + '/images/svg',
         svg_sprite: '/images/svg_sprite.svg',
     	fonts: app + '/fonts',
     	php: app + '/php',
@@ -143,6 +143,7 @@ gulp.task('sass:develop', function () {
         ])
         .pipe($.sourcemaps.init())
         .pipe($.sass({
+            precision: 6,
             outputStyle: 'compact'
         }))
         .on("error", $.notify.onError(function (error) {
@@ -160,6 +161,7 @@ gulp.task('sass:develop', function () {
 gulp.task('sass:deploy', function () {
     gulp.src([proj.sass + '/**/*.scss'])
         .pipe($.sass({
+            precision: 6,
             outputStyle: 'compressed'
         }))
         .pipe($.postcss([
@@ -223,7 +225,8 @@ gulp.task('png_sprite', function (cb) {
     var spriteData = gulp.src([
             proj.images  + '/*.png',
             '!' + proj.images + '/favicon.png',
-            '!' + proj.images + '/header.png',
+            '!' + proj.images + '/header.png',,
+            '!' + proj.svg + '/*.svg'
         ])
         .pipe($.spritesmith({
             imgName: '../images/png_sprite.png',
@@ -256,7 +259,8 @@ gulp.task('assets_include', function () {
 
 gulp.task('copy_images', function () {
     return gulp.src([
-            proj.images + '/**/*(*.jpg)'
+            proj.images + '/**/*(*.jpg)',
+            '!' + proj.svg + '/*.svg'
         ])
         .pipe(gulpif(argv.deploy,
             gulp.dest(proj.gulpdist + '/images'),
@@ -341,8 +345,7 @@ gulp.task('server', function () {
     $.connect.server({
     	root: path,
     	port: port,
-    	livereload: true,
-        fallback: 'index.html'
+    	livereload: true
     });
 
     require('opn')('http://' + server + ':' + port + wip);
@@ -415,7 +418,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
     gulp.watch([proj.templates + '/**/*.hbs'], ['browserify']);
     gulp.watch([proj.sass + '/**/*.scss'], ['sass:develop']);
     gulp.watch([proj.js + '/**/*.js'], ['browserify']);
-    gulp.watch([proj.images + '/**'], ['png_sprite', 'copy_images']);
+    gulp.watch([proj.images + '/**', '!' + proj.images + '/svg/*.svg'], ['png_sprite', 'copy_images']);
 
 });
 

@@ -79,7 +79,7 @@ var AppRouter = Backbone.Router.extend({
     protectedContentCheck: function() {
         "use strict";
         if (NortonApp.headerConfigItem.attributes.siteMode === "protected" && !Norton.isLoggedIn) {
-           window.location.href = Norton.Constants.loginUrl;
+            window.location.href = Norton.Constants.loginUrl;
         }
     }
 });

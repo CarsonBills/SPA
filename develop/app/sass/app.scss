@@ -12,7 +12,11 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 // custom css from here
 @import "sprite/png_sprite";
 @import "sprite/svg_sprite";
+
 @import 'mixins/svg_sprite';
+@import 'mixins/utils';
+
+
 @import "custom";
 
 // Modules

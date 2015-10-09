@@ -62,6 +62,12 @@ $svg-sprite: map-get($icons, sprite) !default;
 %svg-sprite {
 	display: inline-block;
 	background-image: url(map-get($svg-sprite, svgPath));
+	background-size: map-get($svg-sprite, width) map-get($svg-sprite, height);
+}
+
+%svg-sprite-rem {
+	display: inline-block;
+	background-image: url(map-get($svg-sprite, svgPath));
 	background-size: mq-px2em(map-get($svg-sprite, width)) mq-px2em(map-get($svg-sprite, height));
 }
 /// Assign the correct PNG background image and dimensions to the element
