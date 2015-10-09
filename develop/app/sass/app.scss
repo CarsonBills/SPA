@@ -10,7 +10,9 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 @import "vendor/skeleton";
 
 // custom css from here
-@import "sprite/sprite_assets";
+@import "sprite/png_sprite";
+@import "sprite/svg_sprite";
+@import 'mixins/svg_sprite';
 @import "custom";
 
 // Modules

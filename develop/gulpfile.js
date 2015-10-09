@@ -13,6 +13,7 @@ var gulp = require('gulp'),
     gulpif      = require('gulp-if'),
     fileinclude = require('gulp-file-include'),
     runSequence = require('run-sequence'),
+    svgSprite = require('gulp-svg-sprite'),
     addsrc      = require('gulp-add-src'),
     wiredep     = require('wiredep').stream,
     php = require('gulp-connect-php'),
@@ -24,6 +25,8 @@ var gulp = require('gulp'),
     	app: 'app',
         config: app + '/config',
         images: app + '/images',
+        svg: app + '/svg',
+        svg_sprite: '/images/svg_sprite.svg',
     	fonts: app + '/fonts',
     	php: app + '/php',
     	sass: app + '/sass',
@@ -134,7 +137,10 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('sass:develop', function () {
-    gulp.src([proj.sass + '/**/*.scss'])
+    gulp.src([
+            proj.sass + '/**/*.scss',
+            '!' + proj.sass + '/sprite/**/*.scss'
+        ])
         .pipe($.sourcemaps.init())
         .pipe($.sass({
             outputStyle: 'compact'
@@ -163,6 +169,54 @@ gulp.task('sass:deploy', function () {
         .pipe($.size());
 });
 
+/* svg_sprite */
+gulp.task('svg_sprite', function () {
+    return gulp.src(proj.svg + '/**/*.svg')
+        .pipe($.svgo())
+        .pipe(svgSprite({
+            "mode": {
+                "css": {
+                    "spacing": {
+                        "padding": 5
+                    },
+                    "dest": './',
+                    "layout": "diagonal",
+                    "sprite": ifElse(argv.deploy, 
+                        function () { 
+                            return proj.gulpdist + proj.svg_sprite;
+                        },
+                        function () { 
+                           return proj.gulptmp + proj.svg_sprite;
+                        }),
+                    "bust": false,
+                    "render": {
+                        "scss": {
+                            "dest": proj.sass + '/sprite/_svg_sprite.scss',
+                            "template": proj.sass + "/sprite/_svg_template.scss"
+                        }
+                    }
+                }
+            }
+        }))
+        .pipe(gulp.dest('./'));
+});
+
+/* svg2png */
+gulp.task('svg2png', ['svg_sprite'], function () {
+    var path = ifElse(argv.deploy,
+        function () { 
+           return proj.gulpdist;
+        },
+        function () { 
+           return proj.gulptmp;
+        });
+    return gulp.src([
+            path + proj.svg_sprite
+        ])
+        .pipe($.svg2png())
+        .pipe(gulp.dest(path + '/images'));
+});
+
 /* spriteSmith */
 gulp.task('png_sprite', function (cb) {
     // Generate our spritesheet
@@ -173,7 +227,7 @@ gulp.task('png_sprite', function (cb) {
         ])
         .pipe($.spritesmith({
             imgName: '../images/png_sprite.png',
-            cssName: '_sprite_assets.scss',
+            cssName: '_png_sprite.scss',
             cssTemplate: proj.sass + '/handlebars/handlebarsInheritance.scss.handlebars'
         }));
 
@@ -276,7 +330,7 @@ gulp.task('php', function() {
 
 gulp.task('server', function () {
     
-    var url = ifElse(argv.deploy,
+    var path = ifElse(argv.deploy,
         function () { 
            return proj.gulpdist + '/';
         },
@@ -285,7 +339,7 @@ gulp.task('server', function () {
         });
 
     $.connect.server({
-    	root: url,
+    	root: path,
     	port: port,
     	livereload: true,
         fallback: 'index.html'
