@@ -1,5 +1,22 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,700,600);
+//@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,600);
+
+/* 
+	<athelas>
+	Regular 400
+	Italic 400
+	Bold 700
+	Bold Italic 700
+ */
 @mixin athelas($size: 1rem, $height: 1) {
 	font-family: athelas, serif;
 	font-size: $size;
 	line-height: $height;
+}
+
+@mixin opensans($size: 1rem, $height: 1, $weight: 400) {
+	font-family: opensans, sans;
+	font-size: $size;
+	line-height: $height;
+	font-weight: $weight;
 }
