@@ -63,7 +63,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
 
     // Can't allow IIG URL without a site code and version.
     if (!Norton.siteCode || !Norton.version) {
-       //window.location.href = Norton.Constants.invalidSiteCodeUrl;
+       window.location.href = Norton.Constants.invalidSiteCodeUrl;
     }
 
     /**
