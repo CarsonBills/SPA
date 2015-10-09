@@ -163,6 +163,35 @@ gulp.task('sass:deploy', function () {
         .pipe($.size());
 });
 
+/* spriteSmith */
+gulp.task('png_sprite', function (cb) {
+    // Generate our spritesheet
+    var spriteData = gulp.src([
+            proj.images  + '/*.png',
+            '!' + proj.images + '/favicon.png',
+            '!' + proj.images + '/header.png',
+        ])
+        .pipe($.spritesmith({
+            imgName: '../images/png_sprite.png',
+            cssName: '_sprite_assets.scss',
+            cssTemplate: proj.sass + '/handlebars/handlebarsInheritance.scss.handlebars'
+        }));
+
+    // Pipe image stream through image optimizer and onto disk
+    spriteData.img
+        .pipe($.imagemin())
+        .pipe(gulpif(argv.deploy,
+            gulp.dest(proj.gulpdist + '/images'),
+            gulp.dest(proj.gulptmp + '/images')
+        ));
+
+    // Pipe CSS stream through CSS optimizer and onto disk
+    spriteData.css
+      //.pipe($.csso())
+      .pipe(gulp.dest(proj.sass + '/sprite'))
+      .on('end', cb);
+});
+
 gulp.task('assets_include', function () {
     return runSequence(
         //'sass:deploy', 
@@ -173,7 +202,7 @@ gulp.task('assets_include', function () {
 
 gulp.task('copy_images', function () {
     return gulp.src([
-            proj.images + '/**/*(*.jpg|*.png)'
+            proj.images + '/**/*(*.jpg)'
         ])
         .pipe(gulpif(argv.deploy,
             gulp.dest(proj.gulpdist + '/images'),
@@ -323,9 +352,8 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
+gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
 
-    //gulp.start('server');
 
     $.livereload.listen();
 
@@ -333,7 +361,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'copy_fon
     gulp.watch([proj.templates + '/**/*.hbs'], ['browserify']);
     gulp.watch([proj.sass + '/**/*.scss'], ['sass:develop']);
     gulp.watch([proj.js + '/**/*.js'], ['browserify']);
-    gulp.watch([proj.images + '/**'], ['copyImages']);
+    gulp.watch([proj.images + '/**'], ['png_sprite', 'copy_images']);
 
 });
 

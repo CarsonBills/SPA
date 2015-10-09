@@ -1,0 +1,135 @@
+
+.header {
+    width: 100%;
+    height: 85vh;
+    display: block;
+
+	.cover {
+	    background: url("/images/header.png") no-repeat;
+	    width: 100%;
+	    height: 100%;
+	    display: block;
+	    box-shadow: inset 0px -50px 40px -40px rgba(0, 0, 0, 0.3);
+	    background-size: cover;
+	    background-position: top;
+	    opacity: 1;
+	    /* margin-bottom: -60px; */
+
+		.top-bar {
+		    width: 100%;
+		    background: rgba(57, 96, 117, 0.9);
+		    height: 50px;
+		    position: fixed;
+		    z-index: 22;
+		    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+		    text-align: center;
+
+			h1 {
+			    font-size: 1.2em;
+			    color: rgb(198, 209, 215);
+			    letter-spacing: 1px;
+			    top: 14px;
+			    position: relative;
+			    opacity: 0.8;
+			    font-weight: 700;
+			}
+
+			.norton-logo-img span {
+			    @include sprite($norton-logo);
+			    position: absolute;
+			    top: 14px;
+			    left: 17px;
+			}
+
+			.my-account {
+			    position: absolute;
+			    top: 12px;
+			    right: 10px;
+			    color: rgb(255, 255, 255);
+			    letter-spacing: 1px;
+			    opacity: 0.8;
+			    font-weight: 400;
+			    display: -webkit-box;
+			    display: -moz-box;
+			    display: -ms-box;
+			    display: box;
+			    cursor: pointer;
+			}
+			.my-account a {
+			    color: white;
+			    opacity: 0.9;
+			}
+			.my-account a:hover {
+			    color: white;
+			    opacity: 1;
+			}
+			.my-account span {
+			    /* font-family:'Glyphicons Regular'; */
+			    margin: 0px 10px 0 0px;
+			    /* position: absolute; */
+			    font-size: 1.3em;
+			}
+			.my-account h6 {
+			    display: block;
+			}
+		}
+		.title {
+		    top: 45%;
+		    display: table;
+		    margin: 0 auto;
+		    /* max-width: 400px; */
+		    width: 400px;
+		    color: #003A4C;
+		    font-size: 3em;
+		    font-weight: 700;
+		    letter-spacing: 1px;
+		    line-height: 1em;
+		    background-color: #FFFFFF;
+		    padding: 20px 35px;
+		    position: relative;
+		    /* opacity: 0.8; */
+		    text-align: center;
+		    transform: translateY(-50%);
+		    -webkit-transform: translateY(-50%);
+		    transition: all 0.3s;
+		}
+		.title.sticky {
+		    top: 24px;
+		    margin: 0 auto;
+		    color: #FDFEFE;
+		    font-size: 1.4em;
+		    font-weight: 700;
+		    letter-spacing: 1px;
+		    line-height: 1em;
+		    padding: 20px 35px;
+		    position: fixed;
+		    /* opacity: 0.8; */
+		    text-align: center;
+		    transform: translateY(-50%);
+		    -webkit-transform: translateY(-50%);
+		    transition: all 0.3s;
+		    z-index: 222;
+		    width: 500px;
+		    left: 0;
+		    right: 0;
+		    background-color: transparent;
+		    opacity: 0.9;
+		    /* white-space: nowrap; */
+		}
+		.title::after {
+		    content: "This content should not be in a Stylesheet";
+		    background: #BDD538;
+		    color: #003A4C;
+		    position: absolute;
+		    font-size: 50%;
+		    display: block;
+		    margin-top: 14px;
+		    padding: 0 30px;
+		    opacity: 0.8;
+		    right: 0;
+		    left: 0px;
+		    text-transform: uppercase;
+		    letter-spacing: 0px;
+		}
+	}
+}
