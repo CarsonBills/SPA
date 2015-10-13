@@ -1,6 +1,5 @@
 var Backbone = require("backbone");
 
-//"query":"Goode","fields":["categories"],"skip":0,"pageSize":50}
 var ArticleModel = Backbone.Model.extend({
     defaults: {
         "totalRecordCount":null,

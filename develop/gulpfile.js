@@ -174,7 +174,7 @@ gulp.task('sass:deploy', function () {
 /* svg_sprite */
 gulp.task('svg_sprite', function () {
     return gulp.src(proj.svg + '/**/*.svg')
-        .pipe($.svgo())
+        //.pipe($.svgo())
         .pipe(svgSprite({
             "mode": {
                 "css": {
@@ -418,6 +418,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
     gulp.watch([proj.templates + '/**/*.hbs'], ['browserify']);
     gulp.watch([proj.sass + '/**/*.scss'], ['sass:develop']);
     gulp.watch([proj.js + '/**/*.js'], ['browserify']);
+    gulp.watch([proj.php + '/**/*.php'], ['copy_php']);
     gulp.watch([proj.images + '/**', '!' + proj.images + '/svg/*.svg'], ['png_sprite', 'copy_images']);
 
 });
