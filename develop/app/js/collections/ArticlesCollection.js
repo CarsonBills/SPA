@@ -2,8 +2,7 @@ var Backbone = require("backbone");
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
-    //url: '/php/searchandiser.php',
-    url: 'http://http://nortonreader.dev/app/php/searchandiser.php',
+    url: '/php/searchandiser.php',
     parse: function(response) {
         "use strict";
         Norton.totalRecords = response.totalRecordCount;

@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          #fi
 
          apt-get install -y php5
-         apt-get install -y curl
+         apt-get install -y php5-curl
 
          # install nfs
          apt-get install -y nfs-common portmap
