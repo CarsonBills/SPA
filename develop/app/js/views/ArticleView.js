@@ -13,15 +13,7 @@ var ArticleView = Backbone.View.extend({
     render: function () {
         "use strict";
         this.model.each(function (record) {
-            console.log(record.attributes.allMeta.id);
-
-            /**
-             * Probably don't need this once we are getting searchinzed results
-             */
-            if (record.attributes.allMeta.id <= Norton.lastArticleLoaded) {
-                return true; // continue with next model
-            }
-
+            // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
             Norton.lastArticleLoaded = record.attributes.allMeta.id;
 
             /**
@@ -40,6 +32,12 @@ var ArticleView = Backbone.View.extend({
             this.$el.append(articleTemplate);
         }, this);
 
+        /**
+         * Hide the Load More button if we are at the end of current collection
+         */
+        if (Norton.lastArticleLoaded >= Norton.totalRecords) {
+            $(".load-more-section").hide();
+        }
 
         Norton.saveUrl = $(location).attr('href');
 
