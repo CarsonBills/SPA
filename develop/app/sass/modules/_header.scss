@@ -1,4 +1,4 @@
-$gutter: 1.5rem;
+
 $header-text: #f2f2ec;
 .header {
     width: 100%;
@@ -21,7 +21,7 @@ $header-text: #f2f2ec;
 	.top-bar {
 	    width: 100%;
     	max-width: $max-width;
-	    background: rgba(145,188, 197, 0.8);
+	    background: rgba(145,188, 197, 0.9);
 	    height: 50px;
 	    position: fixed;
 	    z-index: 22;
