@@ -116,7 +116,11 @@ var AppView = Backbone.View.extend({
     },
     getArticles: function() {
         "use strict";
+        // query would be populated with Search box data
+        var postdata = {skip: Norton.recordEnd, pageSize: Norton.perPage, query: ''};
         NortonApp.articlesList.fetch({
+            data: postdata,
+            type: 'POST',
             success: $.proxy (function() {
                 this.showResultsTotals();
                 this.renderArticles();

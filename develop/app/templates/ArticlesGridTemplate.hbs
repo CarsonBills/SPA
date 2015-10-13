@@ -1,17 +1,17 @@
 <li class="gridFormat" data-item-id='{{id}}'>
     <div>
-        <a class="details" href="{{baseUrl}}#/page/{{id}}" data-id="{{id}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
-            <h4>{{title}}</h4>
-            <h4>{{authorLast}}, {{authorFirst}}</h4>
+        <a class="details" href="{{baseUrl}}#/page/{{allMeta.id}}" data-id="{{allMeta.id}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
+            <h4>{{allMeta.title}}</h4>
+            <h4>{{allMeta.author_last}}, {{allMeta.author_first}}</h4>
             <span class="fa fa-picture-o"></span>
-            <p>{{shortExtract}}</p>
+            <p>{{ allMeta.abstract }}</p>
         </a>
         <p class="cardlinks">
             <span class="card-info">
-                <img src="/images/icon-add.png" class="icon-add favs-lnk" alt="Add to My Items" data-item-id='{{id}}'>
+                <img src="/images/icon-add.png" class="icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'>
                 <span class="article ebook-lnk">
-                    {{#if ebookUrl}}
-                        <a class="ebook-lnk" href="{{ebookUrl}}" target="_new">View Ebook</a>
+                    {{#if allMeta.ebook_node}}
+                        <a class="ebook-lnk" href="{{allMeta.ebook_node}}" target="_new">View Ebook</a>
                     {{else}}
                         Ebook Unavailable
                     {{/if}}

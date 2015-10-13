@@ -12,40 +12,32 @@ var ArticleView = Backbone.View.extend({
     },
     render: function () {
         "use strict";
-        var nbr = 0;
-        this.model.each(function (article) {
-            /**
-             * only get nbr-per-page articles
-             */
-            if (nbr === Norton.perPage) {
-                return false; // we're done, get out
-            }
-            /**
-             * Probably don't need this once we are getting searchinzed results
-             */
-            if (article.attributes.id <= Norton.lastArticleLoaded) {
-                return true; // continue with next model
-            }
-
-            nbr++;
-            Norton.lastArticleLoaded = article.attributes.id;
+        this.model.each(function (record) {
+            // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
+            Norton.lastArticleLoaded = record.attributes.allMeta.id;
 
             /**
              * Next/prev links
              */
-            article.attributes.prevId = NortonApp.articlesList.prev(article);
-            article.attributes.nextId = NortonApp.articlesList.next(article);
-            article.attributes.baseUrl = Norton.baseUrl;
+            record.attributes.prevId = NortonApp.articlesList.prev(record);
+            record.attributes.nextId = NortonApp.articlesList.next(record);
+            record.attributes.baseUrl = Norton.baseUrl;
 
             var articleTemplate;
             if (Norton.toggleGridFormat) {
-                articleTemplate = this.templateGrid(article.toJSON());
+                articleTemplate = this.templateGrid(record.toJSON());
             } else {
-                articleTemplate = this.templateList(article.toJSON());
+                articleTemplate = this.templateList(record.toJSON());
             }
             this.$el.append(articleTemplate);
         }, this);
 
+        /**
+         * Hide the Load More button if we are at the end of current collection
+         */
+        if (Norton.lastArticleLoaded >= Norton.totalRecords) {
+            $(".load-more-section").hide();
+        }
 
         Norton.saveUrl = $(location).attr('href');
 

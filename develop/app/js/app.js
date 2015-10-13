@@ -28,9 +28,10 @@ $(function() {
      */
     Norton.toggleGridFormat = true;
     Norton.yourFavsCtr = 0;
-    Norton.perPage = 0;
-    Norton.pageNbr = 0;
-    Norton.nbrRecords = 0;
+    Norton.perPage = Norton.Constants.defaultPageSize;
+    Norton.totalRecords = 0;
+    Norton.recordStart = 0;
+    Norton.recordEnd = 0;
     Norton.lastArticleLoaded = 0;
     Norton.currArticle = null;
     Norton.prevArticle = null;
@@ -154,7 +155,7 @@ window.scrollHandler = function() {
     "use strict";
     stickyRelocate();
 
-    if(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
+/*    if(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
         Norton.scrollTrigger = true;
         $("#loadMore").click();
         Norton.scrollTrigger = false;
@@ -162,6 +163,7 @@ window.scrollHandler = function() {
         var scroll_to_new = (Norton.lastArticleLoaded + 1);
         $("[data-id="+scroll_to_new+"]").focus();
     }
+*/
 };
 
 /**
