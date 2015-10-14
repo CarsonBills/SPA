@@ -19,6 +19,11 @@ ul.card {
     margin: 0 auto;
     $card-gutter: 15px;
 
+    
+    .stick & {
+        top: $top-bar-height;
+    }
+
 
     li.gridFormat {
         margin: auto;
