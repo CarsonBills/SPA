@@ -1,0 +1,117 @@
+$top-bar-height: 50px;
+
+#sticky-anchor {
+    margin-top: -$top-bar-height;
+}
+
+#topNav {
+    position: relative;
+}
+
+nav {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    height: $top-bar-height;
+    max-width: $max-width;
+    display: block;
+    width: 100%;
+    z-index: 10;
+    top: $top-bar-height;
+    font-size: 1.4rem;
+    margin: 0 auto;
+    @include one-sided-shadow();
+
+    .container.stick & {
+        position: fixed;
+        top: $top-bar-height;
+        left: 0;
+        right: 0;
+    }
+}
+
+
+/* filter module */
+.filter {
+    color: #000;
+    letter-spacing: 1px;
+    @include vertical-align(absolute);
+    left: 18px;
+
+    span {
+        opacity: 0.9;
+        display: inline-block;
+
+        &:not(.glyphicon) {
+            @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+        }
+
+        &.glyphicon {
+            transform: rotate(90deg);
+            font-size: 1.8rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+/* search module */
+.search {
+    display: block;
+    @include vertical-align();
+    text-align: center;
+
+    input[type="text"] {
+        width: 45%;
+        border: 3px solid #eee;
+        border-radius: 0;
+        padding-right: 40px;
+        @include athelas($size: 1.8rem);
+        color: #000;
+        margin: 0;
+    }
+
+    a {
+        position: relative;
+        color: #000;
+        cursor: pointer;
+        opacity: 0.5;
+        font-size: 2rem;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    span {
+        @include vertical-align(absolute);
+        right: 20px;
+    }
+}
+
+/* saved items */
+
+.saved-items {
+    letter-spacing: 1px;
+    opacity: 1;
+    @include vertical-align(absolute);
+    right: $gutter;
+
+    span {
+        opacity: 0.9;
+        display: inline-block;
+        line-height: 1.9rem;
+
+        &:not(.glyphicon) {
+            @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+        }
+
+        &.glyphicon {
+            color: #000;
+            font-size: 1.8rem;
+            margin-right: 0.5rem;
+        }
+    }
+
+    a {
+        color: #000;
+    }
+}
