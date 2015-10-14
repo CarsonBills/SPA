@@ -1,15 +1,39 @@
 var Backbone = require("backbone");
 
 var PageModel = Backbone.Model.extend({
-    urlRoot: "/get_page.php",
+    urlRoot: "/php/get_page2.php/?",
+    //urlRoot: Norton.Constants.getDetailPageUrl + Norton.siteCode + "/" + Norton.version+ "?pname=",
+
     defaults: {
-        id: null,
-        title: '',
-        authorFirst: '',
-        authorLast: '',
-        imgUrl: '',
-        ebookUrl: '',
-        fullText: ''
+        "siteVersion":"",
+        "mode":"",
+        "data":{
+            "title":"",
+            "metaKeyword":"",
+            "metaDescription":"",
+            "publishDate":"",
+            "sunsetDate":"",
+            "excerpt":"",
+            "publicationDate":"",
+            "ebookLink":"",
+            "pageNumber": null,
+            "readingNumber": null,
+            "authorFirstName":"",
+            "authorMiddleName":"",
+            "authorLastName":"",
+            "authorBio":"",
+            "website":" ",
+            "filters":[
+                {
+                    "type":"",
+                    "value":""
+                }
+            ]
+        }
+    },
+    setUrlId: function(id){
+        // "this" is now our Model instance declared from the router
+        this.url = this.urlRoot + id;
     }
 });
 

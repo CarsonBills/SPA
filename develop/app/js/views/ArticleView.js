@@ -14,7 +14,9 @@ var ArticleView = Backbone.View.extend({
         "use strict";
         this.model.each(function (record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
-            Norton.lastArticleLoaded = record.attributes.allMeta.id;
+           // Norton.lastArticleLoaded = record.attributes.allMeta.id;
+
+            console.log();
 
             /**
              * Next/prev links
@@ -23,6 +25,8 @@ var ArticleView = Backbone.View.extend({
             record.attributes.nextId = NortonApp.articlesList.next(record);
             record.attributes.baseUrl = Norton.baseUrl;
 
+            // temp value
+        record.attributes.pname = "on-going-home";
             var articleTemplate;
             if (Norton.toggleGridFormat) {
                 articleTemplate = this.templateGrid(record.toJSON());

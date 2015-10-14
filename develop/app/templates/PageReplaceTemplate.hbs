@@ -7,16 +7,16 @@
     <div class="modal-container">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{{title}} by {{authorFirst}} {{authorLast}}</h4>
+            <h4 class="modal-title">{{data.title}} by {{data.authorFirstName}} {{data.authorMiddleName}} {{data.authorLastName}}</h4>
         </div>
         <div class="modal-subheader" data-item-id='{{id}}'>
             <button class="btn-savetolist favs-lnk" data-item-id='{{id}}'>SAVE TO MY ITEMS</button>
-            {{#if ebookUrl}}
-                <a class="ebook-lnk" href="{{ebookUrl}}" target="_new">View Ebook</a>
+            {{#if data.ebookLink}}
+                <a class="ebook-lnk" href="{{data.ebookLink}}" target="_new">View Ebook</a>
             {{/if}}
         </div>
         <div class="modal-body">
-            <p>{{{fullText}}}</p>
+            <p>{{{data.excerpt}}}</p>
         </div>
     </div>
     <div class="modal-arrow-container">
