@@ -220,6 +220,7 @@ var AppView = Backbone.View.extend({
 
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 
+        NortonApp.pageItem.setUrlId(id);
         NortonApp.pageItem.fetch({
             success: $.proxy (function() {
                 NortonApp.pageView = new NortonApp.Views.Page({
@@ -239,7 +240,7 @@ var AppView = Backbone.View.extend({
     getNextPrevFromList: function(e) {
         "use strict";
         /**
-         * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone's
+         * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
         if (Backbone.history.fragment === "page/"+$(e.currentTarget).attr('data-id')) {
             NortonApp.router.navigate('#/page/'+$(e.currentTarget).attr('data-id'), true);
@@ -268,6 +269,9 @@ var AppView = Backbone.View.extend({
         "use strict";
         $('#perPage').html(Norton.perPage * Norton.pageNbr);
         $('#nbrRecords').html(Norton.nbrRecords);
+    },
+    callClickTracking: function(id) {
+
     }
 });
 
