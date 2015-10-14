@@ -16,7 +16,7 @@ var ArticleView = Backbone.View.extend({
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
            // Norton.lastArticleLoaded = record.attributes.allMeta.id;
 
-            console.log();
+            console.log(record);
 
             /**
              * Next/prev links

@@ -406,6 +406,7 @@ gulp.task('build', function () {
             'gulp wiredep --deploy',
             'gulp copy_data --deploy',
             'gulp copy_php --deploy',
+            'gulp svg2png --deploy',
             'gulp copy_images --deploy',
             'gulp copy_fonts --deploy',
             'gulp browserify --deploy',
@@ -416,7 +417,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
+gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
 
 
     $.livereload.listen();
