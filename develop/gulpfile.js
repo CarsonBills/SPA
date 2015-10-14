@@ -130,6 +130,10 @@ gulp.task('browserify', function () {
         .pipe(gulpif(argv.deploy, $.uglify()))
         .pipe($.rename({basename: 'bundle', extname: '.min.js'}))
         .pipe(gulpif(!argv.deploy, $.livereload()))
+
+        .pipe($.notify({
+            message: 'Browserify done'
+        }))
         .pipe(gulpif(argv.deploy,
             gulp.dest(proj.gulpdist + '/js'),
             gulp.dest(proj.gulptmp + '/js')
@@ -154,6 +158,9 @@ gulp.task('sass:develop', function () {
         ]))
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(proj.gulptmp + '/css'))
+        .pipe($.notify({
+            message: 'Sass:Develop done'
+        }))
         .pipe($.size())
         .pipe(gulpif(!argv.deploy, $.livereload()))
 });

@@ -18,7 +18,8 @@ $header-text: #f2f2ec;
 
 		.stick & {
 			position: fixed;
-			top: -165px;
+			top: -167px;
+			z-index: 99;
 		}
 	}
 
@@ -102,10 +103,6 @@ $header-text: #f2f2ec;
 		    letter-spacing: 1px;
 		    opacity: 0.8;
 		    font-weight: 400;
-		    display: -webkit-box;
-		    display: -moz-box;
-		    display: -ms-box;
-		    //display: box;
 		    cursor: pointer;
 		}
 		.my-account a {
