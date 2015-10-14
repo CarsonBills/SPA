@@ -128,10 +128,14 @@ $header-text: #f2f2ec;
 	}
 }
 .title-screen {
-	margin: 0 auto;
 	width: 480px;
-	@include vertical-align();
+	@include center();
 	top: 63%;
+	transition: opacity 0.3s;
+
+	.stick & {
+		opacity: 0;
+	}
 
 	.title {
 		@include athelas($size: 4.8rem);
