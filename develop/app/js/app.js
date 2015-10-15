@@ -26,7 +26,7 @@ $(function() {
 	/**
      * Global primitives
      */
-    Norton.toggleGridFormat = true;
+    //Norton.toggleGridFormat = true;
     Norton.yourFavsCtr = 0;
     Norton.perPage = Norton.Constants.defaultPageSize;
     Norton.totalRecords = 0;
@@ -107,7 +107,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      * Initializers
      */
     NortonApp.evtMgr.getInstance();
-    
+
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
     NortonApp.filtersList = new NortonApp.Collections.Filters();

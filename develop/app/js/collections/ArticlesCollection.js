@@ -3,11 +3,17 @@ var Backbone = require("backbone");
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
     url: '/php/searchandiser.php',
+    totalRecords: 0,
+    recordStart: 0,
+    recordEnd: 0,
+
     parse: function(response) {
         "use strict";
-        Norton.totalRecords = response.totalRecordCount;
-        Norton.recordStart = response.pageInfo.recordStart;
-        Norton.recordEnd = response.pageInfo.recordEnd;
+
+        // inject return data to collection for later use in view
+        this.totalRecords = response.totalRecordCount;
+        this.recordStart = response.pageInfo.recordStart;
+        this.recordEnd = response.pageInfo.recordEnd;
 
         return response.records;
     },

@@ -57,10 +57,15 @@ var AppView = Backbone.View.extend({
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
 
-
         this.topNavView = new NortonApp.Views.TopNav({
             el: "#topNav"
         }).render();
+
+        this.articleView = new NortonApp.Views.Article({
+            model: NortonApp.articlesList,
+            collection: this.collection,
+            el: "#articles"
+        });
 
         if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -117,7 +122,6 @@ var AppView = Backbone.View.extend({
         this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
             view: type
         });
-        console.log(this.toggleGridFormat);
     },
 
     onGrid: function (e) {
@@ -148,6 +152,7 @@ var AppView = Backbone.View.extend({
             isGrid = false;
         }
 
+        this.articleView.render(isGrid);
 
         this.showResultsTotals();
 
@@ -155,10 +160,7 @@ var AppView = Backbone.View.extend({
         //$('.listFormat').remove();
         //$('.gridFormat').remove();
 
-        this.articleView = new NortonApp.Views.Article({
-            model: NortonApp.articlesList,
-            el: "#articles"
-        }).render(isGrid);
+
     },
 
     renderArticles: function() {
@@ -172,19 +174,17 @@ var AppView = Backbone.View.extend({
     },
     getArticles: function() {
         "use strict";
-        var that = this;
         // query would be populated with Search box data
-        var postdata = {skip: Norton.recordEnd, pageSize: Norton.perPage, query: ''};
+        var that = this,
+            postdata = {skip: this.collection.recordEnd, pageSize: Norton.perPage, query: ''};
         NortonApp.articlesList.fetch({
             data: postdata,
             type: 'POST',
             success: $.proxy (function(data) {
 
-                console.log(data);
-
                 that.showResultsTotals();
                 
-                that.toggleView(this.toggleGridFormat);
+                that.toggleView(that.toggleGridFormat);
             }, this)
         });
     },
@@ -308,8 +308,8 @@ var AppView = Backbone.View.extend({
     },
     showResultsTotals: function() {
         "use strict";
-        this.$('#perPage').html(Norton.perPage * Norton.pageNbr);
-        this.$('#nbrRecords').html(Norton.nbrRecords);
+        this.$('#perPage').html(this.collection.recordStart);
+        this.$('#nbrRecords').html(this.collection.totalRecords);
     },
     callClickTracking: function(id) {
 

@@ -8,10 +8,14 @@ var ArticleView = Backbone.View.extend({
     templateList: require("../../templates/ArticlesListTemplate.hbs"),
     initialize: function(){
         "use strict";
-        this.model.on('change', this.render, this);
+        this.collection.on('change', this.render, this);
     },
-    render: function (isGrid) {
+    render: function (bool) {
         "use strict";
+
+        console.log('tttttt');
+
+        var isGrid = (bool) ? true: false;
 
         this.$el.empty();
         this.model.each(function (record) {
@@ -26,20 +30,21 @@ var ArticleView = Backbone.View.extend({
             record.attributes.baseUrl = Norton.baseUrl;
 
             // temp value
-        record.attributes.pname = "on-going-home";
-            var articleTemplate;
-            if (isGrid) {
-                articleTemplate = this.templateGrid(record.toJSON());
-            } else {
-                articleTemplate = this.templateList(record.toJSON());
-            }
-            this.$el.append(articleTemplate);
-        }, this);
+            record.attributes.pname = "on-going-home";
+                var articleTemplate;
+                if (isGrid) {
+                    articleTemplate = this.templateGrid(record.toJSON());
+                } else {
+                    articleTemplate = this.templateList(record.toJSON());
+                }
+                this.$el.append(articleTemplate);
+            }, this);
 
         /**
          * Hide the Load More button if we are at the end of current collection
          */
-        if (Norton.lastArticleLoaded >= Norton.totalRecords) {
+        if (this.collection.recordEnd >= this.collection.totalRecords) {
+            console.log('hide');
             $(".load-more-section").hide();
         }
 

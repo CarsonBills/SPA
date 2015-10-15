@@ -23,7 +23,6 @@ var TopNavView = Backbone.View.extend({
         "use strict";
         var view = '.' + params.view;
         this.$toggleView.find('span').removeClass(this.ACTIVE);
-        console.log(this.$toggleView.find('span'));
         this.$(view).addClass(this.ACTIVE);
     },
 
