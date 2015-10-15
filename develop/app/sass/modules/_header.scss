@@ -31,11 +31,11 @@ $header-text: #f2f2ec;
 	    height: 50px;
 	    position: fixed;
 	    z-index: 99;
+	    top: 0;
 	    @include one-sided-shadow();
 
 	    .stick & {
 	    	@include one-sided-shadow($offset-y: 1px);
-	    	top: 0;
     	}
 
 		.norton-logo {
@@ -126,7 +126,7 @@ $header-text: #f2f2ec;
 }
 .title-screen {
 	width: 480px;
-	@include center();
+	@include center(absolute);
 	top: 63%;
 	transition: opacity 0.3s;
 

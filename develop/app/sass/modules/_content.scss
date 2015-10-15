@@ -9,7 +9,6 @@ li a {
 
 /* CARDS STYLES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
 ul.card {
     display: flex;
     flex-direction: row;
@@ -26,11 +25,13 @@ ul.card {
 
 
     li.gridFormat {
+        position: relative;
         margin: auto;
         padding: 0;
         margin: 1rem;
         vertical-align: top;
-        width: 300px;
+        width: $card-width;
+        height: $card-height;
         background: #fafafa;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 
@@ -43,7 +44,7 @@ ul.card {
         }
 
         a.details {
-            width: 300px;
+            width: $card-width;
             color: #777;
             transition: 0.1s all;
             text-decoration: none;
@@ -74,7 +75,10 @@ ul.card {
         }
 
         p.cardlinks {
+            position: absolute;
+            bottom: 1rem;
             padding: 0 $card-gutter;
+            width: $card-width;
             display: block;
 
             .icon-add {
@@ -120,7 +124,7 @@ ul.card {
 .filetype {
     position: absolute;
     background: url('../images/icon-filetype.png') 50% no-repeat;
-    width: 300px;
+    width: $card-width;
     height: 180px;
     display: block;
     opacity: 0.8;
