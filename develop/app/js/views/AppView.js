@@ -3,23 +3,29 @@
  *
  * @type {exports|module.exports}
  */
-var Backbone = require("backbone");
-var $ = require('jquery');
-Backbone.$ = $;
+var Backbone = require("backbone"),
+    $ = require('jquery'),
+    EventManager = require('../modules/eventManager');
+
 
 var AppView = Backbone.View.extend({
     el: $('#container'),
+    topNavView: null,
+    articleView: null,
+    evtMgr: EventManager.getInstance(),
     template: require("../../templates/AppTemplate.hbs"),
+
+    toggleGridFormat: '',
+
+
     initialize: function(){
         "use strict";
-        this.topNavView = new NortonApp.Views.TopNav();
+
+        // Default View
+        this.toggleGridFormat = EventManager.LIST_VIEW;
         
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem
-        });
-
-        this.articleView = new NortonApp.Views.Article({
-            model: NortonApp.articlesList
         });
 
         this.filtersView = new NortonApp.Views.Filters({
@@ -37,8 +43,12 @@ var AppView = Backbone.View.extend({
             }, this)
         });
 
+        // event listeners
+        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onUpdateView, this);
+
         this.render();
     },
+
     render: function(){
         "use strict";
         var data = {baseUrl: Norton.baseUrl};
@@ -47,8 +57,10 @@ var AppView = Backbone.View.extend({
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
 
-        this.topNavView.$el = this.$("#topNav");
-        this.topNavView.render();
+
+        this.topNavView = new NortonApp.Views.TopNav({
+            el: "#topNav"
+        }).render();
 
         if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -59,14 +71,8 @@ var AppView = Backbone.View.extend({
         }
     },
     events: {
-        "click .icon-grid-view": function() {
-            "use strict";
-            this.changeView(true);
-        },
-        "click .icon-list-view": function() {
-            "use strict";
-            this.changeView(false);
-        },
+        "click .icon-grid-view": "onGrid",
+        "click .icon-list-view": "onList",
         "click .filter-item-name": function(e) {
             "use strict";
             this.filtersView.showSelectedFilter(e);
@@ -104,9 +110,59 @@ var AppView = Backbone.View.extend({
             this.getArticles();
         }
     },
+
+    toggleView: function (type) {
+        "use strict";
+        this.toggleGridFormat = type;
+        this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
+            view: type
+        });
+        console.log(this.toggleGridFormat);
+    },
+
+    onGrid: function (e) {
+        "use strict";
+        if (this.toggleGridFormat !== EventManager.GRID_VIEW) {
+            this.toggleView(EventManager.GRID_VIEW);
+        }
+    },
+
+    onList: function (e) {
+        "use strict";
+        if (this.toggleGridFormat !== EventManager.LIST_VIEW) {
+            this.toggleView(EventManager.LIST_VIEW);
+        }
+    },
+
+    onUpdateView: function(type) {
+        "use strict";
+
+        var isGrid = true;
+
+        // re-render Navbar
+        //$('.navbar').remove();  // remove navbar before re-rendering
+        //this.topNavView.$el = this.$("#topNav");
+        //this.topNavView.render();
+
+        if (this.toggleGridFormat === EventManager.LIST_VIEW ) {
+            isGrid = false;
+        }
+
+
+        this.showResultsTotals();
+
+        // remove articles sub-containers before re-rendering
+        //$('.listFormat').remove();
+        //$('.gridFormat').remove();
+
+        this.articleView = new NortonApp.Views.Article({
+            model: NortonApp.articlesList,
+            el: "#articles"
+        }).render(isGrid);
+    },
+
     renderArticles: function() {
         "use strict";
-        this.articleView.$el = this.$("#articles");
         this.articleView.render();
     },
     renderFilters: function() {
@@ -116,36 +172,21 @@ var AppView = Backbone.View.extend({
     },
     getArticles: function() {
         "use strict";
+        var that = this;
         // query would be populated with Search box data
         var postdata = {skip: Norton.recordEnd, pageSize: Norton.perPage, query: ''};
         NortonApp.articlesList.fetch({
             data: postdata,
             type: 'POST',
-            success: $.proxy (function() {
-                this.showResultsTotals();
-                this.renderArticles();
+            success: $.proxy (function(data) {
+
+                console.log(data);
+
+                that.showResultsTotals();
+                
+                that.toggleView(this.toggleGridFormat);
             }, this)
         });
-    },
-    changeView: function(typ) {
-        "use strict";
-        if (Norton.toggleGridFormat === typ) {
-            return;
-        }
-        Norton.toggleGridFormat = typ;
-
-        // re-render Navbar
-        $('.navbar').remove();  // remove navbar before re-rendering
-        this.topNavView.$el = this.$("#topNav");
-        this.topNavView.render();
-
-        this.showResultsTotals();
-
-        // remove articles sub-containers before re-rendering
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        this.articleView.$el = this.$("#articles");
-        this.articleView.render();
     },
     sortArticles: function() {
         "use strict";
@@ -267,8 +308,8 @@ var AppView = Backbone.View.extend({
     },
     showResultsTotals: function() {
         "use strict";
-        $('#perPage').html(Norton.perPage * Norton.pageNbr);
-        $('#nbrRecords').html(Norton.nbrRecords);
+        this.$('#perPage').html(Norton.perPage * Norton.pageNbr);
+        this.$('#nbrRecords').html(Norton.nbrRecords);
     },
     callClickTracking: function(id) {
 

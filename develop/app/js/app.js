@@ -70,6 +70,12 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     }
 
     /**
+    *   General
+    */
+
+    NortonApp.evtMgr = require('./modules/eventManager');
+
+    /**
      * Models
      */
     NortonApp.Models.Filter = require('./models/FilterModel.js');
@@ -100,6 +106,8 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     /**
      * Initializers
      */
+    NortonApp.evtMgr.getInstance();
+    
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
     NortonApp.filtersList = new NortonApp.Collections.Filters();

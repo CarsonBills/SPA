@@ -10,13 +10,13 @@ var ArticleView = Backbone.View.extend({
         "use strict";
         this.model.on('change', this.render, this);
     },
-    render: function () {
+    render: function (isGrid) {
         "use strict";
+
+        this.$el.empty();
         this.model.each(function (record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
            // Norton.lastArticleLoaded = record.attributes.allMeta.id;
-
-            console.log(record);
 
             /**
              * Next/prev links
@@ -28,7 +28,7 @@ var ArticleView = Backbone.View.extend({
             // temp value
         record.attributes.pname = "on-going-home";
             var articleTemplate;
-            if (Norton.toggleGridFormat) {
+            if (isGrid) {
                 articleTemplate = this.templateGrid(record.toJSON());
             } else {
                 articleTemplate = this.templateList(record.toJSON());
