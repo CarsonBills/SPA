@@ -10,6 +10,7 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 @import "./vendor/glyphicons";
 
 @import "./vendor/codyhouse-sliding-panel";
+// TODO re-evaluate
 @import "./vendor/skeleton";
 
 // custom css from here

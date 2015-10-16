@@ -1,19 +1,19 @@
-var Backbone = require("backbone");
+var Backbone = require('backbone');
 var $ = require('jquery');
 Backbone.$ = $;
 
 var FiltersView = Backbone.View.extend({
-    el: "#filters",
-    template: require("../../templates/FiltersTemplate.hbs"),
-    cat: "",
-    filterContent: "",
+    el: '#filters',
+    template: require('../../templates/FiltersTemplate.hbs'),
+    cat: '',
+    filterContent: '',
     initialize: function() {
-        "use strict";
+        'use strict';
         this.on('change', this.render, this);
     },
-    render: function () {
-        "use strict";
-        this.model.each(function (filter) {
+    render: function() {
+        'use strict';
+        this.model.each(function(filter) {
             var filterTemplate = this.template(filter.toJSON());
             this.$el.append(filterTemplate);
         }, this);
@@ -21,10 +21,10 @@ var FiltersView = Backbone.View.extend({
         return this;
     },
     showSelectedFilter: function(e) {
-        "use strict";
-        var html = '<ul class="selected-filters"><li>'+$(e.target).text()+'</li><li>X</li></ul>';
-        $("#selectedFilters").append(html);
-    }
+        'use strict';
+        var html = '<ul class="selected-filters"><li>' + $(e.target).text() + '</li><li>X</li></ul>';
+        $('#selectedFilters').append(html);
+    },
 });
 
 module.exports = FiltersView;

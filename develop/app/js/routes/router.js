@@ -1,4 +1,4 @@
-var Backbone = require("backbone"),
+var Backbone = require('backbone'),
     $ = require('jquery');
 
 var AppRouter = Backbone.Router.extend({
@@ -6,57 +6,57 @@ var AppRouter = Backbone.Router.extend({
     appView: null,
 
     routes: {
-        "/^(?!page|favs|search!filter)([\w]+(\/*))$/": "index",
-        "search/*qs": "search",
-        "page/:id": "page",
-        "favs/": "favs",
-        "filter/": "filter",
-        "": "index"
+        '/^(?!page|favs|search!filter)([\w]+(\/*))$/': 'index',
+        'search/*qs': 'search',
+        'page/:id': 'page',
+        'favs/': 'favs',
+        'filter/': 'filter',
+        '': 'index',
     },
 
     initialize: function() {
-        "use strict";
+        'use strict';
         this.handleSiteConfig();
 
-        Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
+        Norton.Utils.handleIntroPanel(); // Set up showing Intro Panel or not
 
         this.appView = new NortonApp.Views.App({
-            collection: NortonApp.articlesList
+            collection: NortonApp.articlesList,
         });
         this.start();
     },
 
     index: function() {
-        "use strict";
+        'use strict';
 
     },
     search: function() {
-        "use strict";
+        'use strict';
 
     },
     page: function(id) {
-        "use strict";
+        'use strict';
         this.appView.showDetailPage(id, true);
     },
     filter: function() {
-        "use strict";
+        'use strict';
 
     },
     favs: function() {
-        "use strict";
+        'use strict';
 
     },
     start: function() {
-        "use strict";
+        'use strict';
         Backbone.history.start();
     },
     handleSiteConfig: function() {
-        "use strict";
+        'use strict';
         var lsSiteConfig = false;
 
         try {
             lsSiteConfig = localStorage.getItem('config_' + Norton.siteCode);
-        } catch(e) {}
+        } catch (e) {}
 
         if (lsSiteConfig) {
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem('config_' + Norton.siteCode));
@@ -66,24 +66,24 @@ var AppRouter = Backbone.Router.extend({
                 success: $.proxy (function() {
                     this.protectedContentCheck();
 
-                    // save config in localstorage
+                    // Save config in localstorage
                     try {
                         localStorage.setItem('config_' + Norton.siteCode, JSON.stringify(NortonApp.headerConfigItem.attributes));
                     } catch (e) { }
 
                 }, this),
-                error: function(){
-                    // go to generic error page
-                }
+                error: function() {
+                    // Go to generic error page
+                },
             });
         }
     },
     protectedContentCheck: function() {
-        "use strict";
-        if (NortonApp.headerConfigItem.attributes.siteMode === "protected" && !Norton.isLoggedIn) {
+        'use strict';
+        if (NortonApp.headerConfigItem.attributes.siteMode === 'protected' && !Norton.isLoggedIn) {
             window.location.href = Norton.Constants.loginUrl;
         }
-    }
+    },
 });
 
 module.exports = AppRouter;

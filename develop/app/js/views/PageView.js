@@ -5,20 +5,20 @@
  *
  * @type {exports|module.exports}
  */
-var Backbone = require("backbone");
+var Backbone = require('backbone');
 var $ = require('jquery');
 Backbone.$ = $;
 
 var PageView = Backbone.View.extend({
     el: $('#detailPage'),
-    template: require("../../templates/PageTemplate.hbs"),
-    templateReplace: require("../../templates/PageReplaceTemplate.hbs"),
+    template: require('../../templates/PageTemplate.hbs'),
+    templateReplace: require('../../templates/PageReplaceTemplate.hbs'),
     initialize: function() {
-        "use strict";
+        'use strict';
         this.model.on('change', this.render, this);
     },
-    render: function () {
-        "use strict";
+    render: function() {
+        'use strict';
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
         this.model.attributes.baseUrl = Norton.baseUrl;
@@ -31,7 +31,7 @@ var PageView = Backbone.View.extend({
         return this;
     },
     renderReplace: function() {
-        "use strict";
+        'use strict';
         this.getNextPrevIds();
         this.model.attributes.prevId = Norton.prevArticle;
         this.model.attributes.nextId = Norton.nextArticle;
@@ -40,32 +40,32 @@ var PageView = Backbone.View.extend({
         // got this technique from http://stackoverflow.com/questions/14623232/re-rendering-handlebars-partial-from-backbone-view
         // This doesn't use HB partials so maybe we can do that once we figure out how to find Handlebars at runtime...
         var pageReplaceTemplate = this.templateReplace(this.model.toJSON());
-        var selector = ".modal-content";
-//  settimeout is just there for dev purposes to see loading spinner
-        setTimeout(function(){
-            $("#detailPage").find(selector).replaceWith(pageReplaceTemplate);
+        var selector = '.modal-content';
+        //  Settimeout is just there for dev purposes to see loading spinner
+        setTimeout(function() {
+            $('#detailPage').find(selector).replaceWith(pageReplaceTemplate);
         }, 500);
 
         /**
          * Change the URL
          */
-        window.history.pushState(null,null,"#/page/" + this.model.attributes.id);
+        window.history.pushState(null,null,'#/page/' + this.model.attributes.id);
 
-        // fade in between new articles load
-        $(selector).css("opacity", 0);
-        $(selector).fadeTo( "slow" , 1.0);
+        // Fade in between new articles load
+        $(selector).css('opacity', 0);
+        $(selector).fadeTo('slow' , 1.0);
 
         Norton.currArticle = this.model.attributes.id;
 
         return this;
     },
     getNextPrevIds: function() {
-        "use strict";
-        //window.history.pushState(null,null,"#/page/"+this.model.attributes.id);
+        'use strict';
+        //Window.history.pushState(null,null,"#/page/"+this.model.attributes.id);
         var mdl = NortonApp.articlesList.get(this.model.attributes.id);
         Norton.prevArticle = NortonApp.articlesList.prev(mdl);
         Norton.nextArticle = NortonApp.articlesList.next(mdl);
-    }
+    },
 });
 
 module.exports = PageView;

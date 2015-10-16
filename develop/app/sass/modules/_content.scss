@@ -2,7 +2,7 @@
 li a {
     text-align: left;
     outline: none;
-    display: inline-block;
+    //display: inline-block;
     text-decoration: none;
     font-size: 14px;
 }
@@ -10,12 +10,12 @@ li a {
 /* CARDS STYLES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul.card {
-    display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: space-around;
     display: block;
     max-width: $max-width;
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     $card-gutter: 15px;
 
     
@@ -24,7 +24,7 @@ ul.card {
     }
 
 
-    li.gridFormat {
+    li.grid-format {
         position: relative;
         margin: auto;
         padding: 0;
@@ -95,6 +95,96 @@ ul.card {
             }
         }
     }
+
+
+    .list-format,
+    .listview-head {
+
+        display: flex;
+        align-items: center;
+        text-align: left;
+        margin: 0 auto;
+        width: 95%;
+
+        div {
+            padding: 0 1rem;
+            display: inline-block;
+            &.author {
+                flex-grow: 20;
+            }
+
+            &.list-title {
+                flex-grow: 50;
+            }
+
+            &.ebook {
+                flex-grow: 1;
+            }
+
+            &.add-to-list {
+                flex-grow: 2;
+            }
+        }
+    }
+    li.list-format {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        width: 95%;
+        margin: 0 auto;
+        padding: 0;
+        div {
+            padding: 0 1rem;
+        }
+        a {
+            width: 85%;
+            &.details {
+                div {
+                    display: inline-block;
+                }
+            }
+            .author {
+                width: 31.5%;
+                color: #6f6f6f;
+            }
+
+            .list-title {
+                color: #4d808b;
+                @include athelas($size: 1.8rem, $style: italic, $weight: 400);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .ebook {
+            .ebook-lnk {
+                @include svg-sprite(ebook_icon);
+                @include ie-sprite(ebook_icon);
+                text-indent: -999px;
+                display: block;
+                overflow: hidden;
+            }
+        }
+
+        .add-to-list {
+        }
+    }
+
+    .list-format {
+        @include opensans($size: 1.4rem, $weight: 600);
+        height: 45px;
+        background-color: #fff;
+        display: block;
+        border-bottom: 1px solid #9e9e9a;
+        @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
+    }
+
+    .listview-head {
+        @include opensans($size: 1.2rem, $weight: 300);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
 }
 .icon-dl {
     float: right;
@@ -150,6 +240,7 @@ ul.card {
 
 // loadmore button
 .loadmore {
+    position: relative;
     font-size: 1.2em;
     font-weight: 100;
     letter-spacing: 1px;

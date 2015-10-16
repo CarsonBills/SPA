@@ -1,4 +1,4 @@
-var Backbone = require("backbone"),
+var Backbone = require('backbone'),
     _ = require('underscore');
 
 var ArticlesCollection = Backbone.Collection.extend({
@@ -9,18 +9,18 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
 
     parse: function(response) {
-        "use strict";
+        'use strict';
 
         var that = this;
-        // inject return data to collection for later use in view
+        // Inject return data to collection for later use in view
         this.totalRecords = response.totalRecordCount;
         this.recordStart = response.pageInfo.recordStart;
         this.recordEnd = response.pageInfo.recordEnd;
 
 
-        _.each(response.records, function (record) {
+        _.each(response.records, function(record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
-           // Norton.lastArticleLoaded = record.attributes.allMeta.id;
+            // Norton.lastArticleLoaded = record.attributes.allMeta.id;
 
             record.prevId = that.prev(record);
             record.nextId = that.next(record);
@@ -29,11 +29,11 @@ var ArticlesCollection = Backbone.Collection.extend({
              * Next/prev links
              */
 
-            /*record.attributes.prevId = that.prev(record);
+            /*Record.attributes.prevId = that.prev(record);
             record.attributes.nextId = that.next(record);
             record.attributes.baseUrl = Norton.baseUrl;*/
 
-            // temp value
+            // Temp value
             //record.attributes.pname = "on-going-home";
 
         });
@@ -43,8 +43,8 @@ var ArticlesCollection = Backbone.Collection.extend({
     /**
      * For next/prev, index comes from the data so it may not be sequential
      */
-    prev: function (model) {
-        "use strict";
+    prev: function(model) {
+        'use strict';
         var idx = this.curr(model);
         if (idx > 0) {
             return this.at(idx - 1).attributes.allMeta.id;
@@ -52,8 +52,8 @@ var ArticlesCollection = Backbone.Collection.extend({
 
         return null;
     },
-    next: function (model) {
-        "use strict";
+    next: function(model) {
+        'use strict';
         var idx = this.curr(model);
         if (idx < (this.length - 1)) {
             return this.at(idx + 1).attributes.allMeta.id;
@@ -62,9 +62,9 @@ var ArticlesCollection = Backbone.Collection.extend({
         return null;
     },
     curr: function(model) {
-        "use strict";
+        'use strict';
         return this.indexOf(model);
-    }
+    },
 });
 
 module.exports = ArticlesCollection;

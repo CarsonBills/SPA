@@ -1,33 +1,37 @@
-var Backbone = require("backbone"),
-    $ = require("jquery"),
-    EventManager = require("../modules/eventManager");
+var Backbone = require('backbone'),
+    $ = require('jquery'),
+    EventManager = require('../modules/eventManager');
 
 var ArticleView = Backbone.View.extend({
-    el: "#articles",
+    el: '#articles',
     evtMgr: EventManager.getInstance(),
-    templateGrid: require("../../templates/ArticlesGridTemplate.hbs"),
-    templateList: require("../../templates/ArticlesListTemplate.hbs"),
+    templateGrid: require('../../templates/ArticlesGridTemplate.hbs'),
+    templateList: require('../../templates/ArticlesListTemplate.hbs'),
+    templateListHead: require('../../templates/ArticlesListHeadTemplate.hbs'),
 
-    initialize: function(){
-        "use strict";
-        //this.collection.on('update', this.render, this);
+    initialize: function() {
+        'use strict';
+        //This.collection.on('update', this.render, this);
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onUpdateView, this);
     },
 
     onUpdateView: function(params) {
-        "use strict";
+        'use strict';
         this.render(params.showGrid);
     },
 
-    render: function (bool) {
-        "use strict";
+    render: function(bool) {
+        'use strict';
 
         var isGrid = (bool) ? true: false,
             articleTemplate;
 
         this.$el.empty();
-        this.collection.each(function (record) {
+        if (!bool) {
+            this.$el.append(this.templateListHead);
+        }
+        this.collection.each(function(record) {
                 if (bool) {
                     articleTemplate = this.templateGrid(record.toJSON());
                 } else {
@@ -41,7 +45,7 @@ var ArticleView = Backbone.View.extend({
          */
         if (this.collection.recordEnd >= this.collection.totalRecords) {
             console.log('hide');
-            $(".load-more-section").hide();
+            $('.load-more-section').hide();
         }
 
         Norton.saveUrl = $(location).attr('href');
@@ -49,9 +53,9 @@ var ArticleView = Backbone.View.extend({
         return this;
     },
     addYourFavs: function(e, template) {
-        "use strict";
+        'use strict';
 
-        // add item to yourFavsList collection
+        // Add item to yourFavsList collection
         var id = $(e.target).attr('data-item-id');
 
         // Don't add again
@@ -60,10 +64,10 @@ var ArticleView = Backbone.View.extend({
         }
 
         NortonApp.yourFavsList.add(this.collection.get(id));
-        // increment and show item counter
+        // Increment and show item counter
         Norton.yourFavsCtr++;
-        $('#yourFavsCtr').html("My Items (" + Norton.yourFavsCtr + ")");
-    }
+        $('#yourFavsCtr').html('My Items (' + Norton.yourFavsCtr + ')');
+    },
 });
 
 module.exports = ArticleView;
