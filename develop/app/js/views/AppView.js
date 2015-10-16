@@ -22,22 +22,13 @@ var AppView = Backbone.View.extend({
             model: NortonApp.articlesList
         });
 
-        this.filtersView = new NortonApp.Views.Filters({
-            model: NortonApp.filtersList
-        });
+        this.filtersView = new NortonApp.Views.Filters();
 
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
         });
 
         this.getArticles();
-
-        NortonApp.filtersList.fetch({
-            success: $.proxy (function() {
-                this.filtersView.$el = this.$("#filters");
-                this.filtersView.render();
-            }, this)
-        });
 
         this.render();
     },
@@ -136,6 +127,8 @@ var AppView = Backbone.View.extend({
             success: $.proxy (function() {
                 this.showResultsTotals();
                 this.renderArticles();
+                this.filtersView.$el = this.$("#filters");
+                this.filtersView.render();
             }, this)
         });
     },

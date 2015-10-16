@@ -8,6 +8,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         Norton.totalRecords = response.totalRecordCount;
         Norton.recordStart = response.pageInfo.recordStart;
         Norton.recordEnd = response.pageInfo.recordEnd;
+        Norton.Filters = response.availableNavigation;
 
         return response.records;
     },

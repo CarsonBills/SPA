@@ -3,16 +3,16 @@
 
         <a class="details" href="{{baseUrl}}#/page/{{pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
             <h4>{{allMeta.title}}</h4>
-            <h4>{{allMeta.author_last}}, {{allMeta.author_first}}</h4>
+            <h4>{{allMeta.authorLast}}, {{allMeta.authorFirst}}</h4>
             <span class="fa fa-picture-o"></span>
             <p>{{ allMeta.abstract }}</p>
         </a>
         <p class="cardlinks">
             <span class="card-info">
-                <span class="glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'></span>
+                <span class="glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id="{{allMeta.pname}}"></span>
                 <span class="article ebook-lnk">
-                    {{#if allMeta.ebook_node}}
-                        <a class="ebook-lnk" href="{{allMeta.ebook_node}}" target="_new">View Ebook</a>
+                    {{#if allMeta.ebookNode}}
+                        <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
                     {{else}}
                         Ebook Unavailable
                     {{/if}}

@@ -3,6 +3,19 @@ var Backbone = require("backbone");
 var ArticleModel = Backbone.Model.extend({
 
     defaults: {
+        "availableNavigation": [
+            {
+                "name": "",
+                "displayName": "",
+                "refinements": [
+                    {
+                        "type": "",
+                        "count": null,
+                        "value": ""
+                    }
+                ]
+            }
+        ],
         "totalRecordCount":null,
         "pageInfo":{
             "recordStart":null,
@@ -11,23 +24,21 @@ var ArticleModel = Backbone.Model.extend({
         "records":[
             {
                 "allMeta":{
-                    "author_first":'',
+                    "authorFirst":'',
                     "chapter":'',
-                    "site_code":'',
+                    "pname":'',
+                    "siteCode":'',
                     "abstract":'',
                     "title":'',
-                    "mode":'',
-                    "category_id":'',
-                    "author_last":'',
-                    "ebook_node":'',
-                    "genre":'',
-                    "theme":'',
-                    "categories":[
-
-                    ],
+                    "mode":[ ],
+                    //"category_id":[ ],
+                    "authorLast":'',
+                    "ebookNode":'',
+                    "genre":[ ],
+                    "theme":[ ],
+                    //"categories":[ ],
                     "id":'',
-                    "keyword":'',
-                    "pname": ""
+                    "keyword":''
                 },
                 "_id":''
             }

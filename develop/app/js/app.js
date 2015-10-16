@@ -42,6 +42,9 @@ $(function() {
     Norton.siteCode = null;
     Norton.version = null;
 
+    // Filters for Navigation come from ArticlesModel
+    Norton.Filters = {};
+
     /**
      * Authentication setup
      */
@@ -72,7 +75,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     /**
      * Models
      */
-    NortonApp.Models.Filter = require('./models/FilterModel.js');
+//    NortonApp.Models.Filter = require('./models/FilterModel.js');
     NortonApp.Models.Article = require('./models/ArticleModel.js');
     NortonApp.Models.YourFavs = require("./models/YourFavsModel.js");
     NortonApp.Models.Page = require("./models/PageModel.js");
@@ -82,7 +85,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      * Collections
      */
     NortonApp.Collections.Articles = require("./collections/ArticlesCollection.js");
-    NortonApp.Collections.Filters = require("./collections/FiltersCollection.js");
+//    NortonApp.Collections.Filters = require("./collections/FiltersCollection.js");
     NortonApp.Collections.YourFavs = require("./collections/YourFavsCollection.js");
 
     /**
@@ -102,8 +105,8 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      */
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
-    NortonApp.filtersList = new NortonApp.Collections.Filters();
-    NortonApp.filterItem = new NortonApp.Models.Filter();
+//    NortonApp.filtersList = new NortonApp.Collections.Filters();
+//    NortonApp.filterItem = new NortonApp.Models.Filter();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     NortonApp.pageItem = new NortonApp.Models.Page();
@@ -114,7 +117,6 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     NortonApp.AppRouter = require("./routes/router.js");
     NortonApp.router = new NortonApp.AppRouter();
 
-	
 
 	fastClick(document.body);
     $(window).scroll(scrollHandler);

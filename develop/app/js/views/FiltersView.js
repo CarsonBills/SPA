@@ -1,5 +1,6 @@
 var Backbone = require("backbone");
 var $ = require('jquery');
+var _ = require("underscore");
 Backbone.$ = $;
 
 var FiltersView = Backbone.View.extend({
@@ -14,15 +15,16 @@ var FiltersView = Backbone.View.extend({
     render: function () {
         "use strict";
         var cat;
-        this.model.each(function (filter) {
-            filter.attributes.cat = filter.attributes.category;
-            if (filter.attributes.category != cat) {
-                cat = filter.attributes.category;
-                filter.attributes.cat_display = cat;
+
+        _.each(Norton.Filters, function (filter) {
+            if (filter.name != cat) {
+                cat = filter.name;
+                filter.cat_display = filter.displayName;
             } else {
-                filter.attributes.cat_display = "";
+                filter.cat_display = "";
             }
-            var filterTemplate = this.template(filter.toJSON());
+            var filterTemplate = this.template(filter);
+            console.log(filter.refinements);
             this.$el.append(filterTemplate);
         }, this);
 
