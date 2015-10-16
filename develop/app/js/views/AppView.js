@@ -22,7 +22,7 @@ var AppView = Backbone.View.extend({
         'use strict';
 
         // Default View
-        this.toggleGridFormat = EventManager.LIST_VIEW;
+        this.toggleGridFormat = EventManager.GRID_VIEW;
 
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem,

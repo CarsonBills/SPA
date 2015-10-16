@@ -15,13 +15,9 @@ ul.card {
     justify-content: space-around;
     display: block;
     max-width: $max-width;
-    margin: 0 auto 2rem;
     $card-gutter: 15px;
-
-    
-    .stick & {
-        top: $top-bar-height;
-    }
+  
+    @include locked();
 
 
     li.grid-format {
@@ -186,6 +182,25 @@ ul.card {
         margin-bottom: 1rem;
     }
 }
+
+// loadmore button
+.load-more-section {
+
+    @include locked();
+
+    .loadmore {
+        position: relative;
+        font-size: 1.2em;
+        font-weight: 100;
+        letter-spacing: 1px;
+        width: 240px;
+        height: 50px;
+        display: block;
+        margin: 3rem auto;
+    }
+}
+
+
 .icon-dl {
     float: right;
     width: 18px;
@@ -236,16 +251,3 @@ ul.card {
     margin: 8px 10px;
 }
 
-
-
-// loadmore button
-.loadmore {
-    position: relative;
-    font-size: 1.2em;
-    font-weight: 100;
-    letter-spacing: 1px;
-    width: 240px;
-    height: 50px;
-    display: block;
-    margin: 60px auto;
-}
