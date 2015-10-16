@@ -43,9 +43,6 @@ var AppView = Backbone.View.extend({
             }, this)
         });
 
-        // event listeners
-        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onUpdateView, this);
-
         this.render();
     },
 
@@ -62,7 +59,6 @@ var AppView = Backbone.View.extend({
         }).render();
 
         this.articleView = new NortonApp.Views.Article({
-            model: NortonApp.articlesList,
             collection: this.collection,
             el: "#articles"
         });
@@ -119,8 +115,10 @@ var AppView = Backbone.View.extend({
     toggleView: function (type) {
         "use strict";
         this.toggleGridFormat = type;
+
         this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
-            view: type
+            view: type,
+            showGrid: (type === EventManager.GRID_VIEW)
         });
     },
 
@@ -136,31 +134,6 @@ var AppView = Backbone.View.extend({
         if (this.toggleGridFormat !== EventManager.LIST_VIEW) {
             this.toggleView(EventManager.LIST_VIEW);
         }
-    },
-
-    onUpdateView: function(type) {
-        "use strict";
-
-        var isGrid = true;
-
-        // re-render Navbar
-        //$('.navbar').remove();  // remove navbar before re-rendering
-        //this.topNavView.$el = this.$("#topNav");
-        //this.topNavView.render();
-
-        if (this.toggleGridFormat === EventManager.LIST_VIEW ) {
-            isGrid = false;
-        }
-
-        this.articleView.render(isGrid);
-
-        this.showResultsTotals();
-
-        // remove articles sub-containers before re-rendering
-        //$('.listFormat').remove();
-        //$('.gridFormat').remove();
-
-
     },
 
     renderArticles: function() {
@@ -180,6 +153,7 @@ var AppView = Backbone.View.extend({
         NortonApp.articlesList.fetch({
             data: postdata,
             type: 'POST',
+            remove: false,
             success: $.proxy (function(data) {
 
                 that.showResultsTotals();

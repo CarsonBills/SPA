@@ -79,7 +79,7 @@ gulp.task('jscs', function () {
             title: 'JSCS',
             message: 'JSCS Passed'
         }))
-        .pipe(gulp.dest('app/scripts/'));
+        .pipe(gulp.dest(proj.js));
  });
 
 /*

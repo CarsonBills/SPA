@@ -1,38 +1,34 @@
-var Backbone = require("backbone");
-var $ = require('jquery');
-Backbone.$ = $;
+var Backbone = require("backbone"),
+    $ = require("jquery"),
+    EventManager = require("../modules/eventManager");
 
 var ArticleView = Backbone.View.extend({
     el: "#articles",
+    evtMgr: EventManager.getInstance(),
     templateGrid: require("../../templates/ArticlesGridTemplate.hbs"),
     templateList: require("../../templates/ArticlesListTemplate.hbs"),
+
     initialize: function(){
         "use strict";
-        this.collection.on('change', this.render, this);
+        //this.collection.on('update', this.render, this);
+        // event listeners
+        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onUpdateView, this);
     },
+
+    onUpdateView: function(params) {
+        "use strict";
+        this.render(params.showGrid);
+    },
+
     render: function (bool) {
         "use strict";
 
-        console.log('tttttt');
-
-        var isGrid = (bool) ? true: false;
+        var isGrid = (bool) ? true: false,
+            articleTemplate;
 
         this.$el.empty();
-        this.model.each(function (record) {
-            // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
-           // Norton.lastArticleLoaded = record.attributes.allMeta.id;
-
-            /**
-             * Next/prev links
-             */
-            record.attributes.prevId = NortonApp.articlesList.prev(record);
-            record.attributes.nextId = NortonApp.articlesList.next(record);
-            record.attributes.baseUrl = Norton.baseUrl;
-
-            // temp value
-            record.attributes.pname = "on-going-home";
-                var articleTemplate;
-                if (isGrid) {
+        this.collection.each(function (record) {
+                if (bool) {
                     articleTemplate = this.templateGrid(record.toJSON());
                 } else {
                     articleTemplate = this.templateList(record.toJSON());
@@ -59,11 +55,11 @@ var ArticleView = Backbone.View.extend({
         var id = $(e.target).attr('data-item-id');
 
         // Don't add again
-        if (NortonApp.yourFavsList.get(NortonApp.articlesList.get(id)) !== undefined) {
+        if (NortonApp.yourFavsList.get(this.collection.get(id)) !== undefined) {
             return;
         }
 
-        NortonApp.yourFavsList.add(NortonApp.articlesList.get(id));
+        NortonApp.yourFavsList.add(this.collection.get(id));
         // increment and show item counter
         Norton.yourFavsCtr++;
         $('#yourFavsCtr').html("My Items (" + Norton.yourFavsCtr + ")");

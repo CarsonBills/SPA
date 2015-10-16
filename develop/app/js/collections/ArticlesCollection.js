@@ -1,4 +1,5 @@
-var Backbone = require("backbone");
+var Backbone = require("backbone"),
+    _ = require('underscore');
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
@@ -10,10 +11,32 @@ var ArticlesCollection = Backbone.Collection.extend({
     parse: function(response) {
         "use strict";
 
+        var that = this;
         // inject return data to collection for later use in view
         this.totalRecords = response.totalRecordCount;
         this.recordStart = response.pageInfo.recordStart;
         this.recordEnd = response.pageInfo.recordEnd;
+
+
+        _.each(response.records, function (record) {
+            // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
+           // Norton.lastArticleLoaded = record.attributes.allMeta.id;
+
+            record.prevId = that.prev(record);
+            record.nextId = that.next(record);
+            record.baseUrl = Norton.baseUrl;
+            /**
+             * Next/prev links
+             */
+
+            /*record.attributes.prevId = that.prev(record);
+            record.attributes.nextId = that.next(record);
+            record.attributes.baseUrl = Norton.baseUrl;*/
+
+            // temp value
+            //record.attributes.pname = "on-going-home";
+
+        });
 
         return response.records;
     },
