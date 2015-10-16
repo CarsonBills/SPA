@@ -31,9 +31,11 @@ var AppView = Backbone.View.extend({
         });
 
         this.getArticles();
+
         NortonApp.filtersList.fetch({
             success: $.proxy (function() {
-                this.renderFilters();
+                this.filtersView.$el = this.$("#filters");
+                this.filtersView.render();
             }, this)
         });
 
@@ -67,12 +69,27 @@ var AppView = Backbone.View.extend({
             "use strict";
             this.changeView(false);
         },
-        "click .filter-item-name": function(e) {
+        "click .filter-checkbox": function(e) {
             "use strict";
-            this.filtersView.showSelectedFilter(e);
+            if ($(e.target).prop('checked')) {
+                this.filtersView.showSelectedFilter(e);
+            } else {
+                this.filtersView.removeSelectedFilter(e, "cb");
+            }
+        },
+        "click .close-filter": function(e) {
+            "use strict";
+            this.filtersView.removeSelectedFilter(e, "X");
         },
         "change #sortArticles": "sortArticles",
         "click #navFilters": function() {
+            "use strict";
+            $('#filters').toggle();
+        },
+        /**
+         * Remove this event handler when REAL filter button is working.
+         */
+        "click #tempFilters": function() {
             "use strict";
             $('#filters').toggle();
         },
@@ -108,11 +125,6 @@ var AppView = Backbone.View.extend({
         "use strict";
         this.articleView.$el = this.$("#articles");
         this.articleView.render();
-    },
-    renderFilters: function() {
-        "use strict";
-        this.filtersView.$el = this.$("#filters");
-        this.filtersView.render();
     },
     getArticles: function() {
         "use strict";
