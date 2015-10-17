@@ -14,7 +14,6 @@ nav {
     position: relative;
     background: rgba(255, 255, 255, 0.9);
     height: $top-bar-height;
-    max-width: $max-width;
     display: block;
     width: 100%;
     z-index: 10;
@@ -121,7 +120,6 @@ nav {
 
 .results-bar {
     width: 100%;
-    max-width: $max-width;
     position: relative;
     display: block;
     height: $top-bar-height;

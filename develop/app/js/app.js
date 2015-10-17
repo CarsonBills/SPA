@@ -73,7 +73,7 @@ $(function() {
     *   General
     */
 
-    NortonApp.evtMgr = require('./modules/eventManager');
+    NortonApp.evtMgr = require('./modules/event_manager');
 
     /**
      * Models
@@ -125,8 +125,8 @@ $(function() {
 
 
     fastClick(document.body);
-    $(window).scroll(scrollHandler);
-    stickyRelocate();
+    //$(window).scroll(scrollHandler);
+    //stickyRelocate();
 
 });
 
@@ -177,7 +177,7 @@ window.scrollHandler = function() {
 /**
  * Sticky for navbar to remain at top when scrolling
  */
-window.stickyRelocate = function() {
+/*window.stickyRelocate = function() {
     'use strict';
     var window_top = $(window).scrollTop();
     var div_top = $('#sticky-anchor').offset().top;
@@ -186,6 +186,6 @@ window.stickyRelocate = function() {
     } else {
         $('.container').removeClass('stick');
     }
-};
+};*/
 
 

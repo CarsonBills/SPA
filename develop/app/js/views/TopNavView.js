@@ -1,6 +1,6 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    EventManager = require('../modules/eventManager');
+    EventManager = require('../modules/event_manager');
 
 
 var TopNavView = Backbone.View.extend({

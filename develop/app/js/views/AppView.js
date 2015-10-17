@@ -5,7 +5,9 @@
  */
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    EventManager = require('../modules/eventManager');
+    EventManager = require('../modules/event_manager'),
+    resizeHelper = require('../modules/resize_helper'),
+    scrollHelper = require('../modules/scroll_helper');
 
 
 var AppView = Backbone.View.extend({
@@ -22,7 +24,7 @@ var AppView = Backbone.View.extend({
         'use strict';
 
         // Default View
-        this.toggleGridFormat = EventManager.GRID_VIEW;
+        this.toggleGridFormat = EventManager.LIST_VIEW;
 
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem,
@@ -42,6 +44,8 @@ var AppView = Backbone.View.extend({
                 this.renderFilters();
             }, this),
         });
+
+        scrollHelper.setScroll(this.onScroll);
 
         this.render();
     },
@@ -112,13 +116,25 @@ var AppView = Backbone.View.extend({
         },
     },
 
+    onScroll: function() {
+        'use strict';
+        var window_top = $(window).scrollTop(),
+            div_top = $('#sticky-anchor').offset().top;
+        if (window_top > div_top) {
+            console.log('stick');
+            $('.container').addClass('stick');
+        } else {
+            $('.container').removeClass('stick');
+        }
+    },
+
     toggleView: function(type) {
         'use strict';
         this.toggleGridFormat = type;
+        this.collection.setShowGrid(type === EventManager.GRID_VIEW);
 
         this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
-            view: type,
-            showGrid: (type === EventManager.GRID_VIEW),
+            view: type
         });
     },
 

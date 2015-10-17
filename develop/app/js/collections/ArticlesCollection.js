@@ -7,6 +7,7 @@ var ArticlesCollection = Backbone.Collection.extend({
     totalRecords: 0,
     recordStart: 0,
     recordEnd: 0,
+    showGridView: false,
 
     parse: function(response) {
         'use strict';
@@ -65,6 +66,16 @@ var ArticlesCollection = Backbone.Collection.extend({
         'use strict';
         return this.indexOf(model);
     },
+
+    setShowGrid: function (bool) {
+        'use strict';
+        this.showGridView = bool;
+    },
+
+    showGrid: function () {
+        'use strict';
+        return this.showGridView;
+    }
 });
 
 module.exports = ArticlesCollection;

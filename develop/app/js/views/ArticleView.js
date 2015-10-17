@@ -1,6 +1,6 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    EventManager = require('../modules/eventManager');
+    EventManager = require('../modules/event_manager');
 
 var ArticleView = Backbone.View.extend({
     el: '#articles',
@@ -11,28 +11,24 @@ var ArticleView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
-        //This.collection.on('update', this.render, this);
+        this.collection.on('update', this.render, this);
         // event listeners
-        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onUpdateView, this);
+        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
     },
 
-    onUpdateView: function(params) {
-        'use strict';
-        this.render(params.showGrid);
-    },
-
-    render: function(bool) {
+    render: function() {
         'use strict';
 
-        var isGrid = (bool) ? true: false,
+        var showGrid = this.collection.showGrid(),
             articleTemplate;
 
         this.$el.empty();
-        if (!bool) {
+
+        if (!showGrid) {
             this.$el.append(this.templateListHead);
         }
         this.collection.each(function(record) {
-                if (bool) {
+                if (showGrid) {
                     articleTemplate = this.templateGrid(record.toJSON());
                 } else {
                     articleTemplate = this.templateList(record.toJSON());

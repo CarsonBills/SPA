@@ -14,6 +14,7 @@ ul.card {
     flex-direction: row;
     justify-content: space-around;
     display: block;
+    margin: 0 auto;
     max-width: $max-width;
     $card-gutter: 15px;
   
@@ -145,7 +146,7 @@ ul.card {
             }
 
             .list-title {
-                color: #4d808b;
+                color: $reader-blue;
                 @include athelas($size: 1.8rem, $style: italic, $weight: 400);
                 white-space: nowrap;
                 overflow: hidden;
@@ -154,6 +155,7 @@ ul.card {
         }
 
         .ebook {
+            text-align: center;
             .ebook-lnk {
                 @include svg-sprite(ebook_icon);
                 @include ie-sprite(ebook_icon);
@@ -164,6 +166,9 @@ ul.card {
         }
 
         .add-to-list {
+            text-align: center;
+            color: $reader-blue;
+            font-size: 2rem;
         }
     }
 
