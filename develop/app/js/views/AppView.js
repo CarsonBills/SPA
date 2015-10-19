@@ -14,6 +14,7 @@ var AppView = Backbone.View.extend({
     el: $('#container'),
     topNavView: null,
     articleView: null,
+    filtersView: null,
     evtMgr: EventManager.getInstance(),
     template: require('../../templates/AppTemplate.hbs'),
 
@@ -28,7 +29,7 @@ var AppView = Backbone.View.extend({
             model: NortonApp.headerConfigItem
         });
 
-        this.filtersView = new NortonApp.Views.Filters();
+        //this.filtersView = new NortonApp.Views.Filters();
 
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
@@ -214,6 +215,11 @@ var AppView = Backbone.View.extend({
 
                 that.showResultsTotals();
                 that.hasRefreshed = false;
+
+                this.filtersView = new NortonApp.Views.Filters({
+                    el: "#filters"
+                }).render();
+                    
                 if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
                     that.getArticles();
                 }
