@@ -59,6 +59,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      * Get Site Code and version
      */
     var paths = window.location.pathname.split("/");
+    //if ($(location).attr("href").indexOf("nortonreader.com") >= 0) {  // Go Live code
     if ($(location).attr("href").indexOf("nortonreader.dev") >= 0) {
         Norton.siteCode = "nortonreader";
         Norton.version = paths[1];
@@ -75,7 +76,6 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     /**
      * Models
      */
-//    NortonApp.Models.Filter = require('./models/FilterModel.js');
     NortonApp.Models.Article = require('./models/ArticleModel.js');
     NortonApp.Models.YourFavs = require("./models/YourFavsModel.js");
     NortonApp.Models.Page = require("./models/PageModel.js");
@@ -85,7 +85,6 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      * Collections
      */
     NortonApp.Collections.Articles = require("./collections/ArticlesCollection.js");
-//    NortonApp.Collections.Filters = require("./collections/FiltersCollection.js");
     NortonApp.Collections.YourFavs = require("./collections/YourFavsCollection.js");
 
     /**
@@ -98,6 +97,7 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     NortonApp.Views.Page = require("./views/PageView.js");
     NortonApp.Views.HeaderConfig = require("./views/HeaderConfigView.js");
     NortonApp.Views.IntroPanel = require("./views/IntroPanelView.js");
+    NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
     NortonApp.Views.App = require("./views/AppView.js");
 
     /**
@@ -105,18 +105,16 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
      */
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
-//    NortonApp.filtersList = new NortonApp.Collections.Filters();
-//    NortonApp.filterItem = new NortonApp.Models.Filter();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
     NortonApp.pageView;
     NortonApp.introPanelView;
+    NortonApp.errorPageView;
 
     NortonApp.AppRouter = require("./routes/router.js");
     NortonApp.router = new NortonApp.AppRouter();
-
 
 	fastClick(document.body);
     $(window).scroll(scrollHandler);

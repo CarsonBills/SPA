@@ -24,7 +24,6 @@ var FiltersView = Backbone.View.extend({
                 filter.cat_display = "";
             }
             var filterTemplate = this.template(filter);
-            console.log(filter.refinements);
             this.$el.append(filterTemplate);
         }, this);
 

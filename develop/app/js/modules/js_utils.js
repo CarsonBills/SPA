@@ -21,6 +21,10 @@ var Utils = {
         "use strict";
         var expires = new Date(new Date().getTime() + parseInt(exp) * 1000);
         document.cookie = name + "=" + val + "; expires=" + expires.toGMTString() + "; path=/; domain=." + domain;
+    },
+    genericError: function(err) {
+        NortonApp.errorPageView = new NortonApp.Views.ErrorPage();
+        NortonApp.errorPageView.render();
     }
 };
 

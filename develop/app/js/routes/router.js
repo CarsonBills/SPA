@@ -51,27 +51,31 @@ var AppRouter = Backbone.Router.extend({
     handleSiteConfig: function() {
         "use strict";
         var lsSiteConfig = false;
+        var lsConfigId = 'config_' + Norton.siteCode + "_" + Norton.version;
 
         try {
-            lsSiteConfig = localStorage.getItem('config_' + Norton.siteCode);
+            lsSiteConfig = localStorage.getItem(lsConfigId);
         } catch(e) {}
 
         if (lsSiteConfig) {
-            NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem('config_' + Norton.siteCode));
+            NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             this.protectedContentCheck();
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function() {
                     this.protectedContentCheck();
-
                     // save config in localstorage
                     try {
-                        localStorage.setItem('config_' + Norton.siteCode, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                    } catch (e) { }
+                        localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
+                    } catch (e) {
+
+                    }
 
                 }, this),
                 error: function(){
                     // go to generic error page
+                    console.log('Site Config not available.');
+                    Norton.Utils.genericError('config');
                 }
             });
         }
