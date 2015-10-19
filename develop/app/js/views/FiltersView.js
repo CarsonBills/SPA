@@ -17,7 +17,6 @@ var FiltersView = Backbone.View.extend({
         var cat;
 
         _.each(this.collection.filters, function (filter) {
-            console.log(filter);
             if (filter.name != cat) {
                 cat = filter.name;
                 filter.cat_display = filter.displayName;

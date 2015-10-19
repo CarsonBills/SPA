@@ -103,14 +103,10 @@ var AppView = Backbone.View.extend({
             this.filtersView.removeSelectedFilter(e, "X");
         },
         "change #sortArticles": "sortArticles",
-        "click #navFilters": function() {
-            "use strict";
-            $('#filters').toggle();
-        },
         /**
          * Remove this event handler when REAL filter button is working.
          */
-        "click #tempFilters": function(e) {
+        "click #navFilters a": function(e) {
             "use strict";
             console.log('tttt')
             this.$('#filters').toggle();
