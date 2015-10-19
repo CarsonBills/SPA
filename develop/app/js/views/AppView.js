@@ -29,8 +29,6 @@ var AppView = Backbone.View.extend({
             model: NortonApp.headerConfigItem
         });
 
-        //this.filtersView = new NortonApp.Views.Filters();
-
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
         });

@@ -1,7 +1,7 @@
 <li class="grid-format" data-item-id='{{id}}'>
         <a class="details" href="{{baseUrl}}#/page/{{pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
             <h4>{{allMeta.title}}</h4>
-            <h4>{{allMeta.author_last}}, {{allMeta.author_first}}</h4>
+            <h4 class="author">{{HBFullname allMeta}}</h4>
             <span class="fa fa-picture-o"></span>
             <p>{{ allMeta.abstract }}</p>
         </a>
