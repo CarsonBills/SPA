@@ -7,6 +7,7 @@ var ArticlesCollection = Backbone.Collection.extend({
     totalRecords: 0,
     recordStart: 0,
     recordEnd: 0,
+    filters: null,
     showGridView: false,
 
     parse: function(response) {
@@ -17,6 +18,13 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.totalRecords = response.totalRecordCount;
         this.recordStart = response.pageInfo.recordStart;
         this.recordEnd = response.pageInfo.recordEnd;
+        this.filters = response.availableNavigation;
+
+        /*Norton.totalRecords = response.totalRecordCount;
+        Norton.recordStart = response.pageInfo.recordStart;
+        Norton.recordEnd = response.pageInfo.recordEnd;
+        Norton.Filters = response.availableNavigation;*/
+
 
 
         _.each(response.records, function(record) {
@@ -78,7 +86,12 @@ var ArticlesCollection = Backbone.Collection.extend({
     },
     hasMore: function () {
         'use strict';
-        return (this.recordEnd < this.totalRecords);
+        var bool = false;
+
+        if (this.totalRecords !== 0 && this.recordEnd < this.totalRecords) {
+            bool = true;
+        }
+        return bool;
     }
 });
 

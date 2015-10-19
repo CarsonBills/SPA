@@ -146,6 +146,7 @@ ul.card {
             }
 
             .list-title {
+                width: 60%;
                 color: $reader-blue;
                 @include athelas($size: 1.8rem, $style: italic, $weight: 400);
                 white-space: nowrap;

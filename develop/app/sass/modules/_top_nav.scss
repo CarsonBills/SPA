@@ -37,6 +37,7 @@ nav {
     letter-spacing: 1px;
     @include vertical-align(absolute);
     left: 18px;
+    z-index: 99;
 
     span {
         opacity: 0.9;
@@ -51,6 +52,13 @@ nav {
             margin-right: 0.5rem;
         }
     }
+}
+
+#filters {
+    position: absolute;
+    top: 267px;
+    background-color: #fff;
+    z-index: 99;
 }
 
 /* search module */

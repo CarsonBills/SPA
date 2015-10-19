@@ -10,13 +10,13 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     initialize: function() {
         "use strict";
-        this.on('change', this.render, this);
+        this.collection.on('update', this.render, this);
     },
     render: function () {
         "use strict";
         var cat;
 
-        _.each(Norton.Filters, function (filter) {
+        _.each(this.collection.filters, function (filter) {
             if (filter.name != cat) {
                 cat = filter.name;
                 filter.cat_display = filter.displayName;

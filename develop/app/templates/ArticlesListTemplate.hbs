@@ -1,11 +1,11 @@
 <li class="list-format" data-item-id='{{id}}'>
     <a class="details" href="{{baseUrl}}#/page/{{allMeta.id}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
-        <div class="author">{{allMeta.author_first}} {{allMeta.author_last}}</div>
+        <div class="author">{{HBFullname allMeta}}</div>
         <div class="list-title">{{allMeta.title}}</div>
     </a>
     <div class="article ebook">
-        {{#if allMeta.ebook_node}}
-            <a class="ebook-lnk" href="{{allMeta.ebook_node}}" target="_new">View Ebook</a>
+        {{#if allMeta.ebookNode}}
+            <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
         {{/if}}
     </div>
     <div class="add-to-list glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'></div>

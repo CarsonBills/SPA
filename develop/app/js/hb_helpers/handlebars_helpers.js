@@ -1,6 +1,9 @@
 var Handlebars = require('handlebars/runtime');
 module.exports = (function() {
     'use strict';
+    Handlebars.registerHelper('HBFullname', function(data) {
+        return data.authorFirst + " " + data.authorLast;
+    });
     Handlebars.registerHelper('trimString', function(str) {
         var theString = str.substring(0,100);
         return new Handlebars.SafeString(theString);
