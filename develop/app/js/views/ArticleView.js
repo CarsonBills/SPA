@@ -28,19 +28,19 @@ var ArticleView = Backbone.View.extend({
             this.$el.append(this.templateListHead);
         }
         this.collection.each(function(record) {
-                if (showGrid) {
-                    articleTemplate = this.templateGrid(record.toJSON());
-                } else {
-                    articleTemplate = this.templateList(record.toJSON());
-                }
-                this.$el.append(articleTemplate);
-            }, this);
+            if (showGrid) {
+                articleTemplate = this.templateGrid(record.toJSON());
+            } else {
+                articleTemplate = this.templateList(record.toJSON());
+            }
+            this.$el.append(articleTemplate);
+        }, this);
 
         /**
          * Hide the Load More button if we are at the end of current collection
          */
-        if (this.collection.recordEnd >= this.collection.totalRecords) {
-            console.log('hide');
+        if (!this.collection.hasMore()) {
+            console.log('hide!!');
             $('.load-more-section').hide();
         }
 

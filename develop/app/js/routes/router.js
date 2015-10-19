@@ -21,6 +21,7 @@ var AppRouter = Backbone.Router.extend({
         Norton.Utils.handleIntroPanel(); // Set up showing Intro Panel or not
 
         this.appView = new NortonApp.Views.App({
+            el: '#container',
             collection: NortonApp.articlesList,
         });
         this.start();

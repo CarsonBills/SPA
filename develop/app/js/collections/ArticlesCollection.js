@@ -75,6 +75,10 @@ var ArticlesCollection = Backbone.Collection.extend({
     showGrid: function () {
         'use strict';
         return this.showGridView;
+    },
+    hasMore: function () {
+        'use strict';
+        return (this.recordEnd < this.totalRecords);
     }
 });
 

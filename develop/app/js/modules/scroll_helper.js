@@ -3,18 +3,37 @@
     scroll Helper
     author: hon-chih chen
 */
+var _ = require('underscore');
+    //shouldRefresh = require('./should_refresh');
 
 module.exports = (function () {
     'use strict';
-    var THRESHOLD = 0.95,
+    var tasks = [],
 
-        setScroll = function (cb) {
-            var callback = cb;
+        initialize = function () {
             $(window).scroll(function() {
-                if (shouldRefresh()) {
-                    callback();
+                _.each(tasks, function (task) {
+                    if (task.func() && task.callback) {
+                        task.callback();
+                    }
+                });
+            });
+        },
+
+        match = function (name) {
+            var found = false;
+            _.find(tasks, function(task) {
+                if (task.func.name === name && task.func.name !== '') {
+                    found = true;
                 }
             });
+            return found;
+        },
+
+        setQue = function (params) {
+            if (params.func && !match(params.func.name)) {
+                tasks.push(params);
+            }
         },
 
         docHeight = function () {
@@ -25,22 +44,26 @@ module.exports = (function () {
             return $(window).height();
         },
 
-        shouldRefresh = function () {
-            var top = $(window).scrollTop();
-
+        shouldRefresh = function shouldRefresh() {
+            var top = $(window).scrollTop(),
+                docHeight = $(document).height(),
+                winHeight = $(window).height(),
+                THRESHOLD = 0.9;
             // on window resize larger than document
-            if (docHeight() === winHeight()) {
+            if (docHeight === winHeight) {
                 return true;
             }
-            if ((top / (docHeight() - winHeight())) > THRESHOLD) {
+            if ((top / (docHeight - winHeight)) > THRESHOLD) {
                 return true;
             } else {
                 return false;
             }
         };
 
+        initialize();
+
     return {
-        setScroll: setScroll,
+        setQue: setQue,
         shouldRefresh: shouldRefresh,
         winHeight: winHeight,
         docHeight: docHeight

@@ -17,14 +17,15 @@ var AppView = Backbone.View.extend({
     evtMgr: EventManager.getInstance(),
     template: require('../../templates/AppTemplate.hbs'),
 
-    toggleGridFormat: '',
+    hasRefreshed: false,
+    shouldRefresh: null,
+    stickScroll: null,
+
 
 
     initialize: function() {
         'use strict';
 
-        // Default View
-        this.toggleGridFormat = EventManager.LIST_VIEW;
 
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem,
@@ -45,15 +46,29 @@ var AppView = Backbone.View.extend({
             }, this),
         });
 
-        scrollHelper.setScroll(this.onScroll);
-
         this.render();
+
+        this.stickScroll = this.stickScrollWrapper();
+        this.shouldRefresh = this.shouldRefreshWrapper();
+
+        scrollHelper.setQue({
+            func: this.stickScroll
+        });
+
+        scrollHelper.setQue({
+            func: scrollHelper.shouldRefresh,
+            callback: this.shouldRefresh
+        });
+
+        //scrollHelper.setRefresh(this.shouldRefresh);
     },
 
     render: function() {
         'use strict';
         var data = {baseUrl: Norton.baseUrl};
         this.$el.html(this.template(data));
+
+
 
         this.headerConfigView.$el = this.$('#siteHeader');
         this.headerConfigView.render();
@@ -74,6 +89,8 @@ var AppView = Backbone.View.extend({
             this.introPanelView.$el = this.$('#introPanel');
             this.introPanelView.render();
         }
+
+        this.toggleView(EventManager.GRID_VIEW);
     },
     events: {
         'click .icon-grid-view': 'onGrid',
@@ -116,21 +133,40 @@ var AppView = Backbone.View.extend({
         },
     },
 
-    onScroll: function() {
+    shouldRefreshWrapper: function () {
         'use strict';
-        var window_top = $(window).scrollTop(),
-            div_top = $('#sticky-anchor').offset().top;
-        if (window_top > div_top) {
-            console.log('stick');
-            $('.container').addClass('stick');
-        } else {
-            $('.container').removeClass('stick');
+        var that = this;
+        return function () {
+            if (!that.hasRefreshed && that.collection.hasMore()) {
+                that.getArticles();
+                that.hasRefreshed = true;
+            }
         }
     },
 
+    stickScrollWrapper: function () {
+        'use strict';
+        var div_top = $('#sticky-anchor').offset().top,
+            $container = $('.container'),
+            STICK = 'stick';
+
+        return function stickScroll() {
+            if ($(window).scrollTop() > div_top) {
+                if (!$container.hasClass(STICK)) {
+                    $container.addClass(STICK);
+                }
+            } else {
+                if ($container.hasClass(STICK)) {
+                    $container.removeClass(STICK);
+                }
+            }
+        }
+    },
+
+    /* Grid/List view toggle */
+
     toggleView: function(type) {
         'use strict';
-        this.toggleGridFormat = type;
         this.collection.setShowGrid(type === EventManager.GRID_VIEW);
 
         this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
@@ -140,17 +176,18 @@ var AppView = Backbone.View.extend({
 
     onGrid: function(e) {
         'use strict';
-        if (this.toggleGridFormat !== EventManager.GRID_VIEW) {
+        if (!this.collection.showGrid()) {
             this.toggleView(EventManager.GRID_VIEW);
         }
     },
 
     onList: function(e) {
         'use strict';
-        if (this.toggleGridFormat !== EventManager.LIST_VIEW) {
+        if (this.collection.showGrid()) {
             this.toggleView(EventManager.LIST_VIEW);
         }
     },
+    /* End Grid/List view toggle */
 
     renderArticles: function() {
         'use strict';
@@ -173,8 +210,10 @@ var AppView = Backbone.View.extend({
             success: $.proxy (function(data) {
 
                 that.showResultsTotals();
-
-                that.toggleView(that.toggleGridFormat);
+                that.hasRefreshed = false;
+                if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
+                    that.getArticles();
+                }
             }, this),
         });
     },
