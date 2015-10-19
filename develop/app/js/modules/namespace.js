@@ -1,11 +1,11 @@
-module.exports = (function () {
-    "use strict";
-	// Define Namespaces
-	window.Norton = {};
+module.exports = (function() {
+    'use strict';
+    // Define Namespaces
+    window.Norton = {};
 
-	window.NortonApp = {
-	    Models: {},
-	    Collections: {},
-	    Views: {}
-	};
+    window.NortonApp = {
+        Models: {},
+        Collections: {},
+        Views: {},
+    };
 })();

@@ -1,5 +1,5 @@
 /* jshint -W030 */
-/* declare here to build into bundle */
+/* Declare here to build into bundle */
 
 window.$ = require('jquery');
 window.jQuery = $;
@@ -13,7 +13,7 @@ var Backbone = require('backbone'),
 	jQuery_UI_Touch = require('jquery-ui-touch-punch'),
 	_ = require('underscore'),
 
-	// settings
+	// Settings
 	namespace = require('./modules/namespace');
 
 Backbone.$ = $;
@@ -22,11 +22,11 @@ Norton.Constants = require('./modules/js_constants');
 Norton.Utils = require('./modules/js_utils');
 
 $(function() {
-    "use strict";
-	/**
-     * Global primitives
-     */
-    Norton.toggleGridFormat = true;
+    'use strict';
+    /**
+         * Global primitives
+         */
+    //Norton.toggleGridFormat = true;
     Norton.yourFavsCtr = 0;
     Norton.perPage = Norton.Constants.defaultPageSize;
     Norton.totalRecords = 0;
@@ -48,12 +48,12 @@ $(function() {
     /**
      * Authentication setup
      */
-    // get rid of before moving to wwnorton.com environment...
-document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
+    // Get rid of before moving to wwnorton.com environment...
+    document.cookie = 'IISPROTECTLOGIN=User=pdietrich@wwnorton.com';
 
     Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
 
-    Norton.baseUrl = $(location).attr("href");
+    Norton.baseUrl = $(location).attr('href');
 
     /**
      * Get Site Code and version
@@ -70,16 +70,22 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
 
     // Can't allow IIG URL without a site code and version.
     if (!Norton.siteCode || !Norton.version) {
-       window.location.href = Norton.Constants.invalidSiteCodeUrl;
+        window.location.href = Norton.Constants.invalidSiteCodeUrl;
     }
+
+    /**
+    *   General
+    */
+
+    NortonApp.evtMgr = require('./modules/event_manager');
 
     /**
      * Models
      */
     NortonApp.Models.Article = require('./models/ArticleModel.js');
-    NortonApp.Models.YourFavs = require("./models/YourFavsModel.js");
-    NortonApp.Models.Page = require("./models/PageModel.js");
-    NortonApp.Models.HeaderConfig = require("./models/HeaderConfigModel.js");
+    NortonApp.Models.YourFavs = require('./models/YourFavsModel.js');
+    NortonApp.Models.Page = require('./models/PageModel.js');
+    NortonApp.Models.HeaderConfig = require('./models/HeaderConfigModel.js');
 
     /**
      * Collections
@@ -103,6 +109,8 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     /**
      * Initializers
      */
+    NortonApp.evtMgr.getInstance();
+
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
@@ -113,12 +121,14 @@ document.cookie = "IISPROTECTLOGIN=User=pdietrich@wwnorton.com";
     NortonApp.introPanelView;
     NortonApp.errorPageView;
 
-    NortonApp.AppRouter = require("./routes/router.js");
+    NortonApp.AppRouter = require('./routes/router.js');
     NortonApp.router = new NortonApp.AppRouter();
 
-	fastClick(document.body);
-    $(window).scroll(scrollHandler);
-    stickyRelocate();
+
+
+    fastClick(document.body);
+    //$(window).scroll(scrollHandler);
+    //stickyRelocate();
 
 });
 
@@ -140,37 +150,37 @@ window.launchEbookIframe = function (url, title) {
  */
 
 /**
- * re-order My Items
+ * Re-order My Items
  * @param elem
  */
-window.yourFavsDragNDrop = function (elem) {
-    "use strict";
+window.yourFavsDragNDrop = function(elem) {
+    'use strict';
     $(elem).sortable();
 };
 
 /**
- * handle window scroll events for Sticky and for Load-More
+ * Handle window scroll events for Sticky and for Load-More
  */
 window.scrollHandler = function() {
-    "use strict";
+    'use strict';
     stickyRelocate();
 
-/*    if(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
-        Norton.scrollTrigger = true;
-        $("#loadMore").click();
-        Norton.scrollTrigger = false;
+    /*    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
+            Norton.scrollTrigger = true;
+            $("#loadMore").click();
+            Norton.scrollTrigger = false;
 
-        var scroll_to_new = (Norton.lastArticleLoaded + 1);
-        $("[data-id="+scroll_to_new+"]").focus();
-    }
+            var scroll_to_new = (Norton.lastArticleLoaded + 1);
+            $("[data-id="+scroll_to_new+"]").focus();
+        }
 */
 };
 
 /**
  * Sticky for navbar to remain at top when scrolling
  */
-window.stickyRelocate = function() {
-    "use strict";
+/*window.stickyRelocate = function() {
+    'use strict';
     var window_top = $(window).scrollTop();
     var div_top = $('#sticky-anchor').offset().top;
     if (window_top > div_top) {
@@ -178,6 +188,6 @@ window.stickyRelocate = function() {
     } else {
         $('.container').removeClass('stick');
     }
-};
+};*/
 
 

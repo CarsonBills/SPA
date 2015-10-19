@@ -1,21 +1,21 @@
-var Backbone = require("backbone");
+var Backbone = require('backbone');
 var $ = require('jquery');
 Backbone.$ = $;
 
 var YourFavsView = Backbone.View.extend({
     el: $('#yourFavs'),
-    templateHdr: require("../../templates/YourFavsHeaderTemplate.hbs"),
-    template: require("../../templates/YourFavsTemplate.hbs"),
+    templateHdr: require('../../templates/YourFavsHeaderTemplate.hbs'),
+    template: require('../../templates/YourFavsTemplate.hbs'),
     initialize: function() {
-        "use strict";
+        'use strict';
         this.on('change', this.render, this);
     },
-    render: function () {
-        "use strict";
+    render: function() {
+        'use strict';
         var yourFavsTemplate = this.templateHdr();
         this.$el.append(yourFavsTemplate);
         if (this.model.length > 0) {
-            this.model.each(function (article) {
+            this.model.each(function(article) {
                 yourFavsTemplate = this.template(article.toJSON());
                 this.$el.append(yourFavsTemplate);
             }, this);
@@ -27,13 +27,13 @@ var YourFavsView = Backbone.View.extend({
         return this;
     },
     downloadYourFavs: function() {
-        "use strict";
-        var data = $("#yourFavsTitle").text() + "\t\t\n" +
-            "Title\tAuthor\tExtract\n";
-        this.model.each(function (article) {
-            data += article.attributes.title + "\t" +
-                article.attributes.fullName + "\t" +
-                article.attributes.shortExtract + "\n";
+        'use strict';
+        var data = $('#yourFavsTitle').text() + '\t\t\n' +
+            'Title\tAuthor\tExtract\n';
+        this.model.each(function(article) {
+            data += article.attributes.title + '\t' +
+                article.attributes.fullName + '\t' +
+                article.attributes.shortExtract + '\n';
         }, this);
 
         /**
@@ -44,14 +44,14 @@ var YourFavsView = Backbone.View.extend({
         // Create a Blob with the data, thlink element populated, click it, then remove it.
         var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
-        var lnk = document.createElement("a");
-        lnk.setAttribute("href", url);
-        lnk.setAttribute("download", "my_items.csv");
+        var lnk = document.createElement('a');
+        lnk.setAttribute('href', url);
+        lnk.setAttribute('download', 'my_items.csv');
         lnk.style.visibility = 'hidden';
         document.body.appendChild(lnk);
         lnk.click();
         document.body.removeChild(lnk);
-    }
+    },
 });
 
 module.exports = YourFavsView;

@@ -1,51 +1,51 @@
-var Backbone = require("backbone");
+var Backbone = require('backbone');
 
 var HeaderConfigModel = Backbone.Model.extend({
-    urlRoot: Norton.Constants.siteConfigUrl + Norton.siteCode + "/" + Norton.version,
-    //urlRoot: "/json/siteconfig.json",
+    urlRoot: Norton.Constants.siteConfigUrl + Norton.siteCode + '/' + Norton.version,
+    //UrlRoot: "/json/siteconfig.json",
 
     defaults: {
-        "displayTitle": "",
-        "siteCode": "",
-        "siteVersion": "",
-        "siteMode": "",
-        "siteVersionLabel": "",
-        "publishDate": "",
-        "sunsetDate": "",
-        "introPanelCopy": "",
-        "introPanelImage":{
-            "type": "",
-            "src": "",
-            "bucket": ""
+        displayTitle: '',
+        siteCode: '',
+        siteVersion: '',
+        siteMode: '',
+        siteVersionLabel: '',
+        publishDate: '',
+        sunsetDate: '',
+        introPanelCopy: '',
+        introPanelImage: {
+            type: '',
+            src: '',
+            bucket: '',
         },
-        "introPanelCalloutAction":[
+        introPanelCalloutAction: [
             {
-                "actionText": "",
-                "action-link": ""
-            }
+                actionText: '',
+                'action-link': '',
+            },
         ],
-        "introPanelLayout": "",
-        "ebookBaseUrl": "",
-        "ebookLiveDate": "",
-        "ebookSunsetDate": "",
-        "dimensionsHeader": "",
-        "headerLinks":[
+        introPanelLayout: '',
+        ebookBaseUrl: '',
+        ebookLiveDate: '',
+        ebookSunsetDate: '',
+        dimensionsHeader: '',
+        headerLinks: [
             {
-                "label": "",
-                "link": ""
-            }
+                label: '',
+                link: '',
+            },
         ],
-        "footerLinks":[
+        footerLinks: [
 
         ],
-        "footer": "",
-        "otherVersions": [
+        footer: '',
+        otherVersions: [
             {
-                "siteVersionLabel": "view shorter edition",
-                "siteVersion": "short"
-            }
-        ]
-    }
+                siteVersionLabel: 'view shorter edition',
+                siteVersion: 'short',
+            },
+        ],
+    },
 });
 
 module.exports = HeaderConfigModel;

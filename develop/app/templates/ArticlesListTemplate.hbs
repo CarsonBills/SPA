@@ -1,20 +1,13 @@
-<li class="gridFormat" data-item-id='{{id}}'>
-    <div>
-        <a class="details" href="{{baseUrl}}#/page/{{allMeta.pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
-            <h4>{{allMeta.title}}</h4>
-            <h4>{{allMeta.authorLast}}, {{allMeta.authorFirst}}</h4>
-            <span class="fa fa-picture-o"></span>
-            <p>{{allMeta.abstract}}</p>
-            <p class="card-info">
-                <img src="/images/icon-add.png" class="icon-add favs-lnk" alt="Add to My Items" data-item-id="{{allMeta.pname}}">
-                <span class="article ebook-lnk">
-                    {{#if allMeta.ebookNode}}
-                        <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
-                    {{else}}
-                        Ebook Unavailable
-                    {{/if}}
-                </span>
-            </p>
-        </a>
+<li class="list-format" data-item-id='{{id}}'>
+    <a class="details" href="{{baseUrl}}#/page/{{allMeta.id}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
+        <div class="author">{{allMeta.author_first}} {{allMeta.author_last}}</div>
+        <div class="list-title">{{allMeta.title}}</div>
+    </a>
+    <div class="article ebook">
+        {{#if allMeta.ebook_node}}
+            <a class="ebook-lnk" href="{{allMeta.ebook_node}}" target="_new">View Ebook</a>
+        {{/if}}
     </div>
+    <div class="add-to-list glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'></div>
+    
 </li>
