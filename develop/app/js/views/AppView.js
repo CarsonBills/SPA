@@ -205,14 +205,20 @@ var AppView = Backbone.View.extend({
         "use strict";
         // query would be populated with Search box data
         var that = this,
-            postdata = {skip: this.collection.recordEnd, pageSize: Norton.perPage, query: ''};
+            postdata = {
+                sitecode: '"' + Norton.siteCode + '"',
+                siteversion: Norton.siteVersion,
+                skip: this.collection.recordEnd,
+                pageSize: Norton.perPage,
+                query:  Norton.searchQuery,
+                fields: '["*"]'
+            };
 
         NortonApp.articlesList.fetch({
             data: postdata,
             type: 'POST',
             remove: false,
             success: $.proxy (function(data) {
-
                 that.showResultsTotals();
                 that.hasRefreshed = false;
 
@@ -223,7 +229,11 @@ var AppView = Backbone.View.extend({
                 if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
                     that.getArticles();
                 }
-            }, this)
+            }, this),
+            error: function(xhr, response, error) {
+                console.log('Search query not available.');
+                Norton.Utils.genericError('articles');
+            }
 
             /*success: $.proxy (function() {
                 this.showResultsTotals();
@@ -274,36 +284,12 @@ var AppView = Backbone.View.extend({
     searchArticles: function() {
         "use strict";
         /**
-         * THis whole thing will be replaced since our search results will come back from Searchandiser
+         * Clear out collection, reset "skip" to zero, then run search query.
          */
-        var searchTerm = $('#searchTextInput').val().toLowerCase();
-        NortonApp.articlesList.reset(NortonApp.articlesList.models, { silent: true });
-
-        // This iterates all models and returns those selected in "filtered"
-        var filtered = _.filter(NortonApp.articlesList.models,  $.proxy (function(item) {
-            var title =  item.attributes.title.toLowerCase();
-            var name =  item.attributes.fullName.toLowerCase();
-            var extract = item.attributes.extract.toLowerCase();
-
-            if (title.indexOf(searchTerm) >= 0 ||
-                name.indexOf(searchTerm) >= 0 ||
-                extract.indexOf(searchTerm) >= 0 )
-            {
-                Norton.lastArticleLoaded = 0;
-                return item;
-            }
-        }, this));
-
-        // reset the articlesList collection to filtered, then re-render
-        NortonApp.articlesList.reset(filtered);
-
-        /**
-         * It would be nice if we were set up for a collection view on articles so e could
-         * listen for the "reset" event instead of doing this manually
-         */
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        this.renderArticles();
+        Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
+        this.collection.reset(null, { silent: true });
+        this.collection.recordEnd = 0;
+        this.getArticles();
     },
     showYourFavs: function() {
         "use strict";

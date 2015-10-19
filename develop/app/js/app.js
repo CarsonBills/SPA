@@ -41,6 +41,7 @@ $(function() {
     Norton.scrollTrigger = false;
     Norton.siteCode = null;
     Norton.version = null;
+    Norton.searchQuery = "";
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};
