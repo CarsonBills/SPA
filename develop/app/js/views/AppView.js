@@ -29,15 +29,15 @@ var AppView = Backbone.View.extend({
             model: NortonApp.headerConfigItem
         });
 
-        //this.filtersView = new NortonApp.Views.Filters();
+        this.filtersView = new NortonApp.Views.Filters();
 
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
         });
 
-        this.getArticles();
-
         this.render();
+
+        this.getArticles();
 
 
         this.stickScroll = this.stickScrollWrapper();

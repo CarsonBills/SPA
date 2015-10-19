@@ -18,6 +18,12 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.recordStart = response.pageInfo.recordStart;
         this.recordEnd = response.pageInfo.recordEnd;
 
+        Norton.totalRecords = response.totalRecordCount;
+        Norton.recordStart = response.pageInfo.recordStart;
+        Norton.recordEnd = response.pageInfo.recordEnd;
+        Norton.Filters = response.availableNavigation;
+
+
 
         _.each(response.records, function(record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
@@ -78,7 +84,12 @@ var ArticlesCollection = Backbone.Collection.extend({
     },
     hasMore: function () {
         'use strict';
-        return (this.recordEnd < this.totalRecords);
+        var bool = false;
+
+        if (this.totalRecords !== 0 && this.recordEnd < this.totalRecords) {
+            bool = true;
+        }
+        return bool;
     }
 });
 
