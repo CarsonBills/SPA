@@ -29,14 +29,14 @@ var AppView = Backbone.View.extend({
             model: NortonApp.headerConfigItem
         });
 
-        this.filtersView = new NortonApp.Views.Filters();
+        //this.filtersView = new NortonApp.Views.Filters();
 
         this.yourFavsView = new NortonApp.Views.YourFavs({
             model: NortonApp.yourFavsList
         });
 
-        this.render();
 
+        this.render();
         this.getArticles();
 
 
@@ -58,7 +58,7 @@ var AppView = Backbone.View.extend({
     render: function(){
         "use strict";
         var data = {baseUrl: Norton.baseUrl};
-        this.$el.html(this.template(data));
+        //this.$el.html(this.template(data));
 
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
@@ -71,6 +71,11 @@ var AppView = Backbone.View.extend({
             collection: this.collection,
             el: '#articles',
         });
+
+        this.filtersView = new NortonApp.Views.Filters({
+            collection: this.collection,
+            el: "#filters"
+        }).render();
 
         if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -107,9 +112,11 @@ var AppView = Backbone.View.extend({
         /**
          * Remove this event handler when REAL filter button is working.
          */
-        "click #tempFilters": function() {
+        "click #tempFilters": function(e) {
             "use strict";
-            $('#filters').toggle();
+            console.log('tttt')
+            this.$('#filters').toggle();
+            return false;
         },
         "click #searchButton": "searchArticles",
         "keypress #searchTextInput": function(e) {
@@ -215,10 +222,6 @@ var AppView = Backbone.View.extend({
 
                 that.showResultsTotals();
                 that.hasRefreshed = false;
-
-                this.filtersView = new NortonApp.Views.Filters({
-                    el: "#filters"
-                }).render();
                     
                 if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
                     that.getArticles();
