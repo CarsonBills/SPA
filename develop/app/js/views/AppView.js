@@ -340,7 +340,13 @@ var AppView = Backbone.View.extend({
                     NortonApp.pageView.renderReplace(); // replace modal-content but do not recreate modal
                 }
 
-            }, this)
+            }, this),
+            error: function(xhr, response, error) {
+                $('.modal-backdrop').remove();
+                $('.modal-dialog').remove();
+                console.log('Detail Page not available.');
+                Norton.Utils.genericError('detail');
+            }
         });
     },
     getNextPrevFromList: function(e) {
