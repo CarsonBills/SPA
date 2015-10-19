@@ -23,8 +23,6 @@ var ArticleView = Backbone.View.extend({
             record.attributes.nextId = NortonApp.articlesList.next(record);
             record.attributes.baseUrl = Norton.baseUrl;
 
-            // temp value
-        record.attributes.pname = "on-going-home";
             var articleTemplate;
             if (Norton.toggleGridFormat) {
                 articleTemplate = this.templateGrid(record.toJSON());

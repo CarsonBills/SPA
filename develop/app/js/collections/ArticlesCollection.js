@@ -19,7 +19,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         "use strict";
         var idx = this.curr(model);
         if (idx > 0) {
-            return this.at(idx - 1).attributes.allMeta.id;
+            return this.at(idx - 1).attributes.allMeta.pname;
         }
 
         return null;
@@ -28,7 +28,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         "use strict";
         var idx = this.curr(model);
         if (idx < (this.length - 1)) {
-            return this.at(idx + 1).attributes.allMeta.id;
+            return this.at(idx + 1).attributes.allMeta.pname;
         }
 
         return null;
