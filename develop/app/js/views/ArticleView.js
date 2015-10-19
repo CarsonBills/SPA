@@ -15,7 +15,6 @@ var ArticleView = Backbone.View.extend({
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
     },
-
     render: function() {
         'use strict';
 
@@ -27,6 +26,7 @@ var ArticleView = Backbone.View.extend({
         if (!showGrid) {
             this.$el.append(this.templateListHead);
         }
+        
         this.collection.each(function(record) {
             if (showGrid) {
                 articleTemplate = this.templateGrid(record.toJSON());

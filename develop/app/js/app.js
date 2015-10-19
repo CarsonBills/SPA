@@ -42,6 +42,9 @@ $(function() {
     Norton.siteCode = null;
     Norton.version = null;
 
+    // Filters for Navigation come from ArticlesModel
+    Norton.Filters = {};
+
     /**
      * Authentication setup
      */
@@ -55,9 +58,10 @@ $(function() {
     /**
      * Get Site Code and version
      */
-    var paths = window.location.pathname.split('/');
-    if ($(location).attr('href').indexOf('nortonreader.dev') >= 0) {
-        Norton.siteCode = 'nortonreader';
+    var paths = window.location.pathname.split("/");
+    //if ($(location).attr("href").indexOf("nortonreader.com") >= 0) {  // Go Live code
+    if ($(location).attr("href").indexOf("nortonreader.dev") >= 0) {
+        Norton.siteCode = "nortonreader";
         Norton.version = paths[1];
     } else {
         Norton.siteCode = paths[1];
@@ -78,7 +82,6 @@ $(function() {
     /**
      * Models
      */
-    NortonApp.Models.Filter = require('./models/FilterModel.js');
     NortonApp.Models.Article = require('./models/ArticleModel.js');
     NortonApp.Models.YourFavs = require('./models/YourFavsModel.js');
     NortonApp.Models.Page = require('./models/PageModel.js');
@@ -87,21 +90,21 @@ $(function() {
     /**
      * Collections
      */
-    NortonApp.Collections.Articles = require('./collections/ArticlesCollection.js');
-    NortonApp.Collections.Filters = require('./collections/FiltersCollection.js');
-    NortonApp.Collections.YourFavs = require('./collections/YourFavsCollection.js');
+    NortonApp.Collections.Articles = require("./collections/ArticlesCollection.js");
+    NortonApp.Collections.YourFavs = require("./collections/YourFavsCollection.js");
 
     /**
      * Views
      */
-    NortonApp.Views.TopNav = require('./views/TopNavView.js');
-    NortonApp.Views.Article = require('./views/ArticleView.js');
-    NortonApp.Views.Filters = require('./views/FiltersView.js');
-    NortonApp.Views.YourFavs = require('./views/YourFavsView.js');
-    NortonApp.Views.Page = require('./views/PageView.js');
-    NortonApp.Views.HeaderConfig = require('./views/HeaderConfigView.js');
-    NortonApp.Views.IntroPanel = require('./views/IntroPanelView.js');
-    NortonApp.Views.App = require('./views/AppView.js');
+    NortonApp.Views.TopNav = require("./views/TopNavView.js");
+    NortonApp.Views.Article = require("./views/ArticleView.js");
+    NortonApp.Views.Filters = require("./views/FiltersView.js");
+    NortonApp.Views.YourFavs = require("./views/YourFavsView.js");
+    NortonApp.Views.Page = require("./views/PageView.js");
+    NortonApp.Views.HeaderConfig = require("./views/HeaderConfigView.js");
+    NortonApp.Views.IntroPanel = require("./views/IntroPanelView.js");
+    NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
+    NortonApp.Views.App = require("./views/AppView.js");
 
     /**
      * Initializers
@@ -110,14 +113,13 @@ $(function() {
 
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
-    NortonApp.filtersList = new NortonApp.Collections.Filters();
-    NortonApp.filterItem = new NortonApp.Models.Filter();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
     NortonApp.pageView;
     NortonApp.introPanelView;
+    NortonApp.errorPageView;
 
     NortonApp.AppRouter = require('./routes/router.js');
     NortonApp.router = new NortonApp.AppRouter();

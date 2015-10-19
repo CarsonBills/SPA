@@ -10,8 +10,13 @@
     <!-- Intro Panel Section -->
     <div id="introPanel" class="intro-panel-section"></div>
 
+    <!-- Error Page Section -->
+    <div id="errorPage" class="error-page-section"></div>
+
     <!-- Filter Section -->
-    <div class="filter-panelx"></div>
+    <div id="filtersREAL" class="filter-panel">
+        <div id="selectedFiltersREAL" class="filters-selected" style="margin-bottom:10px;"></div>
+    </div>
 
     <!-- Detail Page Section -->
     <div id="detailPage" class="page-view-section"></div>
@@ -35,11 +40,16 @@
     <div id="modalContainer"></div>
     <div class="modal-placeholder" id="modalPlaceholder" data-toggle="modal" data-target="#pageContainer"></div>
     <div class="modal-placeholder" id="modalPlaceholderIntro" data-toggle="modal" data-target="#introContainer"></div>
+    <div class="modal-placeholder" id="modalPlaceholderError" data-toggle="modal" data-target="#errorContainer"></div>
 
     <!-- Footer Section -->
     <div class="footer">
         Copyright &copy; W.W. Norton &amp; Company, Inc. 2015
-
+    </div>
+    <!-- Filter Section -->
+    <a href="#/filters" id="tempFilters">Click for Filters</a>
+    <div id="filters" class="filter-panel" style="width:400px;border:1px solid #000;display:none;">
+        <div id="selectedFilters" class="filters-selected" style="margin-bottom:10px;"></div>
     </div>
 
     <script>
