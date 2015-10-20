@@ -22,7 +22,7 @@ var AppRouter = Backbone.Router.extend({
 
         this.appView = new NortonApp.Views.App({
             el: '#container',
-            collection: NortonApp.articlesList,
+            collection: NortonApp.articlesList
         });
 
         this.start();

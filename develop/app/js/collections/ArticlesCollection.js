@@ -20,30 +20,16 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.recordEnd = response.pageInfo.recordEnd;
         this.filters = response.availableNavigation;
 
-        /*Norton.totalRecords = response.totalRecordCount;
-        Norton.recordStart = response.pageInfo.recordStart;
-        Norton.recordEnd = response.pageInfo.recordEnd;
-        Norton.Filters = response.availableNavigation;*/
-
-
-
         _.each(response.records, function(record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
-            // Norton.lastArticleLoaded = record.attributes.allMeta.id;
+            // Norton.lastArticleLoaded = record.attributes.allMeta.pname;
 
-            record.prevId = that.prev(record);
-            record.nextId = that.next(record);
-            record.baseUrl = Norton.baseUrl;
             /**
              * Next/prev links
              */
-
-            /*Record.attributes.prevId = that.prev(record);
-            record.attributes.nextId = that.next(record);
-            record.attributes.baseUrl = Norton.baseUrl;*/
-
-            // Temp value
-            //record.attributes.pname = "on-going-home";
+            record.prevId = that.prev(record);
+            record.nextId = that.next(record);
+            record.baseUrl = Norton.baseUrl;
 
         });
 

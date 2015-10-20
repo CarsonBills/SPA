@@ -24,7 +24,7 @@ var AppView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
-        
+
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem
         });
@@ -108,7 +108,6 @@ var AppView = Backbone.View.extend({
          */
         "click #navFilters a": function(e) {
             "use strict";
-            console.log('tttt')
             this.$('#filters').toggle();
             return false;
         },
@@ -196,11 +195,10 @@ var AppView = Backbone.View.extend({
         }
     },
     /* End Grid/List view toggle */
-
     renderArticles: function() {
         "use strict";
-        this.articleView.$el = this.$("#articles");
-        this.articleView.render();
+        this.collection.$el = this.$("#articles");
+        this.collection.render();
     },
     getArticles: function() {
         "use strict";
@@ -231,35 +229,8 @@ var AppView = Backbone.View.extend({
                 console.log('Search query not available.');
                 Norton.Utils.genericError('articles');
             }
-
-            /*success: $.proxy (function() {
-                this.showResultsTotals();
-                this.renderArticles();
-                this.filtersView.$el = this.$("#filters");
-                this.filtersView.render();
-            }, this)*/
         });
     },
-    /*changeView: function(typ) {
-        "use strict";
-        if (Norton.toggleGridFormat === typ) {
-            return;
-        }
-        Norton.toggleGridFormat = typ;
-
-        // re-render Navbar
-        $('.navbar').remove();  // remove navbar before re-rendering
-        this.topNavView.$el = this.$("#topNav");
-        this.topNavView.render();
-
-        this.showResultsTotals();
-
-        // remove articles sub-containers before re-rendering
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        this.articleView.$el = this.$("#articles");
-        this.articleView.render();
-    },*/
     sortArticles: function() {
         "use strict";
         var sortby = $( "#sortArticles option:selected" ).val();

@@ -26,7 +26,7 @@ var ArticleView = Backbone.View.extend({
         if (!showGrid) {
             this.$el.append(this.templateListHead);
         }
-        
+        console.log(this.collection);
         this.collection.each(function(record) {
             if (showGrid) {
                 articleTemplate = this.templateGrid(record.toJSON());
@@ -41,9 +41,9 @@ var ArticleView = Backbone.View.extend({
          */
         if (this.collection.hasMore()) {
             $('.load-more-section').show();
-            console.log('show');
+            //console.log('show');
         } else {
-            console.log('hide');
+            //console.log('hide');
             $('.load-more-section').hide();
         }
 
