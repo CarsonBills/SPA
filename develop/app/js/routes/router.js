@@ -16,18 +16,16 @@ var AppRouter = Backbone.Router.extend({
 
     initialize: function() {
         "use strict";
-        this.handleSiteConfig();
 
-        Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
+        this.handleSiteConfig().then(function() {   // use a promise to wait for site_config if it is not in localstorage
+            Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
 
-        this.appView = new NortonApp.Views.App({
-            el: '#container',
-            collection: NortonApp.articlesList
+            this.appView = new NortonApp.Views.App({
+                el: '#container',
+                collection: NortonApp.articlesList
+            });
         });
-
-        this.start();
     },
-
     index: function() {
         "use strict";
 
@@ -54,35 +52,47 @@ var AppRouter = Backbone.Router.extend({
     },
     handleSiteConfig: function() {
         "use strict";
+        var dfd = $.Deferred();
+
         var lsSiteConfig = false;
         var lsConfigId = 'config_' + Norton.siteCode + "_" + Norton.version;
 
         try {
             lsSiteConfig = localStorage.getItem(lsConfigId);
+            // localstorage version of config should expire after one day
+            if ( (JSON.parse(lsSiteConfig).expiry + 86400) <=  Math.floor((new Date).getTime()/1000)) {
+                lsSiteConfig = false;
+            }
         } catch(e) {}
 
         if (lsSiteConfig) {
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             this.protectedContentCheck();
+
+            dfd.resolve();
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function() {
+                    var ts = Math.floor((new Date).getTime()/1000);
+                    NortonApp.headerConfigItem.attributes.expiry = ts;
                     this.protectedContentCheck();
                     // save config in localstorage
                     try {
                         localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                    } catch (e) {
+                    } catch (e) { }
 
-                    }
-
+                    dfd.resolve();
                 }, this),
                 error: function(){
                     // go to generic error page
                     console.log('Site Config not available.');
                     Norton.Utils.genericError('config');
+                    dfd.reject();
                 }
             });
         }
+
+        return dfd.promise();
     },
     protectedContentCheck: function() {
         "use strict";
