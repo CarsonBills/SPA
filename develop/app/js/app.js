@@ -78,6 +78,7 @@ $(function() {
     */
 
     NortonApp.evtMgr = require('./modules/event_manager');
+    NortonApp.GSAPLite = require('./vendor/gsap_lite');
 
     /**
      * Models

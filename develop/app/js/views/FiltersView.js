@@ -15,6 +15,7 @@ var FiltersView = Backbone.View.extend({
     render: function () {
         "use strict";
         var cat;
+        this.$('.filters-container').remove();
 
         _.each(this.collection.filters, function (filter) {
             if (filter.name != cat) {

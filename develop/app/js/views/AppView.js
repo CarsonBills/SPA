@@ -216,6 +216,8 @@ var AppView = Backbone.View.extend({
 
                 that.showResultsTotals();
                 that.hasRefreshed = false;
+                console.log($('.load-more-section').scrollTop())
+                TweenLite.to(window, 4, {scrollTo:{y:$('.load-more-section').scrollTop()}, ease:Power2.easeOut});
                     
                 if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
                     that.getArticles();
