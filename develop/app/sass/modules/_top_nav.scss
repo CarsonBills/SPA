@@ -42,6 +42,7 @@ nav {
     span {
         opacity: 0.9;
         display: inline-block;
+        color: #000;
 
         &:not(.glyphicon) {
             @include opensans($size: 1.4rem, $height: 1, $weight: 600);
@@ -115,7 +116,6 @@ nav {
         &.glyphicon {
             color: #000;
             font-size: 1.8rem;
-            margin-right: 0.5rem;
         }
     }
 
@@ -175,3 +175,32 @@ nav {
         }
     }
 }
+
+@media only screen and (max-width: $desktop-width) {
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+    .filter {
+        .filter-title {
+            display: none;
+        }
+    }
+    .saved-items {
+        .my-items {
+            display: none;
+        }
+    }
+
+    .search input[type="text"] {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: $mobile-width) {
+}
+
+@media only screen and (max-width: $mobile-width-sm) {
+}
+
+
+

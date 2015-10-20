@@ -65,7 +65,7 @@ var ArticleView = Backbone.View.extend({
         NortonApp.yourFavsList.add(this.collection.get(id));
         // Increment and show item counter
         Norton.yourFavsCtr++;
-        $('#yourFavsCtr').html('My Items (' + Norton.yourFavsCtr + ')');
+        $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
     },
 });
 

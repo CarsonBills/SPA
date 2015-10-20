@@ -23,6 +23,7 @@ $header-text: #f2f2ec;
 
 		.header-bg {
 			width: 100%;
+			height: 100%;
 			//max-width: $max-width;
 		}
 	}
@@ -167,13 +168,6 @@ $header-text: #f2f2ec;
 	}
 }
 
-$desktop-width: 1024px;
-$mobile-width: 480px;
-$mobile-width-sm: 320px;
-
-@media only screen and (min-width: $desktop-width + 1) {
-}
-
 @media only screen and (max-width: $desktop-width) {
 	.title-screen {
 		width: 400px;
@@ -181,6 +175,24 @@ $mobile-width-sm: 320px;
 		.title-head {
 			font-size: 4rem;
 			top: 42%;
+		}
+	}
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+	.header {
+		.top-bar {
+			.links,
+			.header-title {
+				display: none;
+			}
+
+			.header-label {
+				margin-left: 7rem;
+				a {
+					line-height: 1;
+				}
+			}
 		}
 	}
 }
