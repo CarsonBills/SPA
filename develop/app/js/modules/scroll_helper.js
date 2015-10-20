@@ -44,6 +44,10 @@ module.exports = (function () {
             return $(window).height();
         },
 
+        docDelta = function () {
+            return -(winHeight() - docHeight());
+        },
+
         shouldRefresh = function shouldRefresh() {
             var top = $(window).scrollTop(),
                 docHeight = $(document).height(),
@@ -66,6 +70,7 @@ module.exports = (function () {
         setQue: setQue,
         shouldRefresh: shouldRefresh,
         winHeight: winHeight,
-        docHeight: docHeight
+        docHeight: docHeight,
+        docDelta: docDelta
     };
 })();

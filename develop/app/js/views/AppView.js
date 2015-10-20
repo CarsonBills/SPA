@@ -206,6 +206,7 @@ var AppView = Backbone.View.extend({
         "use strict";
         // query would be populated with Search box data
         var that = this,
+            delta,
             postdata = {skip: this.collection.recordEnd, pageSize: Norton.perPage, query: ''};
 
         NortonApp.articlesList.fetch({
@@ -216,12 +217,19 @@ var AppView = Backbone.View.extend({
 
                 that.showResultsTotals();
                 that.hasRefreshed = false;
-                console.log($('.load-more-section').scrollTop())
-                TweenLite.to(window, 4, {scrollTo:{y:$('.load-more-section').scrollTop()}, ease:Power2.easeOut});
+
+                if (that.collection.hasMore()) {
+                    delta = scrollHelper.docDelta() - 100;
+                } else {
+                    delta = scrollHelper.docDelta();
+                }
+
+                TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
                     
-                if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
+                if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles();
                 }
+                
             }, this)
 
             /*success: $.proxy (function() {
