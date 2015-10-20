@@ -8,7 +8,7 @@ $type = (isset($_REQUEST['typ']) && (int)$_REQUEST['typ'] > 0) ? (int)$_REQUEST[
 
 if ($type === 1) {
     //$data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","area":"Production","fields":["*"],"skip":0,"pageSize":12}';
-    $data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","collection":"nortonreadertwo","area":"Production"' . $query . ',"fields":["*"], "skip":' . $skip . ',"pageSize":' . $pageSize . '}';
+    $data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","collection":"nortonreader","area":"Production"' . $query . ',"fields":["*"], "skip":' . $skip . ',"pageSize":' . $pageSize . '}';
     $url = "https://wwnorton.groupbycloud.com/api/v1/search?pretty";
 } elseif ($type == 2) {
     $data='{ "navigationName": "brand", "originalQuery":{"query": "dvd", "clientKey": "8fd00c47-8378-455c-a1bc-e4f1f1704b87"} }';

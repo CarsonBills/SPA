@@ -216,6 +216,10 @@ nav {
 }
 
 @media only screen and (max-width: $mobile-width) {
+
+    #sticky-anchor {
+        margin-top: -68px;
+    }
 }
 
 @media only screen and (max-width: $mobile-width-sm) {

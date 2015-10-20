@@ -198,12 +198,17 @@ $header-text: #f2f2ec;
 }
 
 @media only screen and (max-width: $mobile-width) {
+	.header {
+		.cover {
+			height: 50vw;
+		}
+	}
 	.title-screen {
 		width: 94%;
 
 		.title-head {
 			font-size: 9.5vw;
-			top: 13vw;
+			top: 14vw;
 		}
 	}
 }
