@@ -121,6 +121,9 @@ nav {
 
     a {
         color: #000;
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
@@ -142,6 +145,10 @@ nav {
     .results {
         @include vertical-align(absolute);
         left: $gutter;
+
+        .slash {
+            display: none;
+        }
     }
 
     .sortby {
@@ -193,6 +200,18 @@ nav {
 
     .search input[type="text"] {
         width: 60%;
+    }
+
+    .results-bar {
+        .results {
+            .slash {
+                display: inline;
+            }
+            .text {
+                display: none;
+            }
+
+        }
     }
 }
 
