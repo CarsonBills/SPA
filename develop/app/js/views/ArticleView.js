@@ -41,9 +41,7 @@ var ArticleView = Backbone.View.extend({
          */
         if (this.collection.hasMore()) {
             $('.load-more-section').show();
-            console.log('show');
         } else {
-            console.log('hide');
             $('.load-more-section').hide();
         }
 

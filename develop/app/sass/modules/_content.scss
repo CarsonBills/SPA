@@ -116,7 +116,7 @@ ul.card {
             }
 
             &.list-title {
-                flex-grow: 50;
+                flex-grow: 49;
             }
 
             &.ebook {
@@ -124,7 +124,7 @@ ul.card {
             }
 
             &.add-to-list {
-                flex-grow: 2;
+                flex-grow: 1;
             }
         }
     }
@@ -139,7 +139,8 @@ ul.card {
             padding: 0 1rem;
         }
         a {
-            width: 85%;
+            color: transparent;
+            width: 87%;
             &.details {
                 div {
                     display: inline-block;
@@ -162,6 +163,7 @@ ul.card {
 
         .ebook {
             text-align: center;
+            width: 50px;
             .ebook-lnk {
                 @include svg-sprite(ebook_icon);
                 @include ie-sprite(ebook_icon);
@@ -172,6 +174,7 @@ ul.card {
         }
 
         .add-to-list {
+            width: 90px;
             text-align: center;
             color: $reader-blue;
             font-size: 2rem;
@@ -180,7 +183,7 @@ ul.card {
 
     .list-format {
         @include opensans($size: 1.4rem, $weight: 600);
-        height: 45px;
+        min-height: 45px;
         background-color: #fff;
         display: block;
         border-bottom: 1px solid #9e9e9a;
@@ -210,6 +213,50 @@ ul.card {
         margin: 0 auto 3rem;
     }
 }
+
+
+
+@media only screen and (max-width: $mobile-width) {
+    ul.card {
+        .listview-head {
+            div {
+                &.author {
+                    flex-grow: 1;
+                }
+                &.list-title {
+                    flex-grow: 8;
+                }
+                &.ebook,
+                &.add-to-list {
+                    display: none;
+                }
+            }
+
+        }
+        li.list-format {
+            .ebook,
+            .add-to-list {
+                width: 40px;
+            }
+
+            a {
+                display: block;
+
+                width: 80%;
+
+                .author {
+                    line-height: 1.2;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+
+
 
 
 .icon-dl {
