@@ -16,7 +16,6 @@ var AppView = Backbone.View.extend({
     articleView: null,
     filtersView: null,
     evtMgr: EventManager.getInstance(),
-    template: require('../../templates/AppTemplate.hbs'),
 
     hasRefreshed: false,
     shouldRefresh: null,
@@ -33,10 +32,8 @@ var AppView = Backbone.View.extend({
             model: NortonApp.yourFavsList
         });
 
-
         this.render();
         this.getArticles();
-
 
         this.stickScroll = this.stickScrollWrapper();
         this.shouldRefresh = this.shouldRefreshWrapper();
@@ -72,7 +69,8 @@ var AppView = Backbone.View.extend({
 
         this.filtersView = new NortonApp.Views.Filters({
             collection: this.collection,
-            el: "#filters"
+            el: "#filters",
+            app: this
         }).render();
 
         if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
@@ -241,8 +239,20 @@ var AppView = Backbone.View.extend({
                 fields: '["*"]'
             };
 
+		if (Norton.searchQuery) {
+            postdata.query = Norton.searchQuery;
+        }
+        if (Norton.refinements != "") {
+            var refinements_json = this.formatRefinements();
+            postdata.refinements = Norton.refinements;
+            postdata.pruneRefinements = "true";
+        }
+        if (Norton.sortby) {
+            postdata.sort = Norton.sortby;
+        }
+        console.log(JSON.stringify(postdata));
         this.collection.fetch({
-            data: postdata,
+            data: JSON.stringify(postdata),
             type: 'POST',
             remove: false,
             success: $.proxy (function(data) {
@@ -260,6 +270,25 @@ var AppView = Backbone.View.extend({
                 Norton.Utils.genericError('articles');
             }
         });
+    },
+    formatRefinements: function() {
+        var refs = [],
+            ref,
+            splt;
+        for (var cat in Norton.refinements) {
+            splt = Norton.refinements[cat].split("=");
+
+            ref  = splt[1].split(",");
+            console.log(ref);
+            for (var i=0; i<ref.count; i++) {
+                refs.push('{"type": "Value", "navigationName": "' + cat + '", "value": "' + decodeURIComponent(ref[i]) + '"}');
+            }
+        }
+
+        Norton.refinements = refs;
+        console.log(Norton.refinements);
+
+        // return [ {"type": "Value", "navigationName": "mode", "value": "Comparing and Contrasting" } ]
     },
     sortArticles: function() {
         "use strict";

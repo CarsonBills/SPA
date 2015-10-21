@@ -2,7 +2,7 @@ var Backbone = require("backbone");
 
 var PageModel = Backbone.Model.extend({
     //urlRoot: "/php/get_page2.php/?",
-    urlRoot: Norton.Constants.getDetailPageUrl + Norton.siteCode + "/" + Norton.version+ "?pname=",
+    urlRoot: Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=",
 
     defaults: {
         "siteVersion":"",
@@ -30,6 +30,16 @@ var PageModel = Backbone.Model.extend({
                 }
             ]
         }
+    },
+    parse: function(response) {
+        'use strict';
+        if (response.code != 200) {
+            console.log('Search return code is" ' + response.code);
+            Norton.Utils.genericError('config');
+            return;
+        }
+
+        return response;
     },
     setUrlId: function(id){
         // "this" is now our Model instance declared from the router

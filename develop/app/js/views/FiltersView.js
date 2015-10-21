@@ -8,9 +8,12 @@ var FiltersView = Backbone.View.extend({
     template: require("../../templates/FiltersTemplate.hbs"),
     //cat: "",
     filterContent: "",
+    app: null,
+
     initialize: function() {
         "use strict";
         this.collection.on('update', this.render, this);
+        this.app = params.app;
     },
     render: function () {
         "use strict";
@@ -110,6 +113,7 @@ var FiltersView = Backbone.View.extend({
         });
 
         Norton.refinements = cats;
+        this.app.formatRefinements();   // call getArticles() in AppView
 
         for (var key in cats) {
             query += cats[key] + "&";

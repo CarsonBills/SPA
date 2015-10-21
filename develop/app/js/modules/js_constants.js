@@ -4,7 +4,10 @@ var JSConstants = {
     invalidSiteCodeUrl: '//books.wwnorton.com/books/index.aspx',
     //siteConfigUrl: 'http://dev-books.wwnorton.com:2999/api/getsiteconfig/',
     siteConfigUrl: 'http://dusty:822/ars.svc/v1/getsiteconfig?',
-    getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
+    //searchUrl: '/php/searchandiser.php',
+    searchUrl: 'http://dusty:822/ars.svc/v1/search',
+    //getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
+    getDetailPageUrl: 'http://dusty:822/ars.svc/v1/getpagedetail?',
     defaultPageSize: 6
 };
 
