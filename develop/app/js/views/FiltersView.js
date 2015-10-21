@@ -18,7 +18,7 @@ var FiltersView = Backbone.View.extend({
         this.$('.filters-container').remove();
 
         // Since this refreshes on each Load More event, do not keep appending
-        $(this.$el).empty();
+        $(this.$('.filters-content')).empty();
 
         _.each(this.collection.filters, function (filter) {
             filter.cat_display = filter.displayName;
