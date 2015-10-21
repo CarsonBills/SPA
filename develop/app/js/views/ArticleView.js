@@ -18,6 +18,10 @@ var ArticleView = Backbone.View.extend({
     render: function() {
         'use strict';
 
+        if (this.collection.length === 0) {
+            return false;
+        }
+
         var showGrid = this.collection.showGrid(),
             articleTemplate;
 
