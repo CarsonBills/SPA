@@ -24,7 +24,7 @@ var AppView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
-        
+
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem
         });
@@ -108,7 +108,6 @@ var AppView = Backbone.View.extend({
          */
         "click #navFilters a": function(e) {
             "use strict";
-            console.log('tttt')
             this.$('#filters').toggle();
             return false;
         },
@@ -196,25 +195,30 @@ var AppView = Backbone.View.extend({
         }
     },
     /* End Grid/List view toggle */
-
     renderArticles: function() {
         "use strict";
-        this.articleView.$el = this.$("#articles");
-        this.articleView.render();
+        this.collection.$el = this.$("#articles");
+        this.collection.render();
     },
     getArticles: function() {
         "use strict";
         // query would be populated with Search box data
         var that = this,
             delta,
-            postdata = {skip: this.collection.recordEnd, pageSize: Norton.perPage, query: ''};
+            postdata = {
+                sitecode: '"' + Norton.siteCode + '"',
+                siteversion: Norton.siteVersion,
+                skip: this.collection.recordEnd,
+                pageSize: Norton.perPage,
+                query:  Norton.searchQuery,
+                fields: '["*"]'
+            };
 
         NortonApp.articlesList.fetch({
             data: postdata,
             type: 'POST',
             remove: false,
             success: $.proxy (function(data) {
-
                 that.showResultsTotals();
                 that.hasRefreshed = false;
 
@@ -229,37 +233,13 @@ var AppView = Backbone.View.extend({
                 if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles();
                 }
-                
-            }, this)
-
-            /*success: $.proxy (function() {
-                this.showResultsTotals();
-                this.renderArticles();
-                this.filtersView.$el = this.$("#filters");
-                this.filtersView.render();
-            }, this)*/
+            }, this),
+            error: function(xhr, response, error) {
+                console.log('Search query not available.');
+                Norton.Utils.genericError('articles');
+            }
         });
     },
-    /*changeView: function(typ) {
-        "use strict";
-        if (Norton.toggleGridFormat === typ) {
-            return;
-        }
-        Norton.toggleGridFormat = typ;
-
-        // re-render Navbar
-        $('.navbar').remove();  // remove navbar before re-rendering
-        this.topNavView.$el = this.$("#topNav");
-        this.topNavView.render();
-
-        this.showResultsTotals();
-
-        // remove articles sub-containers before re-rendering
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        this.articleView.$el = this.$("#articles");
-        this.articleView.render();
-    },*/
     sortArticles: function() {
         "use strict";
         var sortby = $( "#sortArticles option:selected" ).val();
@@ -281,36 +261,12 @@ var AppView = Backbone.View.extend({
     searchArticles: function() {
         "use strict";
         /**
-         * THis whole thing will be replaced since our search results will come back from Searchandiser
+         * Clear out collection, reset "skip" to zero, then run search query.
          */
-        var searchTerm = $('#searchTextInput').val().toLowerCase();
-        NortonApp.articlesList.reset(NortonApp.articlesList.models, { silent: true });
-
-        // This iterates all models and returns those selected in "filtered"
-        var filtered = _.filter(NortonApp.articlesList.models,  $.proxy (function(item) {
-            var title =  item.attributes.title.toLowerCase();
-            var name =  item.attributes.fullName.toLowerCase();
-            var extract = item.attributes.extract.toLowerCase();
-
-            if (title.indexOf(searchTerm) >= 0 ||
-                name.indexOf(searchTerm) >= 0 ||
-                extract.indexOf(searchTerm) >= 0 )
-            {
-                Norton.lastArticleLoaded = 0;
-                return item;
-            }
-        }, this));
-
-        // reset the articlesList collection to filtered, then re-render
-        NortonApp.articlesList.reset(filtered);
-
-        /**
-         * It would be nice if we were set up for a collection view on articles so e could
-         * listen for the "reset" event instead of doing this manually
-         */
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        this.renderArticles();
+        Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
+        this.collection.reset(null, { silent: true });
+        this.collection.recordEnd = 0;
+        this.getArticles();
     },
     showYourFavs: function() {
         "use strict";

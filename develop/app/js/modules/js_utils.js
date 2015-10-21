@@ -25,6 +25,8 @@ var Utils = {
     genericError: function(err) {
         NortonApp.errorPageView = new NortonApp.Views.ErrorPage();
         NortonApp.errorPageView.render();
+
+        window.history.pushState(null,null,Norton.baseUrl);
     }
 };
 

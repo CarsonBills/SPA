@@ -11,7 +11,6 @@ var ErrorPageView = Backbone.View.extend({
     render: function () {
         "use strict";
         var ErrorPageTemplate = this.template();
-        console.log(ErrorPageTemplate);
         this.$el.append(ErrorPageTemplate);
     }
 });

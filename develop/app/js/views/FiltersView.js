@@ -17,13 +17,16 @@ var FiltersView = Backbone.View.extend({
         var cat;
         this.$('.filters-container').remove();
 
+        // Since this refreshes on each Load More event, do not keep appending
+        $(this.$el).empty();
+
         _.each(this.collection.filters, function (filter) {
-            if (filter.name != cat) {
-                cat = filter.name;
-                filter.cat_display = filter.displayName;
-            } else {
-                filter.cat_display = "";
+            filter.cat_display = filter.displayName;
+
+            for (var i=0; i<filter.refinements.length; i++) {
+               filter.refinements[i].cat = filter.name;
             }
+
             var filterTemplate = this.template(filter);
             this.$el.append(filterTemplate);
         }, this);
@@ -68,7 +71,7 @@ var FiltersView = Backbone.View.extend({
         var sel ='';
         var tgt = $(e.target);
 
-        if (typ == 'cb') {  //checkbox was clicked to remove
+        if (typ == 'cb') {  // checkbox was clicked to remove
             sel = "span[data-close-filter-name='" + tgt.attr('data-filter-name') + "']" +
                 "[data-close-filter-cat='" + tgt.attr('data-filter-cat') + "']";
             tgt.attr('checked', false);
@@ -105,6 +108,8 @@ var FiltersView = Backbone.View.extend({
                 }
             }
         });
+
+        Norton.refinements = cats;
 
         for (var key in cats) {
             query += cats[key] + "&";

@@ -1,15 +1,16 @@
-<div class="filters-container">
+<div class="filters-container" style="font-size:10px">
     <div class="filter-item">
         {{#if cat_display}}
             <div class="filter-item-cat">{{cat_display}}</div>
         {{/if}}
 
         {{#each refinements}}
+            {{#if value}}
                 <div class="filter-item-name"  style="margin-left:10px;">
                     <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{value}}' data-filter-cat="{{cat}}"/></a>
                     <span class="filter-name" style="color:#0073ea">{{value}}</span> ({{count}})
                 </div>
-
+            {{/if}}
         {{/each}}
     </div>
 </div>

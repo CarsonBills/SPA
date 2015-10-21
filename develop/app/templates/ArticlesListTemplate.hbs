@@ -1,5 +1,5 @@
-<li class="list-format" data-item-id='{{id}}'>
-    <a class="details" href="{{baseUrl}}#/page/{{allMeta.id}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
+<li class="list-format" data-item-id='{{allMeta.pname}}'>
+    <a class="details" href="{{baseUrl}}#/page/{{allMeta.pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
         <div class="author">{{HBFullname allMeta}}</div>
         <div class="list-title">{{allMeta.title}}</div>
     </a>
@@ -8,6 +8,6 @@
             <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
         {{/if}}
     </div>
-    <div class="add-to-list glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'></div>
+    <div class="add-to-list glyphicon-plus icon-add favs-lnk" alt="Add to My Items" data-item-id='{{allMeta.pname}}'></div>
     
 </li>

@@ -26,7 +26,7 @@ var ArticleView = Backbone.View.extend({
         if (!showGrid) {
             this.$el.append(this.templateListHead);
         }
-        
+
         this.collection.each(function(record) {
             if (showGrid) {
                 articleTemplate = this.templateGrid(record.toJSON());
