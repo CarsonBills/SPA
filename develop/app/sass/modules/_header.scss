@@ -59,6 +59,7 @@ $header-text: #f2f2ec;
 				@include athelas($size: 2.4rem);
 			    color: $header-text;
 			    letter-spacing: 1px;
+			    text-decoration: none;
 			}	
 	    }
 

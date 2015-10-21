@@ -39,6 +39,10 @@ nav {
     left: 18px;
     z-index: 99;
 
+    a {
+        text-decoration: none;
+    }
+
     span {
         opacity: 0.9;
         display: inline-block;
