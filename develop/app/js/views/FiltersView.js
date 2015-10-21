@@ -15,6 +15,7 @@ var FiltersView = Backbone.View.extend({
     render: function () {
         "use strict";
         var cat;
+        this.$('.filters-container').remove();
 
         // Since this refreshes on each Load More event, do not keep appending
         $(this.$el).empty();

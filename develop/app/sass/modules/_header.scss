@@ -23,7 +23,8 @@ $header-text: #f2f2ec;
 
 		.header-bg {
 			width: 100%;
-			max-width: $max-width;
+			height: 100%;
+			//max-width: $max-width;
 		}
 	}
 
@@ -58,6 +59,7 @@ $header-text: #f2f2ec;
 				@include athelas($size: 2.4rem);
 			    color: $header-text;
 			    letter-spacing: 1px;
+			    text-decoration: none;
 			}	
 	    }
 
@@ -128,17 +130,17 @@ $header-text: #f2f2ec;
 	}
 }
 .title-screen {
-	//width: 480px;
-	width: 30%;
+	width: 480px;
+	height: 144px;
 	@include center(absolute);
 	top: 63%;
-	transition: opacity 0.3s;
+	transition: all 0.3s;
 
 	.stick & {
 		opacity: 0;
 	}
 
-	.title {
+	.title-head {
 		@include athelas($size: 4.8rem);
 		@include vertical-align($position: absolute, $top: 47%);
 		color: #000;
@@ -164,5 +166,61 @@ $header-text: #f2f2ec;
 		//height: 144px;
 		width: 100%;
 		height: auto;
+	}
+}
+
+@media only screen and (max-width: $desktop-width) {
+	.title-screen {
+		width: 400px;
+
+		.title-head {
+			font-size: 4rem;
+			top: 42%;
+		}
+	}
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+	.header {
+		.top-bar {
+			.links,
+			.header-title {
+				display: none;
+			}
+
+			.header-label {
+				margin-left: 7rem;
+				a {
+					line-height: 1;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: $mobile-width) {
+	.header {
+		.cover {
+			height: 50vw;
+		}
+	}
+	.title-screen {
+		width: 94%;
+
+		.title-head {
+			font-size: 9.5vw;
+			top: 14vw;
+		}
+	}
+}
+
+@media only screen and (max-width: $mobile-width-sm) {
+	.title-screen {
+		width: 280px;
+
+		.title-head {
+			font-size: 3rem;
+			top: 29%;
+		}
 	}
 }

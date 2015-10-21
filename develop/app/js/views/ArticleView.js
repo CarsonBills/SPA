@@ -41,9 +41,7 @@ var ArticleView = Backbone.View.extend({
          */
         if (this.collection.hasMore()) {
             $('.load-more-section').show();
-            //console.log('show');
         } else {
-            //console.log('hide');
             $('.load-more-section').hide();
         }
 
@@ -65,7 +63,7 @@ var ArticleView = Backbone.View.extend({
         NortonApp.yourFavsList.add(this.collection.get(id));
         // Increment and show item counter
         Norton.yourFavsCtr++;
-        $('#yourFavsCtr').html('My Items (' + Norton.yourFavsCtr + ')');
+        $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
     },
 });
 

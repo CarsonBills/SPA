@@ -1,16 +1,26 @@
 <div class='navbar'>
     <nav class="nav">
-        <div id="navFilters" class="filter"><span class="glyphicon glyphicon-adjust-alt rotate90"></span> <a href="#/favs/">FILTER</a></div>
+        <div id="navFilters" class="filter">
+            <a href="#/favs/">
+                <span class="glyphicon glyphicon-adjust-alt rotate90"></span>
+                <span class="filter-title">FILTER</span>
+            </a>
+        </div>
         <div class="search">
             <input type="text" name="search" id="searchTextInput" placeholder="Search..." required>
             <a href="#">
                 <span class="glyphicon glyphicon-search" id="searchButton"></span>
             </a>
         </div>
-        <div id="navYourFavs" class="saved-items"><span class="glyphicon glyphicon-list-alt"></span> <a href="#/favs/" class="your-favs-link"><span id="yourFavsCtr">My Items (0)</span></a></div>
+        <div id="navYourFavs" class="saved-items">
+            <a href="#/favs/" class="your-favs-link">
+                <span class="glyphicon glyphicon-list-alt"></span> 
+                <span class="my-items">My Items </span><span id="yourFavsCtr">(0)</span>
+            </a>
+        </div>
     </nav>
     <div class="results-bar">
-        <div class="results">Showing <span id="perPage"></span> of <span id="nbrRecords"></span> Articles</div>
+        <div class="results"><span class="text">Showing </span><span id="perPage"></span><span class="text"> of </span><span class="slash"> / </span><span id="nbrRecords"></span><span class="text"> Articles </span></div>
         <div class="sortby">
             <select id="sortArticles" name="sort">
                 <option value="id">Sort By</option>

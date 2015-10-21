@@ -204,6 +204,7 @@ var AppView = Backbone.View.extend({
         "use strict";
         // query would be populated with Search box data
         var that = this,
+            delta,
             postdata = {
                 sitecode: '"' + Norton.siteCode + '"',
                 siteversion: Norton.siteVersion,
@@ -220,8 +221,16 @@ var AppView = Backbone.View.extend({
             success: $.proxy (function(data) {
                 that.showResultsTotals();
                 that.hasRefreshed = false;
+
+                if (that.collection.hasMore()) {
+                    delta = scrollHelper.docDelta() - 100;
+                } else {
+                    delta = scrollHelper.docDelta();
+                }
+
+                TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
                     
-                if (scrollHelper.shouldRefresh() && this.collection.hasMore()) {
+                if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles();
                 }
             }, this),
