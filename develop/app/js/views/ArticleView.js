@@ -25,6 +25,7 @@ var ArticleView = Backbone.View.extend({
         var showGrid = this.collection.showGrid(),
             articleTemplate;
 
+
         this.$el.empty();
 
         if (!showGrid) {
@@ -39,6 +40,7 @@ var ArticleView = Backbone.View.extend({
             }
             this.$el.append(articleTemplate);
         }, this);
+
 
         /**
          * Hide the Load More button if we are at the end of current collection
