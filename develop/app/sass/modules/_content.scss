@@ -17,7 +17,8 @@
 ul.card {
     position: relative;
     flex-direction: row;
-    justify-content: space-around;
+    //justify-content: space-around;
+    flex-wrap: wrap;
     display: block;
     margin: 0 auto 3rem;
     max-width: $max-width;
@@ -32,6 +33,7 @@ ul.card {
         padding: 0;
         margin: 1rem;
         vertical-align: top;
+        text-align: left;
         width: $card-width;
         height: $card-height;
         background: #fafafa;

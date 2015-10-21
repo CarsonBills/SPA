@@ -136,7 +136,8 @@ var AppView = Backbone.View.extend({
         },
         "click #loadMore": function() {
             "use strict";
-            this.getArticles();
+            // pass true to show hint
+            this.getArticles(true);
         }
     },
 
@@ -200,11 +201,37 @@ var AppView = Backbone.View.extend({
         this.collection.$el = this.$("#articles");
         this.collection.render();
     },
-    getArticles: function() {
+
+    showHighlight: function (showHint) {
+        var delta,
+            $lastItem,
+            style,
+            tween;
+        if (this.collection.hasMore()) {
+            delta = scrollHelper.docDelta() - 100;
+        } else {
+            delta = scrollHelper.docDelta();
+        }
+
+        TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
+
+        if (showHint) {
+            // highlight last record
+            lastRecord = this.collection.recordStart -1 ;
+            $lastItem = this.articleView.$el.find("[data-index='" + lastRecord + "']");
+            style = $lastItem.css('boxShadow');
+            tween = TweenLite.to($lastItem, 0.5, {boxShadow:"inset 0px 0px 15px #F30", ease: Quad.easeIn, onComplete: function() {
+                tween.reverse();
+            }, onReverseComplete: function () {
+                TweenLite.to($lastItem, 1, {boxShadow:style, ease: Quad.easeOut});
+            }});
+        }
+    },
+
+    getArticles: function(showHint) {
         "use strict";
         // query would be populated with Search box data
         var that = this,
-            delta,
             postdata = {
                 sitecode: '"' + Norton.siteCode + '"',
                 siteversion: Norton.siteVersion,
@@ -214,7 +241,7 @@ var AppView = Backbone.View.extend({
                 fields: '["*"]'
             };
 
-        NortonApp.articlesList.fetch({
+        this.collection.fetch({
             data: postdata,
             type: 'POST',
             remove: false,
@@ -222,13 +249,7 @@ var AppView = Backbone.View.extend({
                 that.showResultsTotals();
                 that.hasRefreshed = false;
 
-                if (that.collection.hasMore()) {
-                    delta = scrollHelper.docDelta() - 100;
-                } else {
-                    delta = scrollHelper.docDelta();
-                }
-
-                TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
+                that.showHighlight(showHint);
                     
                 if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles();
