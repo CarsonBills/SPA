@@ -42,7 +42,7 @@ $(function() {
     Norton.siteCode = null;
     Norton.version = null;
     Norton.searchQuery = "";
-    Norton.refinements = [];
+    Norton.refinements = null;
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};

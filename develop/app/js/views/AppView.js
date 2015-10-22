@@ -236,15 +236,17 @@ var AppView = Backbone.View.extend({
                 sitecode: Norton.siteCode,
                 siteversion: Norton.version,
                 skip: this.collection.recordEnd,
-                pageSize: Norton.perPage
+                pageSize: Norton.perPage,
+                fields: 'wow'
             };
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
         }
-        if (Norton.refinements != "") {
-            var refinements_json = this.formatRefinements();
-            postdata.refinements = Norton.refinements;
+
+        if (Norton.refinements) {
+            this.formatRefinements();
+            postdata.refinements = JSON.stringify(Norton.refinements);
             postdata.pruneRefinements = "true";
         }
         if (Norton.sortby) {
@@ -252,8 +254,10 @@ var AppView = Backbone.View.extend({
         }
         console.log(JSON.stringify(postdata));
         this.collection.fetch({
-            data: JSON.stringify(postdata),
-            type: 'POST',
+            //data: JSON.stringify(postdata),
+            data: postdata,
+            method: "POST",
+            datatype: "json",
             remove: false,
             success: $.proxy (function(data) {
                 that.showResultsTotals();
@@ -271,24 +275,30 @@ var AppView = Backbone.View.extend({
             }
         });
     },
+    // format the refinements as JSON string
     formatRefinements: function() {
         var refs = [],
             ref,
-            splt;
+            splt,
+            obj = {};
+
         for (var cat in Norton.refinements) {
             splt = Norton.refinements[cat].split("=");
-
             ref  = splt[1].split(",");
-            console.log(ref);
-            for (var i=0; i<ref.count; i++) {
-                refs.push('{"type": "Value", "navigationName": "' + cat + '", "value": "' + decodeURIComponent(ref[i]) + '"}');
+            for (var i=0; i<ref.length; i++) {
+                obj = {
+                    type: "Value",
+                    navigationName: cat,
+                    value: decodeURIComponent(ref[i])
+                };
+
+                refs.push(obj);
+                //refs.push('{type: Value, navigationName: ' + cat + ', value: ' + decodeURIComponent(ref[i]) + '}');
             }
         }
-
+console.log(refs);
         Norton.refinements = refs;
         console.log(Norton.refinements);
-
-        // return [ {"type": "Value", "navigationName": "mode", "value": "Comparing and Contrasting" } ]
     },
     sortArticles: function() {
         "use strict";
