@@ -236,8 +236,7 @@ var AppView = Backbone.View.extend({
                 sitecode: Norton.siteCode,
                 siteversion: Norton.version,
                 skip: this.collection.recordEnd,
-                pageSize: Norton.perPage,
-                fields: 'wow'
+                pageSize: Norton.perPage
             };
 
 		if (Norton.searchQuery) {
@@ -246,16 +245,17 @@ var AppView = Backbone.View.extend({
 
         if (Norton.refinements) {
             this.formatRefinements();
-            postdata.refinements = JSON.stringify(Norton.refinements);
+            //postdata.refinements = JSON.stringify(Norton.refinements);   //  NEED THIS IF USING searchandiser.php
+            postdata.refinements = Norton.refinements;
             postdata.pruneRefinements = "true";
         }
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
-        console.log(JSON.stringify(postdata));
+ console.log(JSON.stringify(postdata));
         this.collection.fetch({
-            //data: JSON.stringify(postdata),
-            data: postdata,
+            data: JSON.stringify(postdata),
+            //data: postdata,   //  NEED THIS IF USING searchandiser.php
             method: "POST",
             datatype: "json",
             remove: false,
@@ -293,12 +293,10 @@ var AppView = Backbone.View.extend({
                 };
 
                 refs.push(obj);
-                //refs.push('{type: Value, navigationName: ' + cat + ', value: ' + decodeURIComponent(ref[i]) + '}');
             }
         }
-console.log(refs);
+
         Norton.refinements = refs;
-        console.log(Norton.refinements);
     },
     sortArticles: function() {
         "use strict";
