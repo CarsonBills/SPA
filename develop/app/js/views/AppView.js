@@ -241,7 +241,8 @@ var AppView = Backbone.View.extend({
                 sitecode: Norton.siteCode,
                 siteversion: Norton.version,
                 skip: this.collection.recordEnd,
-                pageSize: Norton.perPage
+                pageSize: Norton.perPage,
+                typ: 3
             };
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;

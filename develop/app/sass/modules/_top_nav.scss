@@ -64,6 +64,9 @@ nav {
     top: 267px;
     background-color: #fff;
     z-index: 99;
+
+
+    @include locked($position: fixed, $top:100px);
 }
 
 /* search module */

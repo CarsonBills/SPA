@@ -35,7 +35,7 @@ Navigation.prototype = {
     },
     compare: function (collection) {
         "use strict";
-        console.log(collection.toJSON());
+        console.log(collection);
     }
 };
 

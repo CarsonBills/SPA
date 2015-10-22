@@ -12,12 +12,11 @@ var ArticlesCollection = Backbone.Collection.extend({
     parse: function(res) {
         'use strict';
 
-        var response = res,
+        var response = res.data,
             that = this;
 
-        console.log(response);
-        if (response.code !== 200) {
-            console.log('Search return code is" ' + response.code);
+        if (res.code !== 200) {
+            console.log('Search return code is" ' + res.code);
             Norton.Utils.genericError('config');
             return;
         }

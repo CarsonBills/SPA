@@ -27,7 +27,7 @@ var FiltersView = Backbone.View.extend({
         if (this.collection.length > 0 && this.delay) {
             this.delay = false;
             setTimeout(function () {
-                that.refinements.compare(this.collection);
+                that.refinements.compare(that.collection.toJSON());
             }, 500);
         }
 

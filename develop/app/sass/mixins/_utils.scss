@@ -15,9 +15,9 @@
 	box-shadow: $offset-x $offset-y $blur $spread $color;
 }
 
-@mixin locked($position: relative) {
+@mixin locked($position: relative, $top: $top-bar-height) {
 	.stick & {
 		position: $position;
-		top: $top-bar-height;
+		top: $top;
 	}
 }

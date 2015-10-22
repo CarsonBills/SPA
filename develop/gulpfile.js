@@ -267,6 +267,7 @@ gulp.task('assets_include', function () {
 gulp.task('copy_images', function () {
     return gulp.src([
             proj.images + '/**/*(*.jpg)',
+            proj.images + '/favicon.png',
             '!' + proj.svg + '/*.svg'
         ])
         .pipe(gulpif(argv.deploy,
