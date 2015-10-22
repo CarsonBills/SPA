@@ -9,7 +9,7 @@ var NavigationCollection = require('../collections/NavigationCollection'),
 
 Navigation.prototype = {
     collection: null,
-    url: '/php/searchandiser.php',
+    url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
 
     initialize: function () {

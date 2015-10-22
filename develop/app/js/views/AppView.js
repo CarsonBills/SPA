@@ -211,19 +211,24 @@ var AppView = Backbone.View.extend({
         var delta,
             $lastItem,
             style,
+            lastRecord,
             tween;
+
+        console.log(showHint);
         if (this.collection.hasMore()) {
             delta = scrollHelper.docDelta() - 100;
         } else {
             delta = scrollHelper.docDelta();
         }
 
+
         TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
 
         if (showHint) {
             // highlight last record
-            lastRecord = this.collection.recordStart -1 ;
+            lastRecord = this.collection.recordStart - 1;
             $lastItem = this.articleView.$el.find("[data-index='" + lastRecord + "']");
+            console.log($lastItem)
             style = $lastItem.css('boxShadow');
             tween = TweenLite.to($lastItem, 0.5, {boxShadow:"inset 0px 0px 15px #F30", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
@@ -241,8 +246,7 @@ var AppView = Backbone.View.extend({
                 sitecode: Norton.siteCode,
                 siteversion: Norton.version,
                 skip: this.collection.recordEnd,
-                pageSize: Norton.perPage,
-                typ: 3
+                pageSize: Norton.perPage
             };
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
@@ -255,7 +259,7 @@ var AppView = Backbone.View.extend({
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
-        console.log(JSON.stringify(postdata));
+        console.log(JSON.stringify(postdata))
         this.collection.fetch({
             data: JSON.stringify(postdata),
             type: 'POST',

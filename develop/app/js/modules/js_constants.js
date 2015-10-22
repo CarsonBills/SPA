@@ -8,7 +8,7 @@ var JSConstants = {
     //searchUrl: 'http://dusty:822/ars.svc/v1/search',
     //getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
     getDetailPageUrl: 'http://dusty:822/ars.svc/v1/getpagedetail?',
-    defaultPageSize: 6
+    defaultPageSize: 10
 };
 
 module.exports = JSConstants;
