@@ -10,7 +10,7 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     app: null,
 
-    initialize: function() {
+    initialize: function(params) {
         "use strict";
         this.collection.on('update', this.render, this);
         this.app = params.app;

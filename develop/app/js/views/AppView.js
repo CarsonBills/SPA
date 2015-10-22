@@ -231,12 +231,10 @@ var AppView = Backbone.View.extend({
         // query would be populated with Search box data
         var that = this,
             postdata = {
-                sitecode: '"' + Norton.siteCode + '"',
-                siteversion: Norton.siteVersion,
+                sitecode: Norton.siteCode,
+                siteversion: Norton.version,
                 skip: this.collection.recordEnd,
-                pageSize: Norton.perPage,
-                query:  Norton.searchQuery,
-                fields: '["*"]'
+                pageSize: Norton.perPage
             };
 
 		if (Norton.searchQuery) {
