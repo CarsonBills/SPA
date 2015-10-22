@@ -9,23 +9,26 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
-    parse: function(response) {
+    parse: function(res) {
         'use strict';
 
+        var response = res,
+            that = this;
+
+        console.log(response);
         if (response.code !== 200) {
             console.log('Search return code is" ' + response.code);
             Norton.Utils.genericError('config');
             return;
         }
 
-        var that = this;
         // Inject return data to collection for later use in view
-        this.totalRecords = response.data.totalRecordCount;
-        this.recordStart = response.data.pageInfo.recordStart;
-        this.recordEnd = response.data.pageInfo.recordEnd;
-        this.filters = response.data.availableNavigation;
+        this.totalRecords = response.totalRecordCount;
+        this.recordStart = response.pageInfo.recordStart;
+        this.recordEnd = response.pageInfo.recordEnd;
+        this.filters = response.availableNavigation;
 
-        _.each(response.data.records, function(record) {
+        _.each(response.records, function(record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
             // Norton.lastArticleLoaded = record.attributes.allMeta.pname;
 
@@ -38,7 +41,7 @@ var ArticlesCollection = Backbone.Collection.extend({
 
         });
 
-        return response.data.records;
+        return response.records;
     },
     /**
      * For next/prev, index comes from the data so it may not be sequential
