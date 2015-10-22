@@ -50,6 +50,8 @@ var AppView = Backbone.View.extend({
             callback: this.shouldRefresh
         });
 
+
+
         //scrollHelper.setRefresh(this.shouldRefresh);
 
     },
@@ -84,6 +86,8 @@ var AppView = Backbone.View.extend({
         }
 
         this.toggleView(EventManager.LIST_VIEW);
+
+
 
     },
     events: {

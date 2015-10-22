@@ -1,20 +1,33 @@
-var Backbone = require("backbone");
-var $ = require('jquery');
-var _ = require("underscore");
-Backbone.$ = $;
+var Backbone = require("backbone"),
+    $ = require('jquery'),
+    _ = require("underscore"),
+    Refinements = require('../modules/refinements');
 
 var FiltersView = Backbone.View.extend({
     el: "#filters",
     template: require("../../templates/FiltersTemplate.hbs"),
+    refinements: Refinements.getInstance(),
     //cat: "",
     filterContent: "",
+    delay: true,
     initialize: function() {
         "use strict";
         this.collection.on('update', this.render, this);
     },
     render: function () {
         "use strict";
-        var cat;
+        var that = this,
+            filterTemplate,
+            cat,
+            i;
+
+        if (this.collection.length > 0 && this.delay) {
+            this.delay = false;
+            setTimeout(function () {
+                that.refinements.compare(this.collection);
+            }, 500);
+        }
+
         this.$('.filters-container').remove();
 
         // Since this refreshes on each Load More event, do not keep appending
@@ -23,11 +36,11 @@ var FiltersView = Backbone.View.extend({
         _.each(this.collection.filters, function (filter) {
             filter.cat_display = filter.displayName;
 
-            for (var i=0; i<filter.refinements.length; i++) {
+            for (i=0; i<filter.refinements.length; i++) {
                filter.refinements[i].cat = filter.name;
             }
 
-            var filterTemplate = this.template(filter);
+            filterTemplate = this.template(filter);
             this.$el.append(filterTemplate);
         }, this);
 

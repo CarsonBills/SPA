@@ -1,9 +1,12 @@
 var Backbone = require("backbone"),
-    $ = require('jquery');
+    $ = require('jquery'),
+    Refinements = require('../modules/refinements');
 
 var AppRouter = Backbone.Router.extend({
 
     appView: null,
+    deferred: $.Deferred(),
+    refinements: Refinements.getInstance(),
 
     routes: {
         "/^(?!page|favs|search!filter)([\w]+(\/*))$/": "index",
@@ -17,15 +20,27 @@ var AppRouter = Backbone.Router.extend({
     initialize: function() {
         "use strict";
 
-        this.handleSiteConfig().then(function() {   // use a promise to wait for site_config if it is not in localstorage
+        this.getData().then(function() {   // use a promise to wait for site_config if it is not in localstorage
             Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
-
             this.appView = new NortonApp.Views.App({
                 el: '#container',
                 collection: NortonApp.articlesList
             });
         });
     },
+
+    getData: function () {
+        var that = this;
+        $.when(this.handleSiteConfig(), this.refinements.fetch())
+            .then(function (res1, res2) {
+                that.deferred.resolve();
+            },
+            function (res1, res2) {
+                console.log(res1, res2);
+            });
+        return this.deferred.promise();
+    },
+
     index: function() {
         "use strict";
 
