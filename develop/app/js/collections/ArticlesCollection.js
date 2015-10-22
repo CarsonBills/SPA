@@ -3,24 +3,29 @@ var Backbone = require('backbone'),
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
-    url: '/php/searchandiser.php',
+    url: Norton.Constants.searchUrl,
     totalRecords: 0,
     recordStart: 0,
     recordEnd: 0,
     filters: null,
     showGridView: false,
-
     parse: function(response) {
         'use strict';
 
+        if (response.code !== 200) {
+            console.log('Search return code is" ' + response.code);
+            Norton.Utils.genericError('config');
+            return;
+        }
+
         var that = this;
         // Inject return data to collection for later use in view
-        this.totalRecords = response.totalRecordCount;
-        this.recordStart = response.pageInfo.recordStart;
-        this.recordEnd = response.pageInfo.recordEnd;
-        this.filters = response.availableNavigation;
+        this.totalRecords = response.data.totalRecordCount;
+        this.recordStart = response.data.pageInfo.recordStart;
+        this.recordEnd = response.data.pageInfo.recordEnd;
+        this.filters = response.data.availableNavigation;
 
-        _.each(response.records, function(record) {
+        _.each(response.data.records, function(record) {
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
             // Norton.lastArticleLoaded = record.attributes.allMeta.pname;
 
@@ -33,7 +38,7 @@ var ArticlesCollection = Backbone.Collection.extend({
 
         });
 
-        return response.records;
+        return response.data.records;
     },
     /**
      * For next/prev, index comes from the data so it may not be sequential

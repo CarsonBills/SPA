@@ -87,7 +87,7 @@ gulp.task('jscs', function () {
 */
 gulp.task('lint', function () {
     return gulp.src([proj.js + '/**/*.js',
-            '!' + proj.vendor + '/**/*.js'
+            '!' + app + proj.vendor + '/**/*.js'
         ])
         .pipe($.plumber())
         .pipe($.jshint({

@@ -23,6 +23,7 @@ var Utils = {
         document.cookie = name + "=" + val + "; expires=" + expires.toGMTString() + "; path=/; domain=." + domain;
     },
     genericError: function(err) {
+        "use strict";
         NortonApp.errorPageView = new NortonApp.Views.ErrorPage();
         NortonApp.errorPageView.render();
 

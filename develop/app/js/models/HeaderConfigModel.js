@@ -48,10 +48,11 @@ var HeaderConfigModel = Backbone.Model.extend({
         expiry: 0
     },
     parse: function(response) {
-        if (response.code != 200) {
-            //console.log('Site Config return code is" ' + response.code);
-            // Norton.Utils.genericError('config');
-            //return;
+        "use strict";
+        if (response.code !== 200) {
+            console.log('Site Config return code is" ' + response.code);
+            Norton.Utils.genericError('config');
+            return;
         }
 
         return response.data;

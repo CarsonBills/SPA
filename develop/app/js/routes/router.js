@@ -19,6 +19,7 @@ var AppRouter = Backbone.Router.extend({
 
     initialize: function() {
         "use strict";
+        var that = this;
 
         this.getData().then(function() {   // use a promise to wait for site_config if it is not in localstorage
             Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
@@ -26,10 +27,14 @@ var AppRouter = Backbone.Router.extend({
                 el: '#container',
                 collection: NortonApp.articlesList
             });
+
+            that.start();
         });
+
     },
 
     getData: function () {
+        "use strict";
         var that = this;
         $.when(this.handleSiteConfig(), this.refinements.fetch())
             .then(function (res1, res2) {
@@ -43,7 +48,6 @@ var AppRouter = Backbone.Router.extend({
 
     index: function() {
         "use strict";
-
     },
     search: function() {
         "use strict";
@@ -88,8 +92,7 @@ var AppRouter = Backbone.Router.extend({
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function() {
-                    var ts = Math.floor((new Date).getTime()/1000);
-                    NortonApp.headerConfigItem.attributes.expiry = ts;
+                    NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
                     try {

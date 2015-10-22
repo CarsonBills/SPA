@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
 	NavigationCollection = Backbone.Collection.extend({
     	model: Navigation,
     	parse: function (response) {
+    		"use strict";
     		return response.availableNavigation;
     	}
 	});

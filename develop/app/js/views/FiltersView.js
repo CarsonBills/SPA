@@ -10,9 +10,12 @@ var FiltersView = Backbone.View.extend({
     //cat: "",
     filterContent: "",
     delay: true,
-    initialize: function() {
+    app: null,
+
+    initialize: function(params) {
         "use strict";
         this.collection.on('update', this.render, this);
+        this.app = params.app;
     },
     render: function () {
         "use strict";
@@ -84,7 +87,7 @@ var FiltersView = Backbone.View.extend({
         var sel ='';
         var tgt = $(e.target);
 
-        if (typ == 'cb') {  // checkbox was clicked to remove
+        if (typ === 'cb') {  // checkbox was clicked to remove
             sel = "span[data-close-filter-name='" + tgt.attr('data-filter-name') + "']" +
                 "[data-close-filter-cat='" + tgt.attr('data-filter-cat') + "']";
             tgt.attr('checked', false);
@@ -108,6 +111,7 @@ var FiltersView = Backbone.View.extend({
         var cats = [],
             query = "",
             cat,
+            key,
             name;
 
         $( "input[data-filter-name]" ).each(function() {
@@ -123,8 +127,9 @@ var FiltersView = Backbone.View.extend({
         });
 
         Norton.refinements = cats;
+        this.app.formatRefinements();   // call getArticles() in AppView
 
-        for (var key in cats) {
+        for (key in cats) {
             query += cats[key] + "&";
         }
         return url + "#/filters/?" + query.slice(0, -1);
