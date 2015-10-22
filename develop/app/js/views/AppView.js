@@ -54,8 +54,6 @@ var AppView = Backbone.View.extend({
     },
     render: function(){
         "use strict";
-        var data = {baseUrl: Norton.baseUrl};
-        //this.$el.html(this.template(data));
 
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
@@ -99,6 +97,10 @@ var AppView = Backbone.View.extend({
             } else {
                 this.filtersView.removeSelectedFilter(e, "cb");
             }
+        },
+        "click #removeAllFilters": function(e) {
+            "use strict";
+            this.filtersView.removeAllFilters(e);
         },
         "click .close-filter": function(e) {
             "use strict";

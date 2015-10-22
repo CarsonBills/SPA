@@ -55,7 +55,7 @@ $(function() {
 
     Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
 
-    Norton.baseUrl = $(location).attr('href');
+    Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash
 
     /**
      * Get Site Code and version

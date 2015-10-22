@@ -61,8 +61,14 @@ var FiltersView = Backbone.View.extend({
         var tgt = $(e.target);
         var cat = tgt.attr('data-filter-cat');
         var name = tgt.attr('data-filter-name');
+        var html = "";
 
-        var html = '<div class="selected-filters"><div>' + name +
+
+        if ($(".selected-filters").length < 1) {
+            html = '<div class="remove-all-filters" id="removeAllFilters" style="margin:10px 0 0 10px; color:#0073ea;cursor:pointer;text-decoration:underline;font-size:14px;font-weight:bold;">Remove all filters</div>';
+        }
+
+        html += '<div class="selected-filters"><div>' + name +
             '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + tgt.attr('data-filter-name') +
             '" data-close-filter-cat="' + cat +
             '" class="close-filter" style="cursor:pointer;font-weight:bold;">X</span></div></div>';
@@ -82,6 +88,18 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
+    removeAllFilters: function(e) {
+        "use strict";
+        $('.selected-filters').remove();
+        $('.filter-checkbox').attr('checked', false);
+        $('.remove-all-filters').remove();
+
+        var url = Norton.baseUrl + "#/filters";
+
+        window.history.pushState(null,null,url);
+
+        // call searchandiser, and refresh AppView with results. Remember to leave filter open with selected filters
+    },
     removeSelectedFilter: function(e, typ) {
         "use strict";
         var sel ='';
@@ -99,13 +117,16 @@ var FiltersView = Backbone.View.extend({
             tgt.parents('.selected-filters').remove();
         }
 
+        if ($(".selected-filters").length < 1) {
+            $('.remove-all-filters').remove();
+        }
+
         var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
 
         window.history.pushState(null,null,url);
 
         // call searchandiser, and refresh AppView with results. Remember to leave filter open with selected filters
     },
-
     buildFilterUrl: function(url) {
         "use strict";
         var cats = [],
