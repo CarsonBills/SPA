@@ -2,7 +2,7 @@
 $query = (isset($_REQUEST['query']) && $_REQUEST['query']) ? ',"query"' . ': ' . '"'.$_REQUEST['query'].'"' : "";
 
 $skip = (isset($_REQUEST['skip']) && (int)$_REQUEST['skip'] > 0) ? (int)$_REQUEST['skip'] : 0;
-$pageSize = (isset($_REQUEST['pageSize']) && (int)$_REQUEST['pageSize'] > 0) ? (int)$_REQUEST['pageSize'] : 12;
+$pageSize = (isset($_REQUEST['pageSize']) && (int)$_REQUEST['pageSize'] > 0) ? (int)$_REQUEST['pageSize'] : 6;
 
 $type = (isset($_REQUEST['typ']) && (int)$_REQUEST['typ'] > 0) ? (int)$_REQUEST['typ'] : 1;
 
@@ -16,7 +16,7 @@ if ($type === 1) {
     $url = "https://mycompany.groupbycloud.com/api/v1/search/refinements";
 
 }
-//echo $url."<BR><BR>";
+//echo $data."<BR><BR>";
 $h=curl_init();
 curl_setopt($h, CURLOPT_POST, true);
 curl_setopt($h, CURLOPT_POSTFIELDS, $data);
@@ -26,5 +26,7 @@ curl_setopt($h, CURLOPT_URL, $url);
 $result = curl_exec($h);
 curl_close($h);
 
+
+$result = '{  "code": 200,   "status": "",   "data":' . $result . '}';
 header ('Content-Type: text/javascript');
 echo $result;
