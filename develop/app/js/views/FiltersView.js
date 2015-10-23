@@ -29,6 +29,8 @@ var FiltersView = Backbone.View.extend({
             setTimeout(function () {
                 that.refinements.compare(that.collection.toJSON());
             }, 500);
+        } else {
+            return false;
         }
 
         this.$('.filters-container').remove();
@@ -47,7 +49,37 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
+        this.$('.filter-item').eq(0).removeClass('collapsed');
         return this;
+    },
+
+    events: {
+        "click .filter-item-cat" : "toggleItem",
+        "click .filter-checkbox": function(e) {
+            "use strict";
+            if ($(e.target).prop('checked')) {
+                this.showSelectedFilter(e);
+            } else {
+                this.removeSelectedFilter(e, "cb");
+            }
+        },
+        "click #removeAllFilters": function(e) {
+            "use strict";
+            this.removeAllFilters(e);
+        },
+        "click .close-filter": function(e) {
+            "use strict";
+            this.removeSelectedFilter(e, "X");
+        }
+    },
+
+    toggleItem: function (e) {
+        "use strict";
+        var parent = $(e.currentTarget).parent();
+        
+        this.$('.filter-item').addClass('collapsed'); 
+        parent.removeClass('collapsed');
+        return false;
     },
     /**
      * Display select filter with removal indicator
@@ -65,7 +97,7 @@ var FiltersView = Backbone.View.extend({
 
 
         if ($(".selected-filters").length < 1) {
-            html = '<div class="remove-all-filters" id="removeAllFilters" style="margin:10px 0 0 10px; color:#0073ea;cursor:pointer;text-decoration:underline;font-size:14px;font-weight:bold;">Remove all filters</div>';
+            html = '<div class="remove-all-filters" id="removeAllFilters">Remove all filters</div>';
         }
 
         html += '<div class="selected-filters"><div>' + name +

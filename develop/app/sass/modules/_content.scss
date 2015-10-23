@@ -8,26 +8,62 @@ $filter-width: 250px;
     position: absolute;
     background-color: #fff;
     width: $filter-width;
+    max-height: 600px;
+    height: 100%;
     float: left;
-    top: 270px;
+    top: 269px;
     left: 0;
     z-index: 999;
-    @include toggle-offscreen();
-    @include locked($position: fixed, $top:100px);
+    @include toggle-offscreen($property: left);
+    //transition: left 0.5s ease-in-out;
+    @include locked($position: fixed, $top:101px);
     @include opensans($size: 1.4rem);
     color: #484848;
-    box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     padding: 1.2rem;
 
     &.off-screen {
         left: -$filter-width;
     }
 
+    .filters-selected {
+        position: relative;
+        .remove-all-filters {
+            position: relative;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .selected-filters {
+            position: relative;
+            margin: 0 0 1rem 2rem;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+    }
+
+    .filter-item {
+        overflow-y: scroll;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        //height: 192px;
+        transition: all 0.3s ease-in-out;
+
+        &.collapsed {
+            height: 36px;
+            .filter-item-cat {
+                .glyphicon {
+                    transition: all 0.2s ease-in-out;
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
 
     .filter-item-cat {
         position:relative;
         @include opensans($size: 1.6rem, $weight: 600);
         color:  $reader-blue;
+        background-color: #fff;
         margin: 1rem 0;
 
         .glyphicon {
@@ -40,14 +76,14 @@ $filter-width: 250px;
     }
     .filter-item-name {
         position:relative;
+
         &:not(:last-child) {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.7rem;
         }
 
         .filter-name {
+            margin-left: 0.7rem;
             @include ellipsis();
-            display: inline-block;
-            width: 180px;
         }
         .count {
             position: absolute;
@@ -268,6 +304,9 @@ $filter-width: 250px;
     }
 }
 @media only screen and (max-width: $tablet-portait-width) {
+    #filters {
+        top: 269px;
+    }
     .content {
         width: 100%;
         margin-left: 0;
@@ -276,6 +315,9 @@ $filter-width: 250px;
 
 
 @media only screen and (max-width: $mobile-width) {
+    #filters {
+        top: 251px;
+    }
     ul.card {
         .listview-head {
             div {

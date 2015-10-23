@@ -22,8 +22,8 @@
 	}
 }
 
-@mixin toggle-offscreen() {
-	transition: all 0.5s ease-in-out;
+@mixin toggle-offscreen($property: all) {
+	transition: $property 0.5s ease-in-out;
 }
 
 @mixin toggle-fullscreen() {

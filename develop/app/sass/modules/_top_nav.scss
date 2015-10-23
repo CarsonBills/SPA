@@ -136,6 +136,8 @@ nav {
     background-color: #fff;
     @include opensans($size: 1.4rem, $height: 1, $weight: 600);
     @include toggle-fullscreen();
+
+    
     margin-left: 25rem;
 
 
@@ -200,7 +202,7 @@ nav {
     .search input[type="text"] {
         width: 60%;
     }
-    
+
     .results-bar {
         width: 100%;
         margin-left: 0;

@@ -87,22 +87,6 @@ var AppView = Backbone.View.extend({
         'click .icon-grid-view': 'onGrid',
         'click .icon-list-view': 'onList',
 
-        "click .filter-checkbox": function(e) {
-            "use strict";
-            if ($(e.target).prop('checked')) {
-                this.filtersView.showSelectedFilter(e);
-            } else {
-                this.filtersView.removeSelectedFilter(e, "cb");
-            }
-        },
-        "click #removeAllFilters": function(e) {
-            "use strict";
-            this.filtersView.removeAllFilters(e);
-        },
-        "click .close-filter": function(e) {
-            "use strict";
-            this.filtersView.removeSelectedFilter(e, "X");
-        },
         "change #sortArticles": "sortArticles",
         /**
          * Remove this event handler when REAL filter button is working.
