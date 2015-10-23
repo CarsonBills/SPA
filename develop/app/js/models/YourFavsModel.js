@@ -2,23 +2,22 @@ var Backbone = require('backbone');
 
 var YourFavsModel = Backbone.Model.extend({
     defaults: {
-        id: null,
-        title: '',
-        authorFirst: '',
-        authorLast: '',
-        extract: '',
-        imgUrl: '',
-        ebookUrl: '',
-        shortExtract: '',
-        fullName: '',
-    },
-    initialize: function() {
-        'use strict';
-        this.set({
-            shortExtract: this.get('extract').substr(0,100),
-            fullName: this.get('authorFirst') + ' ' + this.get('authorLast'),
-        });
-    },
+        "authorFirst":'',
+        "chapter":'',
+        "pname":'',
+        "siteCode":'',
+        "abstract":'',
+        "title":'',
+        "mode":[ ],
+        //"category_id":[ ],
+        "authorLast":'',
+        "ebookNode":'',
+        "genre":[ ],
+        "theme":[ ],
+        //"categories":[ ],
+        "id":'',
+        "keyword":''
+    }
 });
 
 module.exports = YourFavsModel;
