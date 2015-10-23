@@ -57,12 +57,13 @@ var AppView = Backbone.View.extend({
         this.headerConfigView.render();
 
         this.topNavView = new NortonApp.Views.TopNav({
-            el: '#topNav',
+            el: '#topNav'
         }).render();
 
         this.articleView = new NortonApp.Views.Article({
             collection: this.collection,
             el: '#articles',
+            app: this
         });
 
         this.filtersView = new NortonApp.Views.Filters({
@@ -404,8 +405,28 @@ var AppView = Backbone.View.extend({
         this.$('#nbrRecords').html(this.collection.totalRecords);
 
     },
-    callClickTracking: function(id) {
+    saveTracking: function(id) {
+        "use strict";
 
+        var postdata = {
+            sitecode: Norton.siteCode,
+            siteversion: Norton.version,
+            asset: id,
+            eventType: 1
+        };
+
+        $.ajax({
+            type:'POST',
+            url: Norton.Constants.saveTrackingUrl,
+            data: JSON.stringify(postdata),
+            dataType: "json",
+            success: function(response) {
+                // eventually, update some popularity indicator somewhere on the site; for now, do nothing
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Save Tracking request failed.");
+            }
+        });
     }
 });
 
