@@ -8,12 +8,14 @@ var ArticleView = Backbone.View.extend({
     templateGrid: require('../../templates/ArticlesGridTemplate.hbs'),
     templateList: require('../../templates/ArticlesListTemplate.hbs'),
     templateListHead: require('../../templates/ArticlesListHeadTemplate.hbs'),
+    app: null,
 
-    initialize: function() {
+    initialize: function(params) {
         'use strict';
         this.collection.on('update', this.render, this);
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
+        this.app = params.app;
     },
     render: function() {
         'use strict';
@@ -70,6 +72,8 @@ var ArticleView = Backbone.View.extend({
         // Increment and show item counter
         Norton.yourFavsCtr++;
         $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
+console.log(this.app);
+        this.app.saveTracking(id);
     },
 });
 

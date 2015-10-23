@@ -2,7 +2,10 @@
     <div class="top-bar">
         <div class="norton-logo" title="{{displayTitle}}"></div>
         <div class="header-title"><a href="{{baseUrl}}">{{displayTitle}}</a></div>
-        <div class="header-label"><a href="{{siteVersion}}">{{siteVersionLabel}}</a></div>
+        <div class="header-label">{{#each otherVersions}}
+            <a href="{{siteVersion}}">{{siteVersionLabel}}</a>
+        {{/each}}
+        </div>
         <div class="links">{{#each headerLinks}}
             <a href="{{link}}">{{label}}</a>
         {{/each}}
