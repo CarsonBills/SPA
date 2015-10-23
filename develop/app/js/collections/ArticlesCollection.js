@@ -37,9 +37,18 @@ var ArticlesCollection = Backbone.Collection.extend({
             /**
              * Next/prev links
              */
-            record.prevId = that.prev(record);
-            record.nextId = that.next(record);
+            record.prevId = that.getPName({
+                inc: -1,
+                records: response.records,
+                record: record
+            })
+            record.nextId = that.getPName({
+                inc: 1,
+                records: response.records,
+                record: record
+            })
             record.baseUrl = Norton.baseUrl;
+
 
         });
 
@@ -48,6 +57,20 @@ var ArticlesCollection = Backbone.Collection.extend({
     /**
      * For next/prev, index comes from the data so it may not be sequential
      */
+    getPName: function (params) {
+        'use strict';
+
+        var idx = _.indexOf(params.records, params.record);
+        idx += params.inc;
+
+        if (idx >= 0 && idx < params.records.length) {
+            return params.records[idx].allMeta.pname;
+        }
+
+        return null;
+
+    },
+
     prev: function(model) {
         'use strict';
         var idx = this.curr(model);

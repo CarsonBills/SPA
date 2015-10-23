@@ -337,6 +337,8 @@ var AppView = Backbone.View.extend({
             $("#detailPage").find(".modal-content").replaceWith(template);
         }
 
+        return false;
+
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 
         NortonApp.pageItem.setUrlId(id);
@@ -367,6 +369,8 @@ var AppView = Backbone.View.extend({
         /**
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
+        console.log('getNextPrevFromList');
+        
         if (Backbone.history.fragment === "page/"+$(e.currentTarget).attr('data-id')) {
             NortonApp.router.navigate('#/page/'+$(e.currentTarget).attr('data-id'), true);
         }
