@@ -229,12 +229,7 @@ var AppView = Backbone.View.extend({
         "use strict";
         // query would be populated with Search box data
         var that = this,
-            postdata = {
-                sitecode: Norton.siteCode,
-                siteversion: Norton.version,
-                skip: this.collection.recordEnd,
-                pageSize: Norton.perPage
-            };
+            postdata = {};
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
@@ -244,11 +239,18 @@ var AppView = Backbone.View.extend({
             this.formatRefinements();
             //postdata.refinements = JSON.stringify(Norton.refinements);   //  NEED THIS IF USING searchandiser.php
             postdata.refinements = Norton.refinements;
-            postdata.pruneRefinements = "true";
+            postdata.pruneRefinements = "false";
         }
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
+
+        postdata.sitecode = Norton.siteCode;
+        postdata.siteversion = Norton.version;
+        postdata.skip = this.collection.recordEnd;
+        postdata.pageSize = Norton.perPage;
+
+        //console.log(JSON.stringify(postdata));
         this.collection.fetch({
             data: JSON.stringify(postdata),
             //data: postdata,   //  NEED THIS IF USING searchandiser.php
@@ -293,24 +295,19 @@ var AppView = Backbone.View.extend({
         }
 
         Norton.refinements = refs;
+        this.collection.cleanupAndReset();
     },
     sortArticles: function() {
         "use strict";
-        var sortby = $( "#sortArticles option:selected" ).val();
-        if (!sortby) {
-            return;
-        }
+        var sortby = $( "#sortArticles option:selected" ).val().split(":");
 
-        NortonApp.articlesList.comparator = function(model) {
-            return model.get(sortby);
+        Norton.sortby = {
+            field: sortby[0],
+            order: sortby[1]
         };
 
-        // call the sort method
-        NortonApp.articlesList.sort();
-        $('.listFormat').remove();
-        $('.gridFormat').remove();
-        Norton.lastArticleLoaded = 0;
-        this.renderArticles();
+        this.collection.cleanupAndReset();
+        this.getArticles();
     },
     searchArticles: function() {
         "use strict";
@@ -318,8 +315,7 @@ var AppView = Backbone.View.extend({
          * Clear out collection, reset "skip" to zero, then run search query.
          */
         Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
-        this.collection.reset(null, { silent: true });
-        this.collection.recordEnd = 0;
+        this.collection.cleanupAndReset();
         this.getArticles();
     },
     showYourFavs: function() {

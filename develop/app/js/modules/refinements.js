@@ -19,7 +19,17 @@ Navigation.prototype = {
     fetch: function () {
         "use strict";
         var that = this;
+        var postdata = {
+            sitecode: Norton.siteCode,
+            siteversion: Norton.version,
+            skip: 0,
+            pageSize: Norton.perPage
+        };
         this.collection.fetch({
+            data: JSON.stringify(postdata),
+            //data: postdata,   //  NEED THIS IF USING searchandiser.php
+            method: "POST",
+            datatype: "json",
             url: this.url,
             success: function(data) {
                 that.deferred.resolve(data);
