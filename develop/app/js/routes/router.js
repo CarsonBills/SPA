@@ -41,7 +41,7 @@ var AppRouter = Backbone.Router.extend({
                 that.deferred.resolve();
             },
             function (res1, res2) {
-                console.log(res1, res2);
+                //console.log(res1, res2);
             });
         return this.deferred.promise();
     },
@@ -103,7 +103,7 @@ var AppRouter = Backbone.Router.extend({
                 }, this),
                 error: function(){
                     // go to generic error page
-                    console.log('Site Config not available.');
+                    console.debug('Site Config not available.');
                     Norton.Utils.genericError('config');
                     dfd.reject();
                 }

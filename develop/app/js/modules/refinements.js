@@ -45,6 +45,9 @@ Navigation.prototype = {
     },
     compare: function (collection) {
         "use strict";
+
+        console.log(collection);
+        console.log(this.collection);
     }
 };
 

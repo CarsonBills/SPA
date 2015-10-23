@@ -39,7 +39,7 @@ $(function() {
     Norton.siteCode = null;
     Norton.version = null;
     Norton.searchQuery = "";
-    Norton.refinements = null;
+    Norton.savedRefinements = null;
     Norton.sortby = {
         field: "authorLast",
         order: "Ascending"

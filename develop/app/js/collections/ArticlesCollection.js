@@ -9,9 +9,6 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
-    initialize: function() {
-        console.log('inti')
-    },
     parse: function(res) {
         'use strict';
 
@@ -19,7 +16,7 @@ var ArticlesCollection = Backbone.Collection.extend({
             that = this;
 
         if (res.code !== 200) {
-            console.log('Search return code is" ' + res.code);
+            console.debug('Search return code is" ' + res.code);
             Norton.Utils.genericError('config');
             return;
         }
