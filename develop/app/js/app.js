@@ -29,9 +29,6 @@ $(function() {
     //Norton.toggleGridFormat = true;
     Norton.yourFavsCtr = 0;
     Norton.perPage = Norton.Constants.defaultPageSize;
-    Norton.totalRecords = 0;
-    Norton.recordStart = 0;
-    Norton.recordEnd = 0;
     Norton.lastArticleLoaded = 0;
     Norton.currArticle = null;
     Norton.prevArticle = null;
@@ -43,6 +40,10 @@ $(function() {
     Norton.version = null;
     Norton.searchQuery = "";
     Norton.refinements = null;
+    Norton.sortby = {
+        field: "authorLast",
+        order: "Ascending"
+    };
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};

@@ -72,9 +72,9 @@ var ArticleView = Backbone.View.extend({
         // Increment and show item counter
         Norton.yourFavsCtr++;
         $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
-console.log(this.app);
+
         this.app.saveTracking(id);
-    },
+    }
 });
 
 module.exports = ArticleView;

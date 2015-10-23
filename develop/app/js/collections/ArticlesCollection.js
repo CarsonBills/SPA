@@ -9,6 +9,9 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
+    initialize: function() {
+        console.log('inti')
+    },
     parse: function(res) {
         'use strict';
 
@@ -85,6 +88,10 @@ var ArticlesCollection = Backbone.Collection.extend({
             bool = true;
         }
         return bool;
+    },
+    cleanupAndReset: function() {
+        this.reset(null, { silent: true });
+        this.recordEnd = 0;
     }
 });
 
