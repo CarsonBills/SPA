@@ -13,7 +13,7 @@ $filter-width: 250px;
     left: 0;
     z-index: 999;
     @include toggle-offscreen();
-    @include locked($position: fixed, $top:101px);
+    @include locked($position: fixed, $top:100px);
     @include opensans($size: 1.4rem);
     color: #484848;
     box-shadow: 3px 0px 3px rgba(0, 0, 0, 0.1);
@@ -21,6 +21,38 @@ $filter-width: 250px;
 
     &.off-screen {
         left: -$filter-width;
+    }
+
+
+    .filter-item-cat {
+        position:relative;
+        @include opensans($size: 1.6rem, $weight: 600);
+        color:  $reader-blue;
+        margin: 1rem 0;
+
+        .glyphicon {
+            position: absolute;
+            right: 0;
+            color: #484848;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+    }
+    .filter-item-name {
+        position:relative;
+        &:not(:last-child) {
+            margin-bottom: 0.6rem;
+        }
+
+        .filter-name {
+            @include ellipsis();
+            display: inline-block;
+            width: 180px;
+        }
+        .count {
+            position: absolute;
+            right: 0;
+        }
     }
 }
 
@@ -30,7 +62,7 @@ $filter-width: 250px;
     position: relative;
     margin-left: 25rem;
     width: calc(100% - 25rem);
-    @include locked($position: 101px);
+    @include locked($position: 100px);
     @include toggle-fullscreen();
 
     ul.card {
@@ -60,6 +92,7 @@ $filter-width: 250px;
             height: $card-height;
             background: #fafafa;
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease-in-out;
 
             &:hover {
                 color: #333;
@@ -179,9 +212,7 @@ $filter-width: 250px;
                     width: 60%;
                     color: $reader-blue;
                     @include athelas($size: 1.8rem, $style: italic, $weight: 400);
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    @include ellipsis();
                 }
             }
 
