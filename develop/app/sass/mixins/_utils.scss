@@ -21,3 +21,15 @@
 		top: $top;
 	}
 }
+
+@mixin toggle-offscreen() {
+	transition: all 0.5s ease-in-out;
+}
+
+@mixin toggle-fullscreen() {
+	@include toggle-offscreen();
+    &.full-screen {
+        width: 100%;
+        margin-left: 0;
+    }
+}

@@ -140,7 +140,7 @@ $header-text: #f2f2ec;
 	height: 144px;
 	@include center(absolute);
 	top: 63%;
-	transition: all 0.3s;
+	transition: all 0.2s;
 
 	.stick & {
 		opacity: 0;

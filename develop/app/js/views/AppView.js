@@ -47,8 +47,6 @@ var AppView = Backbone.View.extend({
             callback: this.shouldRefresh
         });
 
-
-
         //scrollHelper.setRefresh(this.shouldRefresh);
 
     },
@@ -83,8 +81,6 @@ var AppView = Backbone.View.extend({
 
         this.toggleView(EventManager.LIST_VIEW);
 
-
-
     },
     events: {
         'click .icon-grid-view': 'onGrid',
@@ -110,11 +106,7 @@ var AppView = Backbone.View.extend({
         /**
          * Remove this event handler when REAL filter button is working.
          */
-        "click #navFilters a": function(e) {
-            "use strict";
-            this.$('#filters').toggle();
-            return false;
-        },
+        "click #navFilters a": "toggleFilter",
         "click #searchButton": "searchArticles",
         "keypress #searchTextInput": function(e) {
             "use strict";
@@ -145,15 +137,31 @@ var AppView = Backbone.View.extend({
         }
     },
 
+    toggleFilter: function (e) {
+        'use strict';
+
+        if (this.$('#filters').hasClass('off-screen')) {
+            this.$('#filters').removeClass('off-screen');
+            this.$('.results-bar').removeClass('full-screen');
+            this.$('.content').removeClass('full-screen');
+        } else {
+            this.$('#filters').addClass('off-screen');
+            this.$('.results-bar').addClass('full-screen');
+            this.$('.content').addClass('full-screen');
+        }
+
+        return false;
+    },
+
     shouldRefreshWrapper: function () {
         'use strict';
         var that = this;
         return function () {
             if (!that.hasRefreshed && that.collection.hasMore()) {
-                that.getArticles();
+                //that.getArticles();
                 that.hasRefreshed = true;
             }
-        };
+        }
     },
 
     stickScrollWrapper: function () {
@@ -172,7 +180,7 @@ var AppView = Backbone.View.extend({
                     $container.removeClass(STICK);
                 }
             }
-        };
+        }
     },
 
     /* Grid/List view toggle */
@@ -207,28 +215,22 @@ var AppView = Backbone.View.extend({
     },
 
     showHighlight: function (showHint) {
-        "use strict";
         var delta,
             $lastItem,
             style,
-            lastRecord,
             tween;
-
-        console.log(showHint);
         if (this.collection.hasMore()) {
             delta = scrollHelper.docDelta() - 100;
         } else {
             delta = scrollHelper.docDelta();
         }
 
-
-        TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
-
         if (showHint) {
+
+            TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
             // highlight last record
-            lastRecord = this.collection.recordStart - 1;
+            lastRecord = this.collection.recordStart -1 ;
             $lastItem = this.articleView.$el.find("[data-index='" + lastRecord + "']");
-            console.log($lastItem)
             style = $lastItem.css('boxShadow');
             tween = TweenLite.to($lastItem, 0.5, {boxShadow:"inset 0px 0px 15px #F30", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
@@ -248,21 +250,25 @@ var AppView = Backbone.View.extend({
                 skip: this.collection.recordEnd,
                 pageSize: Norton.perPage
             };
+
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
         }
-        if (Norton.refinements !== "") {
-            var refinements_json = this.formatRefinements();
+
+        if (Norton.refinements) {
+            this.formatRefinements();
+            //postdata.refinements = JSON.stringify(Norton.refinements);   //  NEED THIS IF USING searchandiser.php
             postdata.refinements = Norton.refinements;
             postdata.pruneRefinements = "true";
         }
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
-        console.log(JSON.stringify(postdata))
         this.collection.fetch({
             data: JSON.stringify(postdata),
-            type: 'POST',
+            //data: postdata,   //  NEED THIS IF USING searchandiser.php
+            method: "POST",
+            datatype: "json",
             remove: false,
             success: $.proxy (function(data) {
                 that.showResultsTotals();
@@ -271,7 +277,7 @@ var AppView = Backbone.View.extend({
                 that.showHighlight(showHint);
                     
                 if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
-                    that.getArticles();
+                    that.getArticles(false);
                 }
             }, this),
             error: function(xhr, response, error) {
@@ -280,27 +286,28 @@ var AppView = Backbone.View.extend({
             }
         });
     },
+    // format the refinements as JSON string
     formatRefinements: function() {
-        "use strict";
         var refs = [],
             ref,
-            cat,
-            i,
-            splt;
-        for (cat in Norton.refinements) {
-            splt = Norton.refinements[cat].split("=");
+            splt,
+            obj = {};
 
+        for (var cat in Norton.refinements) {
+            splt = Norton.refinements[cat].split("=");
             ref  = splt[1].split(",");
-            console.log(ref);
-            for (i=0; i<ref.count; i++) {
-                refs.push('{"type": "Value", "navigationName": "' + cat + '", "value": "' + decodeURIComponent(ref[i]) + '"}');
+            for (var i=0; i<ref.length; i++) {
+                obj = {
+                    type: "Value",
+                    navigationName: cat,
+                    value: decodeURIComponent(ref[i])
+                };
+
+                refs.push(obj);
             }
         }
 
         Norton.refinements = refs;
-        console.log(Norton.refinements);
-
-        // return [ {"type": "Value", "navigationName": "mode", "value": "Comparing and Contrasting" } ]
     },
     sortArticles: function() {
         "use strict";

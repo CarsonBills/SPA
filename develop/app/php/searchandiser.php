@@ -3,20 +3,19 @@ $query = (isset($_REQUEST['query']) && $_REQUEST['query']) ? ',"query"' . ': ' .
 
 $skip = (isset($_REQUEST['skip']) && (int)$_REQUEST['skip'] > 0) ? (int)$_REQUEST['skip'] : 0;
 $pageSize = (isset($_REQUEST['pageSize']) && (int)$_REQUEST['pageSize'] > 0) ? (int)$_REQUEST['pageSize'] : 6;
+$filters = (isset($_REQUEST['refinements']) && $_REQUEST['refinements']) ? ',"refinements": ' . $_REQUEST['refinements'] : "";
 
-$type = (isset($_REQUEST['typ']) && (int)$_REQUEST['typ'] > 0) ? (int)$_REQUEST['typ'] : 1;
-
-if ($type === 1) {
-    //$data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","area":"Production","fields":["*"],"skip":0,"pageSize":12}';
-    $data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","collection":"nortonreader","area":"Production"' . $query . ',"fields":["*"], "skip":' . $skip . ',"pageSize":' . $pageSize . '}';
     $url = "https://wwnorton.groupbycloud.com/api/v1/search?pretty";
-} elseif ($type == 2) {
-    $data='{ "navigationName": "brand", "originalQuery":{"query": "dvd", "clientKey": "8fd00c47-8378-455c-a1bc-e4f1f1704b87"} }';
-    $data='{ "navigationName": "*", "originalQuery":{"query": "*", "clientKey": "8fd00c47-8378-455c-a1bc-e4f1f1704b87"} }';
-    $url = "https://mycompany.groupbycloud.com/api/v1/search/refinements";
 
-}
-//echo $data."<BR><BR>";
+     $data='{"clientKey":"8fd00c47-8378-455c-a1bc-e4f1f1704b87","collection":"nortonreader","area":"Production"' .
+        $query .
+        ',"fields":["*"] ' .
+        $filters .
+        ',"skip":' . $skip .
+        ',"pageSize":' . $pageSize . '}';
+
+
+//echo $data;exit;
 $h=curl_init();
 curl_setopt($h, CURLOPT_POST, true);
 curl_setopt($h, CURLOPT_POSTFIELDS, $data);
