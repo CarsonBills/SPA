@@ -77,7 +77,7 @@ var FiltersView = Backbone.View.extend({
         "use strict";
         var parent = $(e.currentTarget).parent();
         
-        this.$('.filter-item').addClass('collapsed'); 
+        this.$('.filter-item').addClass('collapsed');
         parent.removeClass('collapsed');
         return false;
     },

@@ -15,7 +15,7 @@ var PageView = Backbone.View.extend({
     templateReplace: require('../../templates/PageReplaceTemplate.hbs'),
     initialize: function() {
         'use strict';
-        this.model.on('change', this.render, this);
+        this.model.on('update', this.render, this);
     },
     render: function() {
         'use strict';

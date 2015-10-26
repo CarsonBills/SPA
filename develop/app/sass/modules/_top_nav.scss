@@ -127,7 +127,7 @@ nav {
 /* result bar */
 
 .results-bar {
-    width: calc(100% - 25rem);
+    width: calc(100% - $filter-width);
     position: relative;
     display: block;
     height: $top-bar-height;
@@ -138,9 +138,7 @@ nav {
     @include toggle-fullscreen();
 
     
-    margin-left: 25rem;
-
-
+    margin-left: $filter-width;
     @include locked();
 
     .results {
@@ -149,19 +147,6 @@ nav {
 
         .slash {
             display: none;
-        }
-    }
-
-    .sortby {
-        @include vertical-align(absolute);
-        padding: 0;
-        right: 0;
-        left: 0;
-
-        select {
-            padding: 0;
-            margin: 0;
-            height: 28px;
         }
     }
     .toggle-view {
@@ -181,6 +166,23 @@ nav {
             margin-right: 1rem;
             color: #60605e;
         }
+    }
+}
+.sortby {
+    @include vertical-align(absolute);
+    padding: 0 0 0 10rem;
+    right: 0;
+    left: 0;
+
+    .full-screen & {
+        padding: 0;
+    }
+
+    select {
+        padding: 0;
+        margin: 0;
+        width: 160px;
+        height: 28px;
     }
 }
 
@@ -216,6 +218,9 @@ nav {
 
         }
     }
+    .sortby {
+        padding: 0;
+    }
 }
 
 @media only screen and (max-width: $mobile-width) {
@@ -226,6 +231,22 @@ nav {
 }
 
 @media only screen and (max-width: $mobile-width-sm) {
+    nav {
+        top: 10px;
+    }
+    .results-bar {
+        margin: 10px auto;
+    }
+    .sortby {
+        margin-right: 2rem;
+        span {
+            display: none;
+        }
+        select {
+            width: 160px;
+
+        }
+    }
 }
 
 

@@ -2,8 +2,6 @@
     padding: 0;
     margin: 0;
 }
-
-$filter-width: 250px;
 #filters {
     position: absolute;
     background-color: #fff;
@@ -44,12 +42,13 @@ $filter-width: 250px;
     .filter-item {
         overflow: hidden;
         cursor: pointer;
-        margin-bottom: 1rem;
-        //height: 192px;
-        transition: all 0.3s ease-in-out;
+        margin-bottom: 0.5rem;
+        max-height: 200px;
+        transition: all 0.4s ease-in-out;
 
         &.collapsed {
-            height: 36px;
+            max-height: 36px;
+            transition: none;
             .filter-item-cat {
                 .glyphicon {
                     transition: all 0.2s ease-in-out;
@@ -96,8 +95,8 @@ $filter-width: 250px;
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .content {
     position: relative;
-    margin-left: 25rem;
-    width: calc(100% - 25rem);
+    margin-left: $filter-width;
+    width: calc(100% - $filter-width);
     @include locked($position: 100px);
     @include toggle-fullscreen();
 

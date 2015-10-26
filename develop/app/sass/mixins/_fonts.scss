@@ -17,7 +17,7 @@
 }
 
 @mixin opensans($size: 1rem, $height: 1, $weight: 400, $style:normal) {
-	font-family: opensans, sans;
+	font-family: 'Open Sans', sans-serif;
 	font-size: $size;
 	font-style: $style;
 	line-height: $height;

@@ -10,6 +10,7 @@ $ctr = count($json_str);
 for ($i=0; $i<$ctr; $i++) {
     if ($json_str[$i]['id'] == $id) {
         echo json_encode($json_str[$i]);
-        die();
+		die();
     }
+   
 }

@@ -66,9 +66,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         if (idx >= 0 && idx < params.records.length) {
             return params.records[idx].allMeta.pname;
         }
-
         return null;
-
     },
 
     prev: function(model) {

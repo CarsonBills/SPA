@@ -337,17 +337,15 @@ var AppView = Backbone.View.extend({
             $("#detailPage").find(".modal-content").replaceWith(template);
         }
 
-        return false;
-
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 
         NortonApp.pageItem.setUrlId(id);
         NortonApp.pageItem.fetch({
-            success: $.proxy (function() {
+            success: $.proxy (function(data) {
                 NortonApp.pageView = new NortonApp.Views.Page({
-                    model: NortonApp.pageItem
+                    model: NortonApp.pageItem,
+                    el: "#detailPage"
                 });
-                NortonApp.pageView.$el = $("#detailPage");
                 if (create) {
                     $('#pageContainer').remove();   // get rid of old page if it exists
                     NortonApp.pageView.render();
@@ -369,8 +367,7 @@ var AppView = Backbone.View.extend({
         /**
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
-        console.log('getNextPrevFromList');
-        
+
         if (Backbone.history.fragment === "page/"+$(e.currentTarget).attr('data-id')) {
             NortonApp.router.navigate('#/page/'+$(e.currentTarget).attr('data-id'), true);
         }
