@@ -34,7 +34,7 @@ var PageModel = Backbone.Model.extend({
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
-            console.log('Search return code is" ' + response.code);
+            console.debug('Search return code is" ' + response.code);
             Norton.Utils.genericError('config');
             return;
         }

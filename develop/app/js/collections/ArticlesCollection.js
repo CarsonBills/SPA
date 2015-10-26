@@ -18,7 +18,7 @@ var ArticlesCollection = Backbone.Collection.extend({
             that = this;
 
         if (res.code !== 200) {
-            console.log('Search return code is" ' + res.code);
+            console.debug('Search return code is" ' + res.code);
             Norton.Utils.genericError('config');
             return;
         }

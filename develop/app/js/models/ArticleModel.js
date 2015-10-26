@@ -43,39 +43,7 @@ var ArticleModel = Backbone.Model.extend({
                 "_id":''
             }
         ]
-    },
-
-    /**
-     * First object is always incomplete with no data (why????) so we need to trap it to ignore it.
-     */
-    initialize: function() {
-        "use strict";
-/*        try {
-
-            var pn = this.get("allMeta").title.toLowerCase();
-            pn = pn.replace(/ /g, "-");
-
-            console.log(this.get("allMeta"));
-
-            this.set("allMeta.pname", pname);
-
-            console.log(this.get("allMeta"));
-
-            var rd = this.set("recordData");
-            rd.push(pname);
-
-            this.set("recordData", rd);
-
-            console.log(this.get("allMeta").pname);
-        }catch(e){
-            //console.log(this);
-        }
-
-
-console.log(this.attributes);
- */
     }
-
 });
 
 

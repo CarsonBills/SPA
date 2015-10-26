@@ -8,6 +8,7 @@ var Backbone = require('backbone'),
     EventManager = require('../modules/event_manager'),
     resizeHelper = require('../modules/resize_helper'),
     scrollHelper = require('../modules/scroll_helper');
+    Refinements = require('../modules/refinements');
 
 
 var AppView = Backbone.View.extend({
@@ -16,6 +17,7 @@ var AppView = Backbone.View.extend({
     articleView: null,
     filtersView: null,
     evtMgr: EventManager.getInstance(),
+    refinements: Refinements.getInstance(),
 
     hasRefreshed: false,
     shouldRefresh: null,
@@ -235,10 +237,9 @@ var AppView = Backbone.View.extend({
             postdata.query = Norton.searchQuery;
         }
 
-        if (Norton.refinements) {
-            this.formatRefinements();
-            //postdata.refinements = JSON.stringify(Norton.refinements);   //  NEED THIS IF USING searchandiser.php
-            postdata.refinements = Norton.refinements;
+        if (Norton.savedRefinements) {
+            //postdata.refinements = JSON.stringify(Norton.savedRefinements);   //  NEED THIS IF USING searchandiser.php
+            postdata.refinements = Norton.savedRefinements;
             postdata.pruneRefinements = "false";
         }
         if (Norton.sortby) {
@@ -259,6 +260,7 @@ var AppView = Backbone.View.extend({
             remove: false,
             success: $.proxy (function(data) {
                 that.showResultsTotals();
+                that.refinements.compare(this.collection);
                 that.hasRefreshed = false;
 
                 that.showHighlight(showHint);
@@ -268,7 +270,7 @@ var AppView = Backbone.View.extend({
                 }
             }, this),
             error: function(xhr, response, error) {
-                console.log('Search query not available.');
+                console.debug('Search query not available.');
                 Norton.Utils.genericError('articles');
             }
         });
@@ -280,8 +282,8 @@ var AppView = Backbone.View.extend({
             splt,
             obj = {};
 
-        for (var cat in Norton.refinements) {
-            splt = Norton.refinements[cat].split("=");
+        for (var cat in Norton.savedRefinements) {
+            splt = Norton.savedRefinements[cat].split("=");
             ref  = splt[1].split(",");
             for (var i=0; i<ref.length; i++) {
                 obj = {
@@ -294,8 +296,9 @@ var AppView = Backbone.View.extend({
             }
         }
 
-        Norton.refinements = refs;
+        Norton.savedRefinements = refs;
         this.collection.cleanupAndReset();
+        this.getArticles();
     },
     sortArticles: function() {
         "use strict";
@@ -357,7 +360,7 @@ var AppView = Backbone.View.extend({
             error: function(xhr, response, error) {
                 $('.modal-backdrop').remove();
                 $('.modal-dialog').remove();
-                console.log('Detail Page not available.');
+                console.debug('Detail Page not available.');
                 Norton.Utils.genericError('detail');
             }
         });
@@ -416,7 +419,7 @@ var AppView = Backbone.View.extend({
                 // eventually, update some popularity indicator somewhere on the site; for now, do nothing
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Save Tracking request failed.");
+                console.debug("Save Tracking request failed.");
             }
         });
     }

@@ -183,8 +183,8 @@ var FiltersView = Backbone.View.extend({
             }
         });
 
-        Norton.refinements = cats;
-        this.app.getArticles();   // call getArticles() in AppView
+        Norton.savedRefinements = cats;
+        this.app.formatRefinements();   // call getArticles() in AppView
 
         for (key in cats) {
             query += cats[key] + "&";

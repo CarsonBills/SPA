@@ -23,7 +23,8 @@ Navigation.prototype = {
             sitecode: Norton.siteCode,
             siteversion: Norton.version,
             skip: 0,
-            pageSize: Norton.perPage
+            pageSize: 1,
+            fields: ["availableNavigation"]
         };
         this.collection.fetch({
             data: JSON.stringify(postdata),
@@ -45,6 +46,9 @@ Navigation.prototype = {
     },
     compare: function (collection) {
         "use strict";
+
+        console.log(collection);
+        console.log(this.collection);
     }
 };
 
@@ -58,7 +62,7 @@ var Refinements = (function() {
                     navigation = new Navigation();
                 }
                 return navigation;
-            },
+            }
         };
 }());
 

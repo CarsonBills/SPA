@@ -64,11 +64,17 @@ var ArticleView = Backbone.View.extend({
         var id = $(e.target).attr('data-item-id');
 
         // Don't add again
-        if (NortonApp.yourFavsList.get(this.collection.get(id)) !== undefined) {
+        if (NortonApp.yourFavsList.get(id) !== undefined) {
             return;
         }
 
         NortonApp.yourFavsList.add(this.collection.get(id));
+        this.collection.each(function(record) {
+            if (record.attributes.allMeta.id == id) {
+                NortonApp.yourFavsList.add(record.attributes.allMeta);
+            }
+        });
+
         // Increment and show item counter
         Norton.yourFavsCtr++;
         $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
