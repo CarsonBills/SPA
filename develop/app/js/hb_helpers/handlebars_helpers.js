@@ -19,6 +19,9 @@ module.exports = (function() {
     Handlebars.registerHelper('HBIsChapter', function(name, options) {
         var fnTrue = options.fn, 
             fnFalse = options.inverse;
-        return (name === "Chapter") ? fnTrue(this) : fnFalse(this);
+        return (name === "chapter") ? fnTrue(this) : fnFalse(this);
+    });
+    Handlebars.registerHelper('HBIsCollapsed', function(name) {
+        return (name === "chapter") ? "collapsed" : "";
     });
 })();

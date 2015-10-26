@@ -107,7 +107,7 @@ var FiltersView = Backbone.View.extend({
         html += '<div class="selected-filters"><div>' + name +
             '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + tgt.attr('data-filter-name') +
             '" data-close-filter-cat="' + cat +
-            '" class="close-filter" style="cursor:pointer;font-weight:bold;">X</span></div></div>';
+            '" class="close-filter" style="cursor:pointer;font-weight:bold;">x</span></div></div>';
 
         $("#selectedFilters").append(html);
 
