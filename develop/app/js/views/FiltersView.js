@@ -49,12 +49,16 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
-        this.$('.filter-item').eq(0).removeClass('collapsed');
+        this.$('.filter-item').on('show.bs.collapse', function () {
+            that.$('.filter-item').removeClass('in');
+        })
+
+
         return this;
     },
 
     events: {
-        "click .filter-item-cat" : "toggleItem",
+        //"click .filter-item-cat" : "toggleItem",
         "click .filter-checkbox": function(e) {
             "use strict";
             if ($(e.target).prop('checked')) {

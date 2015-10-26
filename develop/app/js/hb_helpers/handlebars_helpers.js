@@ -15,4 +15,10 @@ module.exports = (function() {
             });
         }
     });
+    // filters helper
+    Handlebars.registerHelper('HBIsChapter', function(name, options) {
+        var fnTrue = options.fn, 
+            fnFalse = options.inverse;
+        return (name === "Chapter") ? fnTrue(this) : fnFalse(this);
+    });
 })();

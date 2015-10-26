@@ -10,7 +10,6 @@ var ArticlesCollection = Backbone.Collection.extend({
     filters: null,
     showGridView: false,
     initialize: function() {
-        console.log('inti')
     },
     parse: function(res) {
         'use strict';

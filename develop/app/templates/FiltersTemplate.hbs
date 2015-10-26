@@ -1,8 +1,11 @@
-<div class="filter-item collapsed">
-        {{#if cat_display}}
-            <div class="filter-item-cat">{{cat_display}}<span class="glyphicon glyphicon-chevron-down"></span></div>
-        {{/if}}
+{{#if cat_display}}
+    <div role="button" data-target="#{{name}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat collapsed">{{cat_display}}<span class="glyphicon glyphicon-chevron-down"></span></div>
 
+    {{#HBIsChapter cat_display}}
+        <div class="filter-item collapse in" role="tab-panel" id="{{name}}">
+    {{else}}
+        <div class="filter-item collapse" role="tab-panel" id="{{name}}">
+    {{/HBIsChapter}}
         {{#each refinements}}
             {{#if value}}
                 <div class="filter-item-name">
@@ -12,3 +15,4 @@
             {{/if}}
         {{/each}}
     </div>
+{{/if}}
