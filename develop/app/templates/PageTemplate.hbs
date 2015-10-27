@@ -31,21 +31,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        /**
-         * Modal trigger - Only fo this if the modal has not launched or has been removed. When loading
-         * Prev/Next, we do not want to re-spawn the modal
-         */
-        //$("#modalPlaceholder").modal('show');
-        //$("#modalPlaceholder").trigger("click");
-
-        $('#pageContainer').on('hide.bs.modal', function (e) {
-            // load different URL without refreshing page
-            window.history.pushState(null,null,"{{baseUrl}}");
-        //    $('.modal-backdrop').remove(); // WHY THE F does this not disappear on it's own???? I hate idiotic hacks
-        });
-
-    </script>
-
 </div>
