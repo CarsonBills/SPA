@@ -1,0 +1,497 @@
+{
+  "totalRecordCount" : 20,
+  "area" : "Production",
+  "template" : {
+    "name" : "default",
+    "zones" : { }
+  },
+  "pageInfo" : {
+    "recordStart" : 1,
+    "recordEnd" : 6
+  },
+  "availableNavigation" : [ {
+    "name" : "chapter",
+    "displayName" : "Chapter",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 5,
+      "value" : "Journals"
+    }, {
+      "type" : "Value",
+      "count" : 13,
+      "value" : "Personal Accounts"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Portraits of People and Places"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "genre",
+    "displayName" : "Genre",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Argument"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Cultural Analysis"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Evaluations"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Historical Narratives"
+    }, {
+      "type" : "Value",
+      "count" : 5,
+      "value" : "Journals"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Literacy Narratives"
+    }, {
+      "type" : "Value",
+      "count" : 17,
+      "value" : "Memoirs and Personal Narratives"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Nature Writing"
+    }, {
+      "type" : "Value",
+      "count" : 3,
+      "value" : "Profile of a Person"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Profile of a Place"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "theme",
+    "displayName" : "Theme",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 3,
+      "value" : ""
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Across Cultures"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Crime and Punishment"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Death and Dying"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Education"
+    }, {
+      "type" : "Value",
+      "count" : 4,
+      "value" : "Food"
+    }, {
+      "type" : "Value",
+      "count" : 3,
+      "value" : "Health and Sickness"
+    }, {
+      "type" : "Value",
+      "count" : 5,
+      "value" : "Home and Family"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Literature"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Philosophy"
+    }, {
+      "type" : "Value",
+      "count" : 7,
+      "value" : "Race/Class/Ethnicity"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "War and Its Effects"
+    }, {
+      "type" : "Value",
+      "count" : 4,
+      "value" : "Work"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "mode",
+    "displayName" : "Mode",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Classification"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Comparing and Contrasting"
+    }, {
+      "type" : "Value",
+      "count" : 3,
+      "value" : "Definition"
+    }, {
+      "type" : "Value",
+      "count" : 10,
+      "value" : "Description"
+    }, {
+      "type" : "Value",
+      "count" : 4,
+      "value" : "Exposition"
+    }, {
+      "type" : "Value",
+      "count" : 2,
+      "value" : "Persuasion and Argument"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Process Analysis"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  } ],
+  "selectedNavigation" : [ ],
+  "records" : [ {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "on-going-home",
+      "publishDate" : "20150815",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151215",
+      "abstract" : "I go to visit my great-aunts. A few of them think now that I am my cousin, or their daughter who died young. We recall an anecdote about a relative last seen in 1948, and they ask if I still like living in New York City. I have lived in Los Angeles for three years, but I say that I do. Questions trail off, answers are abandoned, the baby plays with the dust motes in a shaft of afternoon sun.",
+      "title" : "On Going Home",
+      "mode" : [ "Description", "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Profile of a Place", "Memoirs and Personal Narratives" ],
+      "authorFirst" : "Joan",
+      "theme" : [ "Home and Family" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Description"
+          }, {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Profile of a Place"
+          }, {
+            "value" : "Memoirs and Personal Narratives"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Home and Family"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "1",
+      "keyword" : [ "Home", "Family", "Memory" ],
+      "categoryId" : [ "5", "8", "9", "16", "17", "28" ],
+      "authorLast" : "Didion"
+    },
+    "_id" : "e7a9182c14153b30d3ce117f44ff9eee",
+    "_u" : "http://wwnorton1nortonreadertwo.com/1",
+    "_t" : "On Going Home"
+  }, {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "coming-home-again",
+      "publishDate" : "20151115",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151116",
+      "abstract" : "Whenever I cook, I find myself working just as she would, readying the ingredients- a mash of garlic, a julienne of red peppers, fantails of shrimp- and piling them in little mounds about the cutting surface. My mother never left me any recipes, but this is how I learned to make her food, each dish coming not from a list or a card but from the aromatic spread of a board.",
+      "title" : "Coming Home Again",
+      "mode" : [ "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Memoirs and Personal Narratives" ],
+      "authorFirst" : "Chang-Rae",
+      "theme" : [ "Race/Class/Ethnicity", "Health and Sickness", "Food", "Home and Family", "Death and Dying" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Memoirs and Personal Narratives"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Race/Class/Ethnicity"
+          }, {
+            "value" : "Health and Sickness"
+          }, {
+            "value" : "Food"
+          }, {
+            "value" : "Home and Family"
+          }, {
+            "value" : "Death and Dying"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "2",
+      "keyword" : [ "Illness, Injury, Death, and Dying", "Food", "Family", "Identity", "Memory" ],
+      "categoryId" : [ "5", "9", "17", "29", "30", "29", "31", "28", "31", "32" ],
+      "authorLast" : "Lee"
+    },
+    "_id" : "12c96a285a8c2c733fadee600b2e1d4a",
+    "_u" : "http://wwnorton1nortonreadertwo.com/2",
+    "_t" : "Coming Home Again"
+  }, {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "how-it-feels-to-be-colored-me",
+      "publishDate" : "20150715",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20161115",
+      "abstract" : "I left Eatonville, the town of the oleanders, as Zora. When I disembarked from the river-boat at Jacksonville, she was no more. It seemed that I had suffered a sea change. I was not Zora of Orange County any more, I was now a little colored girl. I found it out in certain ways. In my heart as well as in the mirror, I became a fast brown- warranted not to rub nor run.",
+      "title" : "How It Feels to Be Colored Me",
+      "mode" : [ "Description", "Exposition", "Persuasion and Argument", "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Memoirs and Personal Narratives", "Argument" ],
+      "authorFirst" : "Zora Neale",
+      "theme" : [ "Race/Class/Ethnicity" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Description"
+          }, {
+            "value" : "Exposition"
+          }, {
+            "value" : "Persuasion and Argument"
+          }, {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Memoirs and Personal Narratives"
+          }, {
+            "value" : "Argument"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Race/Class/Ethnicity"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "3",
+      "keyword" : [ "Race/Class/Ethnicity", "African American History", "Identity", "Memory" ],
+      "categoryId" : [ "5", "8", "10", "11", "9", "17", "18", "29" ],
+      "authorLast" : "Hurston"
+    },
+    "_id" : "959a7090bb039b09cb038c35062c0abb",
+    "_u" : "http://wwnorton1nortonreadertwo.com/3",
+    "_t" : "How It Feels to Be Colored Me"
+  }, {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "graduation",
+      "publishDate" : "20151015",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151115",
+      "abstract" : "Graduation, the hush-hush magic time of frills and gifts and congratulations and diplomas, was finished for me before my name was called. The accomplishment was nothing. The meticulous maps, drawn in three colors of ink, learning and spelling decasyllabic words, memorizing the whole of The Rape of Lucrece- it was for nothing� My name had lost its ring of familiarity and I had to be nudged to go and receive my diploma.",
+      "title" : "Graduation",
+      "mode" : [ "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Memoirs and Personal Narratives" ],
+      "authorFirst" : "Maya",
+      "theme" : [ "Education", "Race/Class/Ethnicity" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Memoirs and Personal Narratives"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Race/Class/Ethnicity"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "4",
+      "keyword" : [ "Race/Class/Ethnicity", "African American History", "Memory" ],
+      "categoryId" : [ "5", "9", "17", "29" ],
+      "authorLast" : "Angelou"
+    },
+    "_id" : "b7cf22025cf75cbfe45e4f3aba189a2e",
+    "_u" : "http://wwnorton1nortonreadertwo.com/4",
+    "_t" : "Graduation"
+  }, {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "working-at-wendy's",
+      "publishDate" : "20151015",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151115",
+      "abstract" : "I step away from the counter and pretend to read the menu, holding my r�sum� close to my chest. The urge to leave increases� As I hand the manager my r�sum�, I realize it is a mistake. He doesn't want to know my service experience, or my academic references, or my GPA. All he wants to know is if I can spell my name correctly.",
+      "title" : "Working at Wendy's",
+      "mode" : [ "Narration", "Description" ],
+      "siteMode" : "full",
+      "genre" : [ "Cultural Analysis", "Evaluations" ],
+      "authorFirst" : "Joey",
+      "theme" : [ "Food", "Work", "Race/Class/Ethnicity" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Description"
+          }, {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Cultural Analysis"
+          }, {
+            "value" : "Evaluations"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Race/Class/Ethnicity"
+          }, {
+            "value" : "Food"
+          }, {
+            "value" : "Work"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "5",
+      "keyword" : [ "Race/Class/Ethnicity", "Work" ],
+      "categoryId" : [ "5", "8", "9", "19", "20", "29", "31", "34" ],
+      "authorLast" : "Franklin"
+    },
+    "_id" : "30921e6341c051748510b777258be305",
+    "_u" : "http://wwnorton1nortonreadertwo.com/5",
+    "_t" : "Working at Wendy's"
+  }, {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "on-dumpster-diving",
+      "publishDate" : "20151015",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151115",
+      "abstract" : "I live from the refuse of others. I am a scavenger. I think it a sound and honorable niche, although if I could I would naturally prefer to live the comfortable consumer life, perhaps- and only perhaps- as a slightly less wasteful consumer, owing to what I have learned as a scavenger.",
+      "title" : "On Dumpster Diving",
+      "mode" : [ "Description", "Definition", "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Memoirs and Personal Narratives" ],
+      "authorFirst" : "Lars",
+      "theme" : [ "Food", "Race/Class/Ethnicity", "Work" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Description"
+          }, {
+            "value" : "Narration"
+          }, {
+            "value" : "Definition"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Memoirs and Personal Narratives"
+          } ],
+          "value" : "Genre"
+        }, {
+          "categories" : [ {
+            "value" : "Food"
+          }, {
+            "value" : "Work"
+          }, {
+            "value" : "Race/Class/Ethnicity"
+          } ],
+          "value" : "Mode"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "6",
+      "keyword" : [ "Race/Class/Ethnicity", "Food", "Work" ],
+      "categoryId" : [ "5", "8", "9", "12", "17", "31", "34", "29" ],
+      "authorLast" : "Eighner"
+    },
+    "_id" : "daeeb06aff6b6c2aeb391da8d20422b3",
+    "_u" : "http://wwnorton1nortonreadertwo.com/6",
+    "_t" : "On Dumpster Diving"
+  } ],
+  "didYouMean" : [ ],
+  "relatedQueries" : [ ],
+  "rewrites" : [ ],
+  "siteParams" : [ ]
+}
