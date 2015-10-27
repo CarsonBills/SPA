@@ -1,0 +1,173 @@
+{
+  "totalRecordCount" : 1,
+  "area" : "Production",
+  "template" : {
+    "name" : "default",
+    "zones" : { }
+  },
+  "pageInfo" : {
+    "recordStart" : 1,
+    "recordEnd" : 1
+  },
+  "availableNavigation" : [ {
+    "name" : "chapter",
+    "displayName" : "Chapter",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Personal Accounts"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "genre",
+    "displayName" : "Genre",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Cultural Analysis"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Memoirs and Personal Narratives"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "theme",
+    "displayName" : "Theme",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : ""
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "mode",
+    "displayName" : "Mode",
+    "refinements" : [ {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Classification"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Comparing and Contrasting"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Description"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Narration"
+    }, {
+      "type" : "Value",
+      "count" : 1,
+      "value" : "Persuasion and Argument"
+    } ],
+    "metadata" : [ ],
+    "range" : false,
+    "or" : false
+  }, {
+    "name" : "publishDate",
+    "displayName" : "Publish Date",
+    "refinements" : [ {
+      "type" : "Range",
+      "count" : 1,
+      "high" : "25251231",
+      "low" : "19230101"
+    } ],
+    "metadata" : [ ],
+    "range" : true,
+    "or" : false
+  }, {
+    "name" : "sunsetDate",
+    "displayName" : "Sunset Data",
+    "refinements" : [ {
+      "type" : "Range",
+      "count" : 1,
+      "high" : "25251231",
+      "low" : "19230101"
+    } ],
+    "metadata" : [ ],
+    "range" : true,
+    "or" : false
+  } ],
+  "selectedNavigation" : [ {
+    "name" : "mode",
+    "displayName" : "Mode",
+    "refinements" : [ {
+      "type" : "Value",
+      "value" : "Comparing and Contrasting"
+    }, {
+      "type" : "Value",
+      "value" : "Comparing and Contrasting"
+    } ],
+    "metadata" : [ ],
+    "_id" : "8bc55a6bc632d657bbfb1e542a7398ec",
+    "range" : false,
+    "or" : false
+  } ],
+  "records" : [ {
+    "allMeta" : {
+      "chapter" : "Personal Accounts",
+      "siteCode" : "nortonreader",
+      "pname" : "night-owl",
+      "publishDate" : "20151015",
+      "ebookNode" : "https://digital.wwnorton.com/1645?chapter=2&demo",
+      "sunsetDate" : "20151115",
+      "abstract" : "The owl's reputation may be beyond salvation. Who gets up early? Farmers, bakers, doctors. Who stays up late? Muggers, streetwalkers, cat burglars. It's assumed that if you're sneaking around after midnight, you must have something to hide. Night is the time of goblins, ghouls, vampires, zombies, witches, warlocks, demons, wraiths, fiends, banshees, poltergeists, werefolk, bogeymen, and things that go bumpï¿½With such a powerful pro-lark tradition arrayed against us, must we owls be forever condemned to the infernal regions- which, despite their inextinguishable flames, are always described as dark?",
+      "title" : "Night Owl",
+      "mode" : [ "Description", "Classification", "Comparing and Contrasting", "Persuasion and Argument", "Narration" ],
+      "siteMode" : "full",
+      "genre" : [ "Cultural Analysis", "Memoirs and Personal Narratives" ],
+      "authorFirst" : "Anne",
+      "theme" : [ "" ],
+      "categories" : [ {
+        "categories" : [ {
+          "categories" : [ {
+            "value" : "Personal Accounts"
+          } ],
+          "value" : "Chapters"
+        }, {
+          "categories" : [ {
+            "value" : "Description"
+          }, {
+            "value" : "Classification"
+          }, {
+            "value" : "Comparing and Contrasting"
+          }, {
+            "value" : "Persuasion and Argument"
+          }, {
+            "value" : "Narration"
+          } ],
+          "value" : "Mode"
+        }, {
+          "categories" : [ {
+            "value" : "Cultural Analysis"
+          }, {
+            "value" : "Memoirs and Personal Narratives"
+          } ],
+          "value" : "Genre"
+        } ],
+        "value" : "Category Root"
+      } ],
+      "id" : "11",
+      "keyword" : [ "Nature", "Reading", "Writing" ],
+      "categoryId" : [ "5", "8", "14", "15", "11", "9", "21", "17" ],
+      "authorLast" : "Fadiman"
+    },
+    "_id" : "266cd1dc4cb7b92b8b0630c8d1613a63",
+    "_u" : "http://wwnorton1nortonreadertwo.com/11",
+    "_t" : "Night Owl"
+  } ],
+  "didYouMean" : [ ],
+  "relatedQueries" : [ ],
+  "rewrites" : [ ],
+  "siteParams" : [ ]
+}
