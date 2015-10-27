@@ -8,13 +8,20 @@
     {{else}}
         <div class="filter-item collapse" role="tab-panel" id="{{name}}">
     {{/HBIsChapter}}
-        {{#each refinements}}
-            {{#if value}}
-                <div class="filter-item-name">
-                    <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{value}}' data-filter-cat="{{cat}}"/></a>
-                    <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
-                </div>
+    {{#each refinements}}
+        {{#if value}}
+            {{#if count}}
+                    <div class="filter-item-name">
+                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{value}}' data-filter-cat="{{cat}}" {{checked}}/></a>
+                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                    </div>
+            {{else}}
+                    <div class="filter-item-name filter-greyed-out">
+                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{cat}}"/>
+                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                    </div>
             {{/if}}
-        {{/each}}
+        {{/if}}
+    {{/each}}
     </div>
 {{/if}}

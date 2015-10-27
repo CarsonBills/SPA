@@ -14,28 +14,25 @@ var FiltersView = Backbone.View.extend({
 
     initialize: function(params) {
         "use strict";
-        this.collection.on('update', this.render, this);
+        this.collection.on('update', this.preRender, this);
         this.app = params.app;
+    },
+    preRender: function() {
+        if (this.collection.length === 0) {
+            return false;
+        }
+        this.collection.filters = this.refinements.compare(this.collection.filters);
+
+        this.render();
     },
     render: function () {
         "use strict";
         var that = this,
             filterTemplate,
-            cat,
             i;
-
-        if (this.collection.length > 0 && this.delay) {
-            this.delay = false;
-            setTimeout(function () {
-                that.refinements.compare(that.collection.toJSON());
-            }, 500);
-        } else {
-            return false;
-        }
 
         this.$('.filters-container').remove();
 
-        // Since this refreshes on each Load More event, do not keep appending
         this.$('.filters-content').empty();
 
         _.each(this.collection.filters, function (filter) {
@@ -51,7 +48,7 @@ var FiltersView = Backbone.View.extend({
 
         this.$('.filter-item').on('show.bs.collapse', function () {
             that.$('.filter-item').removeClass('in');
-        })
+        });
 
 
         return this;

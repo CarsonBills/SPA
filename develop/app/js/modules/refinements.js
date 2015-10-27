@@ -46,6 +46,46 @@ Navigation.prototype = {
     },
     compare: function (collection) {
         "use strict";
+        var filteredNav = collection,
+            originalNav = this.collection.availNav,
+            activeFilter,   // this filter has counts in the filteredNax
+            selectedFilter; // this filter was "checked" in the navigation
+
+        for(var i=0; i<originalNav.length; i++) {
+            for (var j=0; j<originalNav[i].refinements.length; j++) {
+                activeFilter = false;
+                selectedFilter = false;
+                for (var k=0; k<filteredNav[i].refinements.length; k++) {
+                    if (filteredNav[i].refinements[k].value == originalNav[i].refinements[j].value) {
+                        originalNav[i].refinements[j].count = filteredNav[i].refinements[k].count;
+                        activeFilter = true;
+                        // If a filter is checked, the filtered navigation MUST contain that filter so we can do the checkbox thing here.
+                        if (Norton.savedRefinements != undefined) {
+                            for (var m=0; m < Norton.savedRefinements.length; m++) {
+                                if (filteredNav[i].name == Norton.savedRefinements[m].navigationName &&
+                                    filteredNav[i].refinements[k].value == Norton.savedRefinements[m].value
+                                ) {
+                                    selectedFilter = true;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                if (!activeFilter) {
+                    originalNav[i].refinements[j].count = 0;
+                }
+                if (selectedFilter) {
+                    originalNav[i].refinements[j].checked = "checked";
+                } else {
+                    originalNav[i].refinements[j].checked = "";
+                }
+            }
+        }
+
+        return originalNav;
+
     }
 };
 
