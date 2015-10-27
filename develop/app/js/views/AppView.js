@@ -339,6 +339,7 @@ var AppView = Backbone.View.extend({
             var template = require("../../templates/LoadingSpinnerTemplate.hbs");
             $("#detailPage").find(".modal-content").replaceWith(template);
         }
+        console.log(this.collection.current(id));
 
         NortonApp.pageItem = new NortonApp.Models.Page({id: id});
 

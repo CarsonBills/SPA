@@ -6,14 +6,11 @@
     position: absolute;
     background-color: #fff;
     width: $filter-width;
-    max-height: 600px;
-    height: 100%;
     float: left;
     top: 269px;
     left: 0;
     z-index: 999;
     @include toggle-offscreen($property: left);
-    //transition: left 0.5s ease-in-out;
     @include locked($position: fixed, $top:101px);
     @include opensans($size: 1.4rem);
     color: #484848;

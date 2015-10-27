@@ -70,7 +70,10 @@ var ArticlesCollection = Backbone.Collection.extend({
 
     prev: function(model) {
         'use strict';
+
         var idx = this.curr(model);
+        idx -= 1;
+
         if (idx > 0) {
             return this.at(idx - 1).attributes.allMeta.pname;
         }
@@ -79,14 +82,16 @@ var ArticlesCollection = Backbone.Collection.extend({
     },
     next: function(model) {
         'use strict';
+
         var idx = this.curr(model);
+        idx += 1;
+
         if (idx < (this.length - 1)) {
             return this.at(idx + 1).attributes.allMeta.pname;
         }
-
         return null;
     },
-    curr: function(model) {
+    current: function(model) {
         'use strict';
         return this.indexOf(model);
     },

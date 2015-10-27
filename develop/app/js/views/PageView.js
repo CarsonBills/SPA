@@ -28,6 +28,9 @@ var PageView = Backbone.View.extend({
 
         Norton.currArticle = this.model.attributes.id;
 
+
+        $('#pageContainer').modal('show');
+
         return this;
     },
     renderReplace: function() {
