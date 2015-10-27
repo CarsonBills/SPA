@@ -13,6 +13,7 @@ var Backbone = require('backbone'),
 
 var AppView = Backbone.View.extend({
     el: $('#container'),
+    deferred: $.Deferred(),
     topNavView: null,
     articleView: null,
     filtersView: null,
@@ -22,6 +23,12 @@ var AppView = Backbone.View.extend({
     hasRefreshed: false,
     shouldRefresh: null,
     stickScroll: null,
+    dataReady: false,
+    baseUrl: '',
+    modalShown: false,
+
+    pageItem: null,
+    pageView: null,
 
     initialize: function() {
         'use strict';
@@ -48,8 +55,6 @@ var AppView = Backbone.View.extend({
             func: scrollHelper.shouldRefresh,
             callback: this.shouldRefresh
         });
-
-        //scrollHelper.setRefresh(this.shouldRefresh);
 
     },
     render: function(){
@@ -233,6 +238,8 @@ var AppView = Backbone.View.extend({
         var that = this,
             postdata = {};
 
+        this.dataReady = false;
+
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
         }
@@ -259,11 +266,13 @@ var AppView = Backbone.View.extend({
             datatype: "json",
             remove: false,
             success: $.proxy (function(data) {
+                that.dataReady = true;
+                that.hasRefreshed = false;
                 that.showResultsTotals();
                 that.refinements.compare(this.collection);
-                that.hasRefreshed = false;
 
                 that.showHighlight(showHint);
+                that.deferred.resolve();
                     
                 if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles(false);
@@ -330,31 +339,49 @@ var AppView = Backbone.View.extend({
         this.yourFavsView.$el = this.$("#yourFavs");
         this.yourFavsView.render();
     },
-    showDetailPage: function(id, create) {
+
+    showModal: function () {
+        'use strict';
+        var that = this;
+
+        this.modalShown = true;
+
+        $('#pageContainer').modal('show');
+        this.$('#pageContainer').on('hide.bs.modal', function (e) {
+            // load different URL without refreshing page
+            window.history.pushState(null,null, that.baseUrl);
+            that.modalShown = false;
+        });
+
+    },
+
+    showDetail: function (id, create) {
         "use strict";
-        /**
-         * load spinner
-         */
-        if (!create) {
-            var template = require("../../templates/LoadingSpinnerTemplate.hbs");
-            $("#detailPage").find(".modal-content").replaceWith(template);
-        }
-        console.log(this.collection.current(id));
 
-        NortonApp.pageItem = new NortonApp.Models.Page({id: id});
+        var model = this.collection.getModelById(id);
 
-        NortonApp.pageItem.setUrlId(id);
-        NortonApp.pageItem.fetch({
+        this.pageItem = new NortonApp.Models.Page({
+            id: id,
+            prevId: model.get('prevId'),
+            nextId: model.get('nextId')
+        });
+
+        this.baseUrl =  model.get('baseUrl')
+
+        this.pageItem.setUrlId(id);
+        this.pageItem.fetch({
             success: $.proxy (function(data) {
-                NortonApp.pageView = new NortonApp.Views.Page({
-                    model: NortonApp.pageItem,
+                this.pageView = new NortonApp.Views.Page({
+                    model: this.pageItem,
                     el: "#detailPage"
                 });
                 if (create) {
                     $('#pageContainer').remove();   // get rid of old page if it exists
-                    NortonApp.pageView.render();
+                    this.pageView.render();
+
+                    this.showModal();
                 } else {
-                    NortonApp.pageView.renderReplace(); // replace modal-content but do not recreate modal
+                    this.pageView.renderReplace(); // replace modal-content but do not recreate modal
                 }
 
             }, this),
@@ -365,6 +392,30 @@ var AppView = Backbone.View.extend({
                 Norton.Utils.genericError('detail');
             }
         });
+
+    },
+    // called from router
+    showDetailPage: function(id) {
+        "use strict";
+        var that = this,
+            template
+        /**
+         * load spinner
+         */
+        if (this.modalShown) {
+            template = require("../../templates/LoadingSpinnerTemplate.hbs");
+            $("#detailPage").find(".modal-content").replaceWith(template);
+        }
+
+        if (this.dataReady) {
+            this.showDetail(id, !this.modalShown);
+        } else {
+            this.deferred.promise().done(function () {
+                that.showDetail(id, true);
+            })
+        }
+
+        
     },
     getNextPrevFromList: function(e) {
         "use strict";
@@ -372,13 +423,13 @@ var AppView = Backbone.View.extend({
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
 
-        if (Backbone.history.fragment === "page/"+$(e.currentTarget).attr('data-id')) {
-            NortonApp.router.navigate('#/page/'+$(e.currentTarget).attr('data-id'), true);
-        }
 
         Norton.pageClick = "list";
-        Norton.prevArticle = $(e.currentTarget).attr('data-prev-id');
-        Norton.nextArticle = $(e.currentTarget).attr('data-next-id');
+        var page = "page/" + $(e.currentTarget).attr('data-id');
+
+        if (Backbone.history.fragment === page) {
+            NortonApp.router.navigate('#/' + page, true);
+        }
     },
     getNextPrevFromPage: function(e) {
         "use strict";
@@ -387,12 +438,23 @@ var AppView = Backbone.View.extend({
          * Otherwise, they are determined above in getNextPrevFromList
          */
         Norton.pageClick = "page";
+        var page,
+            id;
 
         if ($(e.currentTarget).attr('data-next-id') !== undefined) {
-            this.showDetailPage($(e.currentTarget).attr('data-next-id'), false);
+            id = $(e.currentTarget).attr('data-next-id');
         } else {
-            this.showDetailPage($(e.currentTarget).attr('data-prev-id'), false);
+            id = $(e.currentTarget).attr('data-prev-id');
         }
+
+        page = "page/" + id;
+
+        NortonApp.router.navigate('#/' + page, {
+            trigger: true,
+            replace: true
+        });
+
+        return false;
 
     },
     showResultsTotals: function() {
