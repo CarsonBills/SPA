@@ -68,10 +68,10 @@ var ArticlesCollection = Backbone.Collection.extend({
         return null;
     },
 
-    prev: function(model) {
+    /*prev: function(model) {
         'use strict';
 
-        var idx = this.curr(model);
+        var idx = this.current(model);
         idx -= 1;
 
         if (idx > 0) {
@@ -83,7 +83,7 @@ var ArticlesCollection = Backbone.Collection.extend({
     next: function(model) {
         'use strict';
 
-        var idx = this.curr(model);
+        var idx = this.current(model);
         idx += 1;
 
         if (idx < (this.length - 1)) {
@@ -91,10 +91,11 @@ var ArticlesCollection = Backbone.Collection.extend({
         }
         return null;
     },
-    current: function(model) {
+    current: function(id) {
         'use strict';
-        return this.indexOf(model);
-    },
+        console.log(this.models)
+        return this.indexOf(id);
+    },*/
 
     setShowGrid: function (bool) {
         'use strict';
@@ -115,8 +116,18 @@ var ArticlesCollection = Backbone.Collection.extend({
         return bool;
     },
     cleanupAndReset: function() {
+        'use strict';
         this.reset(null, { silent: true });
         this.recordEnd = 0;
+    },
+
+    getModelById: function (id) {
+        'use strict';
+        var model =  _.find(this.models, function(model) {
+            return model.get('allMeta').pname === id;
+        })
+
+        return model || {};
     }
 });
 
