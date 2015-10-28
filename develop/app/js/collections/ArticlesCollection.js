@@ -127,7 +127,7 @@ var ArticlesCollection = Backbone.Collection.extend({
             return model.get('allMeta').pname === id;
         })
 
-        return model || {};
+        return model;
     }
 });
 
