@@ -45,6 +45,11 @@ Navigation.prototype = {
 
     },
     compare: function (collection) {
+        /**
+         * Technique is to match 2 onjects (the original navigation) with what the refinement query returned.
+         * Assumptions: Refinement query always returns the same categories as the original.
+         * Indexes in refinement query will differ from original so we need to crawl both matching category and refinement name.
+         */
         "use strict";
         var filteredNav = collection,
             originalNav = this.collection.availNav,
