@@ -41,10 +41,10 @@ var PageModel = Backbone.Model.extend({
 
         return response;
     },
-    setUrlId: function(id) {
-        "use strict";
-        // "this" is now our Model instance declared from the router
-        this.url = this.urlRoot + id;
+
+    initialize: function () {
+        'use strict';
+        //this.url = this.urlRoot + this.id;
     }
 });
 
