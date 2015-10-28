@@ -21,6 +21,7 @@ var FiltersView = Backbone.View.extend({
         if (this.collection.length === 0) {
             return false;
         }
+
         this.collection.filters = this.refinements.compare(this.collection.filters);
 
         this.render();
@@ -31,9 +32,8 @@ var FiltersView = Backbone.View.extend({
             filterTemplate,
             i;
 
-        this.$('.filters-container').remove();
-
-        this.$('.filters-content').empty();
+        $('.filter-item-cat').remove();
+        $('.filter-item').remove();
 
         _.each(this.collection.filters, function (filter) {
             filter.cat_display = filter.displayName;
