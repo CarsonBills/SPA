@@ -58,7 +58,7 @@ var FiltersView = Backbone.View.extend({
         "click .filter-checkbox": function(e) {
             "use strict";
             if ($(e.target).prop('checked')) {
-                this.showSelectedFilter(e);
+                this.showSelectedFilter();
             } else {
                 this.removeSelectedFilter(e, "cb");
             }
@@ -67,7 +67,7 @@ var FiltersView = Backbone.View.extend({
             "use strict";
             this.removeAllFilters(e);
         },
-        "click .close-filter": function(e) {
+        "click .clear-filter": function(e) {
             "use strict";
             this.removeSelectedFilter(e, "X");
         }
@@ -88,76 +88,59 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
-    showSelectedFilter: function(e) {
+    showSelectedFilter: function() {
         "use strict";
-        var tgt = $(e.target);
-        var cat = tgt.attr('data-filter-cat');
-        var name = tgt.attr('data-filter-name');
         var html = "";
 
+        $("#selectedFilters").empty();
 
-        if ($(".selected-filters").length < 1) {
-            html = '<div class="remove-all-filters" id="removeAllFilters">Remove all filters</div>';
+        $(".filter-checkbox").each(function() {
+            if ($(this).prop('checked')) {
+                html += '<div class="selected-filters"><div>' + $(this).attr('data-filter-name') +
+                    '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
+                    '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
+                    '" class="clear-filter" style="cursor:pointer;font-weight:bold;">x</span></div></div>';
+            }
+        });
+
+        if (html) {
+            html = '<div class="remove-all-filters" id="removeAllFilters">Remove all filters</div>' + html;
         }
-
-        html += '<div class="selected-filters"><div>' + name +
-            '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + tgt.attr('data-filter-name') +
-            '" data-close-filter-cat="' + cat +
-            '" class="close-filter" style="cursor:pointer;font-weight:bold;">x</span></div></div>';
 
         $("#selectedFilters").append(html);
 
         var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
 
         window.history.pushState(null,null,url);
-
-        // call searchandiser, and refresh AppView with results. Remember to leave filter open with selected filters
-    },
-    /**
-     * Remove filter from selected filters list
-     * Remove URL from filter
-     * Call Searchandiser for refinements
-     * Display filtered content (refresh ArticleView)
-     * @param e
-     */
-    removeAllFilters: function(e) {
-        "use strict";
-        $('.selected-filters').remove();
-        $('.filter-checkbox').attr('checked', false);
-        $('.remove-all-filters').remove();
-
-        var url = Norton.baseUrl + "#/filters";
-
-        window.history.pushState(null,null,url);
-
-        // call searchandiser, and refresh AppView with results. Remember to leave filter open with selected filters
     },
     removeSelectedFilter: function(e, typ) {
         "use strict";
         var sel ='';
         var tgt = $(e.target);
 
-        if (typ === 'cb') {  // checkbox was clicked to remove
-            sel = "span[data-close-filter-name='" + tgt.attr('data-filter-name') + "']" +
-                "[data-close-filter-cat='" + tgt.attr('data-filter-cat') + "']";
-            tgt.attr('checked', false);
-            $(sel).parents('.selected-filters').remove();
-        } else {    // close indicator (X) was clicked to remove
+        if (typ) {
             sel = "input[data-filter-name='" + tgt.attr('data-close-filter-name') + "']" +
                 "[data-filter-cat='" + tgt.attr('data-close-filter-cat') + "']";
             $(sel).attr('checked', false);
-            tgt.parents('.selected-filters').remove();
         }
 
-        if ($(".selected-filters").length < 1) {
-            $('.remove-all-filters').remove();
-        }
+        this.showSelectedFilter();
+    },
+    /**
+     * Remove all filters, remove saved refinements, reset to baseUrl and do getArticles
+     */
+    removeAllFilters: function(e) {
+        "use strict";
+        $('.selected-filters').remove();
+        $('.filter-checkbox').attr('checked', false);
+        $('.remove-all-filters').remove();
+        Norton.savedRefinements = null;
 
-        var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+        var url = Norton.baseUrl;
 
         window.history.pushState(null,null,url);
 
-        // call searchandiser, and refresh AppView with results. Remember to leave filter open with selected filters
+        this.app.formatRefinements();   // call getArticles() in AppView
     },
     buildFilterUrl: function(url) {
         "use strict";
@@ -185,14 +168,18 @@ var FiltersView = Backbone.View.extend({
         for (key in cats) {
             query += cats[key] + "&";
         }
-        return url + "#/filters/?" + query.slice(0, -1);
+
+        // query will be empty when last filter is removed
+        return url + ((query) ? "#/filters/?" + query.slice(0, -1) : "");
     },
     buildRefinementsFromUrl: function() {
+        var refs = [],
+            cats,
+            that = this;
+
         var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
 
-        var refs = [];
-
-        var cats = qs.split("&");
+        cats = (qs) ? qs.split("&") : ""; // don't want cat's to be 1 element array with empty key-val
         var obj;
         for (var cat in cats) {
             splt = cats[cat].split("=");
@@ -201,7 +188,15 @@ var FiltersView = Backbone.View.extend({
 
         Norton.savedRefinements = refs;
         this.app.formatRefinements();   // call getArticles() in AppView
-}
+
+        if (this.app.dataReady) {
+            this.showSelectedFilter();
+        } else {
+            this.app.deferred.promise().done(function () {
+                that.showSelectedFilter();
+            })
+        }
+    }
 });
 
 module.exports = FiltersView;
