@@ -3,9 +3,19 @@ var Backbone = require('backbone'),
 	
 	NavigationCollection = Backbone.Collection.extend({
     	model: Navigation,
-    	parse: function (response) {
+		availNav:  null,
+    	parse: function (res) {
     		"use strict";
-    		return response.availableNavigation;
+
+			var response = res.data;
+
+			if (res.code !== 200) {
+				console.debug('Search return code is" ' + response.code);
+				Norton.Utils.genericError('config');
+				return;
+			}
+			this.availNav = response.availableNavigation;
+    		return response;
     	}
 	});
 

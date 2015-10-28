@@ -14,29 +14,25 @@ var FiltersView = Backbone.View.extend({
 
     initialize: function(params) {
         "use strict";
-        this.collection.on('update', this.render, this);
+        this.collection.on('update', this.preRender, this);
         this.app = params.app;
+    },
+    preRender: function() {
+        if (this.collection.length === 0) {
+            return false;
+        }
+
+        this.collection.filters = this.refinements.compare(this.collection.filters);
+        this.render();
     },
     render: function () {
         "use strict";
         var that = this,
             filterTemplate,
-            cat,
             i;
 
-        if (this.collection.length > 0 && this.delay) {
-            this.delay = false;
-            setTimeout(function () {
-                that.refinements.compare(that.collection.toJSON());
-            }, 500);
-        } else {
-            return false;
-        }
-
-        this.$('.filters-container').remove();
-
-        // Since this refreshes on each Load More event, do not keep appending
-        this.$('.filters-content').empty();
+        $('.filter-item-cat').remove();
+        $('.filter-item').remove();
 
         _.each(this.collection.filters, function (filter) {
             filter.cat_display = filter.displayName;
@@ -51,7 +47,7 @@ var FiltersView = Backbone.View.extend({
 
         this.$('.filter-item').on('show.bs.collapse', function () {
             that.$('.filter-item').removeClass('in');
-        })
+        });
 
 
         return this;
@@ -190,7 +186,22 @@ var FiltersView = Backbone.View.extend({
             query += cats[key] + "&";
         }
         return url + "#/filters/?" + query.slice(0, -1);
-    }
+    },
+    buildRefinementsFromUrl: function() {
+        var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
+
+        var refs = [];
+
+        var cats = qs.split("&");
+        var obj;
+        for (var cat in cats) {
+            splt = cats[cat].split("=");
+            refs[splt[0]] = cats[cat];
+        }
+
+        Norton.savedRefinements = refs;
+        this.app.formatRefinements();   // call getArticles() in AppView
+}
 });
 
 module.exports = FiltersView;

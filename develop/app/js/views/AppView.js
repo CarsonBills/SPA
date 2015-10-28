@@ -8,8 +8,6 @@ var Backbone = require('backbone'),
     EventManager = require('../modules/event_manager'),
     resizeHelper = require('../modules/resize_helper'),
     scrollHelper = require('../modules/scroll_helper');
-    Refinements = require('../modules/refinements');
-
 
 var AppView = Backbone.View.extend({
     el: $('#container'),
@@ -18,7 +16,6 @@ var AppView = Backbone.View.extend({
     articleView: null,
     filtersView: null,
     evtMgr: EventManager.getInstance(),
-    refinements: Refinements.getInstance(),
 
     hasRefreshed: false,
     shouldRefresh: null,
@@ -258,7 +255,6 @@ var AppView = Backbone.View.extend({
         postdata.skip = this.collection.recordEnd;
         postdata.pageSize = Norton.perPage;
 
-        //console.log(JSON.stringify(postdata));
         this.collection.fetch({
             data: JSON.stringify(postdata),
             //data: postdata,   //  NEED THIS IF USING searchandiser.php
@@ -269,7 +265,6 @@ var AppView = Backbone.View.extend({
                 that.dataReady = true;
                 that.hasRefreshed = false;
                 that.showResultsTotals();
-                that.refinements.compare(this.collection);
 
                 that.showHighlight(showHint);
                 that.deferred.resolve();
