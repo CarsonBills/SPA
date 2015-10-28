@@ -11,31 +11,37 @@ var $ = require('jquery');
 var PageView = Backbone.View.extend({
     el: $('#detailPage'),
     template: require('../../templates/PageTemplate.hbs'),
-    templateReplace: require('../../templates/PageReplaceTemplate.hbs'),
+    templateLoading: require("../../templates/LoadingSpinnerTemplate.hbs"),
+    content: '.modal-content',
+    body: '.modal-body',
+    redraw: true,
 
-    initialize: function() {
+    initialize: function(params) {
         'use strict';
-        this.model.on('update', this.render, this);
+        this.redraw = params.redraw;
+        this.on('update', this.render, this);
+        this.$(this.content).html(this.templateLoading());
     },
 
     render: function() {
         'use strict';
 
-        var pageTemplate = this.template(this.model.toJSON());
-        this.$el.append(pageTemplate);
+        var modal = this.template(this.model.toJSON());
+        this.$(this.content).html(modal);
+        TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
 
         return this;
     },
 
+    // TODO can take the whole function out
     renderReplace: function() {
         'use strict';
 
         // got this technique from http://stackoverflow.com/questions/14623232/re-rendering-handlebars-partial-from-backbone-view
         // This doesn't use HB partials so maybe we can do that once we figure out how to find Handlebars at runtime...
-        var pageReplaceTemplate = this.templateReplace(this.model.toJSON()),
-            selector = '.modal-content';
+        // var template = this.template(this.model.toJSON());
 
-        $('#detailPage').find(selector).replaceWith(pageReplaceTemplate);
+        // this.$(this.content).replaceWith(template);
         //  Settimeout is just there for dev purposes to see loading spinner
         /*setTimeout(function() {
             $('#detailPage').find(selector).replaceWith(pageReplaceTemplate);
@@ -47,8 +53,8 @@ var PageView = Backbone.View.extend({
         //window.history.pushState(null,null,'#/page/' + this.model.attributes.id);
 
         // Fade in between new articles load
-        //$(selector).css('opacity', 0);
-        //$(selector).fadeTo('slow' , 1.0);
+        // this.$(this.selector).css('opacity', 0);
+        // this.$(this.selector).fadeTo('slow' , 1.0);
 
         return this;
     }
