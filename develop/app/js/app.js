@@ -119,7 +119,7 @@ $(function() {
     NortonApp.articleItem = new NortonApp.Models.Article();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
-    NortonApp.pageItem = new NortonApp.Models.Page();
+    //NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
     NortonApp.pageView;
     NortonApp.introPanelView;
