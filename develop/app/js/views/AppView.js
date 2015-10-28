@@ -58,7 +58,7 @@ var AppView = Backbone.View.extend({
 
     },
     render: function(){
-        "use strict";
+        'use strict';
 
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
@@ -101,17 +101,17 @@ var AppView = Backbone.View.extend({
         "click #navFilters a": "toggleFilter",
         "click #searchButton": "searchArticles",
         "keypress #searchTextInput": function(e) {
-            "use strict";
+            'use strict';
             if (e.keyCode === 13) {
                 this.searchArticles();
             }
         },
         "click .icon-add.favs-lnk": function(e) {
-            "use strict";
+            'use strict';
             this.articleView.addYourFavs(e, 'article');
         },
         "click .btn-savetolist.favs-lnk": function(e) {
-            "use strict";
+            'use strict';
             this.articleView.addYourFavs(e, 'page');
         },
         "click #navYourFavs": "showYourFavs",
@@ -119,11 +119,11 @@ var AppView = Backbone.View.extend({
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage",
         "click .download-favs": function() {
-            "use strict";
+            'use strict';
             this.yourFavsView.downloadYourFavs();
         },
         "click #loadMore": function() {
-            "use strict";
+            'use strict';
             // pass true to show hint
             this.getArticles(true);
         }
@@ -201,7 +201,7 @@ var AppView = Backbone.View.extend({
     },
     /* End Grid/List view toggle */
     renderArticles: function() {
-        "use strict";
+        'use strict';
         this.collection.$el = this.$("#articles");
         this.collection.render();
     },
@@ -233,7 +233,7 @@ var AppView = Backbone.View.extend({
     },
 
     getArticles: function(showHint) {
-        "use strict";
+        'use strict';
         // query would be populated with Search box data
         var that = this,
             postdata = {};
@@ -310,7 +310,7 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
     sortArticles: function() {
-        "use strict";
+        'use strict';
         var sortby = $( "#sortArticles option:selected" ).val().split(":");
 
         Norton.sortby = {
@@ -322,7 +322,7 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
     searchArticles: function() {
-        "use strict";
+        'use strict';
         /**
          * Clear out collection, reset "skip" to zero, then run search query.
          */
@@ -331,13 +331,18 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
     showYourFavs: function() {
-        "use strict";
+        'use strict';
         $('#filters').css({"display":"none"});
         $('#articles').css({"display":"none"});
         $('.your-favs-view-section').css({"display":"inline"});
 
         this.yourFavsView.$el = this.$("#yourFavs");
         this.yourFavsView.render();
+    },
+
+    resolveToBase: function () {
+        'use strict';
+        window.history.pushState(null,null, this.baseUrl);
     },
 
     showModal: function () {
@@ -349,40 +354,42 @@ var AppView = Backbone.View.extend({
         $('#pageContainer').modal('show');
         this.$('#pageContainer').on('hide.bs.modal', function (e) {
             // load different URL without refreshing page
-            window.history.pushState(null,null, that.baseUrl);
+            that.resolveToBase();
             that.modalShown = false;
         });
 
     },
 
     showDetail: function (id, create) {
-        "use strict";
+        'use strict';
 
         var model = this.collection.getModelById(id);
+
+        // TODO throw fallback when page cannot be found
+        /*if (typeof model === 'undefined') {
+            this.resolveToBase();
+            return false;
+        }*/
+
+        this.baseUrl = model.get('baseUrl');
 
         this.pageItem = new NortonApp.Models.Page({
             id: id,
             prevId: model.get('prevId'),
             nextId: model.get('nextId')
         });
+        this.pageView = new NortonApp.Views.Page({
+            model: this.pageItem,
+            el: "#detailPage",
+            redraw: create
+        });
 
-        this.baseUrl =  model.get('baseUrl')
-
-        this.pageItem.setUrlId(id);
         this.pageItem.fetch({
             success: $.proxy (function(data) {
-                this.pageView = new NortonApp.Views.Page({
-                    model: this.pageItem,
-                    el: "#detailPage"
-                });
                 if (create) {
-                    $('#pageContainer').remove();   // get rid of old page if it exists
-                    this.pageView.render();
-
                     this.showModal();
-                } else {
-                    this.pageView.renderReplace(); // replace modal-content but do not recreate modal
                 }
+                this.pageView.render();
 
             }, this),
             error: function(xhr, response, error) {
@@ -396,16 +403,14 @@ var AppView = Backbone.View.extend({
     },
     // called from router
     showDetailPage: function(id) {
-        "use strict";
+        'use strict';
         var that = this,
             template
         /**
          * load spinner
          */
-        if (this.modalShown) {
-            template = require("../../templates/LoadingSpinnerTemplate.hbs");
-            $("#detailPage").find(".modal-content").replaceWith(template);
-        }
+        //if (this.modalShown) {
+        //}
 
         if (this.dataReady) {
             this.showDetail(id, !this.modalShown);
@@ -418,7 +423,7 @@ var AppView = Backbone.View.extend({
         
     },
     getNextPrevFromList: function(e) {
-        "use strict";
+        'use strict';
         /**
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
@@ -432,7 +437,7 @@ var AppView = Backbone.View.extend({
         }
     },
     getNextPrevFromPage: function(e) {
-        "use strict";
+        'use strict';
         /**
          * Next/prev links are determined in pageView.js when a next prev link was clicked.
          * Otherwise, they are determined above in getNextPrevFromList
@@ -458,13 +463,13 @@ var AppView = Backbone.View.extend({
 
     },
     showResultsTotals: function() {
-        "use strict";        
+        'use strict';        
         this.$('#perPage').html(this.collection.recordStart);
         this.$('#nbrRecords').html(this.collection.totalRecords);
 
     },
     saveTracking: function(id) {
-        "use strict";
+        'use strict';
 
         var postdata = {
             sitecode: Norton.siteCode,
