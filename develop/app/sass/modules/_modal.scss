@@ -1,40 +1,4 @@
-@keyframes rotate-360 {
-	from {
-		transform: scale(0.6) rotate(0deg);
-	}	
-	to {
-		transform: scale(0.6) rotate(360deg);
-	}
-}
 
-button[data-type="reader-button"] {
-	position: relative;
-	width: 160px;
-	height: 42px;
-	line-height: 42px;
-	padding: 0;
-	border-radius: 0;
-	margin: 0;
-
-	.icon {
-		@include vertical-align(absolute);
-		left: 1.2rem;
-	}
-
-	&.savelist-lnk {
-		.icon {
-			@include svg-sprite(savelist-icon);
-		}
-	}
-
-	&.ebook-lnk {
-		.icon {
-			@include vertical-align(absolute);
-			@include svg-sprite(ebook_icon);
-
-		}
-	}
-}
 
 // flattened
 .modal-dialog {
@@ -44,6 +8,7 @@ button[data-type="reader-button"] {
 .modal-content {
 	position: relative;
 	border-radius: 0;
+	border: none;
 	width: 100%;
 	height: 100%;
 }

@@ -268,6 +268,9 @@ var AppView = Backbone.View.extend({
 
                 that.showHighlight(showHint);
                 that.deferred.resolve();
+
+                
+                that.showHidden();
                     
                 if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles(false);
@@ -396,6 +399,14 @@ var AppView = Backbone.View.extend({
         });
 
     },
+
+    showHidden: function () {
+        'use strict';
+        this.$('.load-more-section').removeClass('off');
+        this.$('.footer').removeClass('off');
+        this.$('.results-bar').removeClass('off');
+    },
+
     // called from router
     showDetailPage: function(id) {
         'use strict';
