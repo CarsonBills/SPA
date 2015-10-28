@@ -1,0 +1,98 @@
+@keyframes rotate-360 {
+	from {
+		transform: scale(0.6) rotate(0deg);
+	}	
+	to {
+		transform: scale(0.6) rotate(360deg);
+	}
+}
+
+button[data-type="reader-button"] {
+	position: relative;
+	width: 160px;
+	height: 42px;
+	line-height: 42px;
+	padding: 0;
+	border-radius: 0;
+	margin: 0;
+
+	.icon {
+		@include vertical-align(absolute);
+		left: 1.2rem;
+	}
+
+	&.savelist-lnk {
+		.icon {
+			@include svg-sprite(savelist-icon);
+		}
+	}
+
+	&.ebook-lnk {
+		.icon {
+			@include vertical-align(absolute);
+			@include svg-sprite(ebook_icon);
+
+		}
+	}
+}
+
+// flattened
+.modal-dialog {
+	width: 770px;
+	height: 740px;
+}
+.modal-content {
+	position: relative;
+	border-radius: 0;
+	width: 100%;
+	height: 100%;
+}
+.loading-container {
+	@include vertical-align();
+	text-align: center;
+	@include opensans($size: 1.4rem);
+}
+
+.loading-graphic {
+	@include svg-sprite(loading_spinner);
+	animation: rotate-360 0.8s infinite steps(12, end);
+}
+
+.modal-header {
+	@include opensans($size: 1.8rem);
+	border: 1px solid $reader-blue;
+	& > div {
+		display: inline-block;
+		&.modal-author {
+			margin-right: 2rem;
+		}
+	}
+}
+.modal-subheader {
+	position: relative;
+	float: right;
+	right: 7rem;
+	
+	.savelist-lnk {
+		margin-right: 1.2rem;
+	}
+}
+
+.modal-arrow-container {
+	@include vertical-align();
+	margin: 1rem;
+	font-size: 3rem;
+	color: #666;
+	cursor: pointer;
+	
+	&.prev-page {
+		position: absolute;
+		float: left;
+		left: 0;
+	}
+	&.next-page {
+		position: absolute;
+		float: right;
+		right: 0;
+	}
+}

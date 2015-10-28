@@ -25,6 +25,7 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 
 // Modules
 @import "modules/base";
+@import "modules/modal";
 @import "modules/header";
 @import "modules/top_nav";
 @import "modules/content";
