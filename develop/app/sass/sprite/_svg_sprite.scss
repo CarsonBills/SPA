@@ -1,6 +1,7 @@
 $icons: (
-    sprite: (width: 88px, height: 68px, pngPath: '../images/svg_sprite.png', svgPath: '../images/svg_sprite.svg'),
+    sprite: (width: 164px, height: 143px, pngPath: '../images/svg_sprite.png', svgPath: '../images/svg_sprite.svg'),
     ebook_icon: (width: 15px, height: 20px, backgroundX: 0px, backgroundY: 0px),
-    loader: (width: 24px, height: 25px, backgroundX: -15px, backgroundY: -20px),
-    norton_logo: (width: 49px, height: 23px, backgroundX: -39px, backgroundY: -45px),
+    loading_spinner: (width: 84px, height: 84px, backgroundX: -15px, backgroundY: -20px),
+    norton_logo: (width: 49px, height: 23px, backgroundX: -99px, backgroundY: -104px),
+    savelist-icon: (width: 16px, height: 16px, backgroundX: -148px, backgroundY: -127px),
 );
