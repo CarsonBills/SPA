@@ -13,7 +13,7 @@ var AppRouter = Backbone.Router.extend({
         "search/*qs": "search",
         "page/:id": "page",
         "favs/": "favs",
-        "filter/": "filter",
+        "filters/": "filter",
         "": "index"
     },
 
@@ -59,7 +59,7 @@ var AppRouter = Backbone.Router.extend({
     },
     filter: function() {
         "use strict";
-
+        this.appView.filtersView.buildRefinementsFromUrl();
     },
     favs: function() {
         "use strict";

@@ -255,7 +255,6 @@ var AppView = Backbone.View.extend({
         postdata.skip = this.collection.recordEnd;
         postdata.pageSize = Norton.perPage;
 
-        //console.log(JSON.stringify(postdata));
         this.collection.fetch({
             data: JSON.stringify(postdata),
             //data: postdata,   //  NEED THIS IF USING searchandiser.php

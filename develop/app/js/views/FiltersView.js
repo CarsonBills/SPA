@@ -23,7 +23,6 @@ var FiltersView = Backbone.View.extend({
         }
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
-
         this.render();
     },
     render: function () {
@@ -187,7 +186,22 @@ var FiltersView = Backbone.View.extend({
             query += cats[key] + "&";
         }
         return url + "#/filters/?" + query.slice(0, -1);
-    }
+    },
+    buildRefinementsFromUrl: function() {
+        var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
+
+        var refs = [];
+
+        var cats = qs.split("&");
+        var obj;
+        for (var cat in cats) {
+            splt = cats[cat].split("=");
+            refs[splt[0]] = cats[cat];
+        }
+
+        Norton.savedRefinements = refs;
+        this.app.formatRefinements();   // call getArticles() in AppView
+}
 });
 
 module.exports = FiltersView;

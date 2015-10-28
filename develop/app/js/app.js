@@ -62,19 +62,15 @@ $(function() {
      * Get Site Code and version
      */
     var paths = window.location.pathname.split("/");
-    //if ($(location).attr("href").indexOf("nortonreader.com") >= 0) {  // Go Live code
     if ($(location).attr("href").indexOf("nortonreader.") >= 0) {
         Norton.siteCode = "nortonreader";
         if (!paths[1]) {
             Norton.version = "full";
-            console.log(Norton.baseUrl);
             Norton.baseUrl += "full";
-            console.log(Norton.baseUrl);
             window.history.pushState(null,null,Norton.baseUrl);
         } else {
             Norton.version = paths[1];
         }
-
     } else {
         Norton.siteCode = paths[1];
         Norton.version = paths[2];
