@@ -147,6 +147,7 @@ $card-height: 270px;
 
             &:hover {
                 @include inner-border($spread: 10px);
+
                 .card-info {
                     opacity: 0.8;
                 }
@@ -258,6 +259,8 @@ $card-height: 270px;
             width: 95%;
             margin: 0 auto;
             padding: 0;
+            transition: all 1s ease;
+
             div {
                 padding: 0 1rem;
             }
@@ -309,6 +312,10 @@ $card-height: 270px;
             display: block;
             border-bottom: 1px solid #9e9e9a;
             @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
+
+            &:hover {
+                @include one-sided-hover();
+            }
         }
 
         .listview-head {

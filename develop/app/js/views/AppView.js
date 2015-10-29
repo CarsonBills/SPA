@@ -207,7 +207,7 @@ var AppView = Backbone.View.extend({
         var delta,
             style,
             tween,
-            $lastItem,
+            $nextItem,
             shadowStyle;
         if (this.collection.hasMore()) {
             delta = scrollHelper.docDelta() - 100;
@@ -217,23 +217,18 @@ var AppView = Backbone.View.extend({
 
         TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
 
-        if (this.collection.showGrid()) {
-            shadowStyle = "rgb(217, 217, 217) 0px 0px 0px 1px, rgb(255, 255, 255) 0px 0px 0px 10px, rgba(0, 0, 0, 0.498039) 0px 2px 5px 20px";
-        } else {
-            shadowStyle = "inset 0px 0px 10px #F30";  
-        }
 
         if (params.showHint) {
-            $lastItem = this.articleView.getLastItemById(params.lastItemID);
+            $nextItem = this.articleView.getNextItemById(params.nextItemID);
             // highlight last record
-            style = $lastItem.css('boxShadow');
-            console.log(style);
-            tween = TweenLite.to($lastItem, 0.5, {boxShadow:shadowStyle, ease: Quad.easeIn, onComplete: function() {
+            tween = TweenLite.to($nextItem, 0.5, {backgroundColor: "#03C", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
             }, onReverseComplete: function () {
-                //TweenLite.to($lastItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
-                $lastItem.css({boxShadow: style});
+                //TweenLite.to($nextItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
+                //$nextItem.css({boxShadow: style});
             }});
+
+            $nextItem.find('a').focus();
         }
     },
 
@@ -242,10 +237,10 @@ var AppView = Backbone.View.extend({
         // query would be populated with Search box data
         var that = this,
             postdata = {},
-            lastItemID;
+            nextItemID;
 
         this.dataReady = false;
-        lastItemID = this.articleView.getLastItemID();
+        nextItemID = this.articleView.getLastItemID();
 
 
 		if (Norton.searchQuery) {
@@ -279,7 +274,7 @@ var AppView = Backbone.View.extend({
 
                 that.showHighlight({
                     showHint: showHint,
-                    lastItemID: lastItemID
+                    nextItemID: nextItemID
                 });
                 that.deferred.resolve();
 

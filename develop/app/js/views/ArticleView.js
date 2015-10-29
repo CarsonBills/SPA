@@ -95,9 +95,9 @@ var ArticleView = Backbone.View.extend({
         return this.lastItemID || '';
     },
 
-    getLastItemById: function (id) {
+    getNextItemById: function (id) {
         'use strict';
-        return this.$('li[data-item-id="' + id + '"]') || null;
+        return this.$('li[data-item-id="' + id + '"]').next() || null;
     },
 });
 
