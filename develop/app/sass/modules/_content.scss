@@ -1,5 +1,4 @@
-#container {
-}
+
 .container {
     padding: 0;
     margin: 0;
@@ -126,7 +125,7 @@ $card-height: 270px;
         margin-bottom: 2rem;
         //margin: 0 auto 3rem;
         //max-width: $max-width;
-        $card-gutter: 15px;
+        $card-gutter: 5px;
 
         .articles {
             width: 100%;
@@ -142,15 +141,11 @@ $card-height: 270px;
             width: $card-width;
             height: $card-height;
             background: #fff;
-            box-shadow:  0 0 0 1px #d9d9d9,
-                0 0 0 10px white,
-                0 2px 5px 8px rgba(0, 0, 0, 0.5);
+            @include inner-border();
             transition: all 0.2s ease-in-out;
 
             &:hover {
-                box-shadow: 0 0 0 1px #d9d9d9,
-                    0 0 0 10px white,
-                    0 2px 5px 10px rgba(0, 0, 0, 0.5);
+                @include inner-border($spread: 10px);
                 .card-info {
                     opacity: 0.8;
                 }
@@ -174,7 +169,7 @@ $card-height: 270px;
                     &.title {
                         color: $reader-blue;
                         margin: 0;
-                        @include athelas($size: 1.8rem, $weight: 600, $style: italic);
+                        @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
                     }
 
                 }
@@ -202,7 +197,7 @@ $card-height: 270px;
                 bottom: 1.6rem;
                 margin: 0;
                 padding: 0 $card-gutter;
-                width: $card-width - $card-gutter;
+                width: $card-width - 20px;
                 display: block;
 
                 .savelist-lnk {

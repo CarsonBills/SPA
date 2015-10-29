@@ -9,9 +9,6 @@ $tablet-portait-width: 768px;
 $mobile-width: 480px;
 $mobile-width-sm: 320px;
 
-/* content card diemnstion */
-$card-width: 300px;
-$card-height: 250px;
 
 
 /* filter panel width */
@@ -56,7 +53,6 @@ button[data-type="reader-button"] {
 
 	&.ebook-lnk {
 		.icon {
-			@include vertical-align(absolute);
 			@include svg-sprite(ebook_icon);
 
 		}

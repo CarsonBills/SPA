@@ -15,6 +15,13 @@
 	box-shadow: $offset-x $offset-y $blur $spread $color;
 }
 
+@mixin inner-border($ofx: 0, $ofy: 2px, $expand: 5px, $spread: 8px, $inset: 10px, $col: rgba(0, 0, 0, 0.5)) {
+    box-shadow:  0 0 0 1px #d9d9d9,
+        0 0 0 $inset white,
+        $ofx $ofy $expand $spread $col;
+
+}
+
 @mixin locked($position: relative, $top: $top-bar-height) {
 	.stick & {
 		position: $position;
