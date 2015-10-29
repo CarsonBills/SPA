@@ -42,7 +42,7 @@ var gulp = require('gulp'),
     };
 
 gulp.task('fileinclude', function () {
-    return gulp.src([proj.page_templates + '/**/*.html'])
+    return gulp.src([proj.page_templates + '/index.html'])
         .pipe($.plumber(function (error) {
             $.util.beep();
             $.util.log($.util.colors.red(error));
