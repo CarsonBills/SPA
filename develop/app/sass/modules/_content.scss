@@ -3,8 +3,9 @@
     padding: 0;
     margin: 0;
     background: url(/images/article_pattern.jpg) repeat;
-    //padding-bottom: $top-bar-height * 2;
-    height: 100vh;
+    padding-bottom: $top-bar-height * 2;
+    height: auto;
+    min-height: 100vh;
 }
 #filters {
     position: absolute;
