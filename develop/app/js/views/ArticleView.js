@@ -9,6 +9,7 @@ var ArticleView = Backbone.View.extend({
     templateList: require('../../templates/ArticlesListTemplate.hbs'),
     templateListHead: require('../../templates/ArticlesListHeadTemplate.hbs'),
     app: null,
+    lastItemID: '',
 
     initialize: function(params) {
         'use strict';
@@ -43,6 +44,7 @@ var ArticleView = Backbone.View.extend({
             this.$el.append(articleTemplate);
         }, this);
 
+        this.saveLastItemID();
 
         /**
          * Hide the Load More button if we are at the end of current collection
@@ -57,6 +59,7 @@ var ArticleView = Backbone.View.extend({
 
         return this;
     },
+
     addYourFavs: function(e, template) {
         'use strict';
 
@@ -80,7 +83,22 @@ var ArticleView = Backbone.View.extend({
         $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
 
         this.app.saveTracking(id);
-    }
+    },
+
+    saveLastItemID: function() {
+        'use strict';
+        this.lastItemID = this.$('li:last-child').data('item-id');
+    },
+
+    getLastItemID: function () {
+        'use strict';
+        return this.lastItemID || '';
+    },
+
+    getLastItemById: function (id) {
+        'use strict';
+        return this.$('li[data-item-id="' + id + '"]') || null;
+    },
 });
 
 module.exports = ArticleView;

@@ -197,34 +197,42 @@ var AppView = Backbone.View.extend({
         }
     },
     /* End Grid/List view toggle */
-    renderArticles: function() {
+    /*renderArticles: function() {
         'use strict';
         this.collection.$el = this.$("#articles");
         this.collection.render();
-    },
+    },*/
 
-    showHighlight: function (showHint) {
+    showHighlight: function (params) {
         var delta,
-            $lastItem,
             style,
-            tween;
+            tween,
+            $lastItem,
+            shadowStyle;
         if (this.collection.hasMore()) {
             delta = scrollHelper.docDelta() - 100;
         } else {
             delta = scrollHelper.docDelta();
         }
 
-        if (showHint) {
+        TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
 
-            TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
+        if (this.collection.showGrid()) {
+            shadowStyle = "rgb(217, 217, 217) 0px 0px 0px 1px, rgb(255, 255, 255) 0px 0px 0px 10px, rgba(0, 0, 0, 0.498039) 0px 2px 5px 20px";
+        } else {
+            shadowStyle = "inset 0px 0px 10px #F30";  
+        }
+
+        if (params.showHint) {
+            $lastItem = this.articleView.getLastItemById(params.lastItemID);
             // highlight last record
-            lastRecord = this.collection.recordStart -1 ;
-            $lastItem = this.articleView.$el.find("[data-index='" + lastRecord + "']");
             style = $lastItem.css('boxShadow');
-            tween = TweenLite.to($lastItem, 0.5, {boxShadow:"inset 0px 0px 15px #F30", ease: Quad.easeIn, onComplete: function() {
+            console.log(style);
+            tween = TweenLite.to($lastItem, 0.5, {boxShadow:shadowStyle, ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
             }, onReverseComplete: function () {
-                TweenLite.to($lastItem, 1, {boxShadow:style, ease: Quad.easeOut});
+                //TweenLite.to($lastItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
+                $lastItem.css({boxShadow: style});
             }});
         }
     },
@@ -233,9 +241,12 @@ var AppView = Backbone.View.extend({
         'use strict';
         // query would be populated with Search box data
         var that = this,
-            postdata = {};
+            postdata = {},
+            lastItemID;
 
         this.dataReady = false;
+        lastItemID = this.articleView.getLastItemID();
+
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
@@ -266,7 +277,10 @@ var AppView = Backbone.View.extend({
                 that.hasRefreshed = false;
                 that.showResultsTotals();
 
-                that.showHighlight(showHint);
+                that.showHighlight({
+                    showHint: showHint,
+                    lastItemID: lastItemID
+                });
                 that.deferred.resolve();
 
                 
