@@ -103,14 +103,14 @@ var AppView = Backbone.View.extend({
                 this.searchArticles();
             }
         },
-        "click .icon-add.favs-lnk": function(e) {
+        "click .savelist-lnk": function(e) {
             'use strict';
             this.articleView.addYourFavs(e, 'article');
         },
-        "click .btn-savetolist.favs-lnk": function(e) {
+        /*"click .btn-savetolist.favs-lnk": function(e) {
             'use strict';
             this.articleView.addYourFavs(e, 'page');
-        },
+        },*/
         "click #navYourFavs": "showYourFavs",
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
@@ -221,14 +221,14 @@ var AppView = Backbone.View.extend({
         if (params.showHint) {
             $nextItem = this.articleView.getNextItemById(params.nextItemID);
             // highlight last record
-            tween = TweenLite.to($nextItem, 0.5, {backgroundColor: "#03C", ease: Quad.easeIn, onComplete: function() {
+            tween = TweenLite.to($nextItem, 0.7, {backgroundColor: "#03C", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
             }, onReverseComplete: function () {
                 //TweenLite.to($nextItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
                 //$nextItem.css({boxShadow: style});
             }});
 
-            $nextItem.find('a').focus();
+            $nextItem.find('a.details').focus();
         }
     },
 

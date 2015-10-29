@@ -60,7 +60,7 @@ var ArticleView = Backbone.View.extend({
         return this;
     },
 
-    addYourFavs: function(e, template) {
+    addYourFavs: function(e) {
         'use strict';
 
         // Add item to yourFavsList collection

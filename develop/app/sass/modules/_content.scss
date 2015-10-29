@@ -115,230 +115,230 @@ $card-height: 270px;
     width: calc(100% - $filter-width);
     @include locked($position: 100px);
     @include toggle-fullscreen();
+}
 
-    ul.card {
-        position: relative;
-        flex-direction: row;
-        //justify-content: space-around;
-        flex-wrap: wrap;
-        display: flex;
+ul.card {
+    position: relative;
+    flex-direction: row;
+    //justify-content: space-around;
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    margin-bottom: 2rem;
+    //margin: 0 auto 3rem;
+    //max-width: $max-width;
+    $card-gutter: 5px;
+
+    .articles {
         width: 100%;
-        margin-bottom: 2rem;
-        //margin: 0 auto 3rem;
-        //max-width: $max-width;
-        $card-gutter: 5px;
+    }
 
-        .articles {
-            width: 100%;
+
+    li.grid-format {
+        position: relative;
+        margin: 1.8rem 2rem;
+        padding: 1rem;
+        vertical-align: top;
+        text-align: left;
+        width: $card-width;
+        height: $card-height;
+        background: #fff;
+        @include inner-border();
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            @include inner-border($spread: 10px);
+
+            .card-info {
+                opacity: 0.8;
+            }
         }
 
-
-        li.grid-format {
-            position: relative;
-            margin: 1.8rem 2rem;
-            padding: 1rem;
-            vertical-align: top;
-            text-align: left;
+        a.details {
             width: $card-width;
-            height: $card-height;
-            background: #fff;
-            @include inner-border();
-            transition: all 0.2s ease-in-out;
+            color: #777;
+            transition: 0.1s all;
+            text-decoration: none;
 
-            &:hover {
-                @include inner-border($spread: 10px);
+            div {
+                margin: 5px 0 0;
+                padding: 5px $card-gutter;
+                font-size: 2rem;
+
+                &.author {
+                    @include opensans($size: 1.8rem, $weight: 600);
+                }
+
+                &.title {
+                    color: $reader-blue;
+                    margin: 0;
+                    @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
+                }
+
+            }
+
+            p {
+                margin: 0 0 12px;
+                padding: 2px $card-gutter;
+                /* overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap; */
 
                 .card-info {
-                    opacity: 0.8;
-                }
-            }
-
-            a.details {
-                width: $card-width;
-                color: #777;
-                transition: 0.1s all;
-                text-decoration: none;
-
-                div {
-                    margin: 5px 0 0;
-                    padding: 5px $card-gutter;
-                    font-size: 2rem;
-
-                    &.author {
-                        @include opensans($size: 1.8rem, $weight: 600);
-                    }
-
-                    &.title {
-                        color: $reader-blue;
-                        margin: 0;
-                        @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
-                    }
-
-                }
-
-                p {
-                    margin: 0 0 12px;
-                    padding: 2px $card-gutter;
-                    /* overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap; */
-
-                    .card-info {
-                        width: 100%;
-                        background-color: white;
-                        display: block;
-                        position: relative;
-                        height: 35px;
-                        opacity: 0.5;
-                    }
-                }
-            }
-
-            p.cardlinks {
-                position: absolute;
-                bottom: 1.6rem;
-                margin: 0;
-                padding: 0 $card-gutter;
-                width: $card-width - 20px;
-                display: block;
-
-                .savelist-lnk {
-                    float: left;
-                    font-size: 4rem;
-                    line-height: 1;
-                    cursor:pointer;
-                    @include svg-sprite(savelist-icon);
-                    text-indent: -9999px;
-                    cursor: pointer;
-                }
-
-                .ebook-lnk {
-                    float: right;
-                    line-height: 3;
-                    @include svg-sprite(ebook_icon);
-                    text-indent: -9999px;
-                    cursor: pointer;
-                }
-            }
-        }
-
-
-        .list-format,
-        .listview-head {
-
-            display: flex;
-            align-items: center;
-            text-align: left;
-            margin: 0 auto;
-            width: 95%;
-
-            div {
-                padding: 0 1rem;
-                display: inline-block;
-                &.author {
-                    flex-grow: 20;
-                }
-
-                &.list-title {
-                    flex-grow: 49;
-                }
-
-                &.ebook {
-                    flex-grow: 1;
-                }
-
-                &.add-to-list {
-                    flex-grow: 1;
-                }
-            }
-        }
-        li.list-format {
-            display: flex;
-            align-items: center;
-            text-align: left;
-            width: 95%;
-            margin: 0 auto;
-            padding: 0;
-            transition: all 1s ease;
-
-            div {
-                padding: 0 1rem;
-            }
-            a {
-                color: transparent;
-                width: 87%;
-                &.details {
-                    div {
-                        display: inline-block;
-                    }
-                }
-                .author {
-                    width: 31.5%;
-                    color: #6f6f6f;
-                }
-
-                .list-title {
-                    width: 60%;
-                    color: $reader-blue;
-                    @include athelas($size: 1.8rem, $style: italic, $weight: 400);
-                    @include ellipsis();
-                }
-            }
-
-            .ebook {
-                text-align: center;
-                width: 50px;
-                .ebook-lnk {
-                    @include svg-sprite(ebook_icon);
-                    @include ie-sprite(ebook_icon);
-                    text-indent: -999px;
+                    width: 100%;
+                    background-color: white;
                     display: block;
-                    overflow: hidden;
+                    position: relative;
+                    height: 35px;
+                    opacity: 0.5;
                 }
             }
-
-            .add-to-list {
-                width: 90px;
-                text-align: center;
-                color: $reader-blue;
-                font-size: 2rem;
-            }
         }
 
-        .list-format {
-            @include opensans($size: 1.4rem, $weight: 600);
-            min-height: 45px;
-            background-color: #fff;
+        .cardlinks {
+            position: absolute;
+            bottom: 1.6rem;
+            margin: 0;
+            padding: 0 $card-gutter;
+            width: $card-width - 20px;
             display: block;
-            border-bottom: 1px solid #9e9e9a;
-            @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
 
-            &:hover {
-                @include one-sided-hover();
+            .savelist-lnk {
+                float: left;
+                font-size: 4rem;
+                line-height: 1;
+                cursor:pointer;
+                @include svg-sprite(savelist-icon);
+                text-indent: -9999px;
+                cursor: pointer;
             }
-        }
 
-        .listview-head {
-            @include opensans($size: 1.2rem, $weight: 300);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+            .ebook-lnk {
+                float: right;
+                line-height: 3;
+                @include svg-sprite(ebook_icon);
+                text-indent: -9999px;
+                cursor: pointer;
+            }
         }
     }
 
-    // loadmore button
-    .load-more-section {
 
-        .loadmore {
-            position: relative;
-            font-size: 1.2em;
-            font-weight: 100;
-            letter-spacing: 1px;
-            width: 240px;
-            height: 50px;
-            display: block;
-            margin: 0 auto 3rem;
-            background-color: #fcfcfc;
+    .list-format,
+    .listview-head {
+
+        display: flex;
+        align-items: center;
+        text-align: left;
+        margin: 0 auto;
+        width: 95%;
+
+        div {
+            padding: 0 1rem;
+            display: inline-block;
+            &.author {
+                flex-grow: 20;
+            }
+
+            &.list-title {
+                flex-grow: 49;
+            }
+
+            &.ebook {
+                flex-grow: 1;
+            }
+
+            &.savelist {
+                flex-grow: 1;
+            }
         }
+    }
+    li.list-format {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        width: 95%;
+        margin: 0 auto;
+        padding: 0;
+        transition: all 1s ease;
+
+        div {
+            padding: 0 1rem;
+        }
+        a {
+            color: transparent;
+            width: 87%;
+            &.details {
+                div {
+                    display: inline-block;
+                }
+            }
+            .author {
+                width: 31.5%;
+                color: #6f6f6f;
+            }
+
+            .list-title {
+                width: 60%;
+                color: $reader-blue;
+                @include athelas($size: 1.8rem, $style: italic, $weight: 400);
+                @include ellipsis();
+            }
+        }
+
+        .ebook {
+            text-align: center;
+            width: 50px;
+            .ebook-lnk {
+                @include svg-sprite(ebook_icon);
+                @include ie-sprite(ebook_icon);
+                text-indent: -999px;
+                display: block;
+                overflow: hidden;
+            }
+        }
+
+        .savelist-lnk {
+            width: 90px;
+            text-align: center;
+            color: $reader-blue;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    }
+
+    .list-format {
+        @include opensans($size: 1.4rem, $weight: 600);
+        min-height: 45px;
+        background-color: #fff;
+        display: block;
+        border-bottom: 1px solid #9e9e9a;
+        @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
+
+        &:hover {
+            @include one-sided-hover();
+        }
+    }
+
+    .listview-head {
+        @include opensans($size: 1.2rem, $weight: 300);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+}
+
+// loadmore button
+.load-more-section {
+    .loadmore {
+        position: relative;
+        font-size: 1.2em;
+        font-weight: 100;
+        letter-spacing: 1px;
+        width: 240px;
+        height: 50px;
+        display: block;
+        margin: 0 auto 3rem;
+        background-color: #fcfcfc;
     }
 }
 @media only screen and (max-width: $tablet-portait-width) {
@@ -366,7 +366,7 @@ $card-height: 270px;
                     flex-grow: 8;
                 }
                 &.ebook,
-                &.add-to-list {
+                &.savelist {
                     display: none;
                 }
             }
@@ -374,27 +374,25 @@ $card-height: 270px;
         }
         li.list-format {
             .ebook,
-            .add-to-list {
-                width: 40px;
+            .savelist {
+                width: 15px;
             }
 
             a {
                 display: block;
-
-                width: 80%;
-
+                width: 100%;
                 .author {
                     line-height: 1.2;
+                    max-width: 80px;
+                }
+
+                .list-title {
+                    max-width: 170px;
                 }
             }
         }
     }
 }
-
-
-
-
-
 
 
 .icon-dl {

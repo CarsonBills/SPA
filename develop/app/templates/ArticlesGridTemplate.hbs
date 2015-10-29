@@ -4,18 +4,18 @@
             <div class="title">{{allMeta.title}}</div>
             <p>{{HBTrim allMeta.abstract 25}}</p>
         </a>
-        <p class="cardlinks">
-            <span class="card-info">
-                <span class="savelist-lnk" alt="Add to My Items" data-item-id='{{allMeta.id}}'>
+        <div class="cardlinks">
+            <div class="card-info">
+                <div class="savelist-lnk" alt="Add to My Items" data-item-id="{{allMeta.id}}">
                     <a href="#" target="_new">Save to List</a>
-                </span>
-                <span class="article ebook-lnk">
+                </div>
+                <div class="ebook-lnk">
                     {{#if allMeta.ebookNode}}
-                        <a href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
+                        <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
                     {{else}}
                         Ebook Unavailable
                     {{/if}}
-                </span>
-            </span>
-        </p>
+                </div>
+            </div>
+        </div>
 </li>
