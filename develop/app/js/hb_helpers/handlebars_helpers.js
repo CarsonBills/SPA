@@ -24,4 +24,16 @@ module.exports = (function() {
     Handlebars.registerHelper('HBIsCollapsed', function(name) {
         return (name === "chapter") ? "collapsed" : "";
     });
+    Handlebars.registerHelper('HBTrim', function(text, length) {
+        var words = text.split(" "),
+            new_text = text;
+        if (words.length > length){
+            new_text = "";
+            for (var i = 0; i <= length; i++) {
+               new_text += words[i] + " ";
+            }  
+            new_text = new_text.trim() + "..."          
+        }
+        return new_text;
+    });
 })();
