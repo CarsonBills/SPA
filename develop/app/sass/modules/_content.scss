@@ -1,6 +1,11 @@
+#container {
+}
 .container {
     padding: 0;
     margin: 0;
+    background: url(/images/article_pattern.jpg) repeat;
+    //padding-bottom: $top-bar-height * 2;
+    height: 100vh;
 }
 #filters {
     position: absolute;
@@ -100,6 +105,10 @@
 
 /* CARDS STYLES
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* content card diemnstion */
+$card-width: 290px;
+$card-height: 270px;
 .content {
     position: relative;
     margin-left: $filter-width;
@@ -126,20 +135,22 @@
 
         li.grid-format {
             position: relative;
-            margin: auto;
-            padding: 0;
-            margin: 1rem;
+            margin: 1.8rem 2rem;
+            padding: 1rem;
             vertical-align: top;
             text-align: left;
             width: $card-width;
             height: $card-height;
-            background: #fafafa;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s ease-in-out;
+            background: #fff;
+            box-shadow:  0 0 0 1px #d9d9d9,
+                0 0 0 10px white,
+                0 2px 5px 8px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease-in-out;
 
             &:hover {
-                color: #333;
-                box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 0 0 1px #d9d9d9,
+                    0 0 0 10px white,
+                    0 2px 5px 10px rgba(0, 0, 0, 0.5);
                 .card-info {
                     opacity: 0.8;
                 }
@@ -151,19 +162,29 @@
                 transition: 0.1s all;
                 text-decoration: none;
 
-                h4 {
+                div {
                     margin: 5px 0 0;
                     padding: 5px $card-gutter;
                     font-size: 2rem;
 
+                    &.author {
+                        @include opensans($size: 1.8rem, $weight: 600);
+                    }
+
+                    &.title {
+                        color: $reader-blue;
+                        margin: 0;
+                        @include athelas($size: 1.8rem, $weight: 600, $style: italic);
+                    }
+
                 }
 
                 p {
-                    margin: 5px 0 12px;
+                    margin: 0 0 12px;
                     padding: 2px $card-gutter;
-                    overflow: hidden;
+                    /* overflow: hidden;
                     text-overflow: ellipsis;
-                    white-space: nowrap;
+                    white-space: nowrap; */
 
                     .card-info {
                         width: 100%;
@@ -178,22 +199,28 @@
 
             p.cardlinks {
                 position: absolute;
-                bottom: 0;
+                bottom: 1.6rem;
                 margin: 0;
                 padding: 0 $card-gutter;
-                width: $card-width;
+                width: $card-width - $card-gutter;
                 display: block;
 
-                .icon-add {
+                .savelist-lnk {
                     float: left;
                     font-size: 4rem;
                     line-height: 1;
                     cursor:pointer;
+                    @include svg-sprite(savelist-icon);
+                    text-indent: -9999px;
+                    cursor: pointer;
                 }
 
                 .ebook-lnk {
                     float: right;
                     line-height: 3;
+                    @include svg-sprite(ebook_icon);
+                    text-indent: -9999px;
+                    cursor: pointer;
                 }
             }
         }
@@ -307,6 +334,7 @@
             height: 50px;
             display: block;
             margin: 0 auto 3rem;
+            background-color: #fcfcfc;
         }
     }
 }
