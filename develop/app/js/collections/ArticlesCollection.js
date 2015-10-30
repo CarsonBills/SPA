@@ -121,10 +121,10 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.recordEnd = 0;
     },
 
-    getModelById: function (id) {
+    getModelByAttribute: function (attr, value) {
         'use strict';
         var model =  _.find(this.models, function(model) {
-            return model.get('allMeta').pname === id;
+            return model.get('allMeta')[attr] === value;
         })
 
         return model;
