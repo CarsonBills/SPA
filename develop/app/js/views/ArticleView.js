@@ -59,32 +59,7 @@ var ArticleView = Backbone.View.extend({
 
         return this;
     },
-
-    addYourFavs: function(e) {
-        'use strict';
-
-        // Add item to yourFavsList collection
-        var id = $(e.target).attr('data-item-id');
-
-        // Don't add again
-        if (NortonApp.yourFavsList.get(id) !== undefined) {
-            return;
-        }
-
-        NortonApp.yourFavsList.add(this.collection.get(id));
-        this.collection.each(function(record) {
-            if (record.attributes.allMeta.id == id) {
-                NortonApp.yourFavsList.add(record.attributes.allMeta);
-            }
-        });
-
-        // Increment and show item counter
-        Norton.yourFavsCtr++;
-        $('#yourFavsCtr').html(' (' + Norton.yourFavsCtr + ')');
-
-        this.app.saveTracking(id);
-    },
-
+    
     saveLastItemID: function() {
         'use strict';
         this.lastItemID = this.$('li:last-child').data('item-id');

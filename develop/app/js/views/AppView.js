@@ -15,6 +15,7 @@ var AppView = Backbone.View.extend({
     topNavView: null,
     articleView: null,
     filtersView: null,
+    errorView: null,
     evtMgr: EventManager.getInstance(),
 
     hasRefreshed: false,
@@ -34,13 +35,10 @@ var AppView = Backbone.View.extend({
             model: NortonApp.headerConfigItem
         });
 
-        this.yourFavsView = new NortonApp.Views.YourFavs({
-            model: NortonApp.yourFavsList
-        });
-
         this.render();
         this.getArticles();
 
+        /* window scroll callbacks */
         this.stickScroll = this.stickScrollWrapper();
         this.shouldRefresh = this.shouldRefreshWrapper();
 
@@ -64,6 +62,13 @@ var AppView = Backbone.View.extend({
             el: '#topNav'
         }).render();
 
+        this.yourFavsView = new NortonApp.Views.YourFavs({
+            articles: this.collection,
+            collection: NortonApp.yourFavsList,
+            el: ".container",
+            app: this
+        });
+
         this.articleView = new NortonApp.Views.Article({
             collection: this.collection,
             el: '#articles',
@@ -75,6 +80,10 @@ var AppView = Backbone.View.extend({
             el: "#filters",
             app: this
         }).render();
+
+        this.errorView = new NortonApp.Views.ErrorPage({
+            el: ""
+        });
 
         if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -103,22 +112,9 @@ var AppView = Backbone.View.extend({
                 this.searchArticles();
             }
         },
-        "click .savelist-lnk": function(e) {
-            'use strict';
-            this.articleView.addYourFavs(e, 'article');
-        },
-        /*"click .btn-savetolist.favs-lnk": function(e) {
-            'use strict';
-            this.articleView.addYourFavs(e, 'page');
-        },*/
-        "click #navYourFavs": "showYourFavs",
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage",
-        "click .download-favs": function() {
-            'use strict';
-            this.yourFavsView.downloadYourFavs();
-        },
         "click #loadMore": function() {
             'use strict';
             // pass true to show hint
@@ -216,7 +212,6 @@ var AppView = Backbone.View.extend({
         }
 
         TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
-
 
         if (params.showHint) {
             $nextItem = this.articleView.getNextItemById(params.nextItemID);
@@ -318,7 +313,7 @@ var AppView = Backbone.View.extend({
     },
     sortArticles: function() {
         'use strict';
-        var sortby = $( "#sortArticles option:selected" ).val().split(":");
+        var sortby = $("#sortArticles option:selected").val().split(":");
 
         Norton.sortby = {
             field: sortby[0],
@@ -337,22 +332,13 @@ var AppView = Backbone.View.extend({
         this.collection.cleanupAndReset();
         this.getArticles();
     },
-    showYourFavs: function() {
-        'use strict';
-        $('#filters').css({"display":"none"});
-        $('#articles').css({"display":"none"});
-        $('.your-favs-view-section').css({"display":"inline"});
-
-        this.yourFavsView.$el = this.$("#yourFavs");
-        this.yourFavsView.render();
-    },
 
     resolveToBase: function () {
         'use strict';
         window.history.pushState(null,null, this.baseUrl);
     },
 
-    showModal: function () {
+    showPageModal: function () {
         'use strict';
         var that = this;
 
@@ -364,7 +350,6 @@ var AppView = Backbone.View.extend({
             that.resolveToBase();
             that.modalShown = false;
         });
-
     },
 
     showDetail: function (id, create) {
@@ -394,7 +379,7 @@ var AppView = Backbone.View.extend({
         this.pageItem.fetch({
             success: $.proxy (function(data) {
                 if (create) {
-                    this.showModal();
+                    this.showPageModal();
                 }
                 this.pageView.render();
 
@@ -420,12 +405,7 @@ var AppView = Backbone.View.extend({
     showDetailPage: function(id) {
         'use strict';
         var that = this,
-            template
-        /**
-         * load spinner
-         */
-        //if (this.modalShown) {
-        //}
+            template;
 
         if (this.dataReady) {
             this.showDetail(id, !this.modalShown);
@@ -433,9 +413,7 @@ var AppView = Backbone.View.extend({
             this.deferred.promise().done(function () {
                 that.showDetail(id, true);
             })
-        }
-
-        
+        }        
     },
     getNextPrevFromList: function(e) {
         'use strict';
