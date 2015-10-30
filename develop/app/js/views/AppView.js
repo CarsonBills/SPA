@@ -355,7 +355,7 @@ var AppView = Backbone.View.extend({
     showDetail: function (id, create) {
         'use strict';
 
-        var model = this.collection.getModelByPname(id);
+        var model = this.collection.getModelByAttribute('pname', id);
 
         // TODO throw fallback when page cannot be found
         /*if (typeof model === 'undefined') {
@@ -457,7 +457,7 @@ var AppView = Backbone.View.extend({
     },
     showResultsTotals: function() {
         'use strict';        
-        this.$('#perPage').html(this.collection.recordStart);
+        this.$('#perPage').html(this.collection.length);
         this.$('#nbrRecords').html(this.collection.totalRecords);
 
     },
