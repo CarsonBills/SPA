@@ -4,9 +4,11 @@ var Handlebars = require('handlebars/runtime'),
 module.exports = (function() {
     'use strict';
     Handlebars.registerHelper('HBFullname', function(data) {
-        var name = "";
+        var name = "Not Available";
         if (_.isArray(data) && data.length === 1) {
-            name = data[0].authorFirstName + " " + data[0].authorLastName;
+            if ( data[0].authorLastName !== "" ) {
+                name = data[0].authorFirstName + " " + data[0].authorLastName;
+            }
         } else if (_.isArray(data) && data.length === 2) {
             name = data[0].authorLastName + ', ' + data[1].authorLastName;
         }
