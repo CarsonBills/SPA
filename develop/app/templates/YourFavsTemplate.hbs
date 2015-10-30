@@ -1,15 +1,5 @@
-<div class="favs-container" id="favsContainer">
-    <div class="listFormat">
-        <div class="article hdr">{{title}}</div>
-        <div class="article sub-hdr">{{authorLast}}, {{authorFirst}}</div>
-        <div  class="article content">{{shortExtract}}</div>
-        <div class="article ebook-lnk">
-            {{#if ebookUrl}}
-                View in Ebook
-            {{else}}
-
-            {{/if}}
-        </div>
-        <div class="article favs-delete">X</div>
-    </div>
+<div class="list-format" data-id="{{id}}">
+    <div class="author">{{HBFullname author}}</div>
+    <div class="title">{{title}}</div>
+    <div class="remove"><span class="glyphicon glyphicon-remove-2"</div>
 </div>

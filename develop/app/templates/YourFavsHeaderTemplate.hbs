@@ -1,12 +1,13 @@
-<div class="modal-container">
+<div class="modal-container favorites">
     <div class="modal-header">
         <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
 		<div class="your-favs-title">
-        	<span id="yourFavsTitle" class="your-favs-text-entry" contenteditable="true">Your List</span>
-        	<img src="/images/pencil_icon.png"/>
+        	<span id="yourFavsTitle" class="your-favs-text-entry" contenteditable="true">Saved List</span>
     	</div>
-    	<div class="download-favs">Download</div>
     </div>
-    <div class="modal-body">
-    </div>
+    <div class="modal-body"></div>
+    
+    {{#if hasContent}}
+    <div class="download-favs">Download<span class="glyphicon glyphicon-download-alt"></div>
+    {{/if}}
 </div>
