@@ -1,8 +1,16 @@
-var Handlebars = require('handlebars/runtime');
+var Handlebars = require('handlebars/runtime'),
+    _ = require('underscore');
+
 module.exports = (function() {
     'use strict';
     Handlebars.registerHelper('HBFullname', function(data) {
-        return data.authorFirst + " " + data.authorLast;
+        var name = "";
+        if (_.isArray(data) && data.length === 1) {
+            name = data[0].authorFirstName + " " + data[0].authorLastName;
+        } else if (_.isArray(data) && data.length === 2) {
+            name = data[0].authorLastName + ', ' + data[1].authorLastName;
+        }
+        return name;
     });
     Handlebars.registerHelper('trimString', function(str) {
         var theString = str.substring(0,100);
@@ -26,13 +34,17 @@ module.exports = (function() {
     });
     Handlebars.registerHelper('HBTrim', function(text, length) {
         var words = text.split(" "),
+            count = 0,
+            i,
             new_text = text;
-        if (words.length > length){
+        if (text.length > length){
             new_text = "";
-            for (var i = 0; i <= length; i++) {
-               new_text += words[i] + " ";
+            for (i = 0; i <= length; i++) {
+                if (new_text.length <= length) {
+                    new_text += words[i] + " ";
+                }
             }  
-            new_text = new_text.trim() + "..."          
+            new_text = new_text.trim() + " ..."          
         }
         return new_text;
     });
