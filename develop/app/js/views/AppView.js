@@ -355,7 +355,7 @@ var AppView = Backbone.View.extend({
     showDetail: function (id, create) {
         'use strict';
 
-        var model = this.collection.getModelById(id);
+        var model = this.collection.getModelByPname(id);
 
         // TODO throw fallback when page cannot be found
         /*if (typeof model === 'undefined') {
