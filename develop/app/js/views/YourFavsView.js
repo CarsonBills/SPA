@@ -4,13 +4,13 @@ var Backbone = require('backbone'),
 
 var YourFavsView = Backbone.View.extend({
     templateHdr: require('../../templates/YourFavsHeaderTemplate.hbs'),
-    template: require('../../templates/YourFavsTemplate.hbs'),
-    modal: '#modalContainer',
+    templateItem: require('../../templates/YourFavsTemplate.hbs'),
+    modal: '#modal-container',
     content: '.modal-content',
+    body: '.modal-body',
     $content: null,
     app: null,
     articles: null,
-    yourFavsCtr: 0,
 
     initialize: function(params) {
         'use strict';
@@ -19,29 +19,38 @@ var YourFavsView = Backbone.View.extend({
         this.$content = this.$(this.modal + " " + this.content);
 
         this.initModal();
+        this.collection.on('remove', this.render, this);
     },
 
     events: {
         "click .savelist-lnk": "addYourFavs",
         "click #navYourFavs": "showYourFavs",
-        "click .download-favs": "downloadYourFavs"
+        "click .download-favs": "downloadYourFavs",
+        "click .list-format .remove": "removeItem"
     },
 
     render: function() {
         'use strict';
         var that = this,
             $div = $('<div></div>'),
-            yourFavsTemplate = this.templateHdr();
+            hasContent = (this.collection.length > 0),
+            template;
 
-        $div.html(yourFavsTemplate);
-        console.log(this.collection.length);
-        if (this.collection.length > 0) {
-            _.each(this.collection, function(article) {
-                yourFavsTemplate = that.template(article.toJSON());
-                $div.find('.modal-body').append(yourFavsTemplate);
+        this.$content.empty();
+
+        template = this.templateHdr({
+            hasContent: hasContent
+        })
+
+        $div.html(template);
+
+        if (hasContent) {
+            _.each(this.collection.models, function(article) {
+                template = that.templateItem(article.toJSON());
+                $div.find(that.body).append(template);
             });
         } else {
-            $div.append(Norton.Constants.noMyItems);
+            $div.find(that.body).append(Norton.Constants.noMyItems);
         }
         $div.find('.modal-container').unwrap().appendTo(this.$content);
 
@@ -60,43 +69,49 @@ var YourFavsView = Backbone.View.extend({
         });
     },
 
+    removeItem: function (e) {
+        'use strict';
+
+        var id = $(e.currentTarget).parent().data('id'),
+            model = this.collection.getModelByAttribute("id", id);
+
+        if (model) {
+            this.collection.remove(model);
+            this.updateCount();
+        }
+
+        return false;
+    },
+
+    updateCount: function () {
+        'use strict';
+        // show item counter
+        $('#yourFavsCtr').html(' (' + this.collection.length + ')');
+    },
+
     addYourFavs: function(e) {
         'use strict';
 
         // Add item to yourFavsList collection
-        var id = $(e.target).data('item-id');
+        var id = $(e.target).data('item-id'),
+            model = this.articles.getModelByAttribute("pname", id);
         
         // Don't add again
-        if (this.articles.getModelById(id) !== undefined) {
-            return;
+        if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
+            return false;
+        }
+        if (model.get('allMeta').pname === id) {
+            this.collection.add(model.get('allMeta'));
         }
 
-        //this.collection.add(this.articles.get(id));
-        _.each(this.collection, function(record) {
-            console.log(record);
-            if (record.attributes.allMeta.pname === id) {
-                this.collection.add(record.attributes.allMeta);
-            }
-        });
-
-        // Increment and show item counter
-        this.yourFavsCtr++;
-        $('#yourFavsCtr').html(' (' + this.yourFavsCtr + ')');
-
+        this.updateCount();
         this.app.saveTracking(id);
 
         return false;
     },
 
-
-
     showYourFavs: function() {
         'use strict';
-        /*$('#filters').css({"display":"none"});
-        $('#articles').css({"display":"none"});
-        $('.your-favs-view-section').css({"display":"inline"});*/
-
-        //this.$el = this.$("#yourFavs");
         this.render();
 
         return false;
