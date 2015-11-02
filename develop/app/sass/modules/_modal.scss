@@ -2,6 +2,7 @@
 
 // flattened
 .modal-dialog {
+	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
 .modal-content {
 	border-radius: 0;
@@ -12,6 +13,9 @@
 }
 .modal-container {
 	position: relative;
+	height: inherit;
+}
+.modal-body {
 	height: inherit;
 }
 
@@ -31,34 +35,35 @@
 		}
 	}
 }
-.modal-body {
-}
 
 /* favorites */
 #modal-container {
 	.modal-dialog {	
-		margin: 5rem auto 0;
-		&[data-module=favorites] {
-			width: 1024px;
-			height: 750px;
-			@include opensans($size: 1.4rem);
+		margin: 5rem auto 0;		
+		width: 800px;
+		height: 600px;
+		position: relative;
+		background-color: #fff;
+		text-align: center;
 
-			position: relative;
-			background-color: #fff;
-			text-align: center;
 
-			position: relative;
+		@include opensans($size: 1.4rem);
 
-			.modal-header {
-				background-color: #000;
-				border: none;
-				color: #fff;
-				
-				.close {
-					color: inherit;
-				}
+		.modal-header {
+			background-color: #000;
+			border: none;
+			color: #fff;
+			
+			.close {
+				color: inherit;
 			}
+		}
 
+		&[data-module=errors] {
+			// intentionally left blank
+		}
+
+		&[data-module=favorites] {
 			.empty-list {
 				text-align: center;
 				font-size: 1.8rem;
@@ -112,20 +117,46 @@
 
 		&[data-module=introduction] {
 			width: 990px;
-			height: 720px;
-			background-color: #fff;
-			text-align: center;
-			box-shadow: 0 0 0 1px #bcbaba,
-				0 0 0 10px #fff,
-				0 1px 10px 12px rgba(0, 0, 0, 0.5);
+			height: 770px;
 
-			.modal-title {
-				@include athelas($size: 4.8rem);
-				z-index: 99;
+			.modal-body {
+				padding: 3rem 1.5rem;
 			}
 
-			p {
+			.border {
+				height: 100%;
+				position: relative;
+				border: 2px solid #bcbaba;
+			}
+
+			.modal-title {
+				position: relative;
+				margin-top: 2rem;
+				@include athelas($size: 4.8rem);
 				z-index: 99;
+				align-self: flex-start;
+			}
+
+			.modal-copy {
+				@include opensans($size: 1.7trem);
+				text-align: left;
+				color: #444;
+				position: relative;
+				width: 600px;
+				line-height: 1.5;
+				z-index: 99;
+				margin: 4rem auto 0;
+			}
+
+			.modal-links {
+				position: absolute;
+				float: right;
+				right: 2rem;
+				bottom: 1rem;
+
+				a {
+					margin-left: 1.5rem;
+				}
 			}
 
 			.intro-bg {
