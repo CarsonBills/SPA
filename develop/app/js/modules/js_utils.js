@@ -7,11 +7,6 @@ var Utils = {
             return false;
         }
     },
-    handleIntroPanel: function() {
-        "use strict";
-        Norton.showIntro = (Norton.Utils.getCookie('intro')) ? false : true;
-        this.setCookie("intro", "1", 1209600, location.hostname);   // 14 day expiry - always reset with each site access
-    },
     getCookie: function(name) {
         "use strict";
         var result = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');

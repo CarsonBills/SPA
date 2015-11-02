@@ -22,7 +22,6 @@ var AppRouter = Backbone.Router.extend({
         var that = this;
 
         this.getData().then(function() {   // use a promise to wait for site_config if it is not in localstorage
-            Norton.Utils.handleIntroPanel(); // set up showing Intro Panel or not
             that.appView = new NortonApp.Views.App({
                 el: '#container',
                 collection: NortonApp.articlesList

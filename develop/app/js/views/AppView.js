@@ -62,12 +62,12 @@ var AppView = Backbone.View.extend({
             app: this
         }).render();
 
-        //if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
+        if (Norton.siteCode === "nortonreader") {
             this.introPanelView = new NortonApp.Views.IntroPanel({
                 model: NortonApp.headerConfigItem,
                 el: ".container"
             });
-        //}
+        }
 
         this.toggleView(EventManager.LIST_VIEW);
 
