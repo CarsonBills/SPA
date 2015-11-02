@@ -139,7 +139,7 @@ var ArticleView = Backbone.View.extend({
         });
         this.pageView = new NortonApp.Views.Page({
             model: this.pageItem,
-            el: "#detailPage",
+            el: ".modal-container.details",
             redraw: create
         });
 

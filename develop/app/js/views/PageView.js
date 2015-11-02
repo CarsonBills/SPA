@@ -11,7 +11,6 @@ var Backbone = require('backbone'),
 
 var PageView = Backbone.View.extend({
     MODULE: 'details',
-    el: $('#detailPage'),
     template: require('../../templates/PageTemplate.hbs'),
     templateLoading: require("../../templates/LoadingSpinnerTemplate.hbs"),
     content: '.modal-content',
@@ -31,12 +30,14 @@ var PageView = Backbone.View.extend({
 
         $div.html(this.template(this.model.toJSON()));
 
-        ModalManager.show({
-            content: $div,
-            module: this.MODULE
-        })
-
-        TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
+        if (this.redraw) {
+            ModalManager.show({
+                content: $div,
+                module: this.MODULE
+            });
+        } else {
+            TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
+        }
 
         return this;
     }
