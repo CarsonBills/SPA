@@ -1,4 +1,5 @@
-var Backbone = require("backbone");
+var Backbone = require("backbone"),
+    ErrorsManager = require('../modules/errors_manager');
 
 var PageModel = Backbone.Model.extend({
     url: function() {
@@ -36,7 +37,8 @@ var PageModel = Backbone.Model.extend({
         'use strict';
         if (response.code !== 200) {
             console.debug('Search return code is" ' + response.code);
-            Norton.Utils.genericError('config');
+            
+            //ErrorsManager.showGeneric();
             return;
         }
 
