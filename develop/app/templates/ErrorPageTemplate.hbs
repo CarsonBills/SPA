@@ -1,20 +1,7 @@
-<div id="errorContainer" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:1000px;height:600px;">
-        <div class="modal-content">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <h4 class="modal-title">Oops! Something went wrong!</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Our website is experiencing an unexpected error. Try refreshing the page.</p>
-
-                </div>
-            </div>
-        </div>
+<div class="modal-container">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
+        <div class="modal-title">{{title}}</div>
     </div>
-
-    <script>
-        $("#modalPlaceholderError").trigger("click");
-        $('.modal-backdrop').css("opacity", .9);
-    </script>
+    <div class="modal-body">{{body}}</div>
 </div>

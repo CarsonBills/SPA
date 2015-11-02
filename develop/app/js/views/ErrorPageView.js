@@ -1,17 +1,30 @@
-var Backbone = require("backbone");
-var $ = require('jquery');
+var Backbone = require("backbone"),
+    $ = require('jquery'),
+    ModalManager = require('../modules/modal_manager');
 
 var ErrorPageView = Backbone.View.extend({
-    el: "#errorPage",
+    MODULE: 'errors',
+    //el: "#errorPage",
     template: require("../../templates/ErrorPageTemplate.hbs"),
+
     initialize: function() {
         "use strict";
-        this.on('change', this.render, this);
+
+        this.render();
     },
+    
     render: function () {
         "use strict";
-        var ErrorPageTemplate = this.template();
-        this.$el.append(ErrorPageTemplate);
+
+        var $div = $('<div></div>');
+        $div.html(this.template(this.model));
+
+        ModalManager.show({
+            content: $div,
+            module: this.MODULE
+        })
+
+        return this;
     }
 });
 
