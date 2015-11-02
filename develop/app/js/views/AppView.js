@@ -6,8 +6,8 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     EventManager = require('../modules/event_manager'),
-    resizeHelper = require('../modules/resize_helper'),
-    scrollHelper = require('../modules/scroll_helper');
+    ResizeHelper = require('../modules/resize_helper'),
+    ScrollHelper = require('../modules/scroll_helper');
 
 var AppView = Backbone.View.extend({
     el: $('#container'),
@@ -19,15 +19,8 @@ var AppView = Backbone.View.extend({
     errorView: null,
     evtMgr: EventManager.getInstance(),
 
-    hasRefreshed: false,
-    shouldRefresh: null,
-    stickScroll: null,
     dataReady: false,
     baseUrl: '',
-    modalShown: false,
-
-    pageItem: null,
-    pageView: null,
 
     initialize: function() {
         'use strict';
@@ -38,19 +31,6 @@ var AppView = Backbone.View.extend({
 
         this.render();
         this.getArticles();
-
-        /* window scroll callbacks */
-        this.stickScroll = this.stickScrollWrapper();
-        this.shouldRefresh = this.shouldRefreshWrapper();
-
-        scrollHelper.setQue({
-            func: this.stickScroll
-        });
-
-        scrollHelper.setQue({
-            func: scrollHelper.shouldRefresh,
-            callback: this.shouldRefresh
-        });
 
     },
     render: function(){
@@ -82,10 +62,6 @@ var AppView = Backbone.View.extend({
             app: this
         }).render();
 
-        this.errorView = new NortonApp.Views.ErrorPage({
-            el: ""
-        });
-
         //if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
                 model: NortonApp.headerConfigItem,
@@ -112,9 +88,6 @@ var AppView = Backbone.View.extend({
                 this.searchArticles();
             }
         },
-        "click .details": "getNextPrevFromList",
-        "click #prevArticle": "getNextPrevFromPage",
-        "click #nextArticle": "getNextPrevFromPage",
         "click #loadMore": function() {
             'use strict';
             // pass true to show hint
@@ -138,38 +111,7 @@ var AppView = Backbone.View.extend({
         return false;
     },
 
-    shouldRefreshWrapper: function () {
-        'use strict';
-        var that = this;
-        return function () {
-            if (!that.hasRefreshed && that.collection.hasMore()) {
-                //that.getArticles();
-                that.hasRefreshed = true;
-            }
-        }
-    },
-
-    stickScrollWrapper: function () {
-        'use strict';
-        var div_top = $('#sticky-anchor').offset().top,
-            $container = $('.container'),
-            STICK = 'stick';
-
-        return function stickScroll() {
-            if ($(window).scrollTop() > div_top) {
-                if (!$container.hasClass(STICK)) {
-                    $container.addClass(STICK);
-                }
-            } else {
-                if ($container.hasClass(STICK)) {
-                    $container.removeClass(STICK);
-                }
-            }
-        }
-    },
-
     /* Grid/List view toggle */
-
     toggleView: function(type) {
         'use strict';
         this.collection.setShowGrid(type === EventManager.GRID_VIEW);
@@ -192,39 +134,12 @@ var AppView = Backbone.View.extend({
             this.toggleView(EventManager.LIST_VIEW);
         }
     },
-    /* End Grid/List view toggle */
-    /*renderArticles: function() {
+
+    showHidden: function () {
         'use strict';
-        this.collection.$el = this.$("#articles");
-        this.collection.render();
-    },*/
-
-    showHighlight: function (params) {
-        var delta,
-            style,
-            tween,
-            $nextItem,
-            shadowStyle;
-        if (this.collection.hasMore()) {
-            delta = scrollHelper.docDelta() - 100;
-        } else {
-            delta = scrollHelper.docDelta();
-        }
-
-        TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
-
-        if (params.showHint) {
-            $nextItem = this.articleView.getNextItemById(params.nextItemID);
-            // highlight last record
-            tween = TweenLite.to($nextItem, 0.7, { backgroundColor: "#888", ease: Quad.easeIn, onComplete: function() {
-                tween.reverse();
-            }, onReverseComplete: function () {
-                //TweenLite.to($nextItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
-                //$nextItem.css({boxShadow: style});
-            }});
-
-            $nextItem.find('a.details').focus();
-        }
+        this.$('.load-more-section').removeClass('off');
+        this.$('.footer').removeClass('off');
+        this.$('.results-bar').removeClass('off');
     },
 
     getArticles: function(showHint) {
@@ -267,16 +182,16 @@ var AppView = Backbone.View.extend({
                 that.hasRefreshed = false;
                 that.showResultsTotals();
 
-                that.showHighlight({
+                that.articleView.showHighlight({
                     showHint: showHint,
                     nextItemID: nextItemID
                 });
-                that.deferred.resolve();
 
+                that.deferred.resolve();
                 
                 that.showHidden();
                     
-                if (scrollHelper.shouldRefresh() && that.collection.hasMore()) {
+                if (ScrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles(false);
                 }
             }, this),
@@ -333,7 +248,7 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
 
-    resolveToBase: function () {
+    /*resolveToBase: function () {
         'use strict';
         window.history.pushState(null,null, this.baseUrl);
     },
@@ -350,110 +265,20 @@ var AppView = Backbone.View.extend({
             that.resolveToBase();
             that.modalShown = false;
         });
-    },
-
-    showDetail: function (id, create) {
-        'use strict';
-
-        var model = this.collection.getModelByAttribute('pname', id);
-
-        // TODO throw fallback when page cannot be found
-        /*if (typeof model === 'undefined') {
-            this.resolveToBase();
-            return false;
-        }*/
-
-        this.baseUrl = model.get('baseUrl');
-
-        this.pageItem = new NortonApp.Models.Page({
-            id: id,
-            prevId: model.get('prevId'),
-            nextId: model.get('nextId')
-        });
-        this.pageView = new NortonApp.Views.Page({
-            model: this.pageItem,
-            el: "#detailPage",
-            redraw: create
-        });
-
-        this.pageItem.fetch({
-            success: $.proxy (function(data) {
-                if (create) {
-                    this.showPageModal();
-                }
-                this.pageView.render();
-
-            }, this),
-            error: function(xhr, response, error) {
-                $('.modal-backdrop').remove();
-                $('.modal-dialog').remove();
-                console.debug('Detail Page not available.');
-                Norton.Utils.genericError('detail');
-            }
-        });
-
-    },
-
-    showHidden: function () {
-        'use strict';
-        this.$('.load-more-section').removeClass('off');
-        this.$('.footer').removeClass('off');
-        this.$('.results-bar').removeClass('off');
-    },
+    },*/
 
     // called from router
     showDetailPage: function(id) {
         'use strict';
-        var that = this,
-            template;
+        var that = this;
 
         if (this.dataReady) {
-            this.showDetail(id, !this.modalShown);
+            this.articleView.showDetail(id, !this.modalShown);
         } else {
             this.deferred.promise().done(function () {
-                that.showDetail(id, true);
+                that.articleView.showDetail(id, true);
             })
         }        
-    },
-    getNextPrevFromList: function(e) {
-        'use strict';
-        /**
-         * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
-         */
-
-
-        Norton.pageClick = "list";
-        var page = "page/" + $(e.currentTarget).attr('data-id');
-
-        if (Backbone.history.fragment === page) {
-            NortonApp.router.navigate('#/' + page, true);
-        }
-    },
-    getNextPrevFromPage: function(e) {
-        'use strict';
-        /**
-         * Next/prev links are determined in pageView.js when a next prev link was clicked.
-         * Otherwise, they are determined above in getNextPrevFromList
-         */
-        Norton.pageClick = "page";
-        var page,
-            id;
-
-        if ($(e.currentTarget).attr('data-next-id') !== undefined) {
-            id = $(e.currentTarget).attr('data-next-id');
-        } else {
-            id = $(e.currentTarget).attr('data-prev-id');
-        }
-
-        page = "page/" + id;
-
-        NortonApp.router.navigate('#/' + page, {
-            trigger: true,
-            replace: true
-        });
-
-        return false;
-
     },
     showResultsTotals: function() {
         'use strict';        
