@@ -23,6 +23,11 @@ var Utils = {
         NortonApp.errorPageView.render();
 
         window.history.pushState(null,null,Norton.baseUrl);
+    },
+
+    returnToBase: function () {
+        "user strict";
+        window.history.pushState(null,null,Norton.baseUrl);
     }
 };
 
