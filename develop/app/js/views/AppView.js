@@ -285,28 +285,6 @@ var AppView = Backbone.View.extend({
         this.$('#perPage').html(this.collection.length);
         this.$('#nbrRecords').html(this.collection.totalRecords);
 
-    },
-    saveTracking: function(id) {
-        'use strict';
-
-        var postdata = {
-            sitecode: Norton.siteCode,
-            asset: id,
-            eventType: 1
-        };
-
-        $.ajax({
-            type:'POST',
-            url: Norton.Constants.saveTrackingUrl,
-            data: JSON.stringify(postdata),
-            dataType: "json",
-            success: function(response) {
-                // eventually, update some popularity indicator somewhere on the site; for now, do nothing
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.debug("Save Tracking request failed.");
-            }
-        });
     }
 });
 

@@ -2,7 +2,8 @@ var Backbone = require('backbone'),
     _ = require('underscore'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
-    ErrorsManager = require('../modules/errors_manager');
+    ErrorsManager = require('../modules/errors_manager'),
+    TrackManager = require('../modules/track_manager');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -118,7 +119,7 @@ var YourFavsView = Backbone.View.extend({
             }
             
             this.updateCount();
-            this.app.saveTracking(id);
+            TrackManager.save(id);
         }
 
         return false;
