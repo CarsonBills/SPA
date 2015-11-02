@@ -126,9 +126,6 @@ $(function() {
     NortonApp.yourFavsItem = new NortonApp.Models.YourFavs();
     //NortonApp.pageItem = new NortonApp.Models.Page();
     NortonApp.headerConfigItem = new NortonApp.Models.HeaderConfig();
-    NortonApp.pageView;
-    NortonApp.introPanelView;
-    NortonApp.errorPageView;
 
     NortonApp.AppRouter = require('./routes/router.js');
     NortonApp.router = new NortonApp.AppRouter();
