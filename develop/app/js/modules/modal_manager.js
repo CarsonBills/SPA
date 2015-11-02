@@ -2,7 +2,7 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
 	_ = require('underscore'),
-	modalMgr = (function() {
+	modalManager = (function() {
     'use strict';
         var MODULE = 'data-module',
             modal = '#modal-container',
@@ -10,7 +10,16 @@ var Backbone = require('backbone'),
             content = '.modal-content',
             body = '.modal-body',
             container = '.modal-container',
-            $content = null,
+            $content = null, 
+
+            initialize = function () {
+                'use strict';
+
+                $(modal).on('hide.bs.modal', function (e) {
+                    $content.empty();
+                    console.log("clean up");
+                });
+            },
 
             show = function (params) {
 
@@ -24,9 +33,12 @@ var Backbone = require('backbone'),
                 $(modal).modal('show');
 
             };
+
+        initialize();
+
         return {
             show: show
         };
 }());
 
-module.exports = modalMgr;
+module.exports = modalManager;
