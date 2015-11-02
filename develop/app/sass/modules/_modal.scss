@@ -64,6 +64,14 @@
 		}
 
 		&[data-module=favorites] {
+
+			.modal-title {
+				.glyphicon {
+					font-size: 1.6rem;
+					line-height: 1.5;
+					margin-left: 1rem;
+				}
+			}
 			.empty-list {
 				text-align: center;
 				font-size: 1.8rem;
