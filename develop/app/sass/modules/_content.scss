@@ -115,6 +115,11 @@ $card-height: 270px;
     width: calc(100% - $filter-width);
     @include locked($position: 100px);
     @include toggle-fullscreen();
+
+    // override popover style
+    .popover {
+        border-radius: 0;
+    }
 }
 
 ul.card {

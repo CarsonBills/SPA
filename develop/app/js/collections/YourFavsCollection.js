@@ -10,11 +10,11 @@ var YourFavsCollection = Backbone.Collection.extend({
 
     getModelByAttribute: function (attr, value) {
         'use strict';
-        var model =  _.find(this.models, function(model) {
+        var result =  _.find(this.models, function(model) {
             return model.get(attr) === value;
-        })
+        });
 
-        return model;
+        return result;
     }
 });
 

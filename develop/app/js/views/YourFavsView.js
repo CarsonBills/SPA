@@ -86,23 +86,40 @@ var YourFavsView = Backbone.View.extend({
         $('#yourFavsCtr').html(' (' + this.collection.length + ')');
     },
 
+    showPopover: function ($target) {
+        'use strict';
+        var direction = "left";
+        if (this.articles.showGrid()) {
+            direction = "right";
+        }
+        $target.popover({
+            content: "Item added",
+            placement: direction,
+            container: '.content'
+        });
+        $target.popover('show');
+            setTimeout(function () {
+                $target.popover('destroy');
+            }, 1000);
+    },
+
     addYourFavs: function(e) {
         'use strict';
 
         // Add item to yourFavsList collection
-        var id = $(e.target).data('item-id'),
+        var $target = $(e.currentTarget),
+            id = $target.data('item-id'),
             model = this.articles.getModelByAttribute("pname", id);
-        
         // Don't add again
-        if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
-            return false;
+        if ( this.collection.getModelByAttribute("pname", id) === undefined) {
+            if (model.get('allMeta').pname === id) {
+                this.collection.add(new NortonApp.Models.YourFavs(model.get('allMeta')));
+                this.showPopover($target);
+            }
+            
+            this.updateCount();
+            this.app.saveTracking(id);
         }
-        if (model.get('allMeta').pname === id) {
-            this.collection.add(model.get('allMeta'));
-        }
-
-        this.updateCount();
-        this.app.saveTracking(id);
 
         return false;
     },
