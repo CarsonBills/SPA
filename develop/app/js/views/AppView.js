@@ -291,7 +291,6 @@ var AppView = Backbone.View.extend({
 
         var postdata = {
             sitecode: Norton.siteCode,
-            siteversion: Norton.version,
             asset: id,
             eventType: 1
         };
