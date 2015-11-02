@@ -1,7 +1,6 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    modalMgr = require('../modules/modal_manager');
-Backbone.$ = $;
+    ModalManager = require('../modules/modal_manager');
 
 var IntroPanelView = Backbone.View.extend({
     MODULE: 'introduction',
@@ -9,18 +8,16 @@ var IntroPanelView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
-
         this.render();
     },
 
     render: function() {
         'use strict';
-        var that = this,
-            $div = $('<div></div>');
+        var $div = $('<div></div>');
 
         $div.html(this.template(this.model.toJSON()));
 
-        modalMgr.show({
+        ModalManager.show({
             content: $div,
             module: this.MODULE
         })
