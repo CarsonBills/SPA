@@ -1,8 +1,9 @@
 var Backbone = require("backbone");
 
 var PageModel = Backbone.Model.extend({
-    urlRoot: "/php/get_page2.php/",
-    //urlRoot: Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=",
+    url: function() {
+        return Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=" + this.id;
+    },
 
     defaults: {
         "siteVersion":"",
@@ -39,7 +40,7 @@ var PageModel = Backbone.Model.extend({
             return;
         }
 
-        return response;
+        return response.data;
     },
 
     initialize: function () {

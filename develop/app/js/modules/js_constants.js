@@ -1,14 +1,18 @@
 var JSConstants = {
+    noMyItems: '<div class="empty-list">You have not added any items to your List yet.</div>',
     loginUrl: '//books.wwnorton.com/books//ssl/WebLogin.aspx',
     invalidSiteCodeUrl: '//books.wwnorton.com/books/index.aspx',
-      //siteConfigUrl: 'http://dev-books.wwnorton.com:2999/api/getsiteconfig/',
-    siteConfigUrl: 'http://dusty:822/ars.svc/v1/getsiteconfig?',
-      //searchUrl: '/php/searchandiser.php',
-    searchUrl: 'http://dusty:822/ars.svc/v1/search',
-      //getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
-    getDetailPageUrl: 'http://dusty:822/ars.svc/v1/getpagedetail?',
-    saveTrackingUrl: 'http://dusty:822/Ars.svc/v1/SaveTracking',
-    getTrackingUrl: 'http://dusty:822/Ars.svc/v1/trackingbyasset',
+    siteConfigUrl: 'http://bishop:822/ars.svc/v1/getsiteconfig?',
+    searchUrl: 'http://bishop:822/ars.svc/v1//search',
+    getDetailPageUrl: 'http://bishop:822/ars.svc/v1/getpagedetail?',
+    saveTrackingUrl: 'http://bishop:822/Ars.svc/v1/SaveTracking',
+    getTrackingUrl: 'http://bishop:822/Ars.svc/v1/trackingbyasset',
+    likeAssetUrl: 'http://bishop:822/Ars.svc/v1/LikeAsset ',
+    unlikeAssetUrl: 'http://bishop:822/Ars.svc/v1/UnLikeAsset ',
+    getSavedFavsUrl: 'http://bishop:822/Ars.svc/v1/getfavorites',
+//siteConfigUrl: 'http://dev-books.wwnorton.com:2999/api/getsiteconfig/',
+//getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
+//searchUrl: '/php/searchandiser.php',
     defaultPageSize: 10
 };
 
