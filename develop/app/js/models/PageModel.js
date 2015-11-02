@@ -19,10 +19,15 @@ var PageModel = Backbone.Model.extend({
             "ebookLink":"",
             "pageNumber": null,
             "readingNumber": null,
-            "authorFirstName":"",
-            "authorMiddleName":"",
-            "authorLastName":"",
-            "authorBio":"",
+            "author": [
+                {
+                    "authorBio": "",
+                    "authorFirstName": "",
+                    "authorMiddleName": "",
+                    "authorLastName": ""
+                }
+            ],
+
             "website":" ",
             "filters":[
                 {
