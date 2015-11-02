@@ -1,24 +1,11 @@
-<div id="introContainer" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{{displayTitle}}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>{{{introPanelCopy}}}</p>
-                    <p>An image named: {{introPanelImage.src}}</p>
-                    {{#each introPanelCalloutAction}}
-                        <p><a href="{{action-link}}"><button type="button">{{actionText}}</button></a></p>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
+<div class="modal-container">
+    <div class="modal-body">
+        <img class="intro-bg" src="/images/intro_bg.jpg" />
+        <h4 class="modal-title">{{displayTitle}}</h4>
+        <p>{{{introPanelCopy}}}</p>
+        <!-- p>An image named: {{introPanelImage.src}}</p-->
+        {{#each introPanelCalloutAction}}
+            <p><a href="{{action-link}}"><button type="button">{{actionText}}</button></a></p>
+        {{/each}}
     </div>
-
-    <script>
-        $("#modalPlaceholderIntro").trigger("click");
-
-    </script>
 </div>

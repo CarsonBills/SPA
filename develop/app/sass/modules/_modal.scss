@@ -2,15 +2,17 @@
 
 // flattened
 .modal-dialog {
-	width: 770px;
-	height: 740px;
 }
 .modal-content {
-	position: relative;
 	border-radius: 0;
 	border: none;
-	width: 100%;
-	height: 100%;
+	box-shadow: none;
+	background: transparent;
+	height: inherit;
+}
+.modal-container {
+	position: relative;
+	height: inherit;
 }
 
 /* generic */
@@ -33,72 +35,107 @@
 }
 
 /* favorites */
-.modal-container {
-	height: 100%;
-	&.favorites {
-		@include opensans($size: 1.4rem);
-		position: relative;
+#modal-container {
+	.modal-dialog {	
+		margin: 5rem auto 0;
+		&[data-module=favorites] {
+			width: 1024px;
+			height: 750px;
+			@include opensans($size: 1.4rem);
 
-		.modal-header {
-			background-color: #000;
-			border: none;
-			color: #fff;
-			
-			.close {
-				color: inherit;
-			}
-		}
-
-		.empty-list {
+			position: relative;
+			background-color: #fff;
 			text-align: center;
-			font-size: 1.8rem;
-			margin-top: 5rem;
-		}
 
-		.download-favs {
-			position: absolute;
-			width: 100%;
-			text-transform: uppercase;
-			text-align: center;
-			line-height: 1.4;
-			bottom: 4rem;
+			position: relative;
 
-			.glyphicon {
-				margin-left: 1.3rem;
+			.modal-header {
+				background-color: #000;
+				border: none;
+				color: #fff;
+				
+				.close {
+					color: inherit;
+				}
 			}
-		}
 
-		.list-format {
-			width: 98%;
-			margin: 0 auto;
-			padding: 1rem;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-		    align-items: center;
-		    align-content: center;
-		    min-height: 4.5rem;
-		    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
+			.empty-list {
+				text-align: center;
+				font-size: 1.8rem;
+				margin-top: 5rem;
+			}
 
-			.author {
-				@include opensans($size: 1.4rem, $weight: 600);
-				color: #6f6f6f;
+			.download-favs {
+				position: absolute;
+				width: 100%;
 				text-transform: uppercase;
-				flex-grow: 1; /* flex to fill rest of available space */
-    			min-width: auto;
+				text-align: center;
+				line-height: 1.4;
+				bottom: 4rem;
+
+				.glyphicon {
+					margin-left: 1.3rem;
+				}
 			}
 
-			.title {
-				@include athelas($size: 1.6rem, $style: italic, $weight: 700);
-				color: $reader-blue;
-				flex-grow: 1; /* flex to fill rest of available space */
-    			min-width: auto;
+			.list-format {
+				width: 98%;
+				margin: 0 auto;
+				padding: 1rem;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			    align-items: center;
+			    align-content: center;
+			    min-height: 4.5rem;
+			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
+
+				.author {
+					@include opensans($size: 1.4rem, $weight: 600);
+					color: #6f6f6f;
+					text-transform: uppercase;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+
+				.title {
+					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
+					color: $reader-blue;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+				.remove {
+					cursor: pointer;
+				}
 			}
-			.remove {
-				cursor: pointer;
+		}
+
+		&[data-module=introduction] {
+			width: 990px;
+			height: 720px;
+			background-color: #fff;
+			text-align: center;
+			box-shadow: 0 0 0 1px #bcbaba,
+				0 0 0 10px #fff,
+				0 1px 10px 12px rgba(0, 0, 0, 0.5);
+
+			.modal-title {
+				@include athelas($size: 4.8rem);
+				z-index: 99;
+			}
+
+			p {
+				z-index: 99;
+			}
+
+			.intro-bg {
+				position: absolute;
+				display: block;
+				top: 10rem;
 			}
 		}
 	}
+
 }
 /* end favorites */
 

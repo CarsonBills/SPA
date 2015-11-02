@@ -1,8 +1,10 @@
 var Backbone = require('backbone'),
     _ = require('underscore'),
-    $ = require('jquery');
+    $ = require('jquery'),
+    modalMgr = require('../modules/modal_manager');
 
 var YourFavsView = Backbone.View.extend({
+    MODULE: 'favorites',
     templateHdr: require('../../templates/YourFavsHeaderTemplate.hbs'),
     templateItem: require('../../templates/YourFavsTemplate.hbs'),
     modal: '#modal-container',
@@ -36,7 +38,7 @@ var YourFavsView = Backbone.View.extend({
             hasContent = (this.collection.length > 0),
             template;
 
-        this.$content.empty();
+       // this.$content.empty();
 
         template = this.templateHdr({
             hasContent: hasContent
@@ -52,9 +54,13 @@ var YourFavsView = Backbone.View.extend({
         } else {
             $div.find(that.body).append(Norton.Constants.noMyItems);
         }
-        $div.find('.modal-container').unwrap().appendTo(this.$content);
+        //$div.find('.modal-container').unwrap().appendTo(this.$content);
 
-        this.$(this.modal).modal('show');
+        modalMgr.show({
+            content: $div,
+            module: this.MODULE
+        })
+        //this.$(this.modal).modal('show');
 
         yourFavsDragNDrop('#yourFavs');
         return this;

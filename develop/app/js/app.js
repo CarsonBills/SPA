@@ -27,7 +27,7 @@ $(function() {
          * Global primitives
          */
     //Norton.toggleGridFormat = true;
-    Norton.yourFavsCtr = 0;
+    //Norton.yourFavsCtr = 0;
     Norton.perPage = Norton.Constants.defaultPageSize;
     Norton.lastArticleLoaded = 0;
     Norton.currArticle = null;

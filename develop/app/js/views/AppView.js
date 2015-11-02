@@ -12,6 +12,7 @@ var Backbone = require('backbone'),
 var AppView = Backbone.View.extend({
     el: $('#container'),
     deferred: $.Deferred(),
+    introPanelView: null,
     topNavView: null,
     articleView: null,
     filtersView: null,
@@ -85,13 +86,12 @@ var AppView = Backbone.View.extend({
             el: ""
         });
 
-        if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
+        //if (Norton.siteCode === "nortonreader" && Norton.showIntro) {
             this.introPanelView = new NortonApp.Views.IntroPanel({
-                model: NortonApp.headerConfigItem
+                model: NortonApp.headerConfigItem,
+                el: ".container"
             });
-            this.introPanelView.$el = this.$("#introPanel");
-            this.introPanelView.render();
-        }
+        //}
 
         this.toggleView(EventManager.LIST_VIEW);
 
@@ -216,7 +216,7 @@ var AppView = Backbone.View.extend({
         if (params.showHint) {
             $nextItem = this.articleView.getNextItemById(params.nextItemID);
             // highlight last record
-            tween = TweenLite.to($nextItem, 0.7, {backgroundColor: "#03C", ease: Quad.easeIn, onComplete: function() {
+            tween = TweenLite.to($nextItem, 0.7, { backgroundColor: "#888", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
             }, onReverseComplete: function () {
                 //TweenLite.to($nextItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
