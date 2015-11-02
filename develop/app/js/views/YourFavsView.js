@@ -1,7 +1,8 @@
 var Backbone = require('backbone'),
     _ = require('underscore'),
     $ = require('jquery'),
-    modalMgr = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    ErrorsManager = require('../modules/errors_manager');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -20,7 +21,6 @@ var YourFavsView = Backbone.View.extend({
         this.articles = params.articles;
         this.$content = this.$(this.modal + " " + this.content);
 
-        this.initModal();
         this.collection.on('remove', this.render, this);
     },
 
@@ -52,11 +52,11 @@ var YourFavsView = Backbone.View.extend({
                 $div.find(that.body).append(template);
             });
         } else {
-            $div.find(that.body).append(Norton.Constants.noMyItems);
+            $div.find(that.body).append(ErrorsManager.NO_FAVORITES);
         }
         //$div.find('.modal-container').unwrap().appendTo(this.$content);
 
-        modalMgr.show({
+        ModalManager.show({
             content: $div,
             module: this.MODULE
         })
@@ -64,15 +64,6 @@ var YourFavsView = Backbone.View.extend({
 
         yourFavsDragNDrop('#yourFavs');
         return this;
-    },
-
-    initModal: function () {
-        'use strict';
-        var that = this;
-
-        this.$(this.modal).on('hide.bs.modal', function (e) {
-            that.$content.empty();
-        });
     },
 
     removeItem: function (e) {
