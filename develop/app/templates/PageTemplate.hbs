@@ -8,12 +8,16 @@
         <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
         <div class="modal-author">
             {{#each data.author}}
-                {{data.authorFirstName}} {{data.authorMiddleName}} {{data.authorLastName}}
+                {{authorFirstName}} {{authorMiddleName}} {{authorLastName}}
             {{/each}}
         </div>
         <div class="modal-title">{{data.title}}</div>
     </div>
     <div class="modal-body">
+        <p> {{#each data.author}}
+            Bio: {{authorFirstName}} {{authorMiddleName}} {{authorLastName}}<br/>
+            {{authorBio}}
+        {{/each}}</p>
         <p>{{{data.excerpt}}}</p>
     </div>
     <div class="modal-subheader" data-item-id='{{id}}'>
