@@ -26,10 +26,10 @@ module.exports = (function() {
         }
     });
     // filters helper
-    Handlebars.registerHelper('HBIsChapter', function(name, options) {
+    Handlebars.registerHelper('HBMatchWord', function(name, match, options) {
         var fnTrue = options.fn, 
             fnFalse = options.inverse;
-        return (name === "chapter") ? fnTrue(this) : fnFalse(this);
+        return (name === match) ? fnTrue(this) : fnFalse(this);
     });
     Handlebars.registerHelper('HBIsCollapsed', function(name) {
         return (name === "chapter") ? "collapsed" : "";
