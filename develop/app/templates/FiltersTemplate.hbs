@@ -3,11 +3,11 @@
     <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
 
-    {{#HBIsChapter name}}
+    {{#HBMatchWord name "chapter"}}
         <div class="filter-item collapse in" role="tab-panel" id="{{name}}">
     {{else}}
         <div class="filter-item collapse" role="tab-panel" id="{{name}}">
-    {{/HBIsChapter}}
+    {{/HBMatchWord}}
     {{#each refinements}}
         {{#if value}}
             {{#if count}}
