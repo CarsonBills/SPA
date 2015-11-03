@@ -40,6 +40,39 @@ var PageView = Backbone.View.extend({
         }
 
         return this;
+    },
+
+    events: {
+        "click #prevArticle": "getNextPrevFromPage",
+        "click #nextArticle": "getNextPrevFromPage",
+    },
+
+    getNextPrevFromPage: function(e) {
+        'use strict';
+        /**
+         * Next/prev links are determined in pageView.js when a next prev link was clicked.
+         * Otherwise, they are determined above in getNextPrevFromList
+         */
+        Norton.pageClick = "page";
+        var page,
+            id;
+
+        if ($(e.currentTarget).attr('data-next-id') !== undefined) {
+            id = $(e.currentTarget).attr('data-next-id');
+        } else {
+            id = $(e.currentTarget).attr('data-prev-id');
+        }
+
+        page = "page/" + id;
+
+        console.log(page)
+
+        NortonApp.router.navigate('#/' + page, {
+            trigger: true,
+            replace: true
+        });
+
+        return false;
     }
 });
 
