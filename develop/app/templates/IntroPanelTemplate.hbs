@@ -6,7 +6,11 @@
 	        <div class="modal-copy">{{{introPanelCopy}}}</div>
 	        <div class="modal-links">
 	        {{#each introPanelCalloutAction}}
-	            <a href="{{action-link}}"><button type="button">{{actionText}}</button></a>
+		        {{#HBMatchWord actionText "Give Me a Tour"}}
+	            	<a class="tour" href="#"><button type="button">{{actionText}}</button></a>
+			    {{else}}
+	            	<a href="#" data-dismiss="modal"><button type="button">{{actionText}}</button></a>
+			    {{/HBMatchWord}}
 	        {{/each}}
 	        </div>
         </div>

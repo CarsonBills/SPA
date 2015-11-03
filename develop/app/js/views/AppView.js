@@ -17,6 +17,7 @@ var AppView = Backbone.View.extend({
     articleView: null,
     filtersView: null,
     errorView: null,
+    tourView: null,
     evtMgr: EventManager.getInstance(),
 
     dataReady: false,
@@ -65,7 +66,8 @@ var AppView = Backbone.View.extend({
         if (Norton.siteCode === "nortonreader") {
             this.introPanelView = new NortonApp.Views.IntroPanel({
                 model: NortonApp.headerConfigItem,
-                el: ".container"
+                el: ".container",
+                app: this
             });
         }
 
@@ -93,6 +95,17 @@ var AppView = Backbone.View.extend({
             // pass true to show hint
             this.getArticles(true);
         }
+    },
+
+    showTour: function () {
+        'use strict';
+
+        this.toggleFilter();
+
+        this.tourView = new NortonApp.Views.Tour({
+            el: '.container',
+            collection: new NortonApp.Collections.Tour()
+        });
     },
 
     toggleFilter: function (e) {
@@ -140,6 +153,7 @@ var AppView = Backbone.View.extend({
         this.$('.load-more-section').removeClass('off');
         this.$('.footer').removeClass('off');
         this.$('.results-bar').removeClass('off');
+
     },
 
     getArticles: function(showHint) {

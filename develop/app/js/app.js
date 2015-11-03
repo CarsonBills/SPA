@@ -95,12 +95,14 @@ $(function() {
     NortonApp.Models.YourFavs = require('./models/YourFavsModel.js');
     NortonApp.Models.Page = require('./models/PageModel.js');
     NortonApp.Models.HeaderConfig = require('./models/HeaderConfigModel.js');
+    NortonApp.Models.Tour = require('./models/TourModel.js');
 
     /**
      * Collections
      */
     NortonApp.Collections.Articles = require("./collections/ArticlesCollection.js");
     NortonApp.Collections.YourFavs = require("./collections/YourFavsCollection.js");
+    NortonApp.Collections.Tour = require("./collections/TourCollection.js");
 
     /**
      * Views
@@ -114,6 +116,7 @@ $(function() {
     NortonApp.Views.IntroPanel = require("./views/IntroPanelView.js");
     NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
     NortonApp.Views.App = require("./views/AppView.js");
+    NortonApp.Views.Tour = require("./views/TourView.js");
 
     /**
      * Initializers

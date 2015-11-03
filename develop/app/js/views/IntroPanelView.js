@@ -6,10 +6,11 @@ var IntroPanelView = Backbone.View.extend({
     MODULE: 'introduction',
     template: require('../../templates/IntroPanelTemplate.hbs'),
     showIntro: false,
+    app: null,
 
-    initialize: function() {
+    initialize: function(params) {
         'use strict';
-
+        this.app = params.app;
         this.showIntro = (Norton.Utils.getCookie('intro')) ? false : true;
         Norton.Utils.setCookie("intro", "1", 1209600, location.hostname);   // 14 day expiry - always reset with each site access
 
@@ -30,6 +31,17 @@ var IntroPanelView = Backbone.View.extend({
         })
 
         return this;
+    },
+
+    events: {
+        "click .modal-links .tour" : "showTour"
+    },
+
+    showTour: function (e) {
+        'use strict';
+        ModalManager.hide();
+        this.app.showTour();
+        return false;
     }
 });
 
