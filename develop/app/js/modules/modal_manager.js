@@ -17,7 +17,7 @@ var Backbone = require('backbone'),
 
                 $(modal).on('hide.bs.modal', function (e) {
                     $content.empty();
-                    console.log("clean up");
+                    Norton.Utils.returnToBase();
                 });
             },
 
@@ -32,12 +32,16 @@ var Backbone = require('backbone'),
 
                 $(modal).modal('show');
 
+            },
+            hide = function () {
+                $(modal).modal('hide');
             };
 
         initialize();
 
         return {
-            show: show
+            show: show,
+            hide: hide
         };
 }());
 
