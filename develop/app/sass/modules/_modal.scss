@@ -59,6 +59,11 @@
 			}
 		}
 
+		&[data-module=details] {
+			width: 772px;
+			height: 738px;
+		}
+
 		&[data-module=errors] {
 			// intentionally left blank
 		}

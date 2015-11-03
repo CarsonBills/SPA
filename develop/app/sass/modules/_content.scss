@@ -1,4 +1,5 @@
 
+
 .container {
     padding: 0;
     margin: 0;
@@ -6,6 +7,13 @@
     padding-bottom: $top-bar-height * 2;
     height: auto;
     min-height: 100vh;
+
+    // override popover style
+    .popover {
+        border-radius: 0;
+        animation: popover-glow 0.5s ease-out 0s alternate 2;
+        animation-fill-mode: backwards;
+    }
 }
 #filters {
     position: absolute;
@@ -116,10 +124,6 @@ $card-height: 270px;
     @include locked($position: 100px);
     @include toggle-fullscreen();
 
-    // override popover style
-    .popover {
-        border-radius: 0;
-    }
 }
 
 ul.card {

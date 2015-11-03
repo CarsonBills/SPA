@@ -90,6 +90,10 @@ nav {
     span {
         @include vertical-align(absolute);
         right: 20px;
+
+        &[data-rel="tooltip"] {
+            position: relative;
+        }
     }
 }
 

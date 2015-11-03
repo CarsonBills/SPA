@@ -9,6 +9,7 @@ $tablet-portait-width: 768px;
 $mobile-width: 480px;
 $mobile-width-sm: 320px;
 
+$popover-glow: rgba(255, 51, 0, 1);
 
 
 /* filter panel width */
@@ -29,6 +30,15 @@ $filter-width: 28rem;
 	to {
 		transform: scale(0.6) rotate(360deg);
 	}
+}
+
+@keyframes popover-glow {
+    from {
+        filter: drop-shadow(0 0 0 $popover-glow);
+    }
+    to {
+        filter: drop-shadow(0 0 10px $popover-glow);
+    }
 }
 
 button[data-type="reader-button"] {
