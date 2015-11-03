@@ -26,7 +26,7 @@ var Utils = {
     },
 
     returnToBase: function () {
-        "user strict";
+        "use strict";
         window.history.pushState(null,null,Norton.baseUrl);
     }
 };

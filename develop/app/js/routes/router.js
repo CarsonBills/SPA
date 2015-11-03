@@ -78,7 +78,7 @@ var AppRouter = Backbone.Router.extend({
         try {
             lsSiteConfig = localStorage.getItem(lsConfigId);
             // localstorage version of config should expire after one day
-            if ( (JSON.parse(lsSiteConfig).expiry + 86400) <=  Math.floor((new Date).getTime()/1000)) {
+            if ( (JSON.parse(lsSiteConfig).expiry + 86400) <=  Math.floor((new Date()).getTime()/1000)) {
                 lsSiteConfig = false;
             }
         } catch(e) {}
@@ -91,7 +91,7 @@ var AppRouter = Backbone.Router.extend({
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function() {
-                    NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date).getTime()/1000);
+                    NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
                     try {

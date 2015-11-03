@@ -46,7 +46,7 @@ module.exports = (function() {
                     new_text += words[i] + " ";
                 }
             }  
-            new_text = new_text.trim() + " ..."          
+            new_text = new_text.trim() + " ...";         
         }
         return new_text;
     });

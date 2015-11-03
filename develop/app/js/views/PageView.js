@@ -65,8 +65,6 @@ var PageView = Backbone.View.extend({
 
         page = "page/" + id;
 
-        console.log(page)
-
         NortonApp.router.navigate('#/' + page, {
             trigger: true,
             replace: true

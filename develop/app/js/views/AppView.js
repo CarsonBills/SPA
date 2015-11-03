@@ -1,3 +1,5 @@
+/*jshint -W089 */ // for in error
+
 /**
  * AppView.js is the main view for the app. Since we don't really have routes as such (just modal popups), almost everything clickable happens in the AppTemplate.
  *
@@ -10,7 +12,7 @@ var Backbone = require('backbone'),
     ScrollHelper = require('../modules/scroll_helper');
 
 var AppView = Backbone.View.extend({
-    el: $('#container'),
+
     deferred: $.Deferred(),
     introPanelView: null,
     topNavView: null,
@@ -217,6 +219,7 @@ var AppView = Backbone.View.extend({
     },
     // format the refinements as JSON string
     formatRefinements: function() {
+        'use strict';
         var refs = [],
             ref,
             splt,
@@ -291,7 +294,7 @@ var AppView = Backbone.View.extend({
         } else {
             this.deferred.promise().done(function () {
                 that.articleView.showDetail(id, true);
-            })
+            });
         }        
     },
     showResultsTotals: function() {

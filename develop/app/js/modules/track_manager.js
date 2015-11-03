@@ -1,14 +1,13 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
-	_ = require('underscore')
+	_ = require('underscore');
 
 	TrackManager = (function() {
     'use strict';
 
 
         var save = function(id) {
-            'use strict';
 
             var postdata = {
                 sitecode: Norton.siteCode,

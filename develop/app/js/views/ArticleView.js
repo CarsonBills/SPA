@@ -95,7 +95,7 @@ var ArticleView = Backbone.View.extend({
                 //that.getArticles();
                 that.hasRefreshed = true;
             }
-        }
+        };
     },
 
     stickScrollWrapper: function () {
@@ -114,7 +114,7 @@ var ArticleView = Backbone.View.extend({
                     $container.removeClass(STICK);
                 }
             }
-        }
+        };
     },
 
     showDetail: function (id, create) {
@@ -155,6 +155,7 @@ var ArticleView = Backbone.View.extend({
     },
 
     showHighlight: function (params) {
+        'use strict';
         var delta,
             style,
             tween,

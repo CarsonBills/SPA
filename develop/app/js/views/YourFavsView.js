@@ -39,11 +39,9 @@ var YourFavsView = Backbone.View.extend({
             hasContent = (this.collection.length > 0),
             template;
 
-       // this.$content.empty();
-
         template = this.templateHdr({
             hasContent: hasContent
-        })
+        });
 
         $div.html(template);
 
@@ -55,13 +53,11 @@ var YourFavsView = Backbone.View.extend({
         } else {
             $div.find(that.body).append(ErrorsManager.NO_FAVORITES);
         }
-        //$div.find('.modal-container').unwrap().appendTo(this.$content);
 
         ModalManager.show({
             content: $div,
             module: this.MODULE
-        })
-        //this.$(this.modal).modal('show');
+        });
 
         yourFavsDragNDrop('#yourFavs');
         return this;

@@ -22,7 +22,7 @@ var ErrorPageView = Backbone.View.extend({
         ModalManager.show({
             content: $div,
             module: this.MODULE
-        })
+        });
 
         return this;
     }

@@ -13,7 +13,6 @@ var Backbone = require('backbone'),
             $content = null, 
 
             initialize = function () {
-                'use strict';
 
                 $(modal).on('hide.bs.modal', function (e) {
                     $content.empty();

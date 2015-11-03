@@ -1,7 +1,7 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
-	_ = require('underscore')
+	_ = require('underscore');
 
 	ErrorsManager = (function() {
     'use strict';

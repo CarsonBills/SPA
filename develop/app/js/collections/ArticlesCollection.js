@@ -40,12 +40,12 @@ var ArticlesCollection = Backbone.Collection.extend({
                 inc: -1,
                 records: response.records,
                 record: record
-            })
+            });
             record.nextId = that.getPName({
                 inc: 1,
                 records: response.records,
                 record: record
-            })
+            });
             record.baseUrl = Norton.baseUrl;
 
 
@@ -125,7 +125,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         'use strict';
         var model =  _.find(this.models, function(model) {
             return model.get('allMeta')[attr] === value;
-        })
+        });
 
         return model;
     }

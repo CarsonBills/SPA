@@ -432,4 +432,4 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
 });
 
-gulp.task('clean', del.bind(null, [proj.gulptmp, proj.gulpdist]));
+gulp.task('clean', del.bind(null, [proj.gulptmp + '/*', proj.gulpdist]));

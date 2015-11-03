@@ -5,6 +5,7 @@ var PageModel = Backbone.Model.extend({
 
 
     url: function() {
+        'use strict';
         return Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=" + this.id;
     },
 

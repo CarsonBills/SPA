@@ -1,3 +1,5 @@
+/*jshint -W089 */ // for in error
+
 var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
@@ -13,11 +15,12 @@ var FiltersView = Backbone.View.extend({
     app: null,
 
     initialize: function(params) {
-        "use strict";
+        'use strict';
         this.collection.on('update', this.preRender, this);
         this.app = params.app;
     },
     preRender: function() {
+        'use strict';
         if (this.collection.length === 0) {
             return false;
         }
@@ -26,7 +29,7 @@ var FiltersView = Backbone.View.extend({
         this.render();
     },
     render: function () {
-        "use strict";
+        'use strict';
         var that = this,
             filterTemplate,
             i;
@@ -56,7 +59,7 @@ var FiltersView = Backbone.View.extend({
     events: {
         //"click .filter-item-cat" : "toggleItem",
         "click .filter-checkbox": function(e) {
-            "use strict";
+            'use strict';
             if ($(e.target).prop('checked')) {
                 this.showSelectedFilter();
             } else {
@@ -64,17 +67,17 @@ var FiltersView = Backbone.View.extend({
             }
         },
         "click #removeAllFilters": function(e) {
-            "use strict";
+            'use strict';
             this.removeAllFilters(e);
         },
         "click .clear-filter": function(e) {
-            "use strict";
+            'use strict';
             this.removeSelectedFilter(e, "X");
         }
     },
 
     toggleItem: function (e) {
-        "use strict";
+        'use strict';
         var parent = $(e.currentTarget).parent();
         
         this.$('.filter-item').addClass('collapsed');
@@ -89,7 +92,7 @@ var FiltersView = Backbone.View.extend({
      * @param e
      */
     showSelectedFilter: function() {
-        "use strict";
+        'use strict';
         var html = "";
 
         $("#selectedFilters").empty();
@@ -114,7 +117,7 @@ var FiltersView = Backbone.View.extend({
         window.history.pushState(null,null,url);
     },
     removeSelectedFilter: function(e, typ) {
-        "use strict";
+        'use strict';
         var sel ='';
         var tgt = $(e.target);
 
@@ -130,7 +133,7 @@ var FiltersView = Backbone.View.extend({
      * Remove all filters, remove saved refinements, reset to baseUrl and do getArticles
      */
     removeAllFilters: function(e) {
-        "use strict";
+        'use strict';
         $('.selected-filters').remove();
         $('.filter-checkbox').attr('checked', false);
         $('.remove-all-filters').remove();
@@ -143,7 +146,7 @@ var FiltersView = Backbone.View.extend({
         this.app.formatRefinements();   // call getArticles() in AppView
     },
     buildFilterUrl: function(url) {
-        "use strict";
+        'use strict';
         var cats = [],
             query = "",
             cat,
@@ -173,6 +176,7 @@ var FiltersView = Backbone.View.extend({
         return url + ((query) ? "#/filters/?" + query.slice(0, -1) : "");
     },
     buildRefinementsFromUrl: function() {
+        'use strict';
         var refs = [],
             cats,
             that = this;
@@ -194,7 +198,7 @@ var FiltersView = Backbone.View.extend({
         } else {
             this.app.deferred.promise().done(function () {
                 that.showSelectedFilter();
-            })
+            });
         }
     }
 });
