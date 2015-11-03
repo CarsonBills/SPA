@@ -1,6 +1,8 @@
 var Backbone = require("backbone");
 
 var PageModel = Backbone.Model.extend({
+
+
     url: function() {
         return Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=" + this.id;
     },
@@ -35,7 +37,9 @@ var PageModel = Backbone.Model.extend({
                     "value":""
                 }
             ]
-        }
+        },
+        mainAuthorName: "",
+        mainAuthorBio: ""
     },
     parse: function(response) {
         'use strict';
@@ -44,6 +48,13 @@ var PageModel = Backbone.Model.extend({
             Norton.Utils.genericError('config');
             return;
         }
+
+        this.set({
+            "mainAuthorName": response.data.data.author[0].authorFirstName + " " +
+                response.data.data.author[0].authorMiddleName + " " +
+                response.data.data.author[0].authorLastName,
+            "mainAuthorBio": response.data.data.author[0].authorBio
+        });
 
         return response.data;
     },
