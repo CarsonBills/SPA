@@ -26,6 +26,8 @@
         <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
         {{#if data.ebookLink}}
             <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_new"><span class="icon"></span><span class="title">View Ebook</span></button>
+        {{else}}
+            <span>Ebook unavailable</span>
         {{/if}}
     </div>
     <div class="modal-arrow-container next-page">
