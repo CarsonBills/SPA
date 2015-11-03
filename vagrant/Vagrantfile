@@ -1,52 +1,32 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PROJECT = "Norton_Reader"
-PORT = "9000"
-FOLDER = "../develop/gulptmp"
-VAGRAT = "/vagrant"
+PROJECT1 = "Norton_Reader"
+FOLDER1 = "../develop/reader_tmp"
+VAGRAT1 = "/vagrant_nr"
+PROJECT2 = "IIG"
+FOLDER2 = "../develop/iig_tmp"
+VAGRAT2 = "/vagrant_iig"
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "#{PROJECT}" do |project|
+  config.vm.define "#{PROJECT1}" do |project|
 
     project.vm.box = "precise64"
 
     project.vm.host_name = "nortonreader.dev"
     project.vm.network "private_network", ip: "192.168.50.15"
-    project.vm.network :forwarded_port, host: 4001, guest: 3306
-    project.vm.network :forwarded_port, guest: 80, host: 8080
-    
-    project.vm.synced_folder "#{FOLDER}", "#{VAGRAT}", type:"nfs"
-    #project.vm.synced_folder "#{FOLDER}", "#{VAGRAT}", :mount_options => ['dmode=755,fmode=444']
-    
-  
-      # Enable provisioning with a shell script. Additional provisioners such as
-      # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-      # documentation for more information about their specific syntax and use.
-      project.vm.provision "shell", inline: <<-SHELL
-         apt-get update -y
-         apt-get install -y apache2
-         a2enmod rewrite
-         sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/sites-available/default
+    project.vm.synced_folder "#{FOLDER1}", "#{VAGRAT1}", type:"nfs"
+    project.vm.provision :shell, :path => "bootstrap/bootstrap.sh"
+  end
 
-         #if [ -d '/var/www' ];then
-            rm -fr /var/www
-            ln -s /vagrant /var/www
-         #fi
+    config.vm.define "#{PROJECT2}" do |project|
 
-         apt-get install -y php5
-         apt-get install -y php5-curl
-
-         # install nfs
-         apt-get install -y nfs-common portmap
-
-         # restart apache2
-         service apache2 restart
-         IP=`/sbin/ifconfig eth1 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
-         printf "\n\nVM IP Address: %s\n\n" $IP
-      SHELL
+    project.vm.host_name = "iig.dev"
+    project.vm.network "private_network", ip: "192.168.50.16"
+    project.vm.synced_folder "#{FOLDER2}", "#{VAGRAT2}", type:"nfs"
+    project.vm.provision :shell, :path => "bootstrap/bootstrap.sh"
   end
 
 end
