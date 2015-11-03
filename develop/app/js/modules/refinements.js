@@ -65,7 +65,7 @@ Navigation.prototype = {
                         originalNav[i].refinements[j].count = filteredNav[i].refinements[k].count;
                         activeFilter = true;
                         // If a filter is checked, the filtered navigation MUST contain that filter so we can do the checkbox thing here.
-                        if (Norton.savedRefinements !== undefined) {
+                        if (Norton.savedRefinements != undefined) {
                             for (var m=0; m < Norton.savedRefinements.length; m++) {
                                 if (filteredNav[i].name === Norton.savedRefinements[m].navigationName &&
                                     filteredNav[i].refinements[k].value === Norton.savedRefinements[m].value
