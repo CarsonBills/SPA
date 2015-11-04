@@ -82,8 +82,8 @@ gulp.task('fileinclude', function () {
 
 gulp.task('sass:develop', function () {
     gulp.src([
-            app + site + settings.sass + '/**/*.scss',
-            '!' + app + site + settings.sass + '/sprite/**/*.scss'
+            app + site + settings.sass + '**/*.scss',
+            '!' + app + site + settings.sass_sprite + '**/*.scss'
         ])
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -106,7 +106,7 @@ gulp.task('sass:develop', function () {
 });
 
 gulp.task('sass:production', function () {
-    gulp.src([app + site + settings.sass + '/**/*.scss'])
+    gulp.src([app + site + settings.sass + '**/*.scss'])
         .pipe($.sass({
             precision: 6,
             outputStyle: 'compressed'
@@ -125,14 +125,14 @@ gulp.task('png_sprite', function (cb) {
     var images = app + site + settings.images,
         spriteData = gulp.src([
             images  + '/*.png',
-            '!' + images + '/favicon.png',
-            '!' + images + '/header.png',,
-            '!' + app + site + settings.svg + '/*.svg'
+            '!' + images + 'favicon.png',
+            '!' + images + 'header.png',,
+            '!' + app + site + settings.svg + '*.svg'
         ])
         .pipe($.spritesmith({
             imgName: '../images/png_sprite.png',
             cssName: '_png_sprite.scss',
-            cssTemplate: app + site + settings.sass + '/handlebars/handlebarsInheritance.scss.handlebars'
+            cssTemplate: app + site + settings.sass + 'handlebars/handlebarsInheritance.scss.handlebars'
         }));
 
     // Pipe image stream through image optimizer and onto disk
@@ -152,7 +152,7 @@ gulp.task('png_sprite', function (cb) {
 
 /* svg_sprite */
 gulp.task('svg_sprite', function () {
-    return gulp.src(app + site + settings.svg + '/**/*.svg')
+    return gulp.src(app + site + settings.svg + '**/*.svg')
         //.pipe($.svgo())
         .pipe(svgSprite({
             "mode": {
@@ -172,8 +172,8 @@ gulp.task('svg_sprite', function () {
                     "bust": false,
                     "render": {
                         "scss": {
-                            "dest": app + site + settings.sass_sprite + '/_svg_sprite.scss',
-                            "template": app + site + settings.sass_sprite +  "/_svg_template.scss"
+                            "dest": app + site + settings.sass_sprite + '_svg_sprite.scss',
+                            "template": app + site + settings.sass_sprite +  "_svg_template.scss"
                         }
                     }
                 }
@@ -203,9 +203,9 @@ gulp.task('copy_images', function () {
         svg = app + site + settings.svg;
 
     return gulp.src([
-            images + '/**/*(*.jpg)',
-            images + '/favicon.png',
-            '!' + svg + '/*.svg'
+            images + '**/*(*.jpg)',
+            images + 'favicon.png',
+            '!' + svg + '*.svg'
         ])
         .pipe(gulpif(argv.prod,
             gulp.dest(deploy + site + settings.prod + settings.images),
@@ -215,7 +215,7 @@ gulp.task('copy_images', function () {
 
 gulp.task('copy_php', function () {
     return gulp.src([
-            settings.app_php + '/**/*.php'
+            settings.app_php + '**/*.php'
         ])
         .pipe(gulpif(argv.prod,
             gulp.dest(deploy + site + settings.prod + settings.php),
@@ -287,7 +287,7 @@ gulp.task('wiredep', function () {
 gulp.task('browserify', function () {
     return gulp.src([
             app + site + settings.js + 'app.js',
-            '!' + app + site + settings.js_vendor + '/**/*.js'
+            '!' + app + site + settings.js_vendor + '**/*.js'
         ])
         //.pipe($.jshint())
         //.pipe($.jshint.reporter('jshint-stylish'))
@@ -372,10 +372,10 @@ gulp.task('server', function () {
     
     var path = ifElse(argv.prod,
         function () { 
-           return proj.gulpdist + '/';
+           return deploy + site + settings.prod + '/';
         },
         function () { 
-           return proj.gulptmp + '/';
+           return deploy + site + settings.dev + '/';
         });
 
     $.connect.server({
@@ -436,12 +436,12 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
     $.livereload.listen();
 
-    gulp.watch([app + site + settings.page_templates + '/**/*.html'], ['fileinclude']);
-    gulp.watch([app + site + settings.templates + '/**/*.hbs'], ['browserify']);
-    gulp.watch([app + site + settings.sass + '/**/*.scss'], ['sass:develop']);
-    gulp.watch([app + site + settings.js + '/**/*.js'], ['browserify']);
-    gulp.watch([app + site + settings.php + '/**/*.php'], ['copy_php']);
-    gulp.watch([app + site + settings.images + '/**', '!' + settings.svg + '*.svg'], ['png_sprite', 'copy_images']);
+    gulp.watch([app + site + settings.page_templates + '**/*.html'], ['fileinclude']);
+    gulp.watch([app + site + settings.templates + '**/*.hbs'], ['browserify']);
+    gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
+    gulp.watch([app + site + settings.js + '**/*.js'], ['browserify']);
+    gulp.watch([app + site + settings.php + '**/*.php'], ['copy_php']);
+    gulp.watch([app + site + settings.images + '**', '!' + settings.svg + '*.svg'], ['png_sprite', 'copy_images']);
 
 });
 
