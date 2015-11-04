@@ -1,0 +1,38 @@
+<div class="modal-container">
+    <div class="modal-arrow-container prev-page">
+        {{#if prevId}}
+            <div class="glyphicon glyphicon-chevron-left modal-arrow" id="prevArticle" data-prev-id="{{prevId}}" data-id="{{id}}"></div>
+        {{/if}}
+    </div>
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
+        <div class="modal-author">
+            {{#each data.author}}
+                {{authorFirstName}} {{authorMiddleName}} {{authorLastName}}<br/>
+            {{/each}}
+        </div>
+        <div class="modal-title">{{data.title}}</div>
+    </div>
+    <div class="modal-body">
+        <p>{{{data.excerpt}}}</p>
+
+        <div style="text-align:left;margin-top:25px;">
+            <p style="font-weight:bold;">About {{mainAuthorName}}</p>
+            {{{mainAuthorBio}}}
+        </div>
+
+    </div>
+    <div class="modal-subheader" data-item-id='{{id}}'>
+        <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
+        {{#if data.ebookLink}}
+            <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_new"><span class="icon"></span><span class="title">View Ebook</span></button>
+        {{else}}
+            <span>Ebook unavailable</span>
+        {{/if}}
+    </div>
+    <div class="modal-arrow-container next-page">
+        {{#if nextId}}
+            <div class="glyphicon glyphicon-chevron-right modal-arrow" id="nextArticle" data-next-id="{{nextId}}" data-id="{{id}}"></div>
+        {{/if}}
+    </div>
+</div>

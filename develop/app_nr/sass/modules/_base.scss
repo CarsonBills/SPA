@@ -1,0 +1,70 @@
+
+$max-width: 1366px;
+$gutter: 1.5rem;
+$top-bar-height: 50px;
+$reader-blue: #4d808b;
+
+$desktop-width: 1024px;
+$tablet-portait-width: 768px;
+$mobile-width: 480px;
+$mobile-width-sm: 320px;
+
+$popover-glow: rgba(255, 0, 0, 1);
+
+
+/* filter panel width */
+$filter-width: 28rem;
+
+
+
+/* shared functionality */
+
+.off {
+	opacity: 0;
+	transition: opacity 1s;
+}
+@keyframes rotate-360 {
+	from {
+		transform: scale(0.6) rotate(0deg);
+	}	
+	to {
+		transform: scale(0.6) rotate(360deg);
+	}
+}
+
+@keyframes popover-glow {
+    from {
+        filter: drop-shadow(0 0 0 $popover-glow);
+    }
+    to {
+        filter: drop-shadow(0 0 10px $popover-glow);
+    }
+}
+
+button[data-type="reader-button"] {
+	position: relative;
+	width: 160px;
+	height: 42px;
+	line-height: 42px;
+	padding: 0;
+	border-radius: 0;
+	margin: 0;
+
+	.icon {
+		@include vertical-align(absolute);
+		left: 1.2rem;
+	}
+
+	&.savelist-lnk {
+		.icon {
+			@include svg-sprite(savelist-icon);
+		}
+	}
+
+	&.ebook-lnk {
+		.icon {
+			@include svg-sprite(ebook_icon);
+
+		}
+	}
+}

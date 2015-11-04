@@ -1,0 +1,148 @@
+[
+  {
+    "id": 1,
+    "name": "Profile of a Place",
+    "category": "Genre"
+  },
+  {
+    "id":2,
+    "name":"Memoirs and Personal Narratives",
+    "category":"Genre"
+  },
+  {
+    "id":3,
+    "name":"Argument",
+    "category":"Genre"
+  },
+  {
+    "id":4,
+    "name":"Cultural Analysis",
+    "category":"Genre"
+  },
+  {
+    "id":5,
+    "name":"Evaluations",
+    "category":"Genre"
+  },
+  {
+    "id":6,
+    "name":"Profile of a Person",
+    "category":"Genre"
+  },
+  {
+    "id":7,
+    "name":"Literacy Narratives",
+    "category":"Genre"
+  },
+  {
+    "id":8,
+    "name":"Journals",
+    "category":"Genre"
+  },
+  {
+    "id":9,
+    "name":"Nature Writing",
+    "category":"Genre"
+  },
+  {
+    "id":10,
+    "name":"Historical Narratives",
+    "category":"Genre"
+  },
+  {
+    "id": 11,
+    "name": "Description",
+    "category": "Modes"
+  },
+  {
+    "id":12,
+    "name":"Narration",
+    "category":"Modes"
+  },
+  {
+    "id":13,
+    "name":"Exposition",
+    "category":"Modes"
+  },
+  {
+    "id":14,
+    "name":"Persuasion and Argument",
+    "category":"Modes"
+  },
+  {
+    "id":15,
+    "name":"Process Analysis",
+    "category":"Modes"
+  },
+  {
+    "id":16,
+    "name":"Definition",
+    "category":"Modes"
+  },
+  {
+    "id":17,
+    "name":"Classification",
+    "category":"Modes"
+  },
+  {
+    "id":18,
+    "name":"Comparing and Contrasting",
+    "category":"Modes"
+  },
+  {
+    "id": 19,
+    "name": "Home and Family",
+    "category": "Theme"
+  },
+  {
+    "id":20,
+    "name":"Race/Class/Ethnicity",
+    "category":"Theme"
+  },
+  {
+    "id":21,
+    "name":"Food",
+    "category":"Theme"
+  },
+  {
+    "id":22,
+    "name":"Death and Dying",
+    "category":"Theme"
+  },
+  {
+    "id":23,
+    "name":"Education",
+    "category":"Theme"
+  },
+  {
+    "id":24,
+    "name":"Work",
+    "category":"Theme"
+  },
+  {
+    "id":25,
+    "name":"Across Cultures",
+    "category":"Theme"
+  },
+  {
+    "id":26,
+    "name":"Philosophy",
+    "category":"Theme"
+  },
+  {
+    "id":27,
+    "name":"Literature",
+    "category":"Theme"
+  },
+  {
+    "id":28,
+    "name":"Crime and Punishment",
+    "category":"Theme"
+  },
+  {
+    "id":29,
+    "name":"War and Its Effects",
+    "category":"Theme"
+  }
+
+]

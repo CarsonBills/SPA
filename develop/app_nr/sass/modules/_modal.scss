@@ -1,0 +1,226 @@
+
+
+// flattened
+.modal-dialog {
+	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+	background: transparent;
+	height: inherit;
+}
+.modal-container {
+	position: relative;
+	height: inherit;
+}
+.modal-body {
+	height: inherit;
+}
+
+/* generic */
+.modal-header {
+	@include opensans($size: 1.8rem);
+	border: 1px solid $reader-blue;
+	.close {
+		margin: 0;
+		opacity: 1;
+		font-size: inherit;
+	}
+	& > div {
+		display: inline-block;
+		&.modal-author {
+			margin-right: 2rem;
+		}
+	}
+}
+
+/* favorites */
+#modal-container {
+	.modal-dialog {	
+		margin: 5rem auto 0;		
+		width: 800px;
+		height: 600px;
+		position: relative;
+		background-color: #fff;
+		text-align: center;
+
+
+		@include opensans($size: 1.4rem);
+
+		.modal-header {
+			background-color: #000;
+			border: none;
+			color: #fff;
+			
+			.close {
+				color: inherit;
+			}
+		}
+
+		&[data-module=details] {
+			width: 772px;
+			height: 738px;
+		}
+
+		&[data-module=errors] {
+			// intentionally left blank
+		}
+
+		&[data-module=favorites] {
+
+			.modal-title {
+				.glyphicon {
+					font-size: 1.6rem;
+					line-height: 1.5;
+					margin-left: 1rem;
+				}
+			}
+			.empty-list {
+				text-align: center;
+				font-size: 1.8rem;
+				margin-top: 5rem;
+			}
+
+			.download-favs {
+				position: absolute;
+				width: 100%;
+				text-transform: uppercase;
+				text-align: center;
+				line-height: 1.4;
+				bottom: 4rem;
+
+				.glyphicon {
+					margin-left: 1.3rem;
+				}
+			}
+
+			.list-format {
+				width: 98%;
+				margin: 0 auto;
+				padding: 1rem;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			    align-items: center;
+			    align-content: center;
+			    min-height: 4.5rem;
+			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
+
+				.author {
+					@include opensans($size: 1.4rem, $weight: 600);
+					color: #6f6f6f;
+					text-transform: uppercase;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+
+				.title {
+					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
+					color: $reader-blue;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+				.remove {
+					cursor: pointer;
+				}
+			}
+		}
+
+		&[data-module=introduction] {
+			width: 990px;
+			height: 770px;
+
+			.modal-body {
+				padding: 3rem 1.5rem;
+			}
+
+			.border {
+				height: 100%;
+				position: relative;
+				border: 2px solid #bcbaba;
+			}
+
+			.modal-title {
+				position: relative;
+				margin-top: 2rem;
+				@include athelas($size: 4.8rem);
+				z-index: 99;
+				align-self: flex-start;
+			}
+
+			.modal-copy {
+				@include opensans($size: 1.7trem);
+				text-align: left;
+				color: #444;
+				position: relative;
+				width: 600px;
+				line-height: 1.5;
+				z-index: 99;
+				margin: 4rem auto 0;
+			}
+
+			.modal-links {
+				position: absolute;
+				float: right;
+				right: 2rem;
+				bottom: 1rem;
+
+				a {
+					margin-left: 1.5rem;
+				}
+			}
+
+			.intro-bg {
+				position: absolute;
+				display: block;
+				top: 10rem;
+			}
+		}
+	}
+
+}
+/* end favorites */
+
+
+/* details page */
+.loading-container {
+	@include vertical-align();
+	text-align: center;
+	@include opensans($size: 1.4rem);
+}
+
+.loading-graphic {
+	@include svg-sprite(loading_spinner);
+	animation: rotate-360 0.8s infinite steps(12, end);
+}
+.modal-subheader {
+	position: relative;
+	float: right;
+	right: 7rem;
+	
+	.savelist-lnk {
+		margin-right: 1.2rem;
+	}
+}
+
+.modal-arrow-container {
+	@include vertical-align();
+	margin: 1rem;
+	font-size: 3rem;
+	color: #666;
+	cursor: pointer;
+	
+	&.prev-page {
+		position: absolute;
+		float: left;
+		left: 0;
+	}
+	&.next-page {
+		position: absolute;
+		float: right;
+		right: 0;
+	}
+}
+/* end details page */

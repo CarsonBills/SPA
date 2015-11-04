@@ -1,0 +1,39 @@
+<div class='navbar'>
+    <nav class="nav">
+        <div id="navFilters" class="filter">
+            <a href="#/favs/">
+                <span class="glyphicon glyphicon-adjust-alt rotate90"></span>
+                <span class="filter-title">FILTER</span>
+            </a>
+        </div>
+        <div class="search">
+            <input type="text" name="search" id="searchTextInput" placeholder="Search..." required />
+            <a href="#">
+                <span class="glyphicon glyphicon-search" id="searchButton"></span>
+            </a>
+        </div>
+        <div id="navYourFavs" class="saved-items">
+            <a href="#/favs/" class="your-favs-link">
+                <span class="glyphicon glyphicon-list-alt"></span> 
+                <span class="my-items">My Items </span><span id="yourFavsCtr">(0)</span>
+            </a>
+        </div>
+    </nav>
+    <div class="results-bar full-screen off">
+        <div class="results"><span class="text">Showing </span><span id="perPage"></span><span class="text"> of </span><span class="slash"> / </span><span id="nbrRecords"></span><span class="text"> Articles </span></div>
+        <div class="sortby"><span>Sort By</span>
+            <select id="sortArticles" name="sort">
+                <option value="authorLast:Ascending">Author: A&rightarrow;Z</option>
+                <option value="authorLast:Descending">Author: Z&rightarrow;A</option>
+                <option value="title:Ascending">Title of Work: A&rightarrow;Z</option>
+                <option value="title:Descending">Title of Work: Z&rightarrow;A</option>
+            </select>
+        </div>
+        <div class="toggle-view">
+            <span class="glyphicon glyphicon-show-thumbnails icon-grid-view"></span>
+            <span class="glyphicon glyphicon-list icon-list-view"></span>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,257 @@
+
+#sticky-anchor {
+    margin-top: -$top-bar-height;
+}
+
+#topNav {
+    position: relative;
+    .navbar {
+        margin: 0;
+    }
+}
+
+nav {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    height: $top-bar-height;
+    display: block;
+    width: 100%;
+    z-index: 10;
+    top: $top-bar-height;
+    font-size: 1.4rem;
+    margin: 0 auto;
+    @include one-sided-shadow();
+
+    .stick & {
+        position: fixed;
+        top: $top-bar-height;
+        left: 0;
+        right: 0;
+    }
+}
+
+
+/* filter module */
+.filter {
+    color: #000;
+    letter-spacing: 1px;
+    @include vertical-align(absolute);
+    left: 18px;
+    z-index: 99;
+
+    a {
+        text-decoration: none;
+    }
+
+    span {
+        opacity: 0.9;
+        display: inline-block;
+        color: #000;
+
+        &:not(.glyphicon) {
+            @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+        }
+
+        &.glyphicon {
+            font-size: 1.8rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+/* search module */
+.search {
+    display: block;
+    @include vertical-align();
+    text-align: center;
+
+    input[type="text"] {
+        width: 45%;
+        border: 3px solid #eee;
+        border-radius: 0;
+        padding-right: 40px;
+        @include athelas($size: 1.8rem);
+        color: #000;
+        margin: 0;
+    }
+
+    a {
+        position: relative;
+        color: #000;
+        cursor: pointer;
+        opacity: 0.5;
+        font-size: 2rem;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    span {
+        @include vertical-align(absolute);
+        right: 20px;
+
+        &[data-rel="tooltip"] {
+            position: relative;
+        }
+    }
+}
+
+/* saved items */
+
+.saved-items {
+    letter-spacing: 1px;
+    opacity: 1;
+    @include vertical-align(absolute);
+    right: $gutter;
+
+    span {
+        opacity: 0.9;
+        display: inline-block;
+        line-height: 1.9rem;
+
+        &:not(.glyphicon) {
+            @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+        }
+
+        &.glyphicon {
+            color: #000;
+            font-size: 1.8rem;
+        }
+    }
+
+    a {
+        color: #000;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+/* result bar */
+
+.results-bar {
+    width: calc(100% - $filter-width);
+    position: relative;
+    display: block;
+    height: $top-bar-height;
+    margin: $top-bar-height auto;
+    text-align: center;
+    background-color: #fff;
+    @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+    @include toggle-fullscreen();
+
+    
+    margin-left: $filter-width;
+    @include locked();
+
+    .results {
+        @include vertical-align(absolute);
+        left: $gutter;
+
+        .slash {
+            display: none;
+        }
+    }
+    .toggle-view {
+        @include vertical-align(absolute);
+        right: $gutter;
+        cursor: pointer;
+        font-size: 2rem;
+
+        span {
+            &.active {
+                color: #999;
+                cursor: default;
+            }
+        }
+
+        .icon-grid-view {
+            margin-right: 1rem;
+            color: #60605e;
+        }
+    }
+}
+.sortby {
+    @include vertical-align(absolute);
+    padding: 0 0 0 10rem;
+    right: 0;
+    left: 0;
+
+    .full-screen & {
+        padding: 0;
+    }
+
+    select {
+        padding: 0;
+        margin: 0;
+        width: 160px;
+        height: 28px;
+    }
+}
+
+@media only screen and (max-width: $desktop-width) {
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+    .filter {
+        .filter-title {
+            display: none;
+        }
+    }
+    .saved-items {
+        .my-items {
+            display: none;
+        }
+    }
+
+    .search input[type="text"] {
+        width: 60%;
+    }
+
+    .results-bar {
+        width: 100%;
+        margin-left: 0;
+        .results {
+            .slash {
+                display: inline;
+            }
+            .text {
+                display: none;
+            }
+
+        }
+    }
+    .sortby {
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: $mobile-width) {
+
+    #sticky-anchor {
+        margin-top: -68px;
+    }
+}
+
+@media only screen and (max-width: $mobile-width-sm) {
+    nav {
+        top: 10px;
+    }
+    .results-bar {
+        margin: 10px auto;
+    }
+    .sortby {
+        margin-right: 2rem;
+        span {
+            display: none;
+        }
+        select {
+            width: 160px;
+
+        }
+    }
+}
+
+
+

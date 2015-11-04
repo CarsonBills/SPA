@@ -3,8 +3,11 @@
 # compiled output
 /dist
 /tmp
-#gulpdist
 gulptmp
+deploy/iig_dev
+deploy/iig_prod
+deploy/nr_dev
+deploy/nr_prod
 
 # dependencies
 node_modules

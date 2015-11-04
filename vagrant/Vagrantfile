@@ -1,12 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PROJECT1 = "Norton_Reader"
-FOLDER1 = "../develop/reader_tmp"
-VAGRAT1 = "/vagrant_nr"
-PROJECT2 = "IIG"
-FOLDER2 = "../develop/iig_tmp"
-VAGRAT2 = "/vagrant_iig"
+PROJECT1 = "nr"
+FOLDER1 = "../develop/deploy/nr_dev"
+VAGRAT = "/vagrant"
+PROJECT2 = "iig"
+FOLDER2 = "../develop/deploy/iig_dev"
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -17,15 +16,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     project.vm.host_name = "nortonreader.dev"
     project.vm.network "private_network", ip: "192.168.50.15"
-    project.vm.synced_folder "#{FOLDER1}", "#{VAGRAT1}", type:"nfs"
+    project.vm.synced_folder "#{FOLDER1}", "#{VAGRAT}", type:"nfs"
     project.vm.provision :shell, :path => "bootstrap/bootstrap.sh"
   end
 
     config.vm.define "#{PROJECT2}" do |project|
 
+    project.vm.box = "precise64"
     project.vm.host_name = "iig.dev"
     project.vm.network "private_network", ip: "192.168.50.16"
-    project.vm.synced_folder "#{FOLDER2}", "#{VAGRAT2}", type:"nfs"
+    project.vm.synced_folder "#{FOLDER2}", "#{VAGRAT}", type:"nfs"
     project.vm.provision :shell, :path => "bootstrap/bootstrap.sh"
   end
 

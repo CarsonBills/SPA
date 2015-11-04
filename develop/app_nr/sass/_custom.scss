@@ -1,0 +1,206 @@
+
+.btn {
+    font-size: 1.2em;
+    border-radius: 5px;
+    padding: 12px 30px;
+}
+.block {
+    width: 130px;
+    margin: 0 auto;
+    display: block;
+}
+.icon-label {
+    opacity: 0.4;
+}
+/*html {overflow-y: scroll !important;}*/
+
+
+
+
+/*
+––––––––––––––––––––––––––––––––––––––––––––––––––
+TEMP STYLES FOR DEV WORK
+––––––––––––––––––––––––––––––––––––––––––––––––––
+*/
+
+.list-grid-toggle {
+    width:300px;
+    float:left;
+}
+
+a.your-favs-link {
+    z-index: 100;
+}
+
+.search-button {
+    vertical-align: middle;
+}
+
+a.title-link {
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1em;
+    background-color: white;
+    opacity: 0.8;
+    color: #ccc;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    vertical-align: middle;
+}
+
+/*
+div.page.hdr {
+    font-weight: bold;
+    font-size: 13px;
+}
+div.page.content {
+    background-color: #eee;
+    min-height: 450px;
+    border:1px solid #000;
+    padding:5px;
+}
+div.page.ebook-lnk {
+    font-weight:bold;
+    font-size: 12px;
+    width:15%;
+    cursor:pointer;
+    text-decoration: underline;
+}
+*/
+div.closeme{
+    margin:5px 0 25px 10px;
+    background-color: #f1f1f1;
+    font-size:16px;
+    cursor: pointer;
+    width:10%;
+}
+div.your-favs-actions{
+    padding:0;
+}
+div.your-favs-title {
+    display: inline-block;
+    width:49%;
+    text-align:right
+}
+span.your-favs-text-entry{
+    font-size:30px;
+    background-color: #eeeeee;
+}
+div.download-favs {
+    display: inline-block;
+    width:49%;
+    text-align:right;
+    font-size:16px;
+    cursor: pointer;
+}
+div.your-favs {
+    width:100%;
+}
+div.your-favs-view-section {
+    display:none;
+    width:100px;
+}
+div.favs-delete {
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.cd-panel-container {
+
+}
+
+#navFilters {
+    cursor: pointer;
+}
+#navFilters:hover {
+    text-decoration: underline;
+}
+
+
+/**
+BOOTSTRAP MODAL
+*/
+.modal-content {
+    min-height:600px;
+}
+.modal-title {
+    font-size:16px;
+    text-align: left;
+}
+div.modal-dialog{
+    width:1200px;
+}
+.modal-header{
+    background-color: #222;
+    color:#fff !important;
+    text-align: center;
+    font-size: 30px;
+}
+.close {
+    color:#fff;
+    opacity: .7;
+}
+.close:hover {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 1.0;
+    filter: alpha(opacity=40);
+    cursor: pointer;
+}
+
+.modal.fade:not(.in) .modal-dialog {
+    -webkit-transform: translate3d(-75%, 0, 0);
+    transform: translate3d(0, 75%, 0);
+}
+
+.modal-subheader {
+    padding: 1rem 5px 0 0;
+    border-bottom: 1px solid #000;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.modal-arrow-container {
+    width: 75px;
+    min-height: 600px;
+    text-align: center;
+    vertical-align: top;
+    display: inline-block;
+    padding:0;
+}
+a.modal-arrow {
+    margin-top: 200px;
+    opacity: .8;
+    font-size: 2em;
+    color: #000;
+    text-decoration: none;
+}
+div.modal-arrow {
+    margin-top: 200px;
+    opacity: .8;
+    font-size: 2em;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+div.modal-arrow:hover {
+    opacity: 1;
+    color: #000;
+}
+div.modal-container {
+    display: inline-block;
+    width:1000px;
+}
+
+
+.your-favs-view-section h5 {
+    text-align:center;
+}
+
+/* End Temp styles
+************************************************
+*
+*
+****************************************************
+*/
