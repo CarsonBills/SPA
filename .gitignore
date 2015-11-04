@@ -4,16 +4,17 @@
 /dist
 /tmp
 gulptmp
-deploy/iig_dev
-deploy/iig_prod
-deploy/nr_dev
-deploy/nr_prod
+iig_dev
+iig_prod
+nr_dev
+nr_prod
 
 # dependencies
 node_modules
 bower_components
 
 # misc
+.gitignore.swp
 .idea
 .DS_Store
 /.sass-cache
