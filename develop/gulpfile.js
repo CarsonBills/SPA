@@ -302,15 +302,15 @@ gulp.task('browserify', function () {
             message: 'Browserify done'
         }))
         .pipe(gulpif(argv.prod,
-        gulp.dest(deploy + site + settings.prod + settings.js),
-        gulp.dest(deploy + site + settings.dev + settings.js) 
+            gulp.dest(deploy + site + settings.prod + settings.js),
+            gulp.dest(deploy + site + settings.dev + settings.js) 
         ));
 });
 
 
 gulp.task('jscs', function () {
-     return gulp.src([proj.js + '/**/*.js',
-        '!' + proj.js + '/vendor/**/*.js'
+    return gulp.src([app + site + settings.js + '**/*.js',
+            '!' + app + site + settings.js_vendor + '**/*.js'
         ])
         .pipe($.jscs({
             fix: true
@@ -319,15 +319,19 @@ gulp.task('jscs', function () {
             title: 'JSCS',
             message: 'JSCS Passed'
         }))
-        .pipe(gulp.dest(proj.js));
+        .pipe(gulpif(argv.prod,
+            gulp.dest(deploy + site + settings.prod + settings.js),
+            gulp.dest(deploy + site + settings.dev + settings.js) 
+        ));
  });
 
 /*
     https://github.com/linnovate/mean/blob/master/.jshintrc
 */
 gulp.task('lint', function () {
-    return gulp.src([proj.js + '/**/*.js',
-            '!' + app + proj.vendor + '/**/*.js'
+
+    return gulp.src([app + site + settings.js + '**/*.js',
+            '!' + app + site + settings.js_vendor + '**/*.js'
         ])
         .pipe($.plumber())
         .pipe($.jshint({
