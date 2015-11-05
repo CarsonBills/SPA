@@ -55,7 +55,7 @@ var AppView = Backbone.View.extend({
 
         this.articleView = new NortonApp.Views.Article({
             collection: this.collection,
-            el: '#articles',
+            el: '.container',
             app: this
         });
 
@@ -288,12 +288,12 @@ var AppView = Backbone.View.extend({
     showDetailPage: function(id) {
         'use strict';
         var that = this;
-
         if (this.dataReady) {
-            this.articleView.showDetail(id, !this.modalShown);
+            this.articleView.showDetail(id);
         } else {
+            // Deeplinked content here
             this.deferred.promise().done(function () {
-                that.articleView.showDetail(id, true);
+                that.articleView.showDetail(id);
             });
         }        
     },

@@ -7,70 +7,57 @@
  */
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    ModalManager = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    ErrorsManager = require('../modules/errors_manager');
 
 var PageView = Backbone.View.extend({
     MODULE: 'details',
     template: require('../../templates/PageTemplate.hbs'),
-    templateLoading: require("../../templates/LoadingSpinnerTemplate.hbs"),
+    templateLoading: require("../../templates/PageLoadingTemplate.hbs"),
     content: '.modal-content',
     body: '.modal-body',
 
-    redraw: true,
-
     initialize: function(params) {
         'use strict';
-        this.redraw = params.redraw;
-        this.$(this.content).html(this.templateLoading());
+        this.render(true);
+        if (this.model !== undefined) {
+            this.getPage();
+        }
     },
 
-    render: function() {
+    getPage: function () {
+        var that = this;
+        this.model.fetch({
+            success: $.proxy (function(data) {
+                that.render();
+            }, this),
+            error: function(xhr, response, error) {
+                console.debug('Detail Page not available.');
+                //Norton.Utils.genericError('detail');
+                ErrorsManager.showGeneric();
+            }
+        });
+    },
+
+    render: function(showLoading) {
         'use strict';
         var $div = $('<div></div>');
 
-        $div.html(this.template(this.model.toJSON()));
-
-        if (this.redraw) {
-            ModalManager.show({
-                content: $div,
-                module: this.MODULE
-            });
+        if (showLoading) {
+            $div.html(this.templateLoading());
         } else {
+            $div.html(this.template(this.model.toJSON()));
+        }
+        ModalManager.show({
+            content: $div,
+            module: this.MODULE
+        });
+
+        if (ModalManager.shown()) {
             TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
         }
 
         return this;
-    },
-
-    events: {
-        "click #prevArticle": "getNextPrevFromPage",
-        "click #nextArticle": "getNextPrevFromPage",
-    },
-
-    getNextPrevFromPage: function(e) {
-        'use strict';
-        /**
-         * Next/prev links are determined in pageView.js when a next prev link was clicked.
-         * Otherwise, they are determined above in getNextPrevFromList
-         */
-        Norton.pageClick = "page";
-        var page,
-            id;
-
-        if ($(e.currentTarget).attr('data-next-id') !== undefined) {
-            id = $(e.currentTarget).attr('data-next-id');
-        } else {
-            id = $(e.currentTarget).attr('data-prev-id');
-        }
-
-        page = "page/" + id;
-
-        NortonApp.router.navigate('#/' + page, {
-            trigger: true,
-            replace: true
-        });
-
-        return false;
     }
 });
 

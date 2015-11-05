@@ -53,12 +53,14 @@
 			background-color: #000;
 			border: none;
 			color: #fff;
+			height: 55px;
 			
 			.close {
 				color: inherit;
 			}
 		}
 
+		&[data-module=errors],
 		&[data-module=details] {
 			width: 772px;
 			height: 738px;
@@ -186,7 +188,7 @@
 
 /* details page */
 .loading-container {
-	@include vertical-align();
+	@include vertical-align($top: 40%);
 	text-align: center;
 	@include opensans($size: 1.4rem);
 }
@@ -211,6 +213,7 @@
 	font-size: 3rem;
 	color: #666;
 	cursor: pointer;
+	z-index: 999;
 	
 	&.prev-page {
 		position: absolute;

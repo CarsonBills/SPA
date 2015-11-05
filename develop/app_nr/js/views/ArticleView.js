@@ -1,11 +1,10 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     EventManager = require('../modules/event_manager'),
-    ScrollHelper = require('../modules/scroll_helper'),
-    ErrorsManager = require('../modules/errors_manager');
+    ScrollHelper = require('../modules/scroll_helper');
 
 var ArticleView = Backbone.View.extend({
-    el: '#articles',
+    container: '#articles',
     evtMgr: EventManager.getInstance(),
     templateGrid: require('../../templates/ArticlesGridTemplate.hbs'),
     templateList: require('../../templates/ArticlesListTemplate.hbs'),
@@ -49,13 +48,14 @@ var ArticleView = Backbone.View.extend({
         }
 
         var showGrid = this.collection.showGrid(),
-            articleTemplate;
+            articleTemplate,
+            $articles = this.$(this.container);
 
 
-        this.$el.empty();
+        $articles.empty();
 
         if (!showGrid) {
-            this.$el.append(this.templateListHead);
+            $articles.append(this.templateListHead);
         }
 
         this.collection.each(function(record) {
@@ -64,7 +64,7 @@ var ArticleView = Backbone.View.extend({
             } else {
                 articleTemplate = this.templateList(record.toJSON());
             }
-            this.$el.append(articleTemplate);
+            $articles.append(articleTemplate);
         }, this);
 
         this.saveLastItemID();
@@ -84,7 +84,9 @@ var ArticleView = Backbone.View.extend({
     },
 
     events: {
-        "click .details": "getNextPrevFromList"
+        "click .details": "getNextPrevFromList",
+        "click #prevArticle": "getNextPrevFromPage",
+        "click #nextArticle": "getNextPrevFromPage"
     },
 
     shouldRefreshWrapper: function () {
@@ -117,7 +119,7 @@ var ArticleView = Backbone.View.extend({
         };
     },
 
-    showDetail: function (id, create) {
+    showDetail: function (id) {
         'use strict';
 
         var model = this.collection.getModelByAttribute('pname', id);
@@ -128,30 +130,24 @@ var ArticleView = Backbone.View.extend({
             return false;
         }*/
 
-        this.baseUrl = model.get('baseUrl');
+        if (model === undefined) {
+            this.pageView = new NortonApp.Views.Page({
+                el: "#modal-container"
+            });
 
-        this.pageItem = new NortonApp.Models.Page({
-            id: id,
-            prevId: model.get('prevId'),
-            nextId: model.get('nextId')
-        });
-        this.pageView = new NortonApp.Views.Page({
-            model: this.pageItem,
-            el: "#modal-container",
-            redraw: create
-        });
+        } else {
+            this.baseUrl = model.get('baseUrl');
 
-        this.pageItem.fetch({
-            success: $.proxy (function(data) {
-                this.pageView.render();
-
-            }, this),
-            error: function(xhr, response, error) {
-                console.debug('Detail Page not available.');
-                //Norton.Utils.genericError('detail');
-                ErrorsManager.showGeneric();
-            }
-        });
+            this.pageItem = new NortonApp.Models.Page({
+                id: id,
+                prevId: model.get('prevId'),
+                nextId: model.get('nextId')
+            });
+            this.pageView = new NortonApp.Views.Page({
+                model: this.pageItem,
+                el: "#modal-container"
+            });
+        }
     },
 
     showHighlight: function (params) {
@@ -168,7 +164,7 @@ var ArticleView = Backbone.View.extend({
             delta = ScrollHelper.docDelta();
         }
 
-        TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
+        //TweenLite.to(window, 1, {scrollTo:{y: delta}, ease:Quad.easeInOut});
 
         if (params.showHint) {
             $nextItem = this.getNextItemById(params.nextItemID);
@@ -182,6 +178,32 @@ var ArticleView = Backbone.View.extend({
 
             $nextItem.find('a.details').focus();
         }
+    },    
+
+    getNextPrevFromPage: function(e) {
+        'use strict';
+        /**
+         * Next/prev links are determined in pageView.js when a next prev link was clicked.
+         * Otherwise, they are determined above in getNextPrevFromList
+         */
+        Norton.pageClick = "page";
+        var page,
+            id;
+
+        if ($(e.currentTarget).attr('data-next-id') !== undefined) {
+            id = $(e.currentTarget).attr('data-next-id');
+        } else {
+            id = $(e.currentTarget).attr('data-prev-id');
+        }
+
+        page = "page/" + id;
+
+        NortonApp.router.navigate('#/' + page, {
+            trigger: true,
+            replace: true
+        });
+
+        return false;
     },
 
     getNextPrevFromList: function(e) {
