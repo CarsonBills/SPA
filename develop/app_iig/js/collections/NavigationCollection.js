@@ -10,7 +10,7 @@ var Backbone = require('backbone'),
 			var response = res.data;
 
 			if (res.code !== 200) {
-				console.debug('Search return code is" ' + response.code);
+				//console.debug('Search return code is" ' + response.code);
 				Norton.Utils.genericError('config');
 				return;
 			}
