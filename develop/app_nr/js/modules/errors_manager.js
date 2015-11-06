@@ -24,8 +24,8 @@ var Backbone = require('backbone'),
             show: show,
             showGeneric: showGeneric,
             NO_FAVORITES: '<div class="empty-list">You have not added any items to your List yet.</div>',
-            GENERIC_TITLE: 'Oops! Something went wrong!',
-            GENERIC_BODY: 'Our website is experiencing an unexpected error. Try refreshing the page.'
+            GENERIC_TITLE: '<p>Oops! Something went wrong!</p>',
+            GENERIC_BODY: '<p>Our website is experiencing an unexpected error. Try refreshing the page.</p>'
         };
 }());
 
