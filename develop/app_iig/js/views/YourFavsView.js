@@ -74,6 +74,8 @@ var YourFavsView = Backbone.View.extend({
             this.updateCount();
         }
 
+        this.likeOrUnlikeYourFavs(id, "del");
+
         return false;
     },
 
@@ -106,17 +108,30 @@ var YourFavsView = Backbone.View.extend({
         // Add item to yourFavsList collection
         var $target = $(e.currentTarget),
             id = $target.data('item-id'),
-            model = this.articles.getModelByAttribute("pname", id);
+            favsData = {},
+            model = this.articles.getModelByAttribute("pname", id),
+            articleData = model.attributes.allMeta;
         // Don't add again
-        if ( this.collection.getModelByAttribute("pname", id) === undefined) {
-            if (model.get('allMeta').pname === id) {
-                this.collection.add(new NortonApp.Models.YourFavs(model.get('allMeta')));
-                this.showPopover($target);
-            }
-            
-            this.updateCount();
-            TrackManager.save(id);
+        if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
+            return false;
         }
+
+        favsData.pname = articleData.pname;
+        favsData.abstract = articleData.abstract;
+        favsData.title = articleData.title;
+        favsData.authorLastName = articleData.primaryAuthor.authorLastName;
+        favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
+        favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
+        favsData.ebookNode = articleData.ebookNode;
+        favsData.id = articleData.id;
+        this.collection.add(new NortonApp.Models.YourFavs(favsData));
+
+        this.likeOrUnlikeYourFavs(articleData.id, "add");
+
+        this.showPopover($target);
+
+        this.updateCount();
+        TrackManager.save(id);
 
         return false;
     },
@@ -156,6 +171,27 @@ var YourFavsView = Backbone.View.extend({
 
         return false;
     },
+    likeOrUnlikeYourFavs: function (id, mode) {
+        'use strict';
+
+        var postdata = {
+            sitecode: Norton.siteCode,
+            asset: id
+        };
+
+        $.ajax({
+            type:'POST',
+            url: (mode == 'add') ? Norton.Constants.likeAssetUrl : Norton.Constants.unlikeAssetUrl,
+            data: JSON.stringify(postdata),
+            dataType: "json",
+            success: function(response) {
+// eventually, update some popularity indicator somewhere on the site; for now, do nothing
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.debug("Like-Unlike Assets request failed.");
+            }
+        });
+    }
 });
 
 module.exports = YourFavsView;
