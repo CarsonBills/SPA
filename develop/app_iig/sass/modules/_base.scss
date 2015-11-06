@@ -13,9 +13,13 @@ $popover-glow: rgba(255, 0, 0, 1);
 
 
 /* filter panel width */
-$filter-width: 28rem;
+$filter-width: 280px;
+
+$loading-transform: scale(0.4) translate(-37px, -42px);
 
 
+$card-width: 290px;
+$card-height: 270px;
 
 /* shared functionality */
 
@@ -23,12 +27,22 @@ $filter-width: 28rem;
 	opacity: 0;
 	transition: opacity 1s;
 }
+
 @keyframes rotate-360 {
 	from {
 		transform: scale(0.6) rotate(0deg);
 	}	
 	to {
 		transform: scale(0.6) rotate(360deg);
+	}
+}
+
+@keyframes lm-rotate-360 {
+	from {
+		transform: $loading-transform rotate(0deg);
+	}	
+	to {
+		transform: $loading-transform rotate(360deg);
 	}
 }
 

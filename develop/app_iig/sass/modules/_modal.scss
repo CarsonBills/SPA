@@ -15,19 +15,23 @@
 	position: relative;
 	height: inherit;
 }
-.modal-body {
-	height: inherit;
-}
 
 /* generic */
 .modal-header {
 	@include opensans($size: 1.8rem);
-	border: 1px solid $reader-blue;
+	background-color: #000;
+	border: none;
+	color: #fff;
+	text-align: center;
+	height: 55px;
+
 	.close {
 		margin: 0;
 		opacity: 1;
 		font-size: inherit;
+		color: #fff;
 	}
+	
 	& > div {
 		display: inline-block;
 		&.modal-author {
@@ -36,36 +40,94 @@
 	}
 }
 
+.modal-body {
+	height: inherit;
+	@include opensans($size: 1.8rem, $height: 1.4);
+}
+
 /* favorites */
 #modal-container {
 	.modal-dialog {	
-		margin: 5rem auto 0;		
+		margin: 5.5rem auto 0;		
 		width: 800px;
 		height: 600px;
-		position: relative;
 		background-color: #fff;
-		text-align: center;
 
 
 		@include opensans($size: 1.4rem);
 
-		.modal-header {
-			background-color: #000;
-			border: none;
-			color: #fff;
-			
-			.close {
-				color: inherit;
-			}
-		}
-
+		&[data-module=errors],
 		&[data-module=details] {
 			width: 772px;
 			height: 738px;
+			position: relative;
+			text-align: left;
+
+			.modal-header {
+				background-color: #000;
+				color: #fff;
+
+				& .close {
+					color: #fff;
+				}
+			}
+
+			.modal-utils {
+				margin: 3rem 5rem;
+				text-align: right;
+
+				.savelist-lnk {
+					margin-right: 1rem;
+				}
+			}
+
+			.small-print {
+				font-size: 1.4rem;
+				clear: both;
+			}
+
+			p {
+				padding: 0 4rem;
+			}
+
+			.excerpt {
+				& + p {
+					text-align: center;
+				}
+			}
+
+			.about-author {
+				font-size: 1.8rem;
+				margin-top: 1rem;
+				font-weight: 600;
+			}
+			.author-bio {
+				& + p {
+					font-size: 1.4rem;
+					line-height: 1.6;
+				}
+			}
+			.page-number {
+				margin-top: 5rem;
+				font-weight: 600;
+			}
+
+			.pub-date {
+				font-weight: 600;
+			}
 		}
 
 		&[data-module=errors] {
-			// intentionally left blank
+			.modal-header {
+				background-color: #000;
+				border: none;
+				color: #fff;
+				height: 55px;
+				
+				.close {
+					color: inherit;
+				}
+			}
 		}
 
 		&[data-module=favorites] {
@@ -131,6 +193,7 @@
 		&[data-module=introduction] {
 			width: 990px;
 			height: 770px;
+			text-align: center;
 
 			.modal-body {
 				padding: 3rem 1.5rem;
@@ -151,7 +214,7 @@
 			}
 
 			.modal-copy {
-				@include opensans($size: 1.7trem);
+				@include opensans($size: 1.7rem);
 				text-align: left;
 				color: #444;
 				position: relative;
@@ -159,6 +222,10 @@
 				line-height: 1.5;
 				z-index: 99;
 				margin: 4rem auto 0;
+
+				& p {
+					padding: 0;
+				}
 			}
 
 			.modal-links {
@@ -184,33 +251,13 @@
 /* end favorites */
 
 
-/* details page */
-.loading-container {
-	@include vertical-align();
-	text-align: center;
-	@include opensans($size: 1.4rem);
-}
-
-.loading-graphic {
-	@include svg-sprite(loading_spinner);
-	animation: rotate-360 0.8s infinite steps(12, end);
-}
-.modal-subheader {
-	position: relative;
-	float: right;
-	right: 7rem;
-	
-	.savelist-lnk {
-		margin-right: 1.2rem;
-	}
-}
-
 .modal-arrow-container {
 	@include vertical-align();
 	margin: 1rem;
 	font-size: 3rem;
 	color: #666;
 	cursor: pointer;
+	z-index: 999;
 	
 	&.prev-page {
 		position: absolute;
