@@ -20,6 +20,7 @@ var AppView = Backbone.View.extend({
     filtersView: null,
     errorView: null,
     tourView: null,
+    loadingView: null,
     evtMgr: EventManager.getInstance(),
 
     dataReady: false,
@@ -39,8 +40,14 @@ var AppView = Backbone.View.extend({
     render: function(){
         'use strict';
 
+        var that = this;
+
         this.headerConfigView.$el = this.$("#siteHeader");
         this.headerConfigView.render();
+
+        this.loadingView = new NortonApp.Views.Loading({
+            el: '.load-more-section'
+        });
 
         this.topNavView = new NortonApp.Views.TopNav({
             el: '#topNav'
@@ -75,25 +82,30 @@ var AppView = Backbone.View.extend({
 
         this.toggleView(EventManager.LIST_VIEW);
 
+        this.deferred.promise().done(function () {
+            that.toggleFilter();
+        });
+
     },
     events: {
         'click .icon-grid-view': 'onGrid',
         'click .icon-list-view': 'onList',
 
-        "change #sortArticles": "sortArticles",
+        'change #sortArticles': 'sortArticles',
         /**
          * Remove this event handler when REAL filter button is working.
          */
-        "click #navFilters a": "toggleFilter",
-        "click #searchButton": "searchArticles",
-        "keypress #searchTextInput": function(e) {
+        'click #navFilters a': 'toggleFilter',
+        'click #searchButton': 'searchArticles',
+        'keypress #searchTextInput': function(e) {
             'use strict';
             if (e.keyCode === 13) {
                 this.searchArticles();
             }
         },
-        "click #loadMore": function() {
+        'click #loadMore': function() {
             'use strict';
+            console.log('fffff')
             // pass true to show hint
             this.getArticles(true);
         }
@@ -101,8 +113,6 @@ var AppView = Backbone.View.extend({
 
     showTour: function () {
         'use strict';
-
-        this.toggleFilter();
 
         this.tourView = new NortonApp.Views.Tour({
             el: '.container',
@@ -152,10 +162,12 @@ var AppView = Backbone.View.extend({
 
     showHidden: function () {
         'use strict';
-        this.$('.load-more-section').removeClass('off');
-        this.$('.footer').removeClass('off');
-        this.$('.results-bar').removeClass('off');
+        if (!this.dataReady) {
+            this.$('.load-more-section').removeClass('off');
+            this.$('.footer').removeClass('off');
+            this.$('.results-bar').removeClass('off');
 
+        }
     },
 
     getArticles: function(showHint) {
@@ -167,6 +179,8 @@ var AppView = Backbone.View.extend({
 
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();
+
+        this.loadingView.show();
 
 
 		if (Norton.searchQuery) {
@@ -194,9 +208,9 @@ var AppView = Backbone.View.extend({
             datatype: "json",
             remove: false,
             success: $.proxy (function(data) {
-                that.dataReady = true;
-                that.hasRefreshed = false;
                 that.showResultsTotals();
+
+                that.loadingView.hide();
 
                 that.articleView.showHighlight({
                     showHint: showHint,
@@ -206,11 +220,13 @@ var AppView = Backbone.View.extend({
                 that.deferred.resolve();
                 
                 that.showHidden();
+                that.dataReady = true;
                     
                 if (ScrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles(false);
                 }
             }, this),
+
             error: function(xhr, response, error) {
                 console.debug('Search query not available.');
                 Norton.Utils.genericError('articles');

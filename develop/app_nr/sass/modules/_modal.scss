@@ -194,6 +194,7 @@
 }
 
 .loading-graphic {
+	position: relative;
 	@include svg-sprite(loading_spinner);
 	animation: rotate-360 0.8s infinite steps(12, end);
 }

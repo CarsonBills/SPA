@@ -117,6 +117,7 @@ $(function() {
     NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
     NortonApp.Views.App = require("./views/AppView.js");
     NortonApp.Views.Tour = require("./views/TourView.js");
+    NortonApp.Views.Loading = require("./views/LoadingView.js");
 
     /**
      * Initializers

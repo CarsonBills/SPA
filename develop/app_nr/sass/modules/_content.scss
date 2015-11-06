@@ -339,18 +339,55 @@ ul.card {
 
 // loadmore button
 .load-more-section {
-    .loadmore {
-        position: relative;
-        font-size: 1.2em;
-        font-weight: 100;
-        letter-spacing: 1px;
-        width: 240px;
-        height: 50px;
-        display: block;
-        margin: 0 auto 3rem;
-        background-color: #fcfcfc;
+    position: relative;
+    width: 240px;
+    height: 50px;
+    margin: 0 auto 3rem;
+    transition: all 1s;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    position: absolute;
+    display: none;
+    transform: scale(0.4) translate(-37px, -42px);
+    z-index: 99;
+    @include svg-sprite(loading_spinner);
+
+    .anim & {
+        display: inline-block;
+        animation: lm-rotate-360 0.8s infinite steps(12, end);
     }
 }
+.loadmore {
+    position: relative;
+    padding: 0 5rem;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: 100;
+    letter-spacing: 1px;
+    background-color: #fcfcfc;
+
+    .anim & {
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+    }
+}
+.catch-all {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 9998;
+
+    &.hide {
+        opacity: 0;
+        transition: opacity 1s;
+    }
+}
+
 @media only screen and (max-width: $tablet-portait-width) {
     #filters {
         top: 269px;
