@@ -8,10 +8,10 @@
         <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
         <div class="modal-author">
             {{#each data.author}}
-                {{authorFirstName}} {{authorMiddleName}} {{authorLastName}}<br/>
+                {{{authorFirstName}}} {{{authorMiddleName}}} {{{authorLastName}}}<br/>
             {{/each}}
         </div>
-        <div class="modal-title">{{HBTrim data.title 50}}</div>
+        <div class="modal-title">{{{HBTrim data.title 50}}}</div>
     </div>
     <div class="modal-body">
         <p class="excerpt">{{{data.excerpt}}}</p>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="small-print">
-            <p class="about-author">About {{mainAuthorName}}</p>
+            <p class="about-author">About {{{mainAuthorName}}}</p>
             <p class="author-bio">{{{mainAuthorBio}}}</p>
             <p class="page-number">Page {{data.readingNumber}}</p>
             <p class="pub-date">Published on {{data.publicationDate}}</p>
