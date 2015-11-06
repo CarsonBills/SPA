@@ -2,21 +2,14 @@ var Backbone = require('backbone');
 
 var YourFavsModel = Backbone.Model.extend({
     defaults: {
-        "authorFirst":'',
-        "chapter":'',
         "pname":'',
-        "siteCode":'',
         "abstract":'',
         "title":'',
-        "mode":[ ],
-        //"category_id":[ ],
-        "authorLast":'',
+        "authorLastName":'',
+        "authorFirstName":'',
+        "authorMiddleName":'',
         "ebookNode":'',
-        "genre":[ ],
-        "theme":[ ],
-        //"categories":[ ],
-        "id":'',
-        "keyword":''
+        "id":''
     }
 });
 
