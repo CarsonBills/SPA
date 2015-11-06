@@ -33,7 +33,6 @@ var PageView = Backbone.View.extend({
             }, this),
             error: function(xhr, response, error) {
                 console.debug('Detail Page not available.');
-                //Norton.Utils.genericError('detail');
                 ErrorsManager.showGeneric();
             }
         });

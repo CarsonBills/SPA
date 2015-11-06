@@ -44,7 +44,7 @@
 /* favorites */
 #modal-container {
 	.modal-dialog {	
-		margin: 5rem auto 0;		
+		margin: 5.5rem auto 0;		
 		width: 800px;
 		height: 600px;
 		position: relative;
@@ -219,28 +219,6 @@
 }
 /* end favorites */
 
-
-/* details page */
-.loading-container {
-	@include vertical-align($top: 40%);
-	text-align: center;
-	@include opensans($size: 1.4rem);
-}
-
-.loading-graphic {
-	position: relative;
-	@include svg-sprite(loading_spinner);
-	animation: rotate-360 0.8s infinite steps(12, end);
-}
-.modal-subheader {
-	position: relative;
-	float: right;
-	right: 7rem;
-	
-	.savelist-lnk {
-		margin-right: 1.2rem;
-	}
-}
 
 .modal-arrow-container {
 	@include vertical-align();

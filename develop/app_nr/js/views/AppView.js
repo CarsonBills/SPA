@@ -207,16 +207,17 @@ var AppView = Backbone.View.extend({
             datatype: "json",
             remove: false,
             success: $.proxy (function(data) {
+                
+                that.loadingView.hide();
                 that.showResultsTotals();
 
-                that.loadingView.hide();
 
                 that.articleView.showHighlight({
                     showHint: showHint,
                     nextItemID: nextItemID
                 });
 
-                that.deferred.resolve();
+                that.deferred.resolve("data ready");
                 
                 that.showHidden();
                 that.dataReady = true;

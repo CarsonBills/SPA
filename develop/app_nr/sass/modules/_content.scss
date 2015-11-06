@@ -345,9 +345,9 @@ ul.card {
     height: 50px;
     margin: 0 auto 3rem;
     transition: all 1s;
-    z-index: 9999;
 }
 
+// spinner within load more button
 .loading-spinner {
     position: absolute;
     display: none;
@@ -374,6 +374,22 @@ ul.card {
         padding: 0 4rem 0 7rem;
     }
 }
+/* details page and overall loading graphic*/
+.loading-container {
+    @include vertical-align($top: 40%);
+    text-align: center;
+    @include opensans($size: 1.4rem);
+}
+
+.loading-graphic {
+    position: relative;
+    @include svg-sprite(loading_spinner);
+
+    .anim & {
+        animation: rotate-360 0.8s infinite steps(12, end);
+    }
+}
+
 // used to prevent clicking when loading
 .catch-all {
     position: fixed;
@@ -381,13 +397,25 @@ ul.card {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
-    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 9998;
+    color: #fff;
 
     &.hide {
         opacity: 0;
         transition: opacity 1s;
+    }
+
+    .loading-container {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 200px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+    .loading-graphic {
+        margin-top: 2rem;
     }
 }
 
@@ -442,56 +470,5 @@ ul.card {
             }
         }
     }
-}
-
-
-.icon-dl {
-    float: right;
-    width: 18px;
-    padding: 9px 12px;
-    opacity: 0.7;
-}
-.file_preview img {
-    max-width: 100%;
-    vertical-align: middle;
-    /*
-    flex-shrink:0;
-    min-width:100%;
-    min-height:100%;
-*/
-}
-.file_preview {
-    width: 100%;
-    height: 180px;
-    display: flex;
-    display: -webkit-box;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background-color: white;
-    line-height: 180px;
-}
-.filetype {
-    position: absolute;
-    background: url('../images/icon-filetype.png') 50% no-repeat;
-    width: $card-width;
-    height: 180px;
-    display: block;
-    opacity: 0.8;
-}
-/* MODAL STYLES
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-.asset-action {
-    color: #777;
-    height: 40px;
-    line-height: 50px;
-}
-.downloads {
-    padding: 20px;
-}
-.asset-action button {
-    float: right;
-    margin: 8px 10px;
 }
 
