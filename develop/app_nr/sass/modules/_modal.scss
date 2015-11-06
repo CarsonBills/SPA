@@ -19,15 +19,19 @@
 /* generic */
 .modal-header {
 	@include opensans($size: 1.8rem);
-	//border: 1px solid $reader-blue;
-	text-align: left;
+	background-color: #000;
+	border: none;
+	color: #fff;
+	text-align: center;
 	height: 55px;
 
 	.close {
 		margin: 0;
 		opacity: 1;
 		font-size: inherit;
+		color: #fff;
 	}
+	
 	& > div {
 		display: inline-block;
 		&.modal-author {
@@ -47,6 +51,7 @@
 		margin: 5.5rem auto 0;		
 		width: 800px;
 		height: 600px;
+		background-color: #fff;
 
 
 		@include opensans($size: 1.4rem);
@@ -55,7 +60,6 @@
 		&[data-module=details] {
 			width: 772px;
 			height: 738px;
-			background-color: #fff;
 			position: relative;
 			text-align: left;
 
@@ -189,6 +193,7 @@
 		&[data-module=introduction] {
 			width: 990px;
 			height: 770px;
+			text-align: center;
 
 			.modal-body {
 				padding: 3rem 1.5rem;
@@ -209,7 +214,7 @@
 			}
 
 			.modal-copy {
-				@include opensans($size: 1.7trem);
+				@include opensans($size: 1.7rem);
 				text-align: left;
 				color: #444;
 				position: relative;
@@ -217,6 +222,10 @@
 				line-height: 1.5;
 				z-index: 99;
 				margin: 4rem auto 0;
+
+				& p {
+					padding: 0;
+				}
 			}
 
 			.modal-links {

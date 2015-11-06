@@ -120,7 +120,7 @@ $card-height: 270px;
 .content {
     position: relative;
     margin-left: $filter-width;
-    width: calc(100% - $filter-width);
+    width: calc(100% - #{$filter-width});
     @include locked($position: 100px);
     @include toggle-fullscreen();
 

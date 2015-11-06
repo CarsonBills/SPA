@@ -131,7 +131,7 @@ nav {
 /* result bar */
 
 .results-bar {
-    width: calc(100% - $filter-width);
+    width: calc(100% - #{$filter-width});
     position: relative;
     display: block;
     height: $top-bar-height;
