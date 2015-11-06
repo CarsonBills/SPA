@@ -15,14 +15,18 @@ var YourFavsView = Backbone.View.extend({
     $content: null,
     app: null,
     articles: null,
+    lsMyFavs: 'myfavs_' + Norton.siteCode + "_" + Norton.version,
 
     initialize: function(params) {
         'use strict';
+        var that = this;
         this.app = params.app;
         this.articles = params.articles;
         this.$content = this.$(this.modal + " " + this.content);
 
         this.collection.on('remove', this.render, this);
+
+        this.loadLocalStorage();
     },
 
     events: {
@@ -106,17 +110,31 @@ var YourFavsView = Backbone.View.extend({
         // Add item to yourFavsList collection
         var $target = $(e.currentTarget),
             id = $target.data('item-id'),
-            model = this.articles.getModelByAttribute("pname", id);
+            favsData = {},
+            model = this.articles.getModelByAttribute("pname", id),
+            articleData = model.attributes.allMeta;
         // Don't add again
-        if ( this.collection.getModelByAttribute("pname", id) === undefined) {
-            if (model.get('allMeta').pname === id) {
-                this.collection.add(new NortonApp.Models.YourFavs(model.get('allMeta')));
-                this.showPopover($target);
-            }
-            
-            this.updateCount();
-            TrackManager.save(id);
+        if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
+            return false;
         }
+        favsData.pname = articleData.pname;
+        favsData.abstract = articleData.abstract;
+        favsData.title = articleData.title;
+        favsData.authorLastName = articleData.primaryAuthor.authorLastName;
+        favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
+        favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
+        favsData.ebookNode = articleData.ebookNode;
+        favsData.id = articleData.id;
+        this.collection.add(new NortonApp.Models.YourFavs(favsData));
+
+        // save in localstorage
+        try {
+            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
+        } catch (e) { }
+
+        this.showPopover($target);
+        this.updateCount();
+        TrackManager.save(id);
 
         return false;
     },
@@ -156,6 +174,28 @@ var YourFavsView = Backbone.View.extend({
 
         return false;
     },
+    loadLocalStorage: function() {
+        var that = this,
+            lsTemp = "";
+        /**
+         * try to load from localstorage - maybe user hit refresh
+         */
+        try {
+            lsTemp = JSON.parse(localStorage.getItem(this.lsMyFavs));
+            if (lsTemp) {
+                _.each(lsTemp, function(item) {
+                    that.collection.add(new NortonApp.Models.YourFavs(item));
+                });
+            }
+            if (this.app.dataReady) {
+                this.updateCount();
+            } else {
+                this.app.deferred.promise().done(function () {
+                    that.updateCount();
+                });
+            }
+        } catch(e) {}
+    }
 });
 
 module.exports = YourFavsView;
