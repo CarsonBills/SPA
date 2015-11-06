@@ -15,7 +15,7 @@ $popover-glow: rgba(255, 0, 0, 1);
 /* filter panel width */
 $filter-width: 28rem;
 
-
+$loading-transform: scale(0.4) translate(-37px, -42px);
 
 /* shared functionality */
 
@@ -35,10 +35,10 @@ $filter-width: 28rem;
 
 @keyframes lm-rotate-360 {
 	from {
-		transform: scale(0.4) translate(-37px, -42px) rotate(0deg);
+		transform: $loading-transform rotate(0deg);
 	}	
 	to {
-		transform: scale(0.4) translate(-37px, -42px) rotate(360deg);
+		transform: $loading-transform rotate(360deg);
 	}
 }
 

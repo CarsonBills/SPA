@@ -140,6 +140,7 @@ ul.card {
 
     .articles {
         width: 100%;
+        transition: all 1s ease-out;
     }
 
 
@@ -350,7 +351,7 @@ ul.card {
 .loading-spinner {
     position: absolute;
     display: none;
-    transform: scale(0.4) translate(-37px, -42px);
+    transform: $loading-transform;
     z-index: 99;
     @include svg-sprite(loading_spinner);
 
@@ -359,7 +360,7 @@ ul.card {
         animation: lm-rotate-360 0.8s infinite steps(12, end);
     }
 }
-.loadmore {
+#load-more {
     position: relative;
     padding: 0 5rem;
     height: 100%;
@@ -370,8 +371,10 @@ ul.card {
 
     .anim & {
         box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+        padding: 0 4rem 0 7rem;
     }
 }
+// used to prevent clicking when loading
 .catch-all {
     position: fixed;
     top: 0;

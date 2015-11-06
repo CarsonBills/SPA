@@ -177,7 +177,7 @@ window.scrollHandler = function() {
 
     /*    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
             Norton.scrollTrigger = true;
-            $("#loadMore").click();
+            $("#load-more").click();
             Norton.scrollTrigger = false;
 
             var scroll_to_new = (Norton.lastArticleLoaded + 1);

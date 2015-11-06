@@ -11,24 +11,25 @@
                 {{authorFirstName}} {{authorMiddleName}} {{authorLastName}}<br/>
             {{/each}}
         </div>
-        <div class="modal-title">{{data.title}}</div>
+        <div class="modal-title">{{HBTrim data.title 50}}</div>
     </div>
     <div class="modal-body">
-        <p>{{{data.excerpt}}}</p>
+        <p class="excerpt">{{{data.excerpt}}}</p>
 
-        <div style="text-align:left;margin-top:25px;">
-            <p style="font-weight:bold;">About {{mainAuthorName}}</p>
-            {{{mainAuthorBio}}}
+        <div class="modal-utils" data-item-id='{{id}}'>
+            <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
+            {{#if data.ebookLink}}
+                <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_new"><span class="icon"></span><span class="title">View Ebook</span></button>
+            {{else}}
+                <span>Ebook unavailable</span>
+            {{/if}}
         </div>
 
-    </div>
-    <div class="modal-subheader" data-item-id='{{id}}'>
-        <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
-        {{#if data.ebookLink}}
-            <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_new"><span class="icon"></span><span class="title">View Ebook</span></button>
-        {{else}}
-            <span>Ebook unavailable</span>
-        {{/if}}
+        <div>
+            <p class="about-author">About {{mainAuthorName}}</p>
+            <p class="author-bio">{{{mainAuthorBio}}}</p>
+        </div>
+
     </div>
     <div class="modal-arrow-container next-page">
         {{#if nextId}}

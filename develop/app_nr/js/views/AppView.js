@@ -103,9 +103,8 @@ var AppView = Backbone.View.extend({
                 this.searchArticles();
             }
         },
-        'click #loadMore': function() {
+        'click #load-more': function() {
             'use strict';
-            console.log('fffff')
             // pass true to show hint
             this.getArticles(true);
         }
