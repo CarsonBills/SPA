@@ -77,6 +77,9 @@ gulp.task('fileinclude', function () {
             gulp.dest(deploy + site + settings.dev)
         ))
         .pipe($.size())
+        .pipe($.notify({
+            message: 'site: ' + site + ' fileinclude done'
+        }))
         .pipe(gulpif(!argv.prod, $.livereload()))
 });
 
@@ -99,7 +102,7 @@ gulp.task('sass:develop', function () {
         .pipe($.sourcemaps.write())
         .pipe(gulp.dest(deploy + site + settings.dev + settings.css))
         .pipe($.notify({
-            message: 'Sass:Develop done'
+            message: 'site: ' + site + ' Sass:Develop done'
         }))
         .pipe($.size())
         .pipe(gulpif(!argv.prod, $.livereload()))
@@ -299,7 +302,7 @@ gulp.task('browserify', function () {
         .pipe(gulpif(!argv.prod, $.livereload()))
 
         .pipe($.notify({
-            message: 'Browserify done'
+            message: 'site: ' + site + ' Browserify done'
         }))
         .pipe(gulpif(argv.prod,
             gulp.dest(deploy + site + settings.prod + settings.js),
@@ -432,7 +435,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function () {
+gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
 
     $.livereload.listen();
 
