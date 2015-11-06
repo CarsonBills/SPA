@@ -10,37 +10,53 @@ var Backbone = require('backbone'),
             content = '.modal-content',
             body = '.modal-body',
             container = '.modal-container',
-            $content = null, 
+            $content = null,
+            isShown = false,
 
             initialize = function () {
 
                 $(modal).on('hide.bs.modal', function (e) {
                     $content.empty();
                     Norton.Utils.returnToBase();
+                    isShown = false;
                 });
+            },
+
+            clear = function () {
+                $content.empty();
             },
 
             show = function (params) {
 
                 $content = $(modal + " " + content);
 
-                $content.empty();
+                clear();
+                
                 params.content.find(container).unwrap().appendTo($content);
 
                 $(dialog).attr(MODULE, params.module);
 
-                $(modal).modal('show');
-
+                if (!isShown) {
+                    $(modal).modal('show');
+                    isShown = true;
+                }
             },
+            
             hide = function () {
                 $(modal).modal('hide');
+            },
+
+            shown = function () {
+                return isShown;
             };
 
         initialize();
 
         return {
             show: show,
-            hide: hide
+            hide: hide,
+            shown: shown,
+            clear: clear
         };
 }());
 

@@ -179,6 +179,7 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         var refs = [],
             cats,
+            splt,
             that = this;
 
         var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);

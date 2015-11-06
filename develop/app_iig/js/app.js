@@ -117,6 +117,7 @@ $(function() {
     NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
     NortonApp.Views.App = require("./views/AppView.js");
     NortonApp.Views.Tour = require("./views/TourView.js");
+    NortonApp.Views.Loading = require("./views/LoadingView.js");
 
     /**
      * Initializers
@@ -176,7 +177,7 @@ window.scrollHandler = function() {
 
     /*    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
             Norton.scrollTrigger = true;
-            $("#loadMore").click();
+            $("#load-more").click();
             Norton.scrollTrigger = false;
 
             var scroll_to_new = (Norton.lastArticleLoaded + 1);
