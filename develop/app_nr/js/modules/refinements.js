@@ -2,6 +2,8 @@
 // Data constructor
 var NavigationCollection = require('../collections/NavigationCollection'),
     $ = require('jquery'),
+    ErrorsManager = require('../modules/errors_manager'),
+
     Navigation = function (options) {
         "use strict";
         this.initialize();
@@ -33,7 +35,11 @@ Navigation.prototype = {
             datatype: "json",
             url: this.url,
             success: function(data) {
-                that.deferred.resolve(data);
+                if (that.collection.status !== ErrorsManager.FAIL_STATE) {
+                    that.deferred.resolve(data);
+                } else {
+                    that.deferred.reject(ErrorsManager.FAIL_STATE);
+                }
             },
             error: function(xhr, response, error) {
                 console.debug(error);

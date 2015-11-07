@@ -1,5 +1,6 @@
 var Backbone = require('backbone'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    ErrorsManager = require('../modules/errors_manager');
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
@@ -19,7 +20,8 @@ var ArticlesCollection = Backbone.Collection.extend({
 
         if (res.code !== 200) {
             console.debug('Search return code is" ' + res.code);
-            Norton.Utils.genericError('config');
+            //Norton.Utils.genericError('config');
+            ErrorsManager.showGeneric();
             return;
         }
 

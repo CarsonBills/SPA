@@ -40,7 +40,7 @@ var AppRouter = Backbone.Router.extend({
                 that.deferred.resolve();
             },
             function (res1, res2) {
-                //console.log(res1, res2);
+                console.log(res1, res2);
             });
         return this.deferred.promise();
     },
@@ -90,7 +90,8 @@ var AppRouter = Backbone.Router.extend({
             dfd.resolve();
         } else {
             NortonApp.headerConfigItem.fetch({
-                success: $.proxy (function() {
+                success: $.proxy (function(response) {
+                    console.log(response);
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
