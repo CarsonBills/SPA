@@ -1,6 +1,7 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
-    Refinements = require('../modules/refinements');
+    Refinements = require('../modules/refinements'),
+    ErrorsManager = require('../modules/errors_manager');
 
 var AppRouter = Backbone.Router.extend({
 
@@ -40,7 +41,8 @@ var AppRouter = Backbone.Router.extend({
                 that.deferred.resolve();
             },
             function (res1, res2) {
-                console.log(res1, res2);
+                ErrorsManager.showGeneric();
+                //console.log(res1, res2);
             });
         return this.deferred.promise();
     },
@@ -91,7 +93,6 @@ var AppRouter = Backbone.Router.extend({
         } else {
             NortonApp.headerConfigItem.fetch({
                 success: $.proxy (function(response) {
-                    console.log(response);
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
@@ -104,7 +105,7 @@ var AppRouter = Backbone.Router.extend({
                 error: function(){
                     // go to generic error page
                     console.debug('Site Config not available.');
-                    Norton.Utils.genericError('config');
+                    ErrorsManager.showGeneric();
                     dfd.reject();
                 }
             });

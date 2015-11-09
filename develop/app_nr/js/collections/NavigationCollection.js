@@ -5,16 +5,16 @@ var Backbone = require('backbone'),
 	NavigationCollection = Backbone.Collection.extend({
     	model: Navigation,
 		availNav:  null,
-    	parse: function (res) {
+    	parse: function (res, options) {
     		"use strict";
-
-			var response = res.data;
 
 			if (res.code !== 200) {
             	this.status = ErrorsManager.FAIL_STATE;
             	ErrorsManager.showGeneric();
-            	return null;
+            	return false;
 			}
+
+			var response = res.data;
 			this.availNav = response.availableNavigation;
     		return response;
     	}
