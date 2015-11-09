@@ -96,9 +96,12 @@ var AppRouter = Backbone.Router.extend({
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
-                    try {
-                        localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                    } catch (e) { }
+                    if (NortonApp.headerConfigItem.attributes.siteCode) {
+                        try {
+                            localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
+                        } catch (e) { }
+                    }
+
 
                     dfd.resolve();
                 }, this),
