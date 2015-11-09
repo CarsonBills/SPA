@@ -21,6 +21,7 @@ var ArticleView = Backbone.View.extend({
     initialize: function(params) {
         'use strict';
         this.collection.on('update', this.render, this);
+        this.listenTo(this.collection, 'remove reset', this.renderIfEmpty, this);
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
         this.app = params.app;
@@ -39,11 +40,17 @@ var ArticleView = Backbone.View.extend({
             callback: this.shouldRefresh
         });
     },
+    renderIfEmpty: function() {
+        console.log('checking');
+        if(this.collection.isEmpty()) {
+            this.render(true);
+        }
+    },
 
-    render: function() {
+    render: function(clearout) {
         'use strict';
 
-        if (this.collection.length === 0) {
+        if (this.collection.length === 0 && !clearout) {
             return false;
         }
 
