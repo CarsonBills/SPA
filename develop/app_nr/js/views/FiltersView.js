@@ -13,6 +13,7 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     delay: true,
     app: null,
+    active: "#chapter",
 
     initialize: function(params) {
         'use strict';
@@ -28,6 +29,7 @@ var FiltersView = Backbone.View.extend({
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
     },
+
     render: function () {
         'use strict';
         var that = this,
@@ -49,15 +51,18 @@ var FiltersView = Backbone.View.extend({
         }, this);
 
         this.$('.filter-item').on('show.bs.collapse', function () {
+            that.$('.filter-item-cat').removeClass('collapsed');
             that.$('.filter-item').removeClass('in');
         });
+
+        this.showActive();
 
 
         return this;
     },
 
     events: {
-        //"click .filter-item-cat" : "toggleItem",
+       "click .filter-item-cat" : "toggleItem",
         "click .filter-checkbox": function(e) {
             'use strict';
             if ($(e.target).prop('checked')) {
@@ -76,13 +81,26 @@ var FiltersView = Backbone.View.extend({
         }
     },
 
+    showActive: function () {
+        'use strict';
+        this.$('.filter-item-cat').removeClass('collapsed');
+        this.$('div[data-target=' + this.active + ']').addClass('collapsed');
+
+        this.$('.filter-item').removeClass('in');
+        this.$(this.active).addClass('in');
+
+    },
+
     toggleItem: function (e) {
         'use strict';
-        var parent = $(e.currentTarget).parent();
+        var target = $(e.currentTarget).data('target');
+
+        if (target) {
+            this.active = target;
+            //this.showActive();
+        }
         
-        this.$('.filter-item').addClass('collapsed');
-        parent.removeClass('collapsed');
-        return false;
+        //this.$('.filter-item').addClass('collapsed');
     },
     /**
      * Display select filter with removal indicator
