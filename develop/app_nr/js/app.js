@@ -41,7 +41,7 @@ $(function() {
     Norton.searchQuery = "";
     Norton.savedRefinements = null;
     Norton.sortby = {
-        field: "authorLast",
+        field: "primaryAuthor.authorLastName",
         order: "Ascending"
     };
 
@@ -51,9 +51,6 @@ $(function() {
     /**
      * Authentication setup
      */
-    // Get rid of before moving to wwnorton.com environment...
-    document.cookie = 'IISPROTECTLOGIN=User=pdietrich@wwnorton.com';
-
     Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
 
     Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash
