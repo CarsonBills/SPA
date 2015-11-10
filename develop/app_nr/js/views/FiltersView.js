@@ -25,9 +25,10 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function() {
         'use strict';
-        if (this.collection.length === 0) {
+        if (this.collection.length === 0 || this.collection.status === ErrorsManager.FAIL_STATE ) {
             return false;
         }
+        
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();

@@ -18,11 +18,12 @@ var ArticlesCollection = Backbone.Collection.extend({
         var response = res.data,
             that = this;
 
+        console.log(res);
+
         if (res.code !== 200) {
-            console.debug('Search return code is" ' + res.code);
-            //Norton.Utils.genericError('config');
+            this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
-            return;
+            return false;
         }
 
         // Inject return data to collection for later use in view
@@ -54,6 +55,13 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return response.records;
+    },
+
+    isValid: function() {
+        'use strict';
+        return _.every(this.models, function(model){
+            return model.isValid();
+        });
     },
     /**
      * For next/prev, index comes from the data so it may not be sequential
