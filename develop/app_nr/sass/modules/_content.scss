@@ -50,6 +50,10 @@
             line-height: 1.2;
             cursor: pointer;
         }
+
+        .clear-filter {
+            font-weight: 600;
+        }
     }
 
     /* .filter-item {
@@ -89,7 +93,7 @@
             color: #484848;
             font-size: 1rem;
             line-height: 1.4;
-
+            transform: rotate(0deg);
         }
     }
     .filter-item-name {
