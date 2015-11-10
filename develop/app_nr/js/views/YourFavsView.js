@@ -148,12 +148,13 @@ var YourFavsView = Backbone.View.extend({
 
     downloadYourFavs: function() {
         'use strict';
+        console.log(this.collection);
         var data = $('#yourFavsTitle').text() + '\t\t\n' +
             'Title\tAuthor\tExtract\n';
         this.collection.each(function(article) {
             data += article.attributes.title + '\t' +
-                article.attributes.fullName + '\t' +
-                article.attributes.shortExtract + '\n';
+                article.attributes.authorFirstName + " " + article.attributes.authorLastName + '\t' +
+                article.attributes.abstract + '\n';
         }, this);
 
         /**
@@ -165,8 +166,9 @@ var YourFavsView = Backbone.View.extend({
         var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
         var lnk = document.createElement('a');
+        var filename = ($("#yourFavsTitle").html() !== "") ? $("#yourFavsTitle").html() + ".csv" : "my_items.csv";
         lnk.setAttribute('href', url);
-        lnk.setAttribute('download', 'my_items.csv');
+        lnk.setAttribute('download', filename);
         lnk.style.visibility = 'hidden';
         document.body.appendChild(lnk);
         lnk.click();
