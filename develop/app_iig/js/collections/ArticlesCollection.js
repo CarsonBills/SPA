@@ -1,5 +1,6 @@
 var Backbone = require('backbone'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    ErrorsManager = require('../modules/errors_manager');
 
 var ArticlesCollection = Backbone.Collection.extend({
     model: NortonApp.Models.Article,
@@ -17,10 +18,12 @@ var ArticlesCollection = Backbone.Collection.extend({
         var response = res.data,
             that = this;
 
+        console.log(res);
+
         if (res.code !== 200) {
-            console.debug('Search return code is" ' + res.code);
-            Norton.Utils.genericError('config');
-            return;
+            this.status = ErrorsManager.FAIL_STATE;
+            ErrorsManager.showGeneric();
+            return false;
         }
 
         // Inject return data to collection for later use in view
@@ -52,6 +55,14 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return response.records;
+    },
+
+    isNotValid: function() {
+        'use strict';
+        /*return _.every(this.models, function(model){
+            return model.isValid();
+        });*/
+        return this.status === ErrorsManager.FAIL_STATE || this.models.length === 0;
     },
     /**
      * For next/prev, index comes from the data so it may not be sequential
@@ -109,15 +120,15 @@ var ArticlesCollection = Backbone.Collection.extend({
     hasMore: function () {
         'use strict';
         var bool = false;
-
         if (this.totalRecords !== 0 && this.recordEnd < this.totalRecords) {
             bool = true;
         }
+
         return bool;
     },
     cleanupAndReset: function() {
         'use strict';
-        this.reset(null, { silent: true });
+        this.reset(null);
         this.recordEnd = 0;
     },
 

@@ -70,7 +70,7 @@ var AppView = Backbone.View.extend({
             collection: this.collection,
             el: "#filters",
             app: this
-        }).render();
+        });
 
         if (Norton.siteCode === "nortonreader") {
             this.introPanelView = new NortonApp.Views.IntroPanel({

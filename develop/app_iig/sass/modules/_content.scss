@@ -30,6 +30,9 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     padding: 1.2rem;
 
+    height: 500px;
+    overflow-y: scroll;
+
     &.off-screen {
         left: -$filter-width;
     }
@@ -46,6 +49,10 @@
             margin: 0 0 1rem 2rem;
             line-height: 1.2;
             cursor: pointer;
+        }
+
+        .clear-filter {
+            font-weight: 600;
         }
     }
 
@@ -86,7 +93,7 @@
             color: #484848;
             font-size: 1rem;
             line-height: 1.4;
-
+            transform: rotate(0deg);
         }
     }
     .filter-item-name {
