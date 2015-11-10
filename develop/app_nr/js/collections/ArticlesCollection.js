@@ -120,15 +120,15 @@ var ArticlesCollection = Backbone.Collection.extend({
     hasMore: function () {
         'use strict';
         var bool = false;
-
         if (this.totalRecords !== 0 && this.recordEnd < this.totalRecords) {
             bool = true;
         }
+
         return bool;
     },
     cleanupAndReset: function() {
         'use strict';
-        this.reset(null, { silent: true });
+        this.reset(null);
         this.recordEnd = 0;
     },
 
