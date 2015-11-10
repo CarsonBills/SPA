@@ -28,6 +28,8 @@ var Backbone = require('backbone'),
 
             show = function (params) {
 
+                var options = {};
+
                 $content = $(modal + " " + content);
 
                 clear();
@@ -36,8 +38,10 @@ var Backbone = require('backbone'),
 
                 $(dialog).attr(MODULE, params.module);
 
+                options.backdrop = (params.backdrop) ? params.backdrop: true;
+
                 if (!isShown) {
-                    $(modal).modal('show');
+                    $(modal).modal(options);
                     isShown = true;
                 }
             },
