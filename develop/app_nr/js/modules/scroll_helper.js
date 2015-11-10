@@ -37,22 +37,39 @@ module.exports = (function () {
         },
 
         docHeight = function () {
-            return $(document).height();
+            return $(document).innerHeight();
+        },
+
+        winTop = function () {
+            return $(window).scrollTop();
         },
 
         winHeight = function () {
-            return $(window).height();
+            return $(window).innerHeight();
         },
 
         docDelta = function () {
             return -(winHeight() - docHeight());
         },
 
+        adjustHeight = function adjustHeight() {
+             var top = $(window).scrollTop(),
+                docHeight = $(document).innerHeight(),
+                winHeight = $(window).innerHeight(),
+                THRESHOLD = 0.9;
+            console.log((top / (docHeight - winHeight)))
+            if ((top / (docHeight - winHeight)) <= 1) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
         shouldRefresh = function shouldRefresh() {
             var top = $(window).scrollTop(),
-                docHeight = $(document).height(),
+                docHeight = $(document).innerHeight(),
                 winHeight = $(window).height(),
-                THRESHOLD = 0.9;
+                THRESHOLD = 0.90;
             // on window resize larger than document
             if (docHeight === winHeight) {
                 return true;
@@ -68,9 +85,11 @@ module.exports = (function () {
 
     return {
         setQue: setQue,
-        shouldRefresh: shouldRefresh,
         winHeight: winHeight,
+        winTop: winTop,
         docHeight: docHeight,
-        docDelta: docDelta
+        docDelta: docDelta,
+        shouldRefresh: shouldRefresh,
+        adjustHeight: adjustHeight
     };
 })();

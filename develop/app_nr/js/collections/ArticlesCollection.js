@@ -18,8 +18,6 @@ var ArticlesCollection = Backbone.Collection.extend({
         var response = res.data,
             that = this;
 
-        console.log(res);
-
         if (res.code !== 200) {
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();

@@ -4,9 +4,7 @@
     padding: 0;
     margin: 0;
     background: url(/images/article_pattern.jpg) repeat;
-    padding-bottom: $top-bar-height * 2;
-    height: auto;
-    min-height: 100vh;
+    padding-bottom: $top-bar-height;
 
     // override popover style
     .popover {
@@ -16,6 +14,8 @@
     }
 }
 #filters {
+    @include locked();
+
     position: absolute;
     background-color: #fff;
     width: $filter-width;

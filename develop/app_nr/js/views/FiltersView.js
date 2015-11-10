@@ -3,7 +3,8 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
-    Refinements = require('../modules/refinements');
+    Refinements = require('../modules/refinements'),
+    ScrollHelper = require('../modules/scroll_helper');
 
 var FiltersView = Backbone.View.extend({
     el: "#filters",
@@ -15,6 +16,7 @@ var FiltersView = Backbone.View.extend({
     app: null,
     ACTIVE: "#chapter",
     active: "",
+    adjustHeight: null,
 
     initialize: function(params) {
         'use strict';
@@ -22,13 +24,19 @@ var FiltersView = Backbone.View.extend({
         this.app = params.app;
 
         this.active = this.ACTIVE;
+
+        this.adjustHeight = this.adjustHeigthWrapper();
+
+        ScrollHelper.setQue({
+            func: ScrollHelper.adjustHeight,
+            callback: this.adjustHeight
+        });
     },
     preRender: function() {
         'use strict';
         if (this.collection.isNotValid()) {
             return false;
         }
-        
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
@@ -60,6 +68,7 @@ var FiltersView = Backbone.View.extend({
         });
 
         this.showActive();
+        this.adjustHeight();
 
 
         return this;
@@ -83,6 +92,30 @@ var FiltersView = Backbone.View.extend({
             'use strict';
             this.removeSelectedFilter(e, "X");
         }
+    },
+
+    adjustHeigthWrapper: function () {
+        'use strict';
+        var that = this,
+            top,
+            doc,
+            delta,
+            dist;
+        return function () {
+            top = $('#container').offset().top;
+            doc = ScrollHelper.winHeight();
+
+            // window stick
+            if ($('.container.stick').length > 0) {
+                delta = doc - top -10;
+            } else {
+                top = ScrollHelper.winTop();
+                delta = doc - top -10;
+            }
+
+            //console.log('container ' + $('#container').offset().top);
+            //that.$el.css({'height': delta + 'px'});
+        };
     },
 
     showActive: function () {
