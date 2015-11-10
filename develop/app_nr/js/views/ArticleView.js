@@ -50,7 +50,7 @@ var ArticleView = Backbone.View.extend({
     render: function(clearout) {
         'use strict';
 
-        if (this.collection.length === 0 && !clearout) {
+        if (this.collection.isNotValid() && !clearout) {
             return false;
         }
 

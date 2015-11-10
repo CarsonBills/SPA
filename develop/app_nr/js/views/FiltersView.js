@@ -25,7 +25,7 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function() {
         'use strict';
-        if (this.collection.length === 0 || this.collection.status === ErrorsManager.FAIL_STATE ) {
+        if (this.collection.isNotValid()) {
             return false;
         }
         

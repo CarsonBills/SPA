@@ -57,11 +57,12 @@ var ArticlesCollection = Backbone.Collection.extend({
         return response.records;
     },
 
-    isValid: function() {
+    isNotValid: function() {
         'use strict';
-        return _.every(this.models, function(model){
+        /*return _.every(this.models, function(model){
             return model.isValid();
-        });
+        });*/
+        return this.status === ErrorsManager.FAIL_STATE || this.models.length === 0;
     },
     /**
      * For next/prev, index comes from the data so it may not be sequential
