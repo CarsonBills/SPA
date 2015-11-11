@@ -135,7 +135,7 @@ nav {
     position: relative;
     display: block;
     height: $top-bar-height;
-    margin: $top-bar-height auto;
+    margin: $top-bar-height auto 0;
     text-align: center;
     background-color: #fff;
     @include opensans($size: 1.4rem, $height: 1, $weight: 600);

@@ -112,16 +112,21 @@ var ArticleView = Backbone.View.extend({
         'use strict';
         var div_top = $('#sticky-anchor').offset().top,
             $container = $('.container'),
-            STICK = 'stick';
+            STICK = 'stick',
+            locked = false;
 
         return function stickScroll() {
-            console.log('window top : ' + ScrollHelper.winTop() + ', sticky-anchor top: ' + div_top )
-            if (ScrollHelper.winTop() >= div_top && !$container.hasClass(STICK)) {
+            if (ScrollHelper.winTop() >= div_top) {
+                if (!$container.hasClass(STICK)) {
                     $container.addClass(STICK);
-                
+                    locked = true;
+                }
             }
-             if (ScrollHelper.winTop() < div_top && $container.hasClass(STICK)) {
+            if (ScrollHelper.winTop() < div_top) {
+                if ($container.hasClass(STICK)) {
                     $container.removeClass(STICK);
+                    locked = false;
+                }
             }
         };
     },

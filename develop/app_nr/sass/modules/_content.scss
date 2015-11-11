@@ -1,10 +1,15 @@
+body {
+    background: url(/images/article_pattern.jpg) repeat;
+    background-size: cover;
+}
 
-
+#container {
+}
 .container {
     padding: 0;
     margin: 0;
-    background: url(/images/article_pattern.jpg) repeat;
     padding-bottom: $top-bar-height;
+    height: 120vh;
 
     // override popover style
     .popover {
@@ -30,8 +35,8 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     padding: 1.2rem;
 
-    height: 500px;
-    overflow-y: scroll;
+    height: 100vh;
+    overflow-y: auto;
 
     &.off-screen {
         left: -$filter-width;
@@ -124,9 +129,10 @@
 /* content card diemnstion */
 .content {
     position: relative;
+    padding-top: $top-bar-height;
     margin-left: $filter-width;
     width: calc(100% - #{$filter-width});
-    @include locked($position: 100px);
+    @include locked($top: $top-bar-height);
     @include toggle-fullscreen();
 
 }

@@ -52,29 +52,16 @@ module.exports = (function () {
             return -(winHeight() - docHeight());
         },
 
-        adjustHeight = function adjustHeight() {
-             var top = $(window).scrollTop(),
-                docHeight = $(document).innerHeight(),
-                winHeight = $(window).innerHeight(),
-                THRESHOLD = 0.9;
-            console.log((top / (docHeight - winHeight)))
-            if ((top / (docHeight - winHeight)) <= 1) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
         shouldRefresh = function shouldRefresh() {
             var top = $(window).scrollTop(),
                 docHeight = $(document).innerHeight(),
                 winHeight = $(window).height(),
-                THRESHOLD = 0.90;
+                THRESHOLD = 1;
             // on window resize larger than document
             if (docHeight === winHeight) {
                 return true;
             }
-            if ((top / (docHeight - winHeight)) > THRESHOLD) {
+            if ((top / (docHeight - winHeight)) >= THRESHOLD) {
                 return true;
             } else {
                 return false;
@@ -89,7 +76,6 @@ module.exports = (function () {
         winTop: winTop,
         docHeight: docHeight,
         docDelta: docDelta,
-        shouldRefresh: shouldRefresh,
-        adjustHeight: adjustHeight
+        shouldRefresh: shouldRefresh
     };
 })();
