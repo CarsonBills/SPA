@@ -1,5 +1,5 @@
 
-
+$modal-header-height: 48px;
 // flattened
 .modal-dialog {
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
@@ -18,24 +18,33 @@
 
 /* generic */
 .modal-header {
-	@include opensans($size: 1.8rem);
-	background-color: #000;
+	@include opensans($size: 1.8rem, $height: 2rem);
+	background-color: $reader-blue;
 	border: none;
 	color: #fff;
-	text-align: center;
-	height: 55px;
+	text-align: left;
+	height: $modal-header-height;
 
 	.close {
 		margin: 0;
 		opacity: 1;
-		font-size: inherit;
+		line-height: 1;
+		font-size: 2.3rem;
 		color: #fff;
+
+		.glyphicon {
+			line-height: inherit;
+			top: -3px;
+		}
 	}
 	
 	& > div {
 		display: inline-block;
 		&.modal-author {
 			margin-right: 2rem;
+		}
+		&.modal-title {
+			@include athelas($size: 2rem, $style:italic, $weight: 400);
 		}
 	}
 }
@@ -47,6 +56,9 @@
 
 /* favorites */
 #modal-container {
+	.modal-body {
+		min-height: 600px;
+	}
 	.modal-dialog {	
 		margin: 5.5rem auto 0;		
 		width: 800px;
@@ -59,41 +71,51 @@
 		&[data-module=errors],
 		&[data-module=details] {
 			width: 772px;
-			height: 738px;
+			min-height: 738px;
+			height: auto;
 			position: relative;
 			text-align: left;
 
-			.modal-header {
-				background-color: #000;
-				color: #fff;
+			.loading-container {
+				top: 300px;
+			}
 
-				& .close {
-					color: #fff;
+			.modal-body {
+				text-align: left;
+			}
+
+			// flattened
+			.excerpt {
+				& + p {
+					text-align: left;
 				}
 			}
 
 			.modal-utils {
 				margin: 3rem 5rem;
 				text-align: right;
+				font-weight: 600;
+
+				span {
+					font-size: 1.2rem;
+
+					&.title {
+						margin-left: 1rem;
+					}
+				}
 
 				.savelist-lnk {
 					margin-right: 1rem;
 				}
 			}
 
-			.small-print {
+			.misc {
 				font-size: 1.4rem;
 				clear: both;
 			}
 
 			p {
 				padding: 0 4rem;
-			}
-
-			.excerpt {
-				& + p {
-					text-align: center;
-				}
 			}
 
 			.about-author {
@@ -107,27 +129,38 @@
 					line-height: 1.6;
 				}
 			}
-			.page-number {
-				margin-top: 5rem;
+
+			.moreinfo-lnk {
+				margin: 1rem 6rem 3rem 5rem;
+				font-size: 1.2rem;
 				font-weight: 600;
+				float: right;
+				text-transform: uppercase;
 			}
 
-			.pub-date {
+			.pub-date,
+			.page-filters,
+			.page-number {
 				font-weight: 600;
+				clear: both;
+			}
+			.page-filter {
+				padding-left: 2rem;
+				line-height: 1.6;
 			}
 		}
 
 		&[data-module=errors] {
-			.modal-header {
+			/* .modal-header {
 				background-color: #000;
 				border: none;
 				color: #fff;
-				height: 55px;
+				height: $modal-header-height;
 				
 				.close {
 					color: inherit;
 				}
-			}
+			} */
 		}
 
 		&[data-module=favorites] {

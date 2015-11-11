@@ -19,17 +19,26 @@
         <div class="modal-utils" data-item-id='{{id}}'>
             <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
             {{#if data.ebookLink}}
-                <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_new"><span class="icon"></span><span class="title">View Ebook</span></button>
-            {{else}}
-                <span>Ebook unavailable</span>
+                <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_blank"><span class="icon"></span><span class="title">View Ebook</span></button>
             {{/if}}
         </div>
 
-        <div class="small-print">
+        <div class="misc">
             <p class="about-author">About {{{mainAuthorName}}}</p>
             <p class="author-bio">{{{mainAuthorBio}}}</p>
+
+            {{#if data.author.0.website}}
+                <button data-type="reader-button" class="moreinfo-lnk" href="{{data.author.0.website}}" target="_blank">More on Author</button>
+            {{/if}}
+
             <p class="page-number">Page {{data.readingNumber}}</p>
             <p class="pub-date">Published on {{data.publicationDate}}</p>
+            <p class="page-filters">
+                <span>Filters:</span>
+                {{#each data.filters}}
+                     <span class="page-filter">{{{HBDetailFilters this}}}</span>
+                {{/each}} 
+            </p>
         </div>
 
     </div>

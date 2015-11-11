@@ -50,4 +50,25 @@ module.exports = (function() {
         }
         return new_text;
     });
+    Handlebars.registerHelper('HBDetailFilters', function(data) {
+        var node = "</br>";
+        if (data.type != "Keyword") {
+            node += data.type + ": ";
+            if (_.isString(data.value)) {
+                node += data.value;
+            }
+            if (_.isArray(data.value)) {
+                _.each(data.value, function (val, index) {
+                    if (val !== "") {
+                        node += (val);
+                        // don't append the last one
+                        if (index < data.value.length - 1) {
+                            node += "|";
+                        }
+                    }
+                });
+            }
+        }
+        return node;
+    });
 })();
