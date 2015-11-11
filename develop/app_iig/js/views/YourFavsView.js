@@ -15,14 +15,18 @@ var YourFavsView = Backbone.View.extend({
     $content: null,
     app: null,
     articles: null,
+    lsMyFavs: 'myfavs_' + Norton.siteCode + "_" + Norton.version,
 
     initialize: function(params) {
         'use strict';
+        var that = this;
         this.app = params.app;
         this.articles = params.articles;
         this.$content = this.$(this.modal + " " + this.content);
 
         this.collection.on('remove', this.render, this);
+
+        this.loadLocalStorage();
     },
 
     events: {
@@ -74,8 +78,6 @@ var YourFavsView = Backbone.View.extend({
             this.updateCount();
         }
 
-        this.likeOrUnlikeYourFavs(id, "del");
-
         return false;
     },
 
@@ -115,7 +117,6 @@ var YourFavsView = Backbone.View.extend({
         if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
             return false;
         }
-
         favsData.pname = articleData.pname;
         favsData.abstract = articleData.abstract;
         favsData.title = articleData.title;
@@ -126,10 +127,12 @@ var YourFavsView = Backbone.View.extend({
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
-        this.likeOrUnlikeYourFavs(articleData.id, "add");
+        // save in localstorage
+        try {
+            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
+        } catch (e) { }
 
         this.showPopover($target);
-
         this.updateCount();
         TrackManager.save(id);
 
@@ -145,12 +148,13 @@ var YourFavsView = Backbone.View.extend({
 
     downloadYourFavs: function() {
         'use strict';
+        console.log(this.collection);
         var data = $('#yourFavsTitle').text() + '\t\t\n' +
             'Title\tAuthor\tExtract\n';
         this.collection.each(function(article) {
             data += article.attributes.title + '\t' +
-                article.attributes.fullName + '\t' +
-                article.attributes.shortExtract + '\n';
+                article.attributes.authorFirstName + " " + article.attributes.authorLastName + '\t' +
+                article.attributes.abstract + '\n';
         }, this);
 
         /**
@@ -162,8 +166,9 @@ var YourFavsView = Backbone.View.extend({
         var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
         var url = URL.createObjectURL(blob);
         var lnk = document.createElement('a');
+        var filename = ($("#yourFavsTitle").html() !== "") ? $("#yourFavsTitle").html() + ".csv" : "my_items.csv";
         lnk.setAttribute('href', url);
-        lnk.setAttribute('download', 'my_items.csv');
+        lnk.setAttribute('download', filename);
         lnk.style.visibility = 'hidden';
         document.body.appendChild(lnk);
         lnk.click();
@@ -171,26 +176,27 @@ var YourFavsView = Backbone.View.extend({
 
         return false;
     },
-    likeOrUnlikeYourFavs: function (id, mode) {
-        'use strict';
-
-        var postdata = {
-            sitecode: Norton.siteCode,
-            asset: id
-        };
-
-        $.ajax({
-            type:'POST',
-            url: (mode == 'add') ? Norton.Constants.likeAssetUrl : Norton.Constants.unlikeAssetUrl,
-            data: JSON.stringify(postdata),
-            dataType: "json",
-            success: function(response) {
-// eventually, update some popularity indicator somewhere on the site; for now, do nothing
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.debug("Like-Unlike Assets request failed.");
+    loadLocalStorage: function() {
+        var that = this,
+            lsTemp = "";
+        /**
+         * try to load from localstorage - maybe user hit refresh
+         */
+        try {
+            lsTemp = JSON.parse(localStorage.getItem(this.lsMyFavs));
+            if (lsTemp) {
+                _.each(lsTemp, function(item) {
+                    that.collection.add(new NortonApp.Models.YourFavs(item));
+                });
             }
-        });
+            if (this.app.dataReady) {
+                this.updateCount();
+            } else {
+                this.app.deferred.promise().done(function () {
+                    that.updateCount();
+                });
+            }
+        } catch(e) {}
     }
 });
 

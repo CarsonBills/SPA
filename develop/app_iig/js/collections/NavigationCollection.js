@@ -1,19 +1,20 @@
 var Backbone = require('backbone'),
 	Navigation = require('../models/NavigationModel'),
+    ErrorsManager = require('../modules/errors_manager');
 	
 	NavigationCollection = Backbone.Collection.extend({
     	model: Navigation,
 		availNav:  null,
-    	parse: function (res) {
+    	parse: function (res, options) {
     		"use strict";
 
-			var response = res.data;
-
 			if (res.code !== 200) {
-				//console.debug('Search return code is" ' + response.code);
-				Norton.Utils.genericError('config');
-				return;
+            	this.status = ErrorsManager.FAIL_STATE;
+            	ErrorsManager.showGeneric();
+            	return false;
 			}
+
+			var response = res.data;
 			this.availNav = response.availableNavigation;
     		return response;
     	}

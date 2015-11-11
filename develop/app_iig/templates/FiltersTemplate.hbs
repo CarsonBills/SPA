@@ -1,13 +1,9 @@
 {{#if cat_display}}
-    <div role="button" data-target="#{{name}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat {{HBIsCollapsed name}}">{{cat_display}}
+    <div role="button" data-target="#{{name}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat {{name}}">{{cat_display}}
     <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
 
-    {{#HBMatchWord name "chapter"}}
-        <div class="filter-item collapse in" role="tab-panel" id="{{name}}">
-    {{else}}
-        <div class="filter-item collapse" role="tab-panel" id="{{name}}">
-    {{/HBMatchWord}}
+    <div class="filter-item collapse" role="tab-panel" id="{{name}}">
     {{#each refinements}}
         {{#if value}}
             {{#if count}}

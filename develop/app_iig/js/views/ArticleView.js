@@ -20,7 +20,8 @@ var ArticleView = Backbone.View.extend({
 
     initialize: function(params) {
         'use strict';
-        this.collection.on('update', this.render, this);
+        this.collection.on('reset update', this.renderIfEmpty, this);
+
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
         this.app = params.app;
@@ -39,11 +40,18 @@ var ArticleView = Backbone.View.extend({
             callback: this.shouldRefresh
         });
     },
+    renderIfEmpty: function() {
+        if(this.collection.isEmpty()) {
+            this.render(true);
+        } else {
+            this.render(false);
+        }
+    },
 
-    render: function() {
+    render: function(noresults) {
         'use strict';
 
-        if (this.collection.length === 0) {
+        if (this.collection.isNotValid() && !noresults) {
             return false;
         }
 
@@ -72,7 +80,7 @@ var ArticleView = Backbone.View.extend({
         /**
          * Hide the Load More button if we are at the end of current collection
          */
-        if (this.collection.hasMore()) {
+        if (this.collection.hasMore() && !noresults) {
             $('.load-more-section').show();
         } else {
             $('.load-more-section').hide();

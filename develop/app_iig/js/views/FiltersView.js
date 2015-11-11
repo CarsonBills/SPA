@@ -13,21 +13,27 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     delay: true,
     app: null,
+    ACTIVE: "#chapter",
+    active: "",
 
     initialize: function(params) {
         'use strict';
         this.collection.on('update', this.preRender, this);
         this.app = params.app;
+
+        this.active = this.ACTIVE;
     },
     preRender: function() {
         'use strict';
-        if (this.collection.length === 0) {
+        if (this.collection.isNotValid()) {
             return false;
         }
+        
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
     },
+
     render: function () {
         'use strict';
         var that = this,
@@ -49,15 +55,18 @@ var FiltersView = Backbone.View.extend({
         }, this);
 
         this.$('.filter-item').on('show.bs.collapse', function () {
+            that.$('.filter-item-cat').addClass('collapsed');
             that.$('.filter-item').removeClass('in');
         });
+
+        this.showActive();
 
 
         return this;
     },
 
     events: {
-        //"click .filter-item-cat" : "toggleItem",
+       "click .filter-item-cat" : "toggleItem",
         "click .filter-checkbox": function(e) {
             'use strict';
             if ($(e.target).prop('checked')) {
@@ -76,13 +85,26 @@ var FiltersView = Backbone.View.extend({
         }
     },
 
+    showActive: function () {
+        'use strict';
+        this.$('.filter-item-cat').addClass('collapsed');
+        this.$('div[data-target=' + this.active + ']').removeClass('collapsed');
+
+        this.$('.filter-item').removeClass('in');
+        this.$(this.active).addClass('in');
+
+    },
+
     toggleItem: function (e) {
         'use strict';
-        var parent = $(e.currentTarget).parent();
-        
-        this.$('.filter-item').addClass('collapsed');
-        parent.removeClass('collapsed');
-        return false;
+        var target = $(e.currentTarget).data('target');
+
+        if (target) {
+            this.active = target;
+            // this.$('.filter-item-cat').addClass('collapsed');
+            // this.$('div[data-target=' + this.active + ']').removeClass('collapsed');
+            //this.showActive();
+        }
     },
     /**
      * Display select filter with removal indicator
@@ -99,10 +121,10 @@ var FiltersView = Backbone.View.extend({
 
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
-                html += '<div class="selected-filters"><div>' + $(this).attr('data-filter-name') +
+                html += '<div class="selected-filters"><div class="active-filter">' + $(this).attr('data-filter-name') +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
-                    '" class="clear-filter" style="cursor:pointer;font-weight:bold;">x</span></div></div>';
+                    '" class="clear-filter">x</span></div></div>';
             }
         });
 
@@ -144,6 +166,10 @@ var FiltersView = Backbone.View.extend({
         window.history.pushState(null,null,url);
 
         this.app.formatRefinements();   // call getArticles() in AppView
+
+
+        this.active = this.ACTIVE;
+
     },
     buildFilterUrl: function(url) {
         'use strict';
