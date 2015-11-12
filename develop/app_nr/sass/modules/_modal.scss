@@ -1,5 +1,4 @@
 
-$modal-header-height: 52px;
 // flattened
 .modal-dialog {
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
@@ -15,8 +14,25 @@ $modal-header-height: 52px;
 	position: relative;
 	height: inherit;
 }
-
-/* generic */
+.modal-arrow-container {
+	@include vertical-align();
+	margin: 1rem;
+	font-size: 3rem;
+	color: #666;
+	cursor: pointer;
+	z-index: 999;
+	
+	&.prev-page {
+		position: absolute;
+		float: left;
+		left: 0;
+	}
+	&.next-page {
+		position: absolute;
+		float: right;
+		right: 0;
+	}
+}
 .modal-header {
 	@include opensans($size: 1.8rem, $height: 2rem);
 	background-color: $reader-blue;
@@ -51,24 +67,78 @@ $modal-header-height: 52px;
 	height: inherit;
 	@include opensans($size: 1.8rem, $height: 1.4);
 }
-
-/* favorites */
+/* modal specific */
 #modal-container {
 	.modal-body {
 		min-height: 600px;
 	}
 	.modal-dialog {	
 		margin: 5.5rem auto 0;		
-		width: 800px;
+		width: 768px;
 		height: 600px;
 		background-color: #fff;
 
-
 		@include opensans($size: 1.4rem);
+
+		&[data-module=introduction] {
+			width: 990px;
+			height: 770px;
+			text-align: center;
+
+			.modal-body {
+				padding: 3rem 1.5rem;
+			}
+
+			.border {
+				height: 100%;
+				position: relative;
+				border: 2px solid #bcbaba;
+			}
+
+			.modal-title {
+				position: relative;
+				margin-top: 2rem;
+				@include athelas($size: 4.8rem);
+				z-index: 99;
+				align-self: flex-start;
+			}
+
+			.modal-copy {
+				@include opensans($size: 1.7rem);
+				text-align: left;
+				color: #444;
+				position: relative;
+				width: 600px;
+				line-height: 1.5;
+				z-index: 99;
+				margin: 4rem auto 0;
+
+				& p {
+					padding: 0;
+				}
+			}
+
+			.modal-links {
+				position: absolute;
+				float: right;
+				right: 2rem;
+				bottom: 1rem;
+
+				a {
+					margin-left: 1.5rem;
+				}
+			}
+
+			.intro-bg {
+				position: absolute;
+				display: block;
+				top: 10rem;
+			}
+		}
 
 		&[data-module=errors],
 		&[data-module=details] {
-			width: 772px;
+			width: 768px;
 			min-height: 738px;
 			height: auto;
 			position: relative;
@@ -225,85 +295,70 @@ $modal-header-height: 52px;
 				}
 			}
 		}
+	}
 
-		&[data-module=introduction] {
-			width: 990px;
-			height: 770px;
-			text-align: center;
+}
+/* end modal */
+@media only screen and (max-width: $tablet-landspace-width) {
+	#modal-container {
+		.modal-dialog {
+			&[data-module=introduction] {
+				width: 90%;
 
-			.modal-body {
-				padding: 3rem 1.5rem;
-			}
-
-			.border {
-				height: 100%;
-				position: relative;
-				border: 2px solid #bcbaba;
-			}
-
-			.modal-title {
-				position: relative;
-				margin-top: 2rem;
-				@include athelas($size: 4.8rem);
-				z-index: 99;
-				align-self: flex-start;
-			}
-
-			.modal-copy {
-				@include opensans($size: 1.7rem);
-				text-align: left;
-				color: #444;
-				position: relative;
-				width: 600px;
-				line-height: 1.5;
-				z-index: 99;
-				margin: 4rem auto 0;
-
-				& p {
-					padding: 0;
+				.modal-copy {
+					width: 90%;
+					text-align: center;
 				}
-			}
 
-			.modal-links {
-				position: absolute;
-				float: right;
-				right: 2rem;
-				bottom: 1rem;
-
-				a {
-					margin-left: 1.5rem;
+				.intro-bg {
+					position: relative;
+					width: 95%;
+					margin: 0 auto;
+					top: 0;
 				}
-			}
-
-			.intro-bg {
-				position: absolute;
-				display: block;
-				top: 10rem;
 			}
 		}
 	}
-
 }
-/* end favorites */
 
+@media only screen and (max-width: $mobile-width) {
+	#modal-container {
+		.modal-dialog {
+			&[data-module=introduction] {
+				height: auto;
+				
+				.modal-body {
+    				padding: 1rem;
+				}
 
-.modal-arrow-container {
-	@include vertical-align();
-	margin: 1rem;
-	font-size: 3rem;
-	color: #666;
-	cursor: pointer;
-	z-index: 999;
-	
-	&.prev-page {
-		position: absolute;
-		float: left;
-		left: 0;
-	}
-	&.next-page {
-		position: absolute;
-		float: right;
-		right: 0;
+				.modal-title {
+					font-size: 3.5rem;
+				}
+				.modal-copy {
+					font-size: 1.5rem;
+				}
+				.modal-links {
+					position: relative;
+					float: none;
+					right: 0;
+					margin: 0 auto;
+
+					a,
+					a:hover {
+						text-decoration: none;
+					}
+
+					button {
+						width: 170px;
+						display: block;
+						margin: 0 auto;
+					}
+				}
+			}
+		}
 	}
 }
-/* end details page */
+/* $tablet-landspace-width: 1024px;
+$tablet-portait-width: 768px;
+$mobile-width: 480px;
+$mobile-width-sm: 320px; */
