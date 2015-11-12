@@ -47,8 +47,8 @@ var PageModel = Backbone.Model.extend({
         'use strict';
         if (response.code !== 200) {
             console.debug('Search return code is" ' + response.code);
-            
-            //ErrorsManager.showGeneric();
+            this.status = ErrorsManager.FAIL_STATE;
+            ErrorsManager.showGeneric();
             return;
         }
 
