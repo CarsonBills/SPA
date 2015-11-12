@@ -102,6 +102,7 @@ var AppView = Backbone.View.extend({
          * Remove this event handler when REAL filter button is working.
          */
         'click #navFilters a': 'toggleFilter',
+        'click #resetSearch' : 'onResetSearch',
         'click #searchButton': 'searchArticles',
         'keypress #searchTextInput': function(e) {
             'use strict';
@@ -282,9 +283,23 @@ var AppView = Backbone.View.extend({
         /**
          * Clear out collection, reset "skip" to zero, then run search query.
          */
-        Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
-        this.collection.cleanupAndReset();
-        this.getArticles();
+        if ($('#searchTextInput').val() !== '') {
+            Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
+            this.collection.cleanupAndReset();
+            this.getArticles();
+        } else {
+            $('#searchTextInput').val(Norton.Constants.emptySeach);
+            setTimeout(function () {
+                $('#searchTextInput').val('');
+            }, 1500);
+        }
+    },
+
+    onResetSearch: function (e) {
+        'use strict';
+        Norton.searchQuery = $('#searchTextInput').val('');
+        //this.searchArticles();
+        return false;
     },
 
     /*resolveToBase: function () {
