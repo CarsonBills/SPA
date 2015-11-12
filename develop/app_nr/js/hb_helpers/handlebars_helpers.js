@@ -55,7 +55,7 @@ module.exports = (function() {
         if (data.type != "Keyword") {
             node += "<strong>" + data.type + ": </strong>";
             if (_.isString(data.value)) {
-                node += data.value;
+                node += (data.value + "</br>");
             }
             if (_.isArray(data.value)) {
                 _.each(data.value, function (val, index) {
@@ -64,6 +64,8 @@ module.exports = (function() {
                         // don't append the last one
                         if (index < data.value.length - 1) {
                             node += "|";
+                        } else {
+                            node += "</br>";
                         }
                     }
                 });

@@ -69,14 +69,12 @@ Navigation.prototype = {
              * They might appear in-between categories so we have to increment filteredNav index and decrement originalNav index.
              */
             // TODO There is a mismatch here
-            if (filteredNav[fIdx] === undefined) {
-                return false;
-            }
-            if (filteredNav[fIdx].name === "sunsetDate" || filteredNav[fIdx].name === "publishDate") {
+
+           /* if (filteredNav[fIdx].name === "sunsetDate" || filteredNav[fIdx].name === "publishDate") {
                 fIdx++;
                 i--;
                 continue;
-            }
+            }*/
 
             for (var j=0; j<originalNav[i].refinements.length; j++) {
                 activeFilter = false;

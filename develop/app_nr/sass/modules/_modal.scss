@@ -212,14 +212,18 @@
 			}
 
 			.pub-date,
-			.page-filters > span:first-child,
 			.page-number {
 				font-weight: 600;
 				clear: both;
 			}
 			.page-filter {
-				padding-left: 2rem;
 				line-height: 1.6;
+				margin-bottom: 1rem;
+				display: block;
+
+				strong {
+					font-weight: 600;
+				}
 			}
 		}
 
@@ -302,6 +306,7 @@
 @media only screen and (max-width: $tablet-landspace-width) {
 	#modal-container {
 		.modal-dialog {
+
 			&[data-module=introduction] {
 				width: 90%;
 
@@ -316,6 +321,11 @@
 					margin: 0 auto;
 					top: 0;
 				}
+			}
+
+			&[data-module=errors],
+			&[data-module=details] {
+				width: 90%;
 			}
 		}
 	}
@@ -354,6 +364,10 @@
 						margin: 0 auto;
 					}
 				}
+			}
+
+			&[data-module=errors],
+			&[data-module=details] {
 			}
 		}
 	}
