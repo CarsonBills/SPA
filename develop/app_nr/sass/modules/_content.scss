@@ -13,8 +13,8 @@ body {
     // override popover style
     .popover {
         border-radius: 0;
-        animation: popover-glow 0.5s ease-out 0s alternate 2;
-        animation-fill-mode: backwards;
+        //animation: popover-glow 0.5s ease-out 0s alternate 2;
+        //animation-fill-mode: backwards;
         min-width: 110px;
     }
 }
@@ -329,6 +329,7 @@ ul.card {
             color: $reader-blue;
             font-size: 1.5rem;
             cursor: pointer;
+            top: 0;
         }
     }
 
