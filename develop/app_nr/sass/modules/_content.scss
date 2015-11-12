@@ -187,11 +187,11 @@ ul.card {
                 padding: 5px $card-gutter;
                 font-size: 2rem;
 
-                &.author {
+                &.list-author {
                     @include opensans($size: 1.8rem, $weight: 600);
                 }
 
-                &.title {
+                &.list-title {
                     color: $reader-blue;
                     margin: 0;
                     @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
@@ -261,7 +261,7 @@ ul.card {
         div {
             padding: 0 1rem;
             display: inline-block;
-            &.author {
+            &.list-author {
                 flex-grow: 20;
             }
 
@@ -298,8 +298,9 @@ ul.card {
                     display: inline-block;
                 }
             }
-            .author {
+            .list-author {
                 width: 31.5%;
+                line-height: 1.3;
                 color: #6f6f6f;
             }
 

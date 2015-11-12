@@ -3,14 +3,22 @@ var Handlebars = require('handlebars/runtime'),
 
 module.exports = (function() {
     'use strict';
-    Handlebars.registerHelper('HBFullname', function(data) {
-        var name = "Not Available";
-        if (_.isArray(data) && data.length === 1) {
-            if ( data[0].authorLastName !== "" ) {
-                name = data[0].authorFirstName + " " + data[0].authorLastName;
+    Handlebars.registerHelper('HBAuthors', function(data) {
+        var name = "";
+        if (_.isArray(data)) {
+
+            switch (data.length) {
+                case 0:
+                break;
+                case 1:
+                    if ( data[0].authorLastName !== '' ) {
+                        name = data[0].authorFirstName + " " + data[0].authorMiddleName + " " + data[0].authorLastName;
+                    }
+                break;
+                case 2:
+                    name = data[0].authorLastName + ', ' + data[1].authorLastName;
+                break;
             }
-        } else if (_.isArray(data) && data.length === 2) {
-            name = data[0].authorLastName + ', ' + data[1].authorLastName;
         }
         return name;
     });
