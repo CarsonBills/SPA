@@ -19,16 +19,16 @@ var TourView = Backbone.View.extend({
         _.each(this.collection.models, function (item) {
             $(item.get('anchor')).popover(item.toJSON());
 
-            setTimeout(function () {
+            //setTimeout(function () {
                 $(item.get('anchor')).popover('show');
-            }, inc * 2000);
+            //}, inc * 2000);
 
             inc += 1;
 
             $(item.get('anchor')).on('shown.bs.popover', function(e) {
                 setTimeout(function () {
                     $(item.get('anchor')).popover('destroy');
-                }, 800);
+                }, 2000);
             });
         });
 
