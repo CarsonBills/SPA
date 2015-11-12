@@ -17,12 +17,12 @@ $gutter: 1.5rem;
 $top-bar-height: 50px;
 $reader-blue: #617c7e;
 
-$desktop-width: 1024px;
+$tablet-landspace-width: 1024px;
 $tablet-portait-width: 768px;
 $mobile-width: 480px;
 $mobile-width-sm: 320px;
 
-$popover-glow: rgba(255, 0, 0, 0.3);
+$popover-glow: rgba(255, 255, 255, 1);
 
 
 /* filter panel width */
@@ -33,6 +33,8 @@ $loading-transform: scale(0.4) translate(-37px, -42px);
 
 $card-width: 290px;
 $card-height: 270px;
+/* modal */
+$modal-header-height: 52px;
 
 /* shared functionality */
 
