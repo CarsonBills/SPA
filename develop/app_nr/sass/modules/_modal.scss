@@ -1,5 +1,5 @@
 
-$modal-header-height: 48px;
+$modal-header-height: 52px;
 // flattened
 .modal-dialog {
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
@@ -31,6 +31,7 @@ $modal-header-height: 48px;
 		line-height: 1;
 		font-size: 2.3rem;
 		color: #fff;
+		text-shadow: none;
 
 		.glyphicon {
 			line-height: inherit;
@@ -42,9 +43,6 @@ $modal-header-height: 48px;
 		display: inline-block;
 		&.modal-author {
 			margin-right: 2rem;
-		}
-		&.modal-title {
-			@include athelas($size: 2rem, $style:italic, $weight: 400);
 		}
 	}
 }
@@ -75,6 +73,11 @@ $modal-header-height: 48px;
 			height: auto;
 			position: relative;
 			text-align: left;
+
+
+			.modal-title {
+				@include athelas($size: 2rem, $style:italic, $weight: 400);
+			}
 
 			.loading-container {
 				top: 300px;
@@ -139,7 +142,7 @@ $modal-header-height: 48px;
 			}
 
 			.pub-date,
-			.page-filters,
+			.page-filters > span:first-child,
 			.page-number {
 				font-weight: 600;
 				clear: both;

@@ -51,9 +51,9 @@ module.exports = (function() {
         return new_text;
     });
     Handlebars.registerHelper('HBDetailFilters', function(data) {
-        var node = "</br>";
+        var node = "";
         if (data.type != "Keyword") {
-            node += data.type + ": ";
+            node += "<strong>" + data.type + ": </strong>";
             if (_.isString(data.value)) {
                 node += data.value;
             }
@@ -71,4 +71,8 @@ module.exports = (function() {
         }
         return node;
     });
+    Handlebars.registerHelper('HBArticleFaved', function(bool) {
+        return (bool) ? "glyphicon-minus" : "glyphicon-plus";
+    });
+
 })();

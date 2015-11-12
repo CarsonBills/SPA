@@ -40,7 +40,7 @@ var Backbone = require('backbone'),
 
                 options.backdrop = (params.backdrop) ? params.backdrop: true;
 
-                if (!isShown) {
+                if (!isShown && params.show) {
                     $(modal).modal(options);
                     isShown = true;
                 }

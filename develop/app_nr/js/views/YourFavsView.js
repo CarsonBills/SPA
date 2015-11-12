@@ -24,19 +24,23 @@ var YourFavsView = Backbone.View.extend({
         this.articles = params.articles;
         this.$content = this.$(this.modal + " " + this.content);
 
-        this.collection.on('remove', this.render, this);
+        //this.collection.on('remove', this.render, this);
+        this.collection.on('remove', function (e) {
+            console.log('remove')
+            that.render(false);
+        });
 
         this.loadLocalStorage();
     },
 
     events: {
-        "click .savelist-lnk": "addYourFavs",
+        "click .savelist-lnk": "toggleYourFavs",
         "click #navYourFavs": "showYourFavs",
         "click .download-favs": "downloadYourFavs",
-        "click .list-format .remove": "removeItem"
+        "click .list-format .remove": "removeYourFavs"
     },
 
-    render: function() {
+    render: function(showModal) {
         'use strict';
         var that = this,
             $div = $('<div></div>'),
@@ -57,27 +61,40 @@ var YourFavsView = Backbone.View.extend({
         } else {
             $div.find(that.body).append(ErrorsManager.NO_FAVORITES);
         }
-
+        
         ModalManager.show({
             content: $div,
-            module: this.MODULE
+            module: this.MODULE,
+            show: showModal
         });
 
         yourFavsDragNDrop('#yourFavs');
         return this;
     },
 
-    removeItem: function (e) {
-        'use strict';
-
-        var id = $(e.currentTarget).parent().data('id'),
-            model = this.collection.getModelByAttribute("id", id);
+    removeItem: function (model) {
+        'use strict'; 
 
         if (model) {
             this.collection.remove(model);
+            this.saveLocalStorage();
             this.updateCount();
         }
+    },
 
+    removeYourFavs: function (e) {
+        'use strict';
+
+        var $target = $(e.currentTarget),
+            id = $target.parent().data('id'),
+            model = this.collection.getModelByAttribute("id", id);
+
+        console.log(model)
+
+        if (model !== undefined) {
+            this.showPopover($target, "Item Removed");
+            this.removeItem(model);
+        }
         return false;
     },
 
@@ -87,36 +104,43 @@ var YourFavsView = Backbone.View.extend({
         $('#yourFavsCtr').html(' (' + this.collection.length + ')');
     },
 
-    showPopover: function ($target) {
+    showPopover: function ($target, mesg) {
         'use strict';
         var direction = "left";
+
         if (this.articles.showGrid()) {
             direction = "right";
         }
         $target.popover({
-            content: "Item added",
+            content: mesg,
             placement: direction,
             container: '.content'
         });
         $target.popover('show');
-            setTimeout(function () {
-                $target.popover('destroy');
-            }, 1000);
+        setTimeout(function () {
+            $('.popover').popover('destroy');
+        }, 1000);
     },
 
-    addYourFavs: function(e) {
+    toggleYourFavs: function(e) {
         'use strict';
 
         // Add item to yourFavsList collection
         var $target = $(e.currentTarget),
             id = $target.data('item-id'),
             favsData = {},
-            model = this.articles.getModelByAttribute("pname", id),
-            articleData = model.attributes.allMeta;
+            article = this.articles.getModelByAttribute("pname", id),
+            articleData = article.attributes.allMeta,
+            model = this.collection.getModelByAttribute("pname", id);
         // Don't add again
-        if ( this.collection.getModelByAttribute("pname", id) !== undefined) {
+        if ( model !== undefined) {
+            this.showPopover($target, "Item Removed");
+            this.removeItem(model);
             return false;
         }
+
+        this.showPopover($target, "Item Added");
+
         favsData.pname = articleData.pname;
         favsData.abstract = articleData.abstract;
         favsData.title = articleData.title;
@@ -127,12 +151,7 @@ var YourFavsView = Backbone.View.extend({
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
-        // save in localstorage
-        try {
-            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
-        } catch (e) { }
-
-        this.showPopover($target);
+        this.saveLocalStorage();
         this.updateCount();
         TrackManager.save(id);
 
@@ -141,14 +160,13 @@ var YourFavsView = Backbone.View.extend({
 
     showYourFavs: function() {
         'use strict';
-        this.render();
+        this.render(true);
 
         return false;
     },
 
     downloadYourFavs: function() {
         'use strict';
-        console.log(this.collection);
         var data = $('#yourFavsTitle').text() + '\t\t\n' +
             'Title\tAuthor\tExtract\n';
         this.collection.each(function(article) {
@@ -176,7 +194,17 @@ var YourFavsView = Backbone.View.extend({
 
         return false;
     },
+
+    saveLocalStorage: function () {
+        'use strict';
+        // save in localstorage
+        try {
+            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
+        } catch (e) { }
+    },
+
     loadLocalStorage: function() {
+        'use strict';
         var that = this,
             lsTemp = "";
         /**
@@ -186,7 +214,7 @@ var YourFavsView = Backbone.View.extend({
             lsTemp = JSON.parse(localStorage.getItem(this.lsMyFavs));
             if (lsTemp) {
                 _.each(lsTemp, function(item) {
-                    that.collection.add(new NortonApp.Models.YourFavs(item));
+                    that.collection.add(new NortonApp.Models.YourFavs(item), {silent: true});
                 });
             }
             if (this.app.dataReady) {

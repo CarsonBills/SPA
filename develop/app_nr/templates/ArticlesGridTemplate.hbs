@@ -6,14 +6,10 @@
         </a>
         <div class="cardlinks">
             <div class="card-info">
-                <div class="savelist-lnk" alt="Add to My Items" data-item-id="{{allMeta.pname}}">
-                    <a href="#" target="_new">Save to List</a>
-                </div>
+                <div class="savelist-lnk glyphicon {{HBArticleFaved faved}}" alt="Add to My Items" data-item-id='{{allMeta.pname}}'></div>
                 <div class="ebook-lnk">
                     {{#if allMeta.ebookNode}}
                         <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
-                    {{else}}
-                        Ebook Unavailable
                     {{/if}}
                 </div>
             </div>

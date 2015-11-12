@@ -1,6 +1,5 @@
 body {
     background: url(/images/article_pattern.jpg) repeat;
-    //background-size: cover;
 }
 
 #container {
@@ -16,6 +15,7 @@ body {
         border-radius: 0;
         animation: popover-glow 0.5s ease-out 0s alternate 2;
         animation-fill-mode: backwards;
+        min-width: 110px;
     }
 }
 #filters {
@@ -227,12 +227,9 @@ ul.card {
 
             .savelist-lnk {
                 float: left;
-                font-size: 4rem;
-                line-height: 1;
+                font-size: 1.5rem;
+                color: $reader-blue;
                 cursor:pointer;
-                @include svg-sprite(savelist-icon);
-                text-indent: -9999px;
-                cursor: pointer;
             }
 
             .ebook-lnk {
@@ -245,6 +242,12 @@ ul.card {
         }
     }
 
+    .listview-head {
+        div {
+            font-weight: 600;
+            color: #666;
+        }
+    }
 
     .list-format,
     .listview-head {
@@ -324,7 +327,7 @@ ul.card {
             width: 90px;
             text-align: center;
             color: $reader-blue;
-            font-size: 2rem;
+            font-size: 1.5rem;
             cursor: pointer;
         }
     }

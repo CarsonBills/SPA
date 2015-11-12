@@ -61,6 +61,7 @@ var AppView = Backbone.View.extend({
         });
 
         this.articleView = new NortonApp.Views.Article({
+            favorites: NortonApp.yourFavsList,
             collection: this.collection,
             el: '.container',
             app: this
