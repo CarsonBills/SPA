@@ -49,8 +49,7 @@ var PageView = Backbone.View.extend({
         }
         ModalManager.show({
             content: $div,
-            module: this.MODULE,
-            show: true
+            module: this.MODULE
         });
 
         if (ModalManager.shown()) {

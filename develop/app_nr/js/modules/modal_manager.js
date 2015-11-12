@@ -28,7 +28,8 @@ var Backbone = require('backbone'),
 
             show = function (params) {
 
-                var options = {};
+                var options = {},
+                    redraw = (params.redraw === undefined) ? true : params.redraw;
 
                 $content = $(modal + " " + content);
 
@@ -40,7 +41,7 @@ var Backbone = require('backbone'),
 
                 options.backdrop = (params.backdrop) ? params.backdrop: true;
 
-                if (!isShown && params.show) {
+                if (!isShown && redraw) {
                     $(modal).modal(options);
                     isShown = true;
                 }

@@ -40,7 +40,7 @@ var YourFavsView = Backbone.View.extend({
         "click .list-format .remove": "removeYourFavs"
     },
 
-    render: function(showModal) {
+    render: function(redraw) {
         'use strict';
         var that = this,
             $div = $('<div></div>'),
@@ -61,11 +61,11 @@ var YourFavsView = Backbone.View.extend({
         } else {
             $div.find(that.body).append(ErrorsManager.NO_FAVORITES);
         }
-        
+
         ModalManager.show({
             content: $div,
             module: this.MODULE,
-            show: showModal
+            redraw: redraw
         });
 
         yourFavsDragNDrop('#yourFavs');
@@ -88,8 +88,6 @@ var YourFavsView = Backbone.View.extend({
         var $target = $(e.currentTarget),
             id = $target.parent().data('id'),
             model = this.collection.getModelByAttribute("id", id);
-
-        console.log(model)
 
         if (model !== undefined) {
             this.showPopover($target, "Item Removed");
@@ -160,7 +158,7 @@ var YourFavsView = Backbone.View.extend({
 
     showYourFavs: function() {
         'use strict';
-        this.render(true);
+        this.render();
 
         return false;
     },
