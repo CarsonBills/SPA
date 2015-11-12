@@ -34,6 +34,10 @@ var ArticlesCollection = Backbone.Collection.extend({
             // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
             // Norton.lastArticleLoaded = record.attributes.allMeta.pname;
 
+            // mockup multiple authors
+            /*if (record.allMeta.authors.length > 0) {
+                record.allMeta.authors.push(record.allMeta.authors[0]);
+            }*/
             /**
              * Next/prev links
              */
