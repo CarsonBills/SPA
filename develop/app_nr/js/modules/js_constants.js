@@ -10,6 +10,12 @@ var JSConstants = {
     likeAssetUrl: 'http://bishop:822/Ars.svc/v1/LikeAsset ',
     unlikeAssetUrl: 'http://bishop:822/Ars.svc/v1/UnLikeAsset ',
     getSavedFavsUrl: 'http://bishop:822/Ars.svc/v1/getfavorites',
+
+    tabletLandspaceWidth: 1024,
+    tabletPortaitWidth: 768,
+    mobileWidth: 480,
+    mobileWidthSM: 320,
+    
 //siteConfigUrl: 'http://dev-books.wwnorton.com:2999/api/getsiteconfig/',
 //getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
 //searchUrl: '/php/searchandiser.php',
