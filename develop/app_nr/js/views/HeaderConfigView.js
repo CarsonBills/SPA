@@ -8,7 +8,6 @@ var HeaderConfigView = Backbone.View.extend({
     templateIig: require('../../templates/IigHeaderTemplate.hbs'),
     initialize: function() {
         'use strict';
-        this.on('change', this.render, this);
     },
     render: function() {
         'use strict';

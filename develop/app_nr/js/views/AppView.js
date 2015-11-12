@@ -21,6 +21,7 @@ var AppView = Backbone.View.extend({
     errorView: null,
     tourView: null,
     loadingView: null,
+    footerView: null,
     evtMgr: EventManager.getInstance(),
 
     dataReady: false,
@@ -28,10 +29,6 @@ var AppView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
-
-        this.headerConfigView = new NortonApp.Views.HeaderConfig({
-            model: NortonApp.headerConfigItem
-        });
 
         this.render();
         this.getArticles();
@@ -42,8 +39,11 @@ var AppView = Backbone.View.extend({
 
         var that = this;
 
-        this.headerConfigView.$el = this.$("#siteHeader");
-        this.headerConfigView.render();
+
+        this.headerConfigView = new NortonApp.Views.HeaderConfig({
+            model: NortonApp.headerConfigItem,
+            el: "#siteHeader"
+        }).render();
 
         this.loadingView = new NortonApp.Views.Loading({
             el: '.load-more-section'
@@ -72,6 +72,11 @@ var AppView = Backbone.View.extend({
             el: "#filters",
             app: this
         });
+
+        this.footerView = new NortonApp.Views.Footer({
+            model: NortonApp.headerConfigItem,
+            el: ".page-footer"
+        })
 
         if (Norton.siteCode === "nortonreader") {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -164,7 +169,7 @@ var AppView = Backbone.View.extend({
         'use strict';
         if (!this.dataReady) {
             this.$('.load-more-section').removeClass('off');
-            this.$('.footer').removeClass('off');
+            this.$('.page-footer').removeClass('off');
             this.$('.results-bar').removeClass('off');
 
         }
