@@ -317,7 +317,6 @@ ul.card {
             width: 50px;
             .ebook-lnk {
                 @include svg-sprite(ebook_icon);
-                @include ie-sprite(ebook_icon);
                 text-indent: -999px;
                 display: block;
                 overflow: hidden;
