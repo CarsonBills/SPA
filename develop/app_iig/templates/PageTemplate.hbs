@@ -18,13 +18,13 @@
         <div class="modal-utils" data-item-id='{{id}}'>
             <button data-type="iig-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
             {{#if data.downloadAsset}}
-                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Download {{assetSize}}</span></button>
+                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}' data-download-url="{{{assetURL}}}"><span class="icon"></span><span class="title">Download {{assetSize}}</span></button>
             {{/if}}
         </div>
 
         <p>
             {{#if data.downloadAsset}}
-                {{assetHtml}}
+                {{{assetHtml}}}
             {{/if}}
         </p>
 
@@ -32,9 +32,9 @@
 
 
         <div class="misc">
-            <p class="pub-date">Creation Date {{data.publicationDate}}</p>
+            <p class="pub-date">Creation Date: {{data.publicationDate}}</p>
             {{#if data.downloadAsset}}
-                <p class="page-number">Format {{data.downloadAsset.format}}</p>
+                <p class="page-number">Format: {{{data.downloadAsset.format}}}</p>
             {{/if}}
 
             <p class="page-filters">

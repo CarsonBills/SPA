@@ -37,9 +37,10 @@ var PageModel = Backbone.Model.extend({
                 }
             ]
         },
-        assetHtml: "",
-        assetIcon: "",
-        assetSize: ""
+        "assetHtml": "",
+        "assetIcon": "",
+        "assetSize": "",
+        "assetURL": ""
     },
     parse: function(response) {
         'use strict';
@@ -50,45 +51,22 @@ var PageModel = Backbone.Model.extend({
             return;
         }
 
-        var assetData = this.buildAssetHtml(response.data);
-        this.set({
-            "assetHtml": assetData.html,
-            "assetIcon": assetData.icon,
-            "assetSize": assetData.size
-        });
+        if (response.data.data.downloadAsset != undefined) {
+            var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
+            this.set({
+                "assetHtml": assetData.html,
+                "assetIcon": assetData.icon,
+                "assetSize": assetData.size,
+                "assetURL": assetData.url
+            });
+        }
+
 
         return response.data;
     },
 
     initialize: function () {
         'use strict';
-    },
-    buildAssetHtml: function(response) {
-        'use strict';
-        var data = {},
-            format = response.data.downloadAsset.format,
-            src = response.data.downloadAsset.src,
-            size = response.data.downloadAsset.fileSize;
-
-        switch (format) {
-            case "format":
-                data.html = '<video src="' + url + '"/>';
-                data.icon = "video-icon";
-                break;
-
-            case "audio":
-                data.html = '<audio src="' + url + '"/>';
-                data.icon = "audio-icon";
-                break;
-
-            case "other":
-                data.html = format + ': ' + url;
-                data.icon = "other-icon";
-                break;
-        }
-        data.size = size;
-
-        return data;
     }
 });
 

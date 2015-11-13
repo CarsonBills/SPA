@@ -51,6 +51,11 @@ $(function() {
     /**
      * Authentication setup
      */
+        // Get rid of before moving to wwnorton.com prod environment...
+    if (window.location.hostname == "iig.dev") {
+        document.cookie = 'IISPROTECTLOGIN=User=phdietrich@wwnorton.com';
+    }
+
     Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
 
     Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash
@@ -141,23 +146,6 @@ $(function() {
 });
 
 /**
- * Launch NERD in a sliding iframe
- * @param url - Ebook URL
- * @param title - Book title
-
-window.launchEbookIframe = function (url, title) {
-    $('#ebookTitle').html(title);
-    $(".cd-panel-content").empty(); // clear out the iframe container before loading a new book
-
-    var ifr = document.createElement('iframe');
-    ifr.style.cssText ='margin:0; padding:0; width:100%; height:100%;';
-    ifr.src = url;
-    $(".cd-panel-content").append(ifr);
-    $('.cd-panel').addClass('is-visible');
-};
- */
-
-/**
  * Re-order My Items
  * @param elem
  */
@@ -165,37 +153,3 @@ window.yourFavsDragNDrop = function(elem) {
     'use strict';
     $(elem).sortable();
 };
-
-/**
- * Handle window scroll events for Sticky and for Load-More
- */
-window.scrollHandler = function() {
-    'use strict';
-    stickyRelocate();
-
-    /*    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
-            Norton.scrollTrigger = true;
-            $("#load-more").click();
-            Norton.scrollTrigger = false;
-
-            var scroll_to_new = (Norton.lastArticleLoaded + 1);
-            $("[data-id="+scroll_to_new+"]").focus();
-        }
-*/
-};
-
-/**
- * Sticky for navbar to remain at top when scrolling
- */
-/*window.stickyRelocate = function() {
-    'use strict';
-    var window_top = $(window).scrollTop();
-    var div_top = $('#sticky-anchor').offset().top;
-    if (window_top > div_top) {
-        $('.container').addClass('stick');
-    } else {
-        $('.container').removeClass('stick');
-    }
-};*/
-
-

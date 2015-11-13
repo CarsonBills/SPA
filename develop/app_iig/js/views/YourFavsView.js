@@ -37,7 +37,7 @@ var YourFavsView = Backbone.View.extend({
         "click .savelist-lnk": "toggleYourFavs",
         "click #navYourFavs": "showYourFavs",
         "click .download-favs": "downloadYourFavs",
-        "click .list-format .remove": "removeYourFavs"
+        "click .list-format .remove": "removeYourFavs",
     },
 
     render: function(redraw) {

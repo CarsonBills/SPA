@@ -28,6 +28,52 @@ var Utils = {
     returnToBase: function () {
         "use strict";
         window.history.pushState(null,null,Norton.baseUrl);
+    },
+    /**
+     * buildAssetObject:
+     * @param downloadAsset
+     * @returns object with html code, icon for media type, filesize and URL for AWS service
+     */
+    buildAssetObject: function(downloadAsset) {
+        'use strict';
+
+        var data = {},
+            format = downloadAsset.format,
+            src = downloadAsset.src,
+            size = downloadAsset.fileSize,
+            awsUrl = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
+            url_nodes = src.split("/");
+
+        /**
+         * Amazon URL looks like https://s3.amazonaws.com/nortoniigprotectedassets/psyc/images/test.txt
+         * strip off everything after bucket and build URL to cloudfront .NET service which will look like
+         * //bishop:822/awsOutput.aspx?sitecode=devtest&siteversion=full&bucket=nortoniigprotectedassets&file=/psyc/images/test.txt
+         */
+        data.url = awsUrl;
+        for (var i=4; i<url_nodes.length; i++) {
+            data.url += "/" + url_nodes[i];
+        }
+
+        switch (format) {
+            case "video":
+                data.html = '<video src="' + data.url + '"/>';
+                data.icon = "video-icon";
+                break;
+
+            case "audio":
+                data.html = '<audio src="' + data.url + '"/>';
+                data.icon = "audio-icon";
+                break;
+
+            default:
+                data.html = "other" + ': ' + data.url;
+                data.icon = "other-icon";
+                break;
+        }
+        data.size = size;
+
+console.log(data);
+        return data;
     }
 };
 

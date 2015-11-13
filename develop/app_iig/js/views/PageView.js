@@ -24,7 +24,9 @@ var PageView = Backbone.View.extend({
             this.getPage();
         }
     },
-
+    events: {
+        "click .download-lnk": "downloadContent"
+    },
     getPage: function () {
         var that = this;
         this.model.fetch({
@@ -57,7 +59,21 @@ var PageView = Backbone.View.extend({
         }
 
         return this;
-    }
+    },
+    downloadContent: function(e) {
+        // probably need to discuss how this should work... new window?
+
+        var url = $(e.currentTarget).attr('data-download-url');
+        var lnk = document.createElement('a');
+        lnk.setAttribute('href', url);
+        lnk.style.visibility = 'hidden';
+        document.body.appendChild(lnk);
+        lnk.click();
+        document.body.removeChild(lnk);
+
+        return false;
+
+}
 });
 
 module.exports = PageView;
