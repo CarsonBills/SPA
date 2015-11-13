@@ -80,6 +80,18 @@
 
 		@include opensans($size: 1.4rem);
 
+		&[data-module=credits] {
+			.credits {
+				margin: 3rem auto 0;
+				text-align: center;
+				span {
+					display: inline-block;
+					margin-bottom: 1rem;
+					font-size: 1.6rem;
+				}
+			}
+		}
+
 		&[data-module=introduction] {
 			width: 990px;
 			height: 770px;
@@ -307,6 +319,10 @@
 @media only screen and (max-width: $tablet-landspace-width) {
 	#modal-container {
 		.modal-dialog {
+
+			&[data-module=credits] {
+				width: 90%;
+			}
 
 			&[data-module=introduction] {
 				width: 90%;

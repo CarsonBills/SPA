@@ -1,4 +1,5 @@
-var Backbone = require('backbone');
+var Backbone = require('backbone'),
+    _ = require('underscore');
 
 var HeaderConfigModel = Backbone.Model.extend({
     urlRoot: Norton.Constants.siteConfigUrl + "sitecode=" + Norton.siteCode + '&siteversion=' + Norton.version,
@@ -50,10 +51,22 @@ var HeaderConfigModel = Backbone.Model.extend({
     parse: function(response) {
         "use strict";
         if (response.code !== 200) {
-            console.debug('Site Config return code is" ' + response.code);
-            Norton.Utils.genericError('config');
-            return;
+            //console.debug('Site Config return code is" ' + response.code);
+            this.status = ErrorsManager.FAIL_STATE;
+            ErrorsManager.showGeneric();
+            return false;
         }
+
+        _.each(response.data.headerLinks, function(link, index) {
+            response.data.headerLinks[index].target = (link.target === "") ? "_blank" : link.target;
+
+            if (link.target === "modal") {
+                response.data.headerLinks[index].link = Norton.Constants.creditsUrl;
+            }
+        })
+
+
+        console.log(response);
 
         return response.data;
     }
