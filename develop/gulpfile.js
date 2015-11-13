@@ -25,6 +25,11 @@ var gulp = require('gulp'),
     app_nr      = 'nr',
     app_iig     = 'iig',
     wip 		= '/full',
+
+    fs = require('fs'),
+    s3 = require('gulp-s3'),
+    awsCredentials = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/aws.json')),
+
     settings 		= {
         modernizr: '/modernizr.js',
         bower: 'bower_components/',
@@ -451,5 +456,13 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 gulp.task('clean', del.bind(null, [deploy + 'iig_dev/*', deploy + 'iig_prod/*', deploy + 'nr_dev/*', deploy + 'nr_prod/*']));
 
 
-
+gulp.task('upload:s3', [], function() {
+    return gulp.src(deploy + site + settings.prod + '/**')
+        .pipe($.s3(awsCredentials, {
+            uploadPath: "/" + site + "/",
+            headers: {
+            'x-amz-acl': 'public-read'
+        }
+    }));
+});
 
