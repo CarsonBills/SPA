@@ -229,9 +229,11 @@
 				clear: both;
 			}
 			.page-filter {
+				font-size: 1.3rem;
 				line-height: 1.6;
 				margin-bottom: 1rem;
-				display: block;
+				display: line-block;
+				color: $dark-grey;
 
 				strong {
 					font-weight: 600;

@@ -63,7 +63,7 @@ module.exports = (function() {
         if (data.type != "Keyword") {
             node += "<strong>" + data.type + ": </strong>";
             if (_.isString(data.value)) {
-                node += (data.value + "</br>");
+                node += (data.value + " ");
             }
             if (_.isArray(data.value)) {
                 _.each(data.value, function (val, index) {
@@ -71,9 +71,9 @@ module.exports = (function() {
                         node += (val);
                         // don't append the last one
                         if (index < data.value.length - 1) {
-                            node += "|";
+                            node += ", ";
                         } else {
-                            node += "</br>";
+                            node += " ";
                         }
                     }
                 });
