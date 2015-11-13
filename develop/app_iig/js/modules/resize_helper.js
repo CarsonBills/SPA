@@ -7,6 +7,14 @@ module.exports = (function () {
     'use strict';
     var scrollHelper = require('../modules/scroll_helper'),
 
+        winWidth = function () {
+            return $(window).innerWidth();
+        },
+
+        winHeight = function () {
+            return $(window).innerHeight();
+        },
+
         setResize = function (cb) {
             var callback = cb;
             $(window).resize(function() {
@@ -17,6 +25,8 @@ module.exports = (function () {
         };
 
     return {
-        setResize: setResize
+        setResize: setResize,
+        winWidth: winWidth,
+        winHeight: winHeight
     };
 })();

@@ -3,14 +3,22 @@ var Handlebars = require('handlebars/runtime'),
 
 module.exports = (function() {
     'use strict';
-    Handlebars.registerHelper('HBFullname', function(data) {
-        var name = "Not Available";
-        if (_.isArray(data) && data.length === 1) {
-            if ( data[0].authorLastName !== "" ) {
-                name = data[0].authorFirstName + " " + data[0].authorLastName;
+    Handlebars.registerHelper('HBAuthors', function(data) {
+        var name = "";
+        if (_.isArray(data)) {
+
+            switch (data.length) {
+                case 0:
+                break;
+                case 1:
+                    if ( data[0].authorLastName !== '' ) {
+                        name = data[0].authorFirstName + " " + data[0].authorMiddleName + " " + data[0].authorLastName;
+                    }
+                break;
+                case 2:
+                    name = data[0].authorLastName + ', ' + data[1].authorLastName;
+                break;
             }
-        } else if (_.isArray(data) && data.length === 2) {
-            name = data[0].authorLastName + ', ' + data[1].authorLastName;
         }
         return name;
     });
@@ -50,4 +58,31 @@ module.exports = (function() {
         }
         return new_text;
     });
+    Handlebars.registerHelper('HBDetailFilters', function(data) {
+        var node = "";
+        if (data.type != "Keyword") {
+            node += "<strong>" + data.type + ": </strong>";
+            if (_.isString(data.value)) {
+                node += (data.value + "</br>");
+            }
+            if (_.isArray(data.value)) {
+                _.each(data.value, function (val, index) {
+                    if (val !== "") {
+                        node += (val);
+                        // don't append the last one
+                        if (index < data.value.length - 1) {
+                            node += "|";
+                        } else {
+                            node += "</br>";
+                        }
+                    }
+                });
+            }
+        }
+        return node;
+    });
+    Handlebars.registerHelper('HBArticleFaved', function(bool) {
+        return (bool) ? "glyphicon-minus" : "glyphicon-plus";
+    });
+
 })();

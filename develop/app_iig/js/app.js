@@ -41,7 +41,7 @@ $(function() {
     Norton.searchQuery = "";
     Norton.savedRefinements = null;
     Norton.sortby = {
-        field: "primaryAuthor.authorLastName",
+        field: "pname",
         order: "Ascending"
     };
 
@@ -115,6 +115,7 @@ $(function() {
     NortonApp.Views.App = require("./views/AppView.js");
     NortonApp.Views.Tour = require("./views/TourView.js");
     NortonApp.Views.Loading = require("./views/LoadingView.js");
+    NortonApp.Views.Footer = require("./views/FooterView.js");
 
     /**
      * Initializers

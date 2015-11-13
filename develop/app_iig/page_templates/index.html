@@ -1,6 +1,5 @@
 @@include('./partials/base/page_top.html', {"title": "Norton Reader"})
 
-
 		<div id="container">
 			<div class="container">
 			    <!-- Header Section -->
@@ -27,14 +26,13 @@
 				    </ul>
 
 				    <!-- Load More Section -->
-				    <div class="load-more-section off">
-				        <button id="loadMore" class="loadmore">LOAD MORE</button>
+				    <div class="load-more-section off" data-default="load more" data-loading="Loading">
+				    	<span class="loading-spinner"></span>
+				        <button id="load-more">LOAD MORE</button>
 				    </div>
 
 				    <!-- Footer Section -->
-				    <div class="footer off">
-				        Copyright &copy; W.W. Norton &amp; Company, Inc. 2015
-				    </div>
+				    <div class="page-footer off"></div>
 			    </div>
 
 			    <!-- Error Page Section -->
@@ -46,29 +44,12 @@
 				        <!-- Modal content-->
 				        <div class="modal-content"></div>
 					</div>
-				</div> 
-
-			    <!-- Detail Page Section -->
-			    <div id="detailPage" class="page-view-section">
-			    	<div id="pageContainer" class="modal fade" role="dialog">
-    					<div class="modal-dialog">
-					        <!-- Modal content-->
-					        <div class="modal-content"></div>
-    					</div>
-    				</div> 
-			    </div>
+				</div>
 
 			    <!-- YourFavs Section -->
 			    <div class="your-favs-view-section">
 			        <div id="yourFavs" class="your-favs"></div>
 			    </div>
-
-			    <!-- Modal popup -->
-			    <div id="modalContainer"></div>
-			    <!--div class="modal-placeholder" id="modalPlaceholder" data-toggle="modal" data-target="#pageContainer"></div-->
-			    <div class="modal-placeholder" id="modalPlaceholderIntro" data-toggle="modal" data-target="#introContainer"></div>
-			    <div class="modal-placeholder" id="modalPlaceholderError" data-toggle="modal" data-target="#errorContainer"></div>
-
 
 			    <script>
 			        // modals don't detect close event from back button so use event handler to close with popstate change

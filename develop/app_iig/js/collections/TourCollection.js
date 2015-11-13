@@ -24,7 +24,7 @@ var TourModel = Backbone.Collection.extend({
             }, {
                 anchor: '.filter-item.collapse.in .filter-item-name:nth-child(3)',
                 content: 'Browse the book by selecting one or more of these categories.',
-                container: '#filters',
+                container: '#filtersREAL',
                 placement: 'auto left'
             }, {
                 anchor: 'li:nth-child(9) .ebook',

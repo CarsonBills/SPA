@@ -1,5 +1,6 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
+    _ = require('underscore'),
     EventManager = require('../modules/event_manager'),
     ScrollHelper = require('../modules/scroll_helper');
 
@@ -15,15 +16,19 @@ var ArticleView = Backbone.View.extend({
 
     pageItem: null,
     pageView: null,
+    favorites: null, // favorites list
     lastItemID: '',
     hasRefreshed: false,
 
     initialize: function(params) {
         'use strict';
         this.collection.on('reset update', this.renderIfEmpty, this);
+        this.favorites = params.favorites;
 
         // event listeners
-        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.render, this);
+        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.renderIfEmpty, this);
+        this.favorites.on('update', this.renderIfEmpty, this);
+
         this.app = params.app;
 
 
@@ -57,7 +62,8 @@ var ArticleView = Backbone.View.extend({
 
         var showGrid = this.collection.showGrid(),
             articleTemplate,
-            $articles = this.$(this.container);
+            $articles = this.$(this.container),
+            article;
 
 
         $articles.empty();
@@ -67,10 +73,12 @@ var ArticleView = Backbone.View.extend({
         }
 
         this.collection.each(function(record) {
+            article = record.toJSON();
+            article.faved = this.isfaved(article.allMeta.pname);
             if (showGrid) {
-                articleTemplate = this.templateGrid(record.toJSON());
+                articleTemplate = this.templateGrid(article);
             } else {
-                articleTemplate = this.templateList(record.toJSON());
+                articleTemplate = this.templateList(article);
             }
             $articles.append(articleTemplate);
         }, this);
@@ -97,6 +105,14 @@ var ArticleView = Backbone.View.extend({
         "click #nextArticle": "getNextPrevFromPage"
     },
 
+    isfaved: function (pname) {
+        'use strict';
+        var found = _.find(NortonApp.yourFavsList.models, function (item) {
+            return (item.get('pname') === pname);
+        });
+        return (found != undefined);
+    },
+
     shouldRefreshWrapper: function () {
         'use strict';
         var that = this;
@@ -112,16 +128,20 @@ var ArticleView = Backbone.View.extend({
         'use strict';
         var div_top = $('#sticky-anchor').offset().top,
             $container = $('.container'),
-            STICK = 'stick';
+            STICK = 'stick',
+            locked = false;
 
         return function stickScroll() {
-            if ($(window).scrollTop() > div_top) {
+            if (ScrollHelper.winTop() >= div_top) {
                 if (!$container.hasClass(STICK)) {
                     $container.addClass(STICK);
+                    locked = true;
                 }
-            } else {
+            }
+            if (ScrollHelper.winTop() < div_top) {
                 if ($container.hasClass(STICK)) {
                     $container.removeClass(STICK);
+                    locked = false;
                 }
             }
         };

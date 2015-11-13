@@ -1,5 +1,4 @@
 
-
 // flattened
 .modal-dialog {
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
@@ -15,21 +14,45 @@
 	position: relative;
 	height: inherit;
 }
-
-/* generic */
+.modal-arrow-container {
+	@include vertical-align();
+	margin: 1rem;
+	font-size: 3rem;
+	color: #666;
+	cursor: pointer;
+	z-index: 999;
+	
+	&.prev-page {
+		position: absolute;
+		float: left;
+		left: 0;
+	}
+	&.next-page {
+		position: absolute;
+		float: right;
+		right: 0;
+	}
+}
 .modal-header {
-	@include opensans($size: 1.8rem);
-	background-color: #000;
+	@include opensans($size: 1.8rem, $height: 2rem);
+	background-color: $reader-blue;
 	border: none;
 	color: #fff;
-	text-align: center;
-	height: 55px;
+	text-align: left;
+	height: $modal-header-height;
 
 	.close {
 		margin: 0;
 		opacity: 1;
-		font-size: inherit;
+		line-height: 1;
+		font-size: 2.3rem;
 		color: #fff;
+		text-shadow: none;
+
+		.glyphicon {
+			line-height: inherit;
+			top: -3px;
+		}
 	}
 	
 	& > div {
@@ -44,148 +67,27 @@
 	height: inherit;
 	@include opensans($size: 1.8rem, $height: 1.4);
 }
-
-/* favorites */
+/* modal specific */
 #modal-container {
+	.modal-body {
+		min-height: 600px;
+	}
 	.modal-dialog {	
 		margin: 5.5rem auto 0;		
-		width: 800px;
+		width: 768px;
 		height: 600px;
 		background-color: #fff;
 
-
 		@include opensans($size: 1.4rem);
 
-		&[data-module=errors],
-		&[data-module=details] {
-			width: 772px;
-			height: 738px;
-			position: relative;
-			text-align: left;
-
-			.modal-header {
-				background-color: #000;
-				color: #fff;
-
-				& .close {
-					color: #fff;
-				}
-			}
-
-			.modal-utils {
-				margin: 3rem 5rem;
-				text-align: right;
-
-				.savelist-lnk {
-					margin-right: 1rem;
-				}
-			}
-
-			.small-print {
-				font-size: 1.4rem;
-				clear: both;
-			}
-
-			p {
-				padding: 0 4rem;
-			}
-
-			.excerpt {
-				& + p {
-					text-align: center;
-				}
-			}
-
-			.about-author {
-				font-size: 1.8rem;
-				margin-top: 1rem;
-				font-weight: 600;
-			}
-			.author-bio {
-				& + p {
-					font-size: 1.4rem;
-					line-height: 1.6;
-				}
-			}
-			.page-number {
-				margin-top: 5rem;
-				font-weight: 600;
-			}
-
-			.pub-date {
-				font-weight: 600;
-			}
-		}
-
-		&[data-module=errors] {
-			.modal-header {
-				background-color: #000;
-				border: none;
-				color: #fff;
-				height: 55px;
-				
-				.close {
-					color: inherit;
-				}
-			}
-		}
-
-		&[data-module=favorites] {
-
-			.modal-title {
-				.glyphicon {
+		&[data-module=credits] {
+			.credits {
+				margin: 3rem auto 0;
+				text-align: center;
+				span {
+					display: inline-block;
+					margin-bottom: 1rem;
 					font-size: 1.6rem;
-					line-height: 1.5;
-					margin-left: 1rem;
-				}
-			}
-			.empty-list {
-				text-align: center;
-				font-size: 1.8rem;
-				margin-top: 5rem;
-			}
-
-			.download-favs {
-				position: absolute;
-				width: 100%;
-				text-transform: uppercase;
-				text-align: center;
-				line-height: 1.4;
-				bottom: 4rem;
-
-				.glyphicon {
-					margin-left: 1.3rem;
-				}
-			}
-
-			.list-format {
-				width: 98%;
-				margin: 0 auto;
-				padding: 1rem;
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-			    align-items: center;
-			    align-content: center;
-			    min-height: 4.5rem;
-			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
-
-				.author {
-					@include opensans($size: 1.4rem, $weight: 600);
-					color: #6f6f6f;
-					text-transform: uppercase;
-					flex-grow: 1; /* flex to fill rest of available space */
-	    			min-width: auto;
-				}
-
-				.title {
-					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
-					color: $reader-blue;
-					flex-grow: 1; /* flex to fill rest of available space */
-	    			min-width: auto;
-				}
-				.remove {
-					cursor: pointer;
 				}
 			}
 		}
@@ -245,29 +147,276 @@
 				top: 10rem;
 			}
 		}
+
+		&[data-module=errors],
+		&[data-module=details] {
+			width: 768px;
+			min-height: 738px;
+			height: auto;
+			position: relative;
+			text-align: left;
+
+
+			.modal-title {
+				@include athelas($size: 2rem, $style:italic, $weight: 400);
+			}
+
+			.loading-container {
+				top: 300px;
+			}
+
+			.modal-body {
+				text-align: left;
+			}
+
+			// flattened
+			.excerpt {
+				& + p {
+					text-align: left;
+				}
+			}
+
+			.modal-utils {
+				margin: 3rem 5rem;
+				text-align: right;
+				font-weight: 600;
+
+				span {
+					font-size: 1.2rem;
+
+					&.button-label {
+						margin-left: 1rem;
+					}
+				}
+
+				.savelist-lnk {
+					margin-right: 1rem;
+				}
+			}
+
+			.misc {
+				font-size: 1.4rem;
+				clear: both;
+			}
+
+			p {
+				padding: 0 4rem;
+			}
+
+			.about-author {
+				font-size: 1.8rem;
+				margin-top: 1rem;
+				font-weight: 600;
+			}
+			.author-bio {
+				& + p {
+					font-size: 1.4rem;
+					line-height: 1.6;
+				}
+			}
+
+			.moreinfo-lnk {
+				margin: 1rem 6rem 3rem 5rem;
+				font-size: 1.2rem;
+				font-weight: 600;
+				float: right;
+				text-transform: uppercase;
+			}
+
+			.pub-date,
+			.page-number {
+				font-weight: 600;
+				clear: both;
+			}
+			.page-filter {
+				line-height: 1.6;
+				margin-bottom: 1rem;
+				display: block;
+
+				strong {
+					font-weight: 600;
+				}
+			}
+		}
+
+		&[data-module=errors] {
+			/* .modal-header {
+				background-color: #000;
+				border: none;
+				color: #fff;
+				height: $modal-header-height;
+				
+				.close {
+					color: inherit;
+				}
+			} */
+		}
+
+		&[data-module=favorites] {
+
+			.modal-title {
+				.glyphicon {
+					font-size: 1.6rem;
+					line-height: 1.5;
+					margin-left: 1rem;
+				}
+			}
+			.empty-list {
+				text-align: center;
+				font-size: 1.8rem;
+				margin-top: 5rem;
+			}
+
+			.download-favs {
+				position: absolute;
+				width: 100%;
+				text-transform: uppercase;
+				text-align: center;
+				line-height: 1.4;
+				bottom: 4rem;
+
+				.glyphicon {
+					margin-left: 1.3rem;
+				}
+			}
+
+			.list-format {
+				width: 98%;
+				margin: 0 auto;
+				padding: 1rem;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			    align-items: center;
+			    align-content: center;
+			    min-height: 4.5rem;
+			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
+
+				.list-author {
+					@include opensans($size: 1.4rem, $weight: 600);
+					color: #6f6f6f;
+					text-transform: uppercase;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+
+				.list-title {
+					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
+					color: $reader-blue;
+					flex-grow: 1; /* flex to fill rest of available space */
+	    			min-width: auto;
+				}
+				.remove {
+					cursor: pointer;
+					color: $dark-grey;
+				}
+			}
+		}
 	}
 
 }
-/* end favorites */
+/* end modal */
+@media only screen and (max-width: $tablet-landspace-width) {
+	#modal-container {
+		.modal-dialog {
 
+			&[data-module=credits] {
+				width: 90%;
+			}
 
-.modal-arrow-container {
-	@include vertical-align();
-	margin: 1rem;
-	font-size: 3rem;
-	color: #666;
-	cursor: pointer;
-	z-index: 999;
-	
-	&.prev-page {
-		position: absolute;
-		float: left;
-		left: 0;
-	}
-	&.next-page {
-		position: absolute;
-		float: right;
-		right: 0;
+			&[data-module=introduction] {
+				width: 90%;
+
+				.modal-copy {
+					width: 90%;
+					text-align: center;
+				}
+
+				.intro-bg {
+					position: relative;
+					width: 95%;
+					margin: 0 auto;
+					top: 0;
+				}
+			}
+
+			&[data-module=errors],
+			&[data-module=details] {
+				width: 90%;
+
+				.modal-header {
+					min-height: $modal-header-height;
+					height: auto;
+					padding: 1rem 1.5rem;
+					position: relative;
+
+					.close {
+						transform: translateY(50%);
+					}
+
+					& > div {
+						display: block;
+						line-height: 1.3;
+					}
+				}
+
+				.modal-utils {
+					margin: 2rem auto;
+					text-align: center;
+				}
+
+				.moreinfo-lnk {
+					margin: 2rem auto;
+					display: block;
+					float: none;
+				}
+			}
+		}
 	}
 }
-/* end details page */
+
+@media only screen and (max-width: $mobile-width) {
+	#modal-container {
+		.modal-dialog {
+			&[data-module=introduction] {
+				height: auto;
+				
+				.modal-body {
+    				padding: 1rem;
+				}
+
+				.modal-title {
+					font-size: 3.5rem;
+				}
+				.modal-copy {
+					font-size: 1.5rem;
+				}
+				.modal-links {
+					position: relative;
+					float: none;
+					right: 0;
+					margin: 0 auto;
+
+					a,
+					a:hover {
+						text-decoration: none;
+					}
+
+					button {
+						width: 170px;
+						display: block;
+						margin: 0 auto;
+					}
+				}
+			}
+
+			&[data-module=errors],
+			&[data-module=details] {
+			}
+		}
+	}
+}
+/* $tablet-landspace-width: 1024px;
+$tablet-portait-width: 768px;
+$mobile-width: 480px;
+$mobile-width-sm: 320px; */

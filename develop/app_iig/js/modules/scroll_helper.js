@@ -37,11 +37,15 @@ module.exports = (function () {
         },
 
         docHeight = function () {
-            return $(document).height();
+            return $(document).innerHeight();
+        },
+
+        winTop = function () {
+            return $(window).scrollTop();
         },
 
         winHeight = function () {
-            return $(window).height();
+            return $(window).innerHeight();
         },
 
         docDelta = function () {
@@ -50,14 +54,14 @@ module.exports = (function () {
 
         shouldRefresh = function shouldRefresh() {
             var top = $(window).scrollTop(),
-                docHeight = $(document).height(),
+                docHeight = $(document).innerHeight(),
                 winHeight = $(window).height(),
-                THRESHOLD = 0.9;
+                THRESHOLD = 1;
             // on window resize larger than document
             if (docHeight === winHeight) {
                 return true;
             }
-            if ((top / (docHeight - winHeight)) > THRESHOLD) {
+            if ((top / (docHeight - winHeight)) >= THRESHOLD) {
                 return true;
             } else {
                 return false;
@@ -68,9 +72,10 @@ module.exports = (function () {
 
     return {
         setQue: setQue,
-        shouldRefresh: shouldRefresh,
         winHeight: winHeight,
+        winTop: winTop,
         docHeight: docHeight,
-        docDelta: docDelta
+        docDelta: docDelta,
+        shouldRefresh: shouldRefresh
     };
 })();

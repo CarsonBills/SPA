@@ -13,50 +13,48 @@ var PageModel = Backbone.Model.extend({
         "siteVersion":"",
         "mode":"",
         "data":{
-            "title":"",
-            "metaKeyword":"",
-            "metaDescription":"",
-            "publishDate":"",
-            "sunsetDate":"",
-            "excerpt":"",
-            "publicationDate":"",
-            "ebookLink":"",
-            "pageNumber": null,
-            "readingNumber": null,
-            "author": [
-                {
-                    "authorBio": "",
-                    "authorFirstName": "",
-                    "authorMiddleName": "",
-                    "authorLastName": ""
-                }
-            ],
-
-            "website":" ",
-            "filters":[
+            "id": "",
+            "contentType": "",
+            "template": "",
+            "title": "",
+            "metaKeyword": "",
+            "publishDate": "",
+            "sunsetDate": "",
+            "headerImage": "",
+            "introCopy": "",
+            "sections": [
                 {
                     "type":"",
                     "value":""
                 }
+            ],
+            "downloadAsset": {},
+            "filters": [
+                {
+                    "src":"",
+                    "format":"",
+                    "fileSize":""
+                }
             ]
         },
-        mainAuthorName: "",
-        mainAuthorBio: ""
+        assetHtml: "",
+        assetIcon: "",
+        assetSize: ""
     },
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
             console.debug('Search return code is" ' + response.code);
-            
-            //ErrorsManager.showGeneric();
+            this.status = ErrorsManager.FAIL_STATE;
+            ErrorsManager.showGeneric();
             return;
         }
 
+        var assetData = this.buildAssetHtml(response.data);
         this.set({
-            "mainAuthorName": response.data.data.author[0].authorFirstName + " " +
-                response.data.data.author[0].authorMiddleName + " " +
-                response.data.data.author[0].authorLastName,
-            "mainAuthorBio": response.data.data.author[0].authorBio
+            "assetHtml": assetData.html,
+            "assetIcon": assetData.icon,
+            "assetSize": assetData.size
         });
 
         return response.data;
@@ -64,7 +62,33 @@ var PageModel = Backbone.Model.extend({
 
     initialize: function () {
         'use strict';
-        //this.url = this.urlRoot + this.id;
+    },
+    buildAssetHtml: function(response) {
+        'use strict';
+        var data = {},
+            format = response.data.downloadAsset.format,
+            src = response.data.downloadAsset.src,
+            size = response.data.downloadAsset.fileSize;
+
+        switch (format) {
+            case "format":
+                data.html = '<video src="' + url + '"/>';
+                data.icon = "video-icon";
+                break;
+
+            case "audio":
+                data.html = '<audio src="' + url + '"/>';
+                data.icon = "audio-icon";
+                break;
+
+            case "other":
+                data.html = format + ': ' + url;
+                data.icon = "other-icon";
+                break;
+        }
+        data.size = size;
+
+        return data;
     }
 });
 

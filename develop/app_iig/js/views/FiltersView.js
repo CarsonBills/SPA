@@ -28,7 +28,6 @@ var FiltersView = Backbone.View.extend({
         if (this.collection.isNotValid()) {
             return false;
         }
-        
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
@@ -47,7 +46,8 @@ var FiltersView = Backbone.View.extend({
             filter.cat_display = filter.displayName;
 
             for (i=0; i<filter.refinements.length; i++) {
-               filter.refinements[i].cat = filter.name;
+                filter.refinements[i].cat = filter.name;
+                filter.refinements[i].cat_display = filter.displayName;
             }
 
             filterTemplate = this.template(filter);
@@ -115,12 +115,18 @@ var FiltersView = Backbone.View.extend({
      */
     showSelectedFilter: function() {
         'use strict';
-        var html = "";
+        var html = "",
+            selCat = "";
 
         $("#selectedFilters").empty();
 
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
+                if (selCat != $(this).attr('data-filter-cat-display')) {
+                    selCat = $(this).attr('data-filter-cat-display');
+                    html += '<div class="sel-filter-cat">'+selCat+'</div>';
+                }
+
                 html += '<div class="selected-filters"><div class="active-filter">' + $(this).attr('data-filter-name') +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
