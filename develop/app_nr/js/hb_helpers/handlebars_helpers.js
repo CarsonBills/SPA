@@ -81,8 +81,11 @@ module.exports = (function() {
         }
         return node;
     });
-    Handlebars.registerHelper('HBArticleFaved', function(bool) {
+    /*Handlebars.registerHelper('HBArticleFaved', function(bool) {
         return (bool) ? "glyphicon-minus" : "glyphicon-plus";
+    });*/
+    Handlebars.registerHelper('HBFaved', function(bool, saved, unsaved) {
+        return (bool) ? saved : unsaved;
     });
 
 })();

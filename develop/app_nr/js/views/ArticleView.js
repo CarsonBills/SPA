@@ -31,7 +31,6 @@ var ArticleView = Backbone.View.extend({
 
         this.app = params.app;
 
-
         this.shouldRefresh = this.shouldRefreshWrapper();
         /* window scroll callbacks */
         this.stickScroll = this.stickScrollWrapper();
@@ -105,11 +104,9 @@ var ArticleView = Backbone.View.extend({
         "click #nextArticle": "getNextPrevFromPage"
     },
 
-    isfaved: function (pname) {
+    isfaved: function (id) {
         'use strict';
-        var found = _.find(NortonApp.yourFavsList.models, function (item) {
-            return (item.get('pname') === pname);
-        });
+        var found = this.favorites.getModelByAttribute('pname', id);
         return (found != undefined);
     },
 
@@ -157,24 +154,25 @@ var ArticleView = Backbone.View.extend({
             this.resolveToBase();
             return false;
         }*/
-
-        if (model === undefined) {
+        if (this.pageView === null) {
             this.pageView = new NortonApp.Views.Page({
+                favorites: this.favorites,
                 el: "#modal-container"
             });
+        }
 
-        } else {
+        if (model != undefined) {
             this.baseUrl = model.get('baseUrl');
 
             this.pageItem = new NortonApp.Models.Page({
+                faved: this.favorites.getModelByAttribute('pname', id),
                 id: id,
                 prevId: model.get('prevId'),
                 nextId: model.get('nextId')
             });
-            this.pageView = new NortonApp.Views.Page({
-                model: this.pageItem,
-                el: "#modal-container"
-            });
+
+            this.pageView.model = this.pageItem;
+            this.pageView.getPage();
         }
     },
 

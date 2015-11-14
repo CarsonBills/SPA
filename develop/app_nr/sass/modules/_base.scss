@@ -4,7 +4,7 @@ $white: #ffffff;
 $black: #000000;
 $light-grey: #eeeeee;
 $grey: #d6d6d6;
-$dark-grey: #9f9f9c;
+$dark-grey: #515151;
 $blue: #00738b; // Title links
 $light-blue: #91bcc5; // Header BG
 $tan: #c8b59c; // Shorter Header BG
@@ -87,16 +87,16 @@ button[data-type="reader-button"] {
 	border-radius: 0;
 	margin: 0;
 
-	.icon {
+	/* .icon {
 		@include vertical-align(absolute);
 		left: 1.2rem;
+	} */
+
+	a {
+		text-decoration: none;
+		color: $dark-grey;
 	}
 
-	&.savelist-lnk {
-		.icon {
-			@include svg-sprite(savelist-icon);
-		}
-	}
 
 	&.ebook-lnk {
 		.icon {

@@ -24,10 +24,11 @@ var YourFavsView = Backbone.View.extend({
         this.articles = params.articles;
         this.$content = this.$(this.modal + " " + this.content);
 
-        //this.collection.on('remove', this.render, this);
         this.collection.on('remove', function (e) {
-            console.log('remove')
-            that.render(false);
+            // make sure this render process only apply when in favs view
+            if (ModalManager.runModule(that.MODULE)) {
+                that.render();
+            }
         });
 
         this.loadLocalStorage();
@@ -40,7 +41,7 @@ var YourFavsView = Backbone.View.extend({
         "click .list-format .remove": "removeYourFavs"
     },
 
-    render: function(redraw) {
+    render: function() {
         'use strict';
         var that = this,
             $div = $('<div></div>'),
@@ -64,11 +65,10 @@ var YourFavsView = Backbone.View.extend({
 
         ModalManager.show({
             content: $div,
-            module: this.MODULE,
-            redraw: redraw
+            module: this.MODULE
         });
 
-        yourFavsDragNDrop('#yourFavs');
+        this.$("div[data-module=favorites] .modal-body").sortable();
         return this;
     },
 

@@ -11,14 +11,14 @@ var Backbone = require('backbone'),
             body = '.modal-body',
             container = '.modal-container',
             $content = null,
-            isShown = false,
+            module = '',
 
             initialize = function () {
-
                 $(modal).on('hide.bs.modal', function (e) {
-                    $content.empty();
+                    module = '';
+                    $(dialog).attr(MODULE, "");
+                    clear();
                     Norton.Utils.returnToBase();
-                    isShown = false;
                 });
             },
 
@@ -32,7 +32,6 @@ var Backbone = require('backbone'),
                     redraw = (params.redraw === undefined) ? true : params.redraw;
 
                 $content = $(modal + " " + content);
-
                 clear();
                 
                 params.content.find(container).unwrap().appendTo($content);
@@ -41,9 +40,9 @@ var Backbone = require('backbone'),
 
                 options.backdrop = (params.backdrop) ? params.backdrop: true;
 
-                if (!isShown && redraw) {
+                if (module === '' && redraw) {
                     $(modal).modal(options);
-                    isShown = true;
+                    module = params.module;
                 }
             },
             
@@ -52,7 +51,11 @@ var Backbone = require('backbone'),
             },
 
             shown = function () {
-                return isShown;
+                return module !== '';
+            },
+
+            runModule = function (mod) {
+                return (mod === module);
             };
 
         initialize();
@@ -61,7 +64,8 @@ var Backbone = require('backbone'),
             show: show,
             hide: hide,
             shown: shown,
-            clear: clear
+            clear: clear,
+            runModule: runModule
         };
 }());
 
