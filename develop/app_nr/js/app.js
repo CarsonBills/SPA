@@ -161,28 +161,27 @@ window.launchEbookIframe = function (url, title) {
  * Re-order My Items
  * @param elem
  */
-window.yourFavsDragNDrop = function(elem) {
+/*window.yourFavsDragNDrop = function(elem) {
     'use strict';
     $(elem).sortable();
-};
+};*/
 
 /**
  * Handle window scroll events for Sticky and for Load-More
  */
-window.scrollHandler = function() {
+/*window.scrollHandler = function() {
     'use strict';
     stickyRelocate();
 
-    /*    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
-            Norton.scrollTrigger = true;
-            $("#load-more").click();
-            Norton.scrollTrigger = false;
+    If(!Norton.scrollTrigger && $(window).scrollTop() > ($(document).height() - $(window).height() - 50)) {
+        Norton.scrollTrigger = true;
+        $("#load-more").click();
+        Norton.scrollTrigger = false;
 
-            var scroll_to_new = (Norton.lastArticleLoaded + 1);
-            $("[data-id="+scroll_to_new+"]").focus();
-        }
-*/
-};
+        var scroll_to_new = (Norton.lastArticleLoaded + 1);
+        $("[data-id="+scroll_to_new+"]").focus();
+    }
+};*/
 
 /**
  * Sticky for navbar to remain at top when scrolling
