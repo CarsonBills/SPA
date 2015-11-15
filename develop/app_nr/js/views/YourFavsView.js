@@ -115,9 +115,9 @@ var YourFavsView = Backbone.View.extend({
             container: '.content'
         });
         $target.popover('show');
-        setTimeout(function () {
+        TweenLite.to($('.popover'), 1, {autoAlpha: 0, delay: 1, onComplete: function () {
             $('.popover').popover('destroy');
-        }, 1000);
+        }});
     },
 
     toggleYourFavs: function(e) {
