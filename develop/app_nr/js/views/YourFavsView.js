@@ -146,6 +146,7 @@ var YourFavsView = Backbone.View.extend({
         favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
         favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
         favsData.ebookNode = articleData.ebookNode;
+        favsData.baseUrl = Norton.baseUrl;
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 

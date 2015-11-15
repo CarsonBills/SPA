@@ -31,8 +31,6 @@ var HeaderConfigView = Backbone.View.extend({
         'use strict';
         var $div = $('<div></div>');
 
-        console.log(credits)
-
         $div.html(this.templateCredits(credits));
 
         ModalManager.show({

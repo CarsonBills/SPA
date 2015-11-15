@@ -86,6 +86,9 @@ module.exports = (function() {
     });*/
     Handlebars.registerHelper('HBFaved', function(bool, saved, unsaved) {
         return (bool) ? saved : unsaved;
+    });    
+    Handlebars.registerHelper('HBPageLinkWithPname', function(url, pname) {
+        return url + "#/page/" + pname;
     });
 
 })();

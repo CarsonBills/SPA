@@ -298,17 +298,21 @@ ul.card {
         a {
             color: transparent;
             width: 87%;
+
+            display: flex;
             &.details {
                 div {
                     display: inline-block;
                 }
             }
             .list-author {
+                flex-flow: 2;
                 width: 31.5%;
                 color: #6f6f6f;
             }
 
             .list-title {
+                flex-flow: 3;
                 width: 60%;
                 color: $reader-blue;
                 @include athelas($size: 1.8rem, $style: italic, $weight: 400);
