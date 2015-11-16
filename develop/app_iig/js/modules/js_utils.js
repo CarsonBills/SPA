@@ -41,7 +41,6 @@ var Utils = {
             format = downloadAsset.format,
             src = downloadAsset.src,
             size = downloadAsset.fileSize,
-            awsUrl = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
             url_nodes = src.split("/");
 
         /**
@@ -49,7 +48,8 @@ var Utils = {
          * strip off everything after bucket and build URL to cloudfront .NET service which will look like
          * //bishop:822/awsOutput.aspx?sitecode=devtest&siteversion=full&bucket=nortoniigprotectedassets&file=/psyc/images/test.txt
          */
-        data.url = awsUrl;
+        data.url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
+        // Assuming 4th forward slash and beyond is the file path and name
         for (var i=4; i<url_nodes.length; i++) {
             data.url += "/" + url_nodes[i];
         }
