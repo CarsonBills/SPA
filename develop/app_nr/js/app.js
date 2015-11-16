@@ -107,6 +107,7 @@ $(function() {
     NortonApp.Views.TopNav = require("./views/TopNavView.js");
     NortonApp.Views.Article = require("./views/ArticleView.js");
     NortonApp.Views.Filters = require("./views/FiltersView.js");
+    NortonApp.Views.Search = require("./views/SearchView.js");
     NortonApp.Views.YourFavs = require("./views/YourFavsView.js");
     NortonApp.Views.Page = require("./views/PageView.js");
     NortonApp.Views.HeaderConfig = require("./views/HeaderConfigView.js");
