@@ -63,10 +63,7 @@ var HeaderConfigModel = Backbone.Model.extend({
             if (link.target === "modal") {
                 response.data.headerLinks[index].link = Norton.Constants.creditsUrl;
             }
-        })
-
-
-        console.log(response);
+        });
 
         return response.data;
     }

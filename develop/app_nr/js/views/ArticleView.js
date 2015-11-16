@@ -45,6 +45,7 @@ var ArticleView = Backbone.View.extend({
         });
     },
     renderIfEmpty: function() {
+        'use strict';
         if(this.collection.isEmpty()) {
             this.render(true);
         } else {

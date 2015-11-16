@@ -84,7 +84,7 @@ var AppView = Backbone.View.extend({
         this.footerView = new NortonApp.Views.Footer({
             model: NortonApp.headerConfigItem,
             el: ".page-footer"
-        })
+        });
 
         if (Norton.siteCode === "nortonreader") {
             this.introPanelView = new NortonApp.Views.IntroPanel({
@@ -108,15 +108,7 @@ var AppView = Backbone.View.extend({
          * Remove this event handler when REAL filter button is working.
          */
         'click #navFilters a': 'toggleFilter',
-
-        /*'click #resetSearch' : 'onResetSearch',
-        'click #searchButton': 'searchArticles',
-        'keypress #searchTextInput': function(e) {
-            'use strict';
-            if (e.keyCode === 13) {
-                this.searchArticles();
-            }
-        },*/
+        
         'click #load-more': function() {
             'use strict';
             // pass true to show hint

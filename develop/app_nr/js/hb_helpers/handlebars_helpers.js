@@ -60,7 +60,7 @@ module.exports = (function() {
     });
     Handlebars.registerHelper('HBDetailFilters', function(data) {
         var node = "";
-        if (data.type != "Keyword") {
+        if (data.type !== "Keyword") {
             node += "<strong>" + data.type + ": </strong>";
             if (_.isString(data.value)) {
                 node += (data.value + " ");
