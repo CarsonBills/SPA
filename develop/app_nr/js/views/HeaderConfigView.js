@@ -13,7 +13,8 @@ var HeaderConfigView = Backbone.View.extend({
     },
     render: function() {
         'use strict';
-        var headerConfigTemplate;
+        var img = this.model.get('headerImage'),
+            headerConfigTemplate;
 
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(this.model.toJSON());
@@ -21,6 +22,11 @@ var HeaderConfigView = Backbone.View.extend({
             headerConfigTemplate = this.templateIig(this.model.toJSON());
         }
         this.$el.append(headerConfigTemplate);
+
+        // insert background image url (full/short are different)
+        if (img) {
+            this.$('.header-bg').css('background', 'url("' + img + '") top/cover no-repeat');
+        }
     },
 
     events: {
