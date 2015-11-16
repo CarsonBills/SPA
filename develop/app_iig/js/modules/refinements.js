@@ -32,6 +32,9 @@ Navigation.prototype = {
             data: JSON.stringify(postdata),
             //data: postdata,   //  NEED THIS IF USING searchandiser.php
             method: "POST",
+            xhrFields: {
+                withCredentials: true
+            },
             datatype: "json",
             url: this.url,
             success: function(data) {

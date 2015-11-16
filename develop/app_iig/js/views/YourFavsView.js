@@ -92,6 +92,7 @@ var YourFavsView = Backbone.View.extend({
         if (model !== undefined) {
             this.showPopover($target, "Item Removed");
             this.removeItem(model);
+            this.likeOrUnlikeYourFavs(id, 'unlike');
         }
         return false;
     },
@@ -151,6 +152,7 @@ var YourFavsView = Backbone.View.extend({
 
         this.saveLocalStorage();
         this.updateCount();
+        this.likeOrUnlikeYourFavs(id, 'like');
         TrackManager.save(id);
 
         return false;
@@ -223,6 +225,67 @@ var YourFavsView = Backbone.View.extend({
                 });
             }
         } catch(e) {}
+    },
+    likeOrUnlikeYourFavs: function (id, mode) {
+        'use strict';
+
+        var postdata = {
+            sitecode: Norton.siteCode,
+            asset: id
+        };
+
+        $.ajax({
+            type:'POST',
+            url: (mode == 'like') ? Norton.Constants.likeAssetUrl : Norton.Constants.unlikeAssetUrl,
+            data: JSON.stringify(postdata),
+            dataType: "json",
+            success: function(response) {
+// eventually, update some popularity indicator somewhere on the site; for now, do nothing
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.debug("Like-Unlike Assets request failed.");
+            }
+        });
+    },
+    getSavedFavs: function (id, mode) {
+        'use strict';
+        var that = this;
+
+        $.ajax({
+            type:'POST',
+            url: Norton.Constants.getSavedFavsUrl,
+            data: null,
+            dataType: "json",
+            success: function(response) {
+                if (response.code !== 200) {
+                    console.debug("Get Favorites request failed.");
+                    return;
+                }
+                if (response.data.length < 1) {
+//       return; // User had no saved favorites
+                }
+                that.buildSavedFavs(response.data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.debug("Get Favorites request failed.");
+            }
+        });
+    },
+    buildSavedFavs: function(data) {
+        'use strict';
+        var assetId;
+
+        this.pageItem = new NortonApp.Models.Page({
+            id: id,
+            prevId: model.get('prevId'),
+            nextId: model.get('nextId')
+        });
+
+        for(var i=0; i<data.length; i++) {
+            assetId = data[i].asset.id;
+
+
+        }
     }
 });
 

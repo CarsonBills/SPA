@@ -51,7 +51,7 @@ var Utils = {
         data.url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
         // Assuming 4th forward slash and beyond is the file path and name
         for (var i=4; i<url_nodes.length; i++) {
-            data.url += "/" + url_nodes[i];
+            data.url += "/" + url_nodes[i].replace("+", "%2b");
         }
 
         switch (format) {

@@ -51,11 +51,6 @@ $(function() {
     /**
      * Authentication setup
      */
-        // Get rid of before moving to wwnorton.com prod environment...
-    if (window.location.hostname == "iig.dev") {
-        document.cookie = 'IISPROTECTLOGIN=User=phdietrich@wwnorton.com';
-    }
-
     Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
 
     Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash

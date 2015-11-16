@@ -30,6 +30,9 @@ var PageView = Backbone.View.extend({
     getPage: function () {
         var that = this;
         this.model.fetch({
+            xhrFields: {
+                withCredentials: true
+            },
             success: $.proxy (function(data) {
                 that.render();
             }, this),

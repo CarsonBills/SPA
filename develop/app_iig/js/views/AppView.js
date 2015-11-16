@@ -212,6 +212,9 @@ var AppView = Backbone.View.extend({
             //data: postdata,   //  NEED THIS IF USING searchandiser.php
             method: "POST",
             datatype: "json",
+            xhrFields: {
+                withCredentials: true
+            },
             remove: false,
             success: $.proxy (function(data) {
                 
