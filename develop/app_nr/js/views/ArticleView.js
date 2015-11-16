@@ -99,9 +99,36 @@ var ArticleView = Backbone.View.extend({
     },
 
     events: {
+        'click .icon-grid-view': 'onGrid',
+        'click .icon-list-view': 'onList',
+        
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage"
+    },
+
+    /* Grid/List view toggle */
+    toggleView: function(type) {
+        'use strict';
+        this.collection.setShowGrid(type === EventManager.GRID_VIEW);
+
+        this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
+            view: type
+        });
+    },
+
+    onGrid: function(e) {
+        'use strict';
+        if (!this.collection.showGrid()) {
+            this.toggleView(EventManager.GRID_VIEW);
+        }
+    },
+
+    onList: function(e) {
+        'use strict';
+        if (this.collection.showGrid()) {
+            this.toggleView(EventManager.LIST_VIEW);
+        }
     },
 
     isfaved: function (id) {

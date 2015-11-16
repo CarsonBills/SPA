@@ -86,7 +86,7 @@ var AppView = Backbone.View.extend({
             });
         }
 
-        this.toggleView(EventManager.LIST_VIEW);
+        this.articleView.toggleView(EventManager.LIST_VIEW);
 
         this.deferred.promise().done(function () {
             that.toggleFilter();
@@ -94,8 +94,6 @@ var AppView = Backbone.View.extend({
 
     },
     events: {
-        'click .icon-grid-view': 'onGrid',
-        'click .icon-list-view': 'onList',
 
         'change #sortArticles': 'sortArticles',
         /**
@@ -140,30 +138,6 @@ var AppView = Backbone.View.extend({
         }
 
         return false;
-    },
-
-    /* Grid/List view toggle */
-    toggleView: function(type) {
-        'use strict';
-        this.collection.setShowGrid(type === EventManager.GRID_VIEW);
-
-        this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
-            view: type
-        });
-    },
-
-    onGrid: function(e) {
-        'use strict';
-        if (!this.collection.showGrid()) {
-            this.toggleView(EventManager.GRID_VIEW);
-        }
-    },
-
-    onList: function(e) {
-        'use strict';
-        if (this.collection.showGrid()) {
-            this.toggleView(EventManager.LIST_VIEW);
-        }
     },
 
     showHidden: function () {
