@@ -50,21 +50,7 @@
 			    <div class="your-favs-view-section">
 			        <div id="yourFavs" class="your-favs"></div>
 			    </div>
-
-			    <script>
-			        // modals don't detect close event from back button so use event handler to close with popstate change
-			        $(window).bind("popstate", function() {
-			            if (window.location.href == Norton.baseUrl) {
-			                try {
-                    $('#pageContainer').modal('hide');
-                } catch(e) {
-
-                }
-
-            }
-        });
-    </script>
-</div>
+			</div>
 		</div>
 
 @@include('./partials/base/page_bottom.html')

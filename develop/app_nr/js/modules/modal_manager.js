@@ -14,12 +14,27 @@ var Backbone = require('backbone'),
             module = '',
 
             initialize = function () {
+
                 $(modal).on('hide.bs.modal', function (e) {
-                    module = '';
-                    $(dialog).attr(MODULE, "");
-                    clear();
+                    reset();
                     Norton.Utils.returnToBase();
                 });
+                // modals don't detect close event from back button so use event handler to close with popstate change
+                $(window).on("popstate", function(e) {
+                    if (window.location.href === Norton.baseUrl) {
+                        try {
+                            hide();
+                        } catch(e) {
+
+                        }
+                    }
+                });
+            },
+
+            reset = function () {
+                module = '';
+                $(dialog).attr(MODULE, "");
+                clear();
             },
 
             clear = function () {
@@ -58,7 +73,7 @@ var Backbone = require('backbone'),
                 return (mod === module);
             };
 
-        initialize();
+            initialize();
 
         return {
             show: show,
