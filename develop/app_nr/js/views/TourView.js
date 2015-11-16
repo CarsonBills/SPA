@@ -20,15 +20,15 @@ var TourView = Backbone.View.extend({
             $(item.get('anchor')).popover(item.toJSON());
 
             //setTimeout(function () {
-                $(item.get('anchor')).popover('show');
+            $(item.get('anchor')).popover('show');
             //}, inc * 2000);
 
             inc += 1;
 
             $(item.get('anchor')).on('shown.bs.popover', function(e) {
-                setTimeout(function () {
+                TweenLite.to($('.popover'), 1, {autoAlpha: 0, delay: 4, onComplete: function () {
                     $(item.get('anchor')).popover('destroy');
-                }, 2000);
+                }});
             });
         });
 
