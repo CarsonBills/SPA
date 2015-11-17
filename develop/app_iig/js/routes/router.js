@@ -92,6 +92,9 @@ var AppRouter = Backbone.Router.extend({
             dfd.resolve();
         } else {
             NortonApp.headerConfigItem.fetch({
+                xhrFields: {
+                    withCredentials: true
+                },
                 success: $.proxy (function(response) {
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();

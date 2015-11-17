@@ -19,13 +19,6 @@ var TopNavView = Backbone.View.extend({
         this.on('change', this.render, this);
     },
 
-    onUpdateView: function(params) {
-        'use strict';
-        var view = '.' + params.view;
-        this.$toggleView.find('span').removeClass(this.ACTIVE);
-        this.$(view).addClass(this.ACTIVE);
-    },
-
     render: function() {
         'use strict';
 
@@ -35,6 +28,13 @@ var TopNavView = Backbone.View.extend({
         this.$toggleView = this.$('.toggle-view');
 
         return this;
+    },
+
+    onUpdateView: function(params) {
+        'use strict';
+        var view = '.' + params.view;
+        this.$toggleView.find('span').removeClass(this.ACTIVE);
+        this.$(view).addClass(this.ACTIVE);
     },
 });
 

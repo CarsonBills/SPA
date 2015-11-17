@@ -11,13 +11,14 @@ var Backbone = require('backbone'),
 
             },
 
-            showGeneric = function () {
+            showGeneric = function (msg) {
                 view = new ErrorView({
                     model: {
                         title: ErrorsManager.GENERIC_TITLE,
                         body: ErrorsManager.GENERIC_BODY
                     }
                 });
+                console.debug(msg);
             };
         return {
             show: show,

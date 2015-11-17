@@ -32,6 +32,9 @@ Navigation.prototype = {
             data: JSON.stringify(postdata),
             //data: postdata,   //  NEED THIS IF USING searchandiser.php
             method: "POST",
+            xhrFields: {
+                withCredentials: true
+            },
             datatype: "json",
             url: this.url,
             success: function(data) {
@@ -64,16 +67,6 @@ Navigation.prototype = {
             fIdx = 0;  // filterNav index which may need not be in sync with originalNav index
 
         for(var i=0; i<originalNav.length; i++) {
-            /**
-             * Need to handle the publishDate and sunsetDate in filteredNav which wouldn't have been in the originalNav
-             * They might appear in-between categories so we have to increment filteredNav index and decrement originalNav index.
-             */
-            if (filteredNav[fIdx].name === "sunsetDate" || filteredNav[fIdx].name === "publishDate") {
-                fIdx++;
-                i--;
-                continue;
-            }
-
             for (var j=0; j<originalNav[i].refinements.length; j++) {
                 activeFilter = false;
                 selectedFilter = false;

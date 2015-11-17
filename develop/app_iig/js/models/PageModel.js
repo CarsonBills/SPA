@@ -13,58 +13,60 @@ var PageModel = Backbone.Model.extend({
         "siteVersion":"",
         "mode":"",
         "data":{
-            "title":"",
-            "metaKeyword":"",
-            "metaDescription":"",
-            "publishDate":"",
-            "sunsetDate":"",
-            "excerpt":"",
-            "publicationDate":"",
-            "ebookLink":"",
-            "pageNumber": null,
-            "readingNumber": null,
-            "author": [
-                {
-                    "authorBio": "",
-                    "authorFirstName": "",
-                    "authorMiddleName": "",
-                    "authorLastName": ""
-                }
-            ],
-
-            "website":" ",
-            "filters":[
+            "id": "",
+            "contentType": "",
+            "template": "",
+            "title": "",
+            "metaKeyword": "",
+            "publishDate": "",
+            "sunsetDate": "",
+            "headerImage": "",
+            "introCopy": "",
+            "sections": [
                 {
                     "type":"",
                     "value":""
                 }
+            ],
+            "downloadAsset": {},
+            "filters": [
+                {
+                    "src":"",
+                    "format":"",
+                    "fileSize":""
+                }
             ]
         },
-        mainAuthorName: "",
-        mainAuthorBio: ""
+        "assetHtml": "",
+        "assetIcon": "",
+        "assetSize": "",
+        "assetURL": ""
     },
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
             console.debug('Search return code is" ' + response.code);
-            
-            //ErrorsManager.showGeneric();
+            this.status = ErrorsManager.FAIL_STATE;
+            ErrorsManager.showGeneric();
             return;
         }
 
-        this.set({
-            "mainAuthorName": response.data.data.author[0].authorFirstName + " " +
-                response.data.data.author[0].authorMiddleName + " " +
-                response.data.data.author[0].authorLastName,
-            "mainAuthorBio": response.data.data.author[0].authorBio
-        });
+        if (response.data.data.downloadAsset != undefined) {
+            var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
+            this.set({
+                "assetHtml": assetData.html,
+                "assetIcon": assetData.icon,
+                "assetSize": assetData.size,
+                "assetURL": assetData.url
+            });
+        }
+
 
         return response.data;
     },
 
     initialize: function () {
         'use strict';
-        //this.url = this.urlRoot + this.id;
     }
 });
 
