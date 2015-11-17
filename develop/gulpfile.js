@@ -63,18 +63,9 @@ var gulp = require('gulp'),
         dev: '_dev'
     };
 
+
+
 var site = process.env.SITE || 'nr';
-
-gulp.task('fc', function () {
-   
-    return gulp.src(['./deploy/nr_dev/index.html'])
-        .pipe($.inject(gulp.src([
-                './js/vendor/modernizr.js', 
-                './js/bundle.min.js'
-            ], {read: false})))
-
-        .pipe(gulp.dest('./deploy'));
-});
 
 function getHTMLAssets(path) {
     return {
@@ -325,6 +316,7 @@ gulp.task('copy_vendor', function () {
 gulp.task('wiredep', function () {
     gulp.src([
         settings.app_js_vendor + 'codyhouse-modernizr.js'
+        //settings.app_js_vendor + 'modernizr.js'
     ])
     .pipe($.rename(function (path) {
         path.basename = 'modernizr';
@@ -441,16 +433,17 @@ gulp.task('server', function () {
 /*
     UPDATE Modernizr
     - bower update modernizr
-    - gulp custom-modernizr
+    - gulp assets:modernizr
     - 
 */
 gulp.task('assets:modernizr', function() {
-  return gulp.src([
-    proj.gulpdist + '/css/app.css',
-    proj.gulpdist + '/js/bundle.min.js'
-  ]).pipe(
-      $.modernizr({
+    return gulp.src([
+        deploy + site + settings.prod + settings.css + settings.app_css,
+        deploy + site + settings.prod + settings.js + settings.app_js
+    ]).pipe(
+        $.modernizr({
         options: [
+
           'addTest',                   /* Add custom tests */
           'fnBind',                    /* Use function.bind */
           'html5printshiv',            /* HTML5 support for IE */
@@ -458,14 +451,12 @@ gulp.task('assets:modernizr', function() {
           'testProp'                   /* Test for properties */
         ]
       }))
-    .pipe(addsrc.append(proj.bower + '/respond/dest/respond.src.js'))
+    .pipe(addsrc.append(settings.bower + '/respond/dest/respond.src.js'))
     .pipe($.concat('modernizr.js'))
-    .pipe(gulpif(argv.prod, $.uglify()))
-    .pipe(gulpif(argv.prod,
-        gulp.dest(proj.gulpdist + proj.vendor), 
-        gulp.dest(proj.gulptmp + proj.vendor)
-    ));
+    .pipe($.uglify())
+    .pipe(gulp.dest(app + site + settings.js_vendor));
 });
+
 gulp.task('build', function () {
     return gulp.src('')
         .pipe($.shell([
@@ -507,8 +498,13 @@ gulp.task('upload:nr_s3', [], function() {
     // use 'gulp --select' to upload only the srouces here 
     if (argv.select) {
         return gulp.src([
-            deploy + NR + settings.prod + settings.css + settings.app_css,
-            deploy + NR + settings.prod + settings.js + settings.app_js
+
+            deploy + NR + settings.prod + '/**',
+            '!' + deploy + NR + settings.prod + '/index.html',
+            '!' + deploy + NR + settings.prod + settings.fonts + '**',
+            '!' + deploy + NR + settings.prod + settings.json + '**',
+            '!' + deploy + NR + settings.prod + settings.php + '**',
+            '!' + deploy + NR + settings.prod + settings.images + '**'
         ])
         .pipe($.s3(nortonappreaderiig, {
             uploadPath: "/nr/",
