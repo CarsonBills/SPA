@@ -13,6 +13,8 @@ var gulp = require('gulp'),
     ifElse      = require('gulp-if-else'),
     gulpif      = require('gulp-if'),
     fileinclude = require('gulp-file-include'),
+    htmlreplace = require('gulp-html-replace'),
+    modifyCssUrls = require('gulp-modify-css-urls'),
     runSequence = require('run-sequence'),
     svgSprite = require('gulp-svg-sprite'),
     addsrc      = require('gulp-add-src'),
@@ -28,11 +30,15 @@ var gulp = require('gulp'),
 
     fs = require('fs'),
     s3 = require('gulp-s3'),
-    awsCredentials = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/aws.json')),
+    CF_APP_URL = "http://d2ybxpb8b9c7qj.cloudfront.net/",
+    CF_ASSETS_URL = "http://dk93p46l5vp3c.cloudfront.net/",
+    awsHeaders = {'x-amz-acl': 'public-read'},
 
     settings 		= {
         modernizr: '/modernizr.js',
         bower: 'bower_components/',
+        app_css: 'app.css',
+        app_js: 'bundle.min.js',
         app_config: app + app_nr + '/config/',
         app_fonts: app + app_nr + '/fonts/',
         app_php: app + app_nr + '/php/',
@@ -59,7 +65,43 @@ var gulp = require('gulp'),
 
 var site = process.env.SITE || 'nr';
 
+gulp.task('fc', function () {
+   
+    return gulp.src(['./deploy/nr_dev/index.html'])
+        .pipe($.inject(gulp.src([
+                './js/vendor/modernizr.js', 
+                './js/bundle.min.js'
+            ], {read: false})))
+
+        .pipe(gulp.dest('./deploy'));
+});
+
+function getHTMLAssets(path) {
+    return {
+        css: {
+            src: path +'/css/app.css',
+            tpl: '<link rel="stylesheet" href="%s">'
+        },
+        js: {
+            src: [path + '/js/vendor/modernizr.js', path + '/js/bundle.min.js'],
+            tpl: '<script src="%s"></script>'
+        },
+        icon: {
+            src: [path + '/images/favicon.png'],
+            tpl: '<link rel="icon" type="image/png" href="%s">'
+        }
+    }
+}
+
 gulp.task('fileinclude', function () {
+    var assets = ifElse(argv.prod,
+        function () { 
+            return getHTMLAssets(CF_APP_URL + site);
+        },
+        function () { 
+           return getHTMLAssets('');
+        });
+
     return gulp.src([app + site +  settings.page_templates + 'index.html'])
         .pipe($.plumber(function (error) {
             $.util.beep();
@@ -70,13 +112,7 @@ gulp.task('fileinclude', function () {
             prefix: '@@',
             basepath: '@file'
         }))
-        /* disable for now, reserved for future use */
-        /*.pipe(wiredep({
-            directory: proj.bower,
-            bowerJson: require('./bower.json'),
-            ignorePath: /^(\.\.\/)*\.\./,
-            exclude: ['jquery' ]
-        })) */
+        .pipe(htmlreplace(assets))
         .pipe(gulpif(argv.prod,
             gulp.dest(deploy + site + settings.prod),
             gulp.dest(deploy + site + settings.dev)
@@ -117,11 +153,18 @@ gulp.task('sass:production', function () {
     gulp.src([app + site + settings.sass + '**/*.scss'])
         .pipe($.sass({
             precision: 6,
-            outputStyle: 'compressed'
+            outputStyle: 'compact'
+        }))
+        .pipe(modifyCssUrls({
+            modify: function (url, filePath) {
+                return site + url;
+            },
+            prepend: CF_APP_URL
         }))
         .pipe($.postcss([
             require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
+        .pipe($.csso())
         .pipe(gulp.dest(deploy + site + settings.prod + settings.css))
         .pipe($.size());
 });
@@ -138,7 +181,7 @@ gulp.task('png_sprite', function (cb) {
             '!' + app + site + settings.svg + '*.svg'
         ])
         .pipe($.spritesmith({
-            imgName: '../images/png_sprite.png',
+            imgName: '/images/png_sprite.png',
             cssName: '_png_sprite.scss',
             cssTemplate: app + site + settings.sass + 'handlebars/handlebarsInheritance.scss.handlebars'
         }));
@@ -456,13 +499,42 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 gulp.task('clean', del.bind(null, [deploy + 'iig_dev/*', deploy + 'iig_prod/*', deploy + 'nr_dev/*', deploy + 'nr_prod/*']));
 
 
-gulp.task('upload:s3', [], function() {
-    return gulp.src(deploy + site + settings.prod + '/**')
-        .pipe($.s3(awsCredentials, {
-            uploadPath: "/" + site + "/",
-            headers: {
-            'x-amz-acl': 'public-read'
-        }
+gulp.task('upload:nr_s3', [], function() {
+    var nortonreaderassets = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonreaderassets.json')),
+    nortonappreaderiig = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonappreaderiig.json')),
+    NR = 'nr';
+
+    // use 'gulp --select' to upload only the srouces here 
+    if (argv.select) {
+        return gulp.src([
+            deploy + NR + settings.prod + settings.css + settings.app_css,
+            deploy + NR + settings.prod + settings.js + settings.app_js
+        ])
+        .pipe($.s3(nortonappreaderiig, {
+            uploadPath: "/nr/",
+            headers: awsHeaders
+        }));
+    }
+
+    gulp.src([
+        deploy + NR + settings.prod + '/**',
+        '!' + deploy + NR + settings.prod + '/index.html',
+        '!' + deploy + NR + settings.prod + settings.json + '**',
+        '!' + deploy + NR + settings.prod + settings.php + '**',
+        '!' + deploy + NR + settings.prod + settings.images + 'intro_bg.jpg',
+        '!' + deploy + NR + settings.prod + settings.images + 'header*.jpg'
+    ])
+    .pipe($.s3(nortonappreaderiig, {
+        uploadPath: "/nr/",
+        headers: awsHeaders
+    }));
+    gulp.src([
+        deploy + NR + settings.prod + settings.images + 'intro_bg.jpg',
+        deploy + NR + settings.prod + settings.images + 'header*.jpg'
+    ])
+    .pipe($.s3(nortonreaderassets, {
+        uploadPath: "/images/",
+        headers: awsHeaders
     }));
 });
 
