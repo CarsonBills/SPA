@@ -316,7 +316,7 @@ gulp.task('copy_vendor', function () {
 gulp.task('wiredep', function () {
     gulp.src([
         settings.app_js_vendor + 'codyhouse-modernizr.js'
-        //settings.app_js_vendor + 'modernizr.js'
+        //settings.app_js_vendor + 'modernizr-custom.min.js'
     ])
     .pipe($.rename(function (path) {
         path.basename = 'modernizr';
@@ -438,22 +438,25 @@ gulp.task('server', function () {
 */
 gulp.task('assets:modernizr', function() {
     return gulp.src([
-        deploy + site + settings.prod + settings.css + settings.app_css,
-        deploy + site + settings.prod + settings.js + settings.app_js
+        deploy + site + settings.dev + settings.css + settings.app_css,
+        deploy + site + settings.dev + settings.js + settings.app_js
     ]).pipe(
         $.modernizr({
         options: [
-
-          'addTest',                   /* Add custom tests */
-          'fnBind',                    /* Use function.bind */
-          'html5printshiv',            /* HTML5 support for IE */
-          'setClasses',                /* Add CSS classes to root tag */
-          'testProp'                   /* Test for properties */
+            "prefixes",
+            "addTest",
+            "hasEvent",
+            "mq",
+            "testProp",
+            "testStyles",
+            "setClasses",
+            'addTest',                   /* Add custom tests */
+            'html5printshiv'            /* HTML5 support for IE */
         ]
       }))
-    .pipe(addsrc.append(settings.bower + '/respond/dest/respond.src.js'))
+    //.pipe(addsrc.append(settings.bower + '/respond/dest/respond.src.js'))
     .pipe($.concat('modernizr.js'))
-    .pipe($.uglify())
+    //.pipe($.uglify())
     .pipe(gulp.dest(app + site + settings.js_vendor));
 });
 

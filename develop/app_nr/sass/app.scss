@@ -1,5 +1,4 @@
-@import "../../bower_components/jquery-ui/themes/base/jquery-ui";
-//@import "../../bower_components/foundation/scss/normalize";
+//@import "../../bower_components/jquery-ui/themes/base/jquery-ui";
 
 // override bootstrap glyphicon variable
 $bootstrap-sass-asset-helper: false;
@@ -7,7 +6,7 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 //@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "./vendor/bootstrap";
 
-@import "./vendor/codyhouse-sliding-panel";
+//@import "./vendor/codyhouse-sliding-panel";
 // TODO re-evaluate
 @import "./vendor/skeleton";
 
@@ -18,8 +17,6 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 @import 'mixins/svg_sprite';
 @import 'mixins/utils';
 @import 'mixins/fonts';
-
-//@import "custom";
 
 // Modules
 @import "modules/base";
