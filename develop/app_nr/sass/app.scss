@@ -6,8 +6,6 @@ $bootstrap-sass-asset-helper: false;
 $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default;
 //@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "./vendor/bootstrap";
-// local override
-@import "./vendor/glyphicons";
 
 @import "./vendor/codyhouse-sliding-panel";
 // TODO re-evaluate
@@ -25,6 +23,11 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 
 // Modules
 @import "modules/base";
+
+// local override
+@import "./vendor/glyphicons";
+
+
 @import "modules/modal";
 @import "modules/header";
 @import "modules/top_nav";
