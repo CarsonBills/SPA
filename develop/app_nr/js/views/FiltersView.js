@@ -3,9 +3,12 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
-    Refinements = require('../modules/refinements');
+    Refinements = require('../modules/refinements'),
+    ScrollHelper = require('../modules/scroll_helper');
+    ResizeHelper = require('../modules/resize_helper');
 
 var FiltersView = Backbone.View.extend({
+    THRESHOLD: 100,
     el: "#filters",
     template: require("../../templates/FiltersTemplate.hbs"),
     refinements: Refinements.getInstance(),
@@ -13,8 +16,11 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     delay: true,
     app: null,
+    adjustHieght: null,
     ACTIVE: "#chapter",
     active: "",
+    currentHeight: 0,
+
 
     initialize: function(params) {
         'use strict';
@@ -22,6 +28,16 @@ var FiltersView = Backbone.View.extend({
         this.app = params.app;
 
         this.active = this.ACTIVE;
+
+        this.adjustHieght = this.adjustHieghtWrapper();
+
+        ScrollHelper.setQue({
+            func: this.adjustHieght
+        });        
+
+        ResizeHelper.setQue({
+            func: this.adjustHieght
+        });
     },
     preRender: function() {
         'use strict';
@@ -31,6 +47,7 @@ var FiltersView = Backbone.View.extend({
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
+        this.adjustHieght();
     },
 
     render: function () {
@@ -54,13 +71,13 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
+        // used to allow only one expanded filter
         this.$('.filter-item').on('show.bs.collapse', function () {
             // that.$('.filter-item-cat').addClass('collapsed');
             // that.$('.filter-item').removeClass('in');
         });
 
         this.showActive();
-
 
         return this;
     },
@@ -83,6 +100,23 @@ var FiltersView = Backbone.View.extend({
             'use strict';
             this.removeSelectedFilter(e, "X");
         }
+    },
+
+    adjustHieghtWrapper: function () {
+        'use strict';
+        var that = this,
+            anchor = $('#sticky-anchor'),
+            anchor_top = anchor.offset().top;
+
+        return function adjustHieght() {
+            var height = ScrollHelper.getElHeight(that.$el.offset().top),
+                delta = height - that.currentHeight;
+
+            if (Math.abs(delta) > that.THRESHOLD) {
+                that.$el.css({'delta' : delta});
+                that.currentHeight = height;
+            }
+        };
     },
 
     showActive: function () {

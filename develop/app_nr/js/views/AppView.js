@@ -100,6 +100,8 @@ var AppView = Backbone.View.extend({
             that.toggleFilter();
         });
 
+        ScrollHelper.resetScroll();
+
     },
     events: {
 
