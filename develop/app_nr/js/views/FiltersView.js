@@ -8,7 +8,7 @@ var Backbone = require("backbone"),
     ResizeHelper = require('../modules/resize_helper');
 
 var FiltersView = Backbone.View.extend({
-    THRESHOLD: 100,
+    THRESHOLD: 10,
     el: "#filters",
     template: require("../../templates/FiltersTemplate.hbs"),
     refinements: Refinements.getInstance(),
@@ -114,8 +114,8 @@ var FiltersView = Backbone.View.extend({
             var height = ScrollHelper.getElHeight(that.$el.offset().top),
                 delta = height - that.currentHeight;
 
-            if (Math.abs(delta) > that.THRESHOLD) {
-                that.$el.css({'delta' : delta});
+            if (Math.abs(delta) > this.THRESHOLD) {
+                that.$el.css({'height' : height});
                 that.currentHeight = height;
             }
         };
@@ -143,16 +143,22 @@ var FiltersView = Backbone.View.extend({
             
     },
 
+    collapseAll: function () {
+        'use strict';
+        this.$('.filter-item-cat').addClass('collapsed');
+        this.$('.filter-item').removeClass('in');
+    },
+
     showActive: function (category) {
         'use strict';
-        console.log(category)
-        if (this.$(category).is('collapsed')) {
-            //this.$('.filter-item-cat').addClass('collapsed');
-            this.$('div[data-target=' + category + ']').removeClass('collapsed');
 
-            //this.$('.filter-item').removeClass('in');
+        var $cat = this.$('div[data-target=' + category + ']');
+        if ($cat.hasClass('collapsed')) {
+            $cat.removeClass('collapsed');
+
             this.$(category).addClass('in');
-            console.log('cccccc')
+
+            this.adjustHieght();
         }
     },
 
@@ -223,9 +229,9 @@ var FiltersView = Backbone.View.extend({
      */
     removeAllFilters: function(e) {
         'use strict';
-        $('.selected-filters').remove();
+        $('.filters-selected').remove();
         $('.filter-checkbox').attr('checked', false);
-        $('.remove-all-filters').remove();
+        //$('.remove-all-filters').remove();
         Norton.savedRefinements = null;
 
         var url = Norton.baseUrl;
@@ -234,8 +240,9 @@ var FiltersView = Backbone.View.extend({
 
         this.app.formatRefinements();   // call getArticles() in AppView
 
-
+        this.collapseAll();
         this.active = this.ACTIVE;
+        this.showActive(this.ACTIVE);
 
     },
     buildFilterUrl: function(url) {
