@@ -331,10 +331,10 @@ gulp.task('wiredep', function () {
 /*
     UPDATE Modernizr
     - bower update modernizr
-    - gulp assets:modernizr
+    - gulp customize:modernizr
     - 
 */
-gulp.task('assets:modernizr', function() {
+gulp.task('customize:modernizr', function() {
     return gulp.src([
         deploy + site + settings.dev + settings.css + settings.app_css,
         deploy + site + settings.dev + settings.js + settings.app_js
