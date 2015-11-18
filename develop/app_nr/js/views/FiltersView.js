@@ -24,7 +24,8 @@ var FiltersView = Backbone.View.extend({
 
     initialize: function(params) {
         'use strict';
-        this.collection.on('update', this.preRender, this);
+        // use once to prevent intialize from executing multiple times
+        this.collection.once('update', this.preRender, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -48,6 +49,7 @@ var FiltersView = Backbone.View.extend({
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
         this.adjustHieght();
+        this.checkSelected();
     },
 
     render: function () {
@@ -72,12 +74,12 @@ var FiltersView = Backbone.View.extend({
         }, this);
 
         // used to allow only one expanded filter
-        this.$('.filter-item').on('show.bs.collapse', function () {
-            // that.$('.filter-item-cat').addClass('collapsed');
-            // that.$('.filter-item').removeClass('in');
-        });
+        /* this.$('.filter-item').on('show.bs.collapse', function () {
+            that.$('.filter-item-cat').addClass('collapsed');
+            that.$('.filter-item').removeClass('in');
+        });*/
 
-        this.showActive();
+        //this.showActive();
 
         return this;
     },
@@ -119,14 +121,39 @@ var FiltersView = Backbone.View.extend({
         };
     },
 
-    showActive: function () {
+    checkSelected: function () {
         'use strict';
+        
+        // collapse all
         this.$('.filter-item-cat').addClass('collapsed');
-        this.$('div[data-target=' + this.active + ']').removeClass('collapsed');
 
-        this.$('.filter-item').removeClass('in');
-        this.$(this.active).addClass('in');
+        var that = this,
+            checked = this.$('.filter-item input[checked]'),
+            cat;
 
+        if (checked.length > 0 ) {
+            _.each(checked, function (item) {
+                cat = $(item).data('filter-cat');
+                that.showActive('#' + cat);
+            })
+        } else {
+            // if nothing checked expand the first one
+            this.showActive(this.ACTIVE);
+        }
+            
+    },
+
+    showActive: function (category) {
+        'use strict';
+        console.log(category)
+        if (this.$(category).is('collapsed')) {
+            //this.$('.filter-item-cat').addClass('collapsed');
+            this.$('div[data-target=' + category + ']').removeClass('collapsed');
+
+            //this.$('.filter-item').removeClass('in');
+            this.$(category).addClass('in');
+            console.log('cccccc')
+        }
     },
 
     toggleItem: function (e) {
