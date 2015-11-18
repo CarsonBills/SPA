@@ -55,8 +55,8 @@ var FiltersView = Backbone.View.extend({
         }, this);
 
         this.$('.filter-item').on('show.bs.collapse', function () {
-            that.$('.filter-item-cat').addClass('collapsed');
-            that.$('.filter-item').removeClass('in');
+            // that.$('.filter-item-cat').addClass('collapsed');
+            // that.$('.filter-item').removeClass('in');
         });
 
         this.showActive();
