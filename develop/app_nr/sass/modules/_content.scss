@@ -511,4 +511,9 @@ ul.card {
         }
     }
 }
+@media only screen and (max-width: $mobile-width-sm) {
+    #filters {
+        top: 210px;
+    }
+}
 
