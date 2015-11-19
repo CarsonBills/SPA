@@ -262,6 +262,9 @@
 		}
 
 		&[data-module=favorites] {
+			min-height: 600px;
+			height: auto;
+
 			.modal-title {
 				.glyphicon {
 					font-size: 1.6rem;
@@ -269,13 +272,43 @@
 					margin-left: 1rem;
 				}
 			}
+
+			.modal-body {    
+				overflow-y: scroll;
+				min-height: 0;
+				height: 480px;
+			}
+
+			.modal-footer {
+				padding: 0;
+    			text-align: center;
+			}
+
 			.empty-list {
 				text-align: center;
 				font-size: 1.8rem;
 				margin-top: 5rem;
 			}
 
-			.download-favs {
+			.button-container {
+				position: relative;
+				margin-top: 1rem;
+				height: auto;
+				@include clearfix();
+
+				a {
+					display: inline-block;
+					margin-bottom: 1rem;	
+					margin-right: 1rem;	
+				}
+
+				.glyphicon {
+					line-height: 38px;
+					margin-left: 1rem;
+				}
+			}
+
+			/* .download-favs {
 				position: absolute;
 				width: 100%;
 				text-transform: uppercase;
@@ -286,9 +319,8 @@
 				.glyphicon {
 					margin-left: 1.3rem;
 				}
-			}
+			} */
 			.list-format {
-
 				width: 98%;
 				margin: 0 auto;
 				padding: 1rem;
@@ -296,19 +328,22 @@
 			    cursor: move;
 			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
 
+			    display: table;
+			    table-layout: fixed;
+
 				.list-author {
 					@include opensans($size: 1.4rem, $weight: 600);
 					color: #6f6f6f;
 					text-transform: uppercase;
 					width: 30%;
-					display: inline-block;
+					display: table-cell;
 					line-height: 1.8rem;
 				}
 
 				.list-title {
 					@include athelas($size: 1.8rem, $style: italic, $weight: 400);
 	    			width: 62%;
-					display: inline-block;
+	    			display: table-cell;
 					line-height: 1.8rem;
 
 					a {
@@ -322,12 +357,11 @@
 				}
 
 				.remove {
-					cursor: pointer;
-					line-height: 1.8rem;
-					display: inline-block;
-					margin-right: 0.5rem;
-					margin-top: 0.3rem;
-					float: right;
+				    cursor: pointer;
+					display: table-cell;	
+					vertical-align: middle;
+					width: 20px;
+
 					span {
 						color: $dark-grey;
 					}

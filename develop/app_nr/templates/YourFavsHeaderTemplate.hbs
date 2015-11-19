@@ -6,8 +6,12 @@
     	</div>
     </div>
     <div class="modal-body"></div>
-    
+    <div class="modal-footer">
     {{#if hasContent}}
-    <div class="download-favs">Download<span class="glyphicon glyphicon-download-alt"></div>
+        <div class="button-container">
+            <a href="#" class="download-cvs"><button data-type="reader-button">Download .cvs<span class="glyphicon glyphicon-download-alt"></button></a>
+            <a href="#" class="download-rtf"><button data-type="reader-button">Download .rtf<span class="glyphicon glyphicon-download-alt"></button></a>
+        </div>
     {{/if}}
+    </div>
 </div>
