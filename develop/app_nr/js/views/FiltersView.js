@@ -114,8 +114,8 @@ var FiltersView = Backbone.View.extend({
             var height = ScrollHelper.getElHeight(that.$el.offset().top),
                 delta = height - that.currentHeight;
 
-            if (Math.abs(delta) > this.THRESHOLD) {
-                that.$el.css({'height' : height});
+            if (Math.abs(delta) > that.THRESHOLD) {
+                TweenLite.to(that.$el, 0.3, {'height': height, ease: Quad.easeInOut});
                 that.currentHeight = height;
             }
         };
