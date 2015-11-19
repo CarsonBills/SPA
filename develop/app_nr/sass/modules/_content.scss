@@ -44,10 +44,14 @@ body {
 
     .filters-selected {
         position: relative;
+        margin-bottom: 2rem;
         .remove-all-filters {
             position: relative;
             margin-bottom: 1rem;
             cursor: pointer;
+        }
+        .sel-filter-cat {
+            margin: 0 0 1rem 2rem; 
         }
         .selected-filters {
             position: relative;

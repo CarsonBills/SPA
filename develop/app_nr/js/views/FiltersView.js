@@ -229,9 +229,8 @@ var FiltersView = Backbone.View.extend({
      */
     removeAllFilters: function(e) {
         'use strict';
-        $('.filters-selected').remove();
+        $('.filters-selected').empty();
         $('.filter-checkbox').attr('checked', false);
-        //$('.remove-all-filters').remove();
         Norton.savedRefinements = null;
 
         var url = Norton.baseUrl;
