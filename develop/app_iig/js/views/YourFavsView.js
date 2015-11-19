@@ -30,7 +30,7 @@ var YourFavsView = Backbone.View.extend({
             that.render(false);
         });
 
-        this.loadLocalStorage();
+        this.getSavedFavs();
     },
 
     events: {
@@ -77,8 +77,8 @@ var YourFavsView = Backbone.View.extend({
 
         if (model) {
             this.collection.remove(model);
-            this.saveLocalStorage();
             this.updateCount();
+            this.likeOrUnlikeYourFavs(id, 'unlike');
         }
     },
 
@@ -92,7 +92,6 @@ var YourFavsView = Backbone.View.extend({
         if (model !== undefined) {
             this.showPopover($target, "Item Removed");
             this.removeItem(model);
-            this.likeOrUnlikeYourFavs(id, 'unlike');
         }
         return false;
     },
@@ -150,7 +149,6 @@ var YourFavsView = Backbone.View.extend({
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
-        this.saveLocalStorage();
         this.updateCount();
         this.likeOrUnlikeYourFavs(id, 'like');
         TrackManager.save(id);
@@ -195,13 +193,6 @@ var YourFavsView = Backbone.View.extend({
         return false;
     },
 
-    saveLocalStorage: function () {
-        'use strict';
-        // save in localstorage
-        try {
-            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
-        } catch (e) { }
-    },
 
     loadLocalStorage: function() {
         'use strict';
@@ -228,10 +219,19 @@ var YourFavsView = Backbone.View.extend({
     },
     likeOrUnlikeYourFavs: function (id, mode) {
         'use strict';
+        var model = this.collection.getModelByAttribute("id", id);
+        var data = {
+            sitecode: Norton.siteCode,
+            asset: id,
+            abstract: model.abstract.substr(0, 250),
+            title: model.title,
+            downloadAsset: model.downloadAsset,
+            pname: model.pname
+        }
 
         var postdata = {
-            sitecode: Norton.siteCode,
-            asset: id
+            asset: id,
+            asset_data: data
         };
 
         $.ajax({
@@ -240,7 +240,7 @@ var YourFavsView = Backbone.View.extend({
             data: JSON.stringify(postdata),
             dataType: "json",
             success: function(response) {
-// eventually, update some popularity indicator somewhere on the site; for now, do nothing
+                // eventually, update some popularity indicator somewhere on the site; for now, do nothing
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.debug("Like-Unlike Assets request failed.");
@@ -265,26 +265,27 @@ var YourFavsView = Backbone.View.extend({
 //       return; // User had no saved favorites
                 }
                 that.buildSavedFavs(response.data);
+                if (this.app.dataReady) {
+                    this.updateCount();
+                } else {
+                    this.app.deferred.promise().done(function () {
+                        that.updateCount();
+                    });
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 console.debug("Get Favorites request failed.");
             }
         });
     },
-    buildSavedFavs: function(data) {
+    buildSavedFavs: function(records) {
         'use strict';
-        var assetId;
+        var favsData;
 
-        this.pageItem = new NortonApp.Models.Page({
-            id: id,
-            prevId: model.get('prevId'),
-            nextId: model.get('nextId')
-        });
-
-        for(var i=0; i<data.length; i++) {
-            assetId = data[i].asset.id;
-
-
+        for (var i=0; i<records.length; i++) {
+            favsData = JSON.parse(records[i].assetData);
+            favsData.id = records[i].assetId;
+            this.collection.add(new NortonApp.Models.YourFavs(favsData));
         }
     }
 });
