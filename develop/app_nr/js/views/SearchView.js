@@ -11,9 +11,7 @@ var SearchView = Backbone.View.extend({
         this.app = params.app;
     },
 
-
     events: {
-
         'click #resetSearch' : 'onResetSearch',
         'click #searchButton': 'searchArticles',
         'keypress #searchTextInput': function(e) {
@@ -43,8 +41,15 @@ var SearchView = Backbone.View.extend({
     },
 
     onResetSearch: function (e) {
-        'use strict';
-        Norton.searchQuery = $('#searchTextInput').val('');
+        'use strict';       
+        if (Norton.searchQuery !== '') {
+            Norton.searchQuery = '';
+            this.collection.cleanupAndReset();
+            this.app.getArticles();
+        }
+        if ($('#searchTextInput').val() !== '') {
+            $('#searchTextInput').val('');
+        }
         return false;
     }
 });

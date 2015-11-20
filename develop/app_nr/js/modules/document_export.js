@@ -15,7 +15,7 @@ var Backbone = require('backbone'),
                 } else if (type === 'rtf') {
                     separator = ' ';
                 }
-                data.concat(params.legend.join(separator) + '\n');
+                data += (params.legend.join(separator) + '\n');
 
                 _.each(params.collection.models, function(article) {
                     data += article.attributes.title + separator +
