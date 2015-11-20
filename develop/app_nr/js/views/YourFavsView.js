@@ -3,7 +3,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
-    TrackManager = require('../modules/track_manager');
+    TrackManager = require('../modules/track_manager'),
+    Favorites =  require('../modules/favorites_helper');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -37,7 +38,7 @@ var YourFavsView = Backbone.View.extend({
     events: {
         "click .savelist-lnk": "toggleYourFavs",
         "click #navYourFavs": "showYourFavs",
-        "click .download-favs": "downloadYourFavs",
+        "click .button-container a": "saveYourFavs",
         "click .list-format .remove": "removeYourFavs"
     },
 
@@ -164,32 +165,23 @@ var YourFavsView = Backbone.View.extend({
         return false;
     },
 
-    downloadYourFavs: function() {
+    strip: function (html) {
         'use strict';
-        var data = $('#yourFavsTitle').text() + '\t\t\n' +
-            'Title\tAuthor\tExtract\n';
-        this.collection.each(function(article) {
-            data += article.attributes.title + '\t' +
-                article.attributes.authorFirstName + " " + article.attributes.authorLastName + '\t' +
-                article.attributes.abstract + '\n';
-        }, this);
+        var tmp = document.createElement("div");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText;
+    },
 
-        /**
-         * Maybe a better way to do this? This simulates a clickable link of the page.
-         * Create a blob of the data, create a link element and populate it with the blob,
-         * then click the link to open a SAVE dialog box, then remove the link.
-         */
-        // Create a Blob with the data, thlink element populated, click it, then remove it.
-        var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
-        var url = URL.createObjectURL(blob);
-        var lnk = document.createElement('a');
-        var filename = ($("#yourFavsTitle").html() !== "") ? $("#yourFavsTitle").html() + ".csv" : "my_items.csv";
-        lnk.setAttribute('href', url);
-        lnk.setAttribute('download', filename);
-        lnk.style.visibility = 'hidden';
-        document.body.appendChild(lnk);
-        lnk.click();
-        document.body.removeChild(lnk);
+    saveYourFavs: function (e) {
+        'use strict';
+        var $target = $(e.currentTarget),
+            type = $target.data('type');
+
+        Favorites.save({
+            title: $('#yourFavsTitle').text(),
+            type: $target.data('type'),
+            collection: this.collection
+        })
 
         return false;
     },
