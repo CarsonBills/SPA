@@ -3,7 +3,6 @@ var Backbone = require('backbone'),
 
 var HeaderConfigModel = Backbone.Model.extend({
     urlRoot: Norton.Constants.siteConfigUrl + "sitecode=" + Norton.siteCode + '&siteversion=' + Norton.version,
-    //urlRoot: Norton.Constants.siteConfigUrl  + Norton.siteCode + '/' + Norton.version,
 
     defaults: {
         displayTitle: '',
