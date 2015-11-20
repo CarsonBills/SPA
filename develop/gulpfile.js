@@ -341,20 +341,21 @@ gulp.task('customize:modernizr', function() {
     ]).pipe(
         $.modernizr({
         options: [
-            "prefixes",
-            "hasEvent",
-            "mq",
-            "testProp",
-            "testStyles",
-            "setClasses",
+            'prefixes',
+            'hasEvent',
+            'mq',
+            'testProp',
+            'testStyles',
+            'setClasses',
             'addTest',
             'html5printshiv'
         ],
         excludeTests: [
-            "hidden"
+            'hidden'
         ],
         tests : [
-            "localstorage"
+            'blobconstructor',
+            'localstorage'
         ]})
     )
     //.pipe(addsrc.append(settings.bower + '/respond/dest/respond.src.js'))
