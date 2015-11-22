@@ -137,10 +137,12 @@ var YourFavsView = Backbone.View.extend({
             this.removeItem(model);
             return false;
         }
+        console.log(articleData)
 
         this.showPopover($target, "Item Added");
 
         favsData.pname = articleData.pname;
+        favsData.pageNumber = articleData.pageNumber;
         favsData.abstract = articleData.abstract;
         favsData.title = articleData.title;
         favsData.authorLastName = articleData.primaryAuthor.authorLastName;

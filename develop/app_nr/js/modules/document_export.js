@@ -20,7 +20,7 @@ var Backbone = require('backbone'),
                 _.each(params.collection.models, function(article) {
                     data += article.attributes.title + separator +
                     article.attributes.authorFirstName + ' ' + article.attributes.authorLastName + separator +
-                    ' page number' + '\n';
+                    ' page ' + article.attributes.pageNumber + '\n';
                 });
 
                 return 'data:application/' + type + ';charset=utf-8,' + encodeURIComponent(data);

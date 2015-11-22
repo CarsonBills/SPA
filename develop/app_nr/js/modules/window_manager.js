@@ -20,7 +20,7 @@ var Backbone = require('backbone'),
                     entry = [];
                     entry.push(article.attributes.title);
                     entry.push(article.attributes.authorFirstName + ' ' + article.attributes.authorLastName);
-                    entry.push('page number');
+                    entry.push(' page ' + article.attributes.pageNumber);
                     data.entries.push({
                         entry: entry
                     });
