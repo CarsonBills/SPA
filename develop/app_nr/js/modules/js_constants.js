@@ -5,7 +5,7 @@ var JSConstants = {
     loginUrl: '//books.wwnorton.com/books//ssl/WebLogin.aspx',
     invalidSiteCodeUrl: '//books.wwnorton.com/books/index.aspx',
     siteConfigUrl: 'http://bishop:822/ars.svc/v1/getsiteconfig?',
-    searchUrl: 'http://bishop:822/ars.svc/v1//search',
+    searchUrl: 'http://bishop:821/ars.svc/v1//search',
     getDetailPageUrl: 'http://bishop:822/ars.svc/v1/getpagedetail?',
     saveTrackingUrl: 'http://bishop:822/Ars.svc/v1/SaveTracking',
     getTrackingUrl: 'http://bishop:822/Ars.svc/v1/trackingbyasset',
