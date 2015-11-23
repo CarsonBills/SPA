@@ -54,7 +54,7 @@ $header-text: #f2f2ec;
    			width: 100%;
 			height: $top-bar-height;
 			background-color: $bg-color;
-    		transition: all 0.3s;
+    		//transition: all 0.3s;
 			opacity: 0;
 
     		.stick & {
@@ -64,11 +64,10 @@ $header-text: #f2f2ec;
 
 		.norton-logo {
 			@include svg-sprite(norton_logo);
-			@include ie-sprite(norton_logo);
 			@include vertical-align(absolute);
 		    margin-left: $gutter;
 	    	float: left;
-	    	z-index: 999;
+	    	z-index: 50;
 		}
 
 	    .header-title {
@@ -81,8 +80,7 @@ $header-text: #f2f2ec;
 			    color: $header-text;
 			    letter-spacing: 1px;
 			    text-decoration: none;
-			}
-	    	z-index: 999;	
+			}	
 	    }
 
 	    .header-label {
