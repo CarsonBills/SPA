@@ -1,5 +1,8 @@
 body {
     background-color: $bg-color;
+    @include opensans($size: 1.5rem, $height: 1.6);
+    color: #222;
+    min-height: 200vh;
 }
 
 #container {

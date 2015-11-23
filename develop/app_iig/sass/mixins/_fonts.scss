@@ -1,22 +1,6 @@
 //@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,700,600);
 //@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,600);
 
-
-
-/* 
-	<lato>
-	Regular 400
-	Italic 400
-	Bold 700
- */
-@mixin lato($size: 1rem, $height: 1, $style:normal, $weight: 400) {
-	font-family: lato, sans-serif;
-	font-size: $size;
-	font-style: $style;
-	line-height: $height;
-	font-weight: $weight;
-}
-
 /* 
 	<athelas>
 	Regular 400

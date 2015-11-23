@@ -1,30 +1,4 @@
 
-@keyframes rotateX {
-	from {
-		transform:rotateX(0deg);
-	}	
-	to {
-		transform:translateY(25px) rotateX(-90deg) translateY(-25px);
-	}
-}
-
-@keyframes bottomRot {
-	from {
-		opacity: 0;
-	}	
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes rotateXR {
-	from {
-		transform:rotateX(-90deg);
-	}	
-	to {
-		transform:rotateX(0deg);
-	}
-}
 
 $header-text: #f2f2ec;
 // #siteHeader
@@ -70,7 +44,6 @@ $header-text: #f2f2ec;
 	    position: fixed;
 	    z-index: 99;
 	    top: 0;
-    	perspective: 800;
 
 	    .stick & {
 	    	@include one-sided-shadow($offset-y: 1px);
@@ -78,38 +51,14 @@ $header-text: #f2f2ec;
 
     	.bg {
     		position: absolute;
-   			transform-style: preserve-3d;
    			width: 100%;
 			height: $top-bar-height;
-    		transition: all 1s;
+			background-color: $bg-color;
+    		transition: all 0.3s;
 			opacity: 0;
-
-
-    		.front {
-    			position: absolute;
-   				width: 100%;
-    			height: $top-bar-height;
-    			background-color: #eee;
-    			transform: rotateX(90deg) translateY(-25px);
-    		}
-
-    		.bottom {
-    			position: absolute;
-   				width: 100%;
-    			height: $top-bar-height;
-    			background-color: #ccc;
-    			transform:rotateX(0deg) translateY(25px);
-    			opacity: 0;
-
-    			.stick & {
-    				animation: fade-in 0.5s ease-in-out;
-    			}
-    		}
 
     		.stick & {
     			opacity: 1;
-    			animation: rotateX 0.5s ease-in-out;
-    			animation-fill-mode: forwards;
     		}
     	}
 
@@ -174,31 +123,25 @@ $header-text: #f2f2ec;
 	    }
 
 		.my-account {
-		    position: absolute;
-		    top: 12px;
+			@include vertical-align(absolute);
 		    right: 10px;
-		    color: rgb(255, 255, 255);
-		    letter-spacing: 1px;
-		    opacity: 0.8;
-		    font-weight: 400;
 		    cursor: pointer;
-		}
-		.my-account a {
-		    color: white;
-		    opacity: 0.9;
-		}
-		.my-account a:hover {
-		    color: white;
-		    opacity: 1;
-		}
-		.my-account span {
-		    /* font-family:'Glyphicons Regular'; */
-		    margin: 0px 10px 0 0px;
-		    /* position: absolute; */
-		    font-size: 1.3em;
-		}
-		.my-account h6 {
-		    display: block;
+
+		    a {
+		    	color: #7d8084;
+
+		    	&:hover {
+		    	}
+		    }
+
+		    .glyphicon {
+		    	font-size: 2rem;
+		    }
+
+	    	.icon-label {
+	    		color: #000;
+	    		margin-left: 1rem;
+	    	}
 		}
 	}
 }
