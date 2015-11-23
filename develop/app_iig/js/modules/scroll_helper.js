@@ -4,7 +4,6 @@
     author: hon-chih chen
 */
 var _ = require('underscore');
-    //shouldRefresh = require('./should_refresh');
 
 module.exports = (function () {
     'use strict';
@@ -40,6 +39,10 @@ module.exports = (function () {
             return $(document).innerHeight();
         },
 
+        docTop = function () {
+            return $(document).scrollTop();
+        },
+
         winTop = function () {
             return $(window).scrollTop();
         },
@@ -50,6 +53,14 @@ module.exports = (function () {
 
         docDelta = function () {
             return -(winHeight() - docHeight());
+        },
+
+        getElHeight = function (top) {
+            return winHeight() - (top - docTop());
+        },
+
+        resetScroll = function (top) {
+            $(window).scrollTop(0);
         },
 
         shouldRefresh = function shouldRefresh() {
@@ -74,8 +85,11 @@ module.exports = (function () {
         setQue: setQue,
         winHeight: winHeight,
         winTop: winTop,
+        docTop: docTop,
         docHeight: docHeight,
         docDelta: docDelta,
-        shouldRefresh: shouldRefresh
+        shouldRefresh: shouldRefresh,
+        getElHeight: getElHeight,
+        resetScroll: resetScroll
     };
 })();

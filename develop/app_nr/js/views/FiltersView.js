@@ -4,7 +4,7 @@ var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
     Refinements = require('../modules/refinements'),
-    ScrollHelper = require('../modules/scroll_helper');
+    ScrollHelper = require('../modules/scroll_helper'),
     ResizeHelper = require('../modules/resize_helper');
 
 var FiltersView = Backbone.View.extend({

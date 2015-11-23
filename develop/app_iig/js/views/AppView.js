@@ -92,6 +92,8 @@ var AppView = Backbone.View.extend({
             that.toggleFilter();
         });
 
+        ScrollHelper.resetScroll();
+
     },
     events: {
         'click .icon-grid-view': 'onGrid',

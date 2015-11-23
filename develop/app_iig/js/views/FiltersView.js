@@ -3,9 +3,12 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
-    Refinements = require('../modules/refinements');
+    Refinements = require('../modules/refinements')
+    ScrollHelper = require('../modules/scroll_helper'),
+    ResizeHelper = require('../modules/resize_helper');
 
 var FiltersView = Backbone.View.extend({
+    THRESHOLD: 10,
     el: "#filters",
     template: require("../../templates/FiltersTemplate.hbs"),
     refinements: Refinements.getInstance(),
@@ -15,6 +18,9 @@ var FiltersView = Backbone.View.extend({
     app: null,
     ACTIVE: "#chapter",
     active: "",
+    adjustHieght: null,
+    active: "",
+    currentHeight: 0,
 
     initialize: function(params) {
         'use strict';
@@ -22,6 +28,16 @@ var FiltersView = Backbone.View.extend({
         this.app = params.app;
 
         this.active = this.ACTIVE;
+
+        this.adjustHieght = this.adjustHieghtWrapper();
+
+        ScrollHelper.setQue({
+            func: this.adjustHieght
+        });        
+
+        ResizeHelper.setQue({
+            func: this.adjustHieght
+        });
     },
     preRender: function() {
         'use strict';
@@ -84,6 +100,24 @@ var FiltersView = Backbone.View.extend({
             this.removeSelectedFilter(e, "X");
         }
     },
+
+    adjustHieghtWrapper: function () {
+        'use strict';
+        var that = this,
+            anchor = $('#sticky-anchor'),
+            anchor_top = anchor.offset().top;
+
+        return function adjustHieght() {
+            var height = ScrollHelper.getElHeight(that.$el.offset().top),
+                delta = height - that.currentHeight;
+
+            if (Math.abs(delta) > that.THRESHOLD) {
+                TweenLite.to(that.$el, 0.3, {'height': height, ease: Quad.easeInOut});
+                that.currentHeight = height;
+            }
+        };
+    },
+
 
     showActive: function () {
         'use strict';
