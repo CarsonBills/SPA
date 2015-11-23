@@ -168,7 +168,8 @@ gulp.task('png_sprite', function (cb) {
         spriteData = gulp.src([
             images  + '/*.png',
             '!' + images + 'favicon.png',
-            '!' + images + 'header.png',,
+            '!' + images + 'header.png',
+            '!' + images + 'header_pattern.png',
             '!' + app + site + settings.svg + '*.svg'
         ])
         .pipe($.spritesmith({
@@ -247,6 +248,7 @@ gulp.task('copy_images', function () {
     return gulp.src([
             images + '**/*(*.jpg)',
             images + 'favicon.png',
+            images + 'header_pattern.png',
             '!' + svg + '*.svg'
         ])
         .pipe(gulpif(argv.prod,
