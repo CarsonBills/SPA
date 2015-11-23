@@ -22,9 +22,6 @@ var JSConstants = {
     tabletPortaitWidth: 768,
     mobileWidth: 480,
     mobileWidthSM: 320,
-
-//getDetailPageUrl: 'http://localhost:2999/api/getdetailpage/',
-//searchUrl: '/php/searchandiser.php',
     defaultPageSize: 10
 };
 

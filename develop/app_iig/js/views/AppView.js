@@ -191,6 +191,7 @@ var AppView = Backbone.View.extend({
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
+            //this.collection.url = '//ec2-52-91-226-102.compute-1.amazonaws.com/search2.php';
         }
 
         if (Norton.savedRefinements) {
@@ -312,25 +313,6 @@ var AppView = Backbone.View.extend({
         //this.searchArticles();
         return false;
     },
-
-    /*resolveToBase: function () {
-        'use strict';
-        window.history.pushState(null,null, this.baseUrl);
-    },
-
-    showPageModal: function () {
-        'use strict';
-        var that = this;
-
-        this.modalShown = true;
-
-        $('#pageContainer').modal('show');
-        this.$('#pageContainer').on('hide.bs.modal', function (e) {
-            // load different URL without refreshing page
-            that.resolveToBase();
-            that.modalShown = false;
-        });
-    },*/
 
     // called from router
     showDetailPage: function(id) {
