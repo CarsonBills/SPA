@@ -31,13 +31,6 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.filters = response.availableNavigation;
 
         _.each(response.records, function(record) {
-            // Keep track of last record loaded to place focus on record previous to new page request - for accessibility
-            // Norton.lastArticleLoaded = record.attributes.allMeta.pname;
-
-            // mockup multiple authors
-            /*if (record.allMeta.authors.length > 0) {
-                record.allMeta.authors.push(record.allMeta.authors[0]);
-            }*/
             /**
              * Next/prev links
              */
@@ -61,9 +54,6 @@ var ArticlesCollection = Backbone.Collection.extend({
 
     isNotValid: function() {
         'use strict';
-        /*return _.every(this.models, function(model){
-            return model.isValid();
-        });*/
         return this.status === ErrorsManager.FAIL_STATE || this.models.length === 0;
     },
     /**
@@ -80,35 +70,6 @@ var ArticlesCollection = Backbone.Collection.extend({
         }
         return null;
     },
-
-    /*prev: function(model) {
-        'use strict';
-
-        var idx = this.current(model);
-        idx -= 1;
-
-        if (idx > 0) {
-            return this.at(idx - 1).attributes.allMeta.pname;
-        }
-
-        return null;
-    },
-    next: function(model) {
-        'use strict';
-
-        var idx = this.current(model);
-        idx += 1;
-
-        if (idx < (this.length - 1)) {
-            return this.at(idx + 1).attributes.allMeta.pname;
-        }
-        return null;
-    },
-    current: function(id) {
-        'use strict';
-        console.log(this.models)
-        return this.indexOf(id);
-    },*/
 
     setShowGrid: function (bool) {
         'use strict';
