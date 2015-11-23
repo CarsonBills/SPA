@@ -240,7 +240,7 @@ ul.card {
             .ebook-lnk {
                 float: right;
                 line-height: 3;
-                @include svg-sprite(ebook_icon);
+                //@include svg-sprite(ebook_icon);
                 text-indent: -9999px;
                 cursor: pointer;
             }
@@ -321,7 +321,7 @@ ul.card {
             text-align: center;
             width: 50px;
             .ebook-lnk {
-                @include svg-sprite(ebook_icon);
+                //@include svg-sprite(ebook_icon);
                 text-indent: -999px;
                 display: block;
                 overflow: hidden;
@@ -420,6 +420,7 @@ ul.card {
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 9998;
     color: #fff;
+    visibility: hidden;
 
     &.hide {
         opacity: 0;

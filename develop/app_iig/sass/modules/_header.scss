@@ -1,4 +1,31 @@
 
+@keyframes rotateX {
+	from {
+		transform:rotateX(0deg);
+	}	
+	to {
+		transform:translateY(25px) rotateX(-90deg) translateY(-25px);
+	}
+}
+
+@keyframes bottomRot {
+	from {
+		opacity: 0;
+	}	
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes rotateXR {
+	from {
+		transform:rotateX(-90deg);
+	}	
+	to {
+		transform:rotateX(0deg);
+	}
+}
+
 $header-text: #f2f2ec;
 .header {
     width: 100%;
@@ -37,15 +64,52 @@ $header-text: #f2f2ec;
 	// flattened
 	.top-bar {
 	    width: 100%;
-	    background: rgba(145,188, 197, 0.9);
+	    background: transparent;
     	height: $top-bar-height;
 	    position: fixed;
 	    z-index: 99;
 	    top: 0;
-	    @include one-sided-shadow();
+    	perspective: 800;
 
 	    .stick & {
 	    	@include one-sided-shadow($offset-y: 1px);
+    	}
+
+    	.bg {
+    		position: absolute;
+   			transform-style: preserve-3d;
+   			width: 100%;
+			height: $top-bar-height;
+    		transition: all 1s;
+			opacity: 0;
+
+
+    		.front {
+    			position: absolute;
+   				width: 100%;
+    			height: $top-bar-height;
+    			background-color: #ccc;
+    			transform: rotateX(90deg) translateY(-25px);
+    		}
+
+    		.bottom {
+    			position: absolute;
+   				width: 100%;
+    			height: $top-bar-height;
+    			background-color: #999;
+    			transform:rotateX(0deg) translateY(25px);
+    			opacity: 0;
+
+    			.stick & {
+    				animation: fade-in 0.5s ease-in-out;
+    			}
+    		}
+
+    		.stick & {
+    			opacity: 1;
+    			animation: rotateX 0.5s ease-in-out;
+    			animation-fill-mode: forwards;
+    		}
     	}
 
 		.norton-logo {
@@ -54,6 +118,7 @@ $header-text: #f2f2ec;
 			@include vertical-align(absolute);
 		    margin-left: $gutter;
 	    	float: left;
+	    	z-index: 999;
 		}
 
 	    .header-title {
@@ -66,7 +131,8 @@ $header-text: #f2f2ec;
 			    color: $header-text;
 			    letter-spacing: 1px;
 			    text-decoration: none;
-			}	
+			}
+	    	z-index: 999;	
 	    }
 
 	    .header-label {

@@ -94,14 +94,13 @@ button[data-type="reader-button"] {
 
 	&.savelist-lnk {
 		.icon {
-			@include svg-sprite(savelist-icon);
+			//@include svg-sprite(savelist-icon);
 		}
 	}
 
 	&.ebook-lnk {
 		.icon {
-			@include svg-sprite(ebook_icon);
-
+			//@include svg-sprite(ebook_icon);
 		}
 	}
 }
