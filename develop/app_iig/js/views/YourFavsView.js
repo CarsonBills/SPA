@@ -99,7 +99,7 @@ var YourFavsView = Backbone.View.extend({
     updateCount: function () {
         'use strict';
         // show item counter
-        $('#yourFavsCtr').html(' (' + this.collection.length + ')');
+        $('#yourFavsCtr').val(this.collection.length);
     },
 
     showPopover: function ($target, mesg) {
