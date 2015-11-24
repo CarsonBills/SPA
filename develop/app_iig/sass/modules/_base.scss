@@ -6,7 +6,7 @@ $light-grey: #eeeeee;
 $grey: #d6d6d6;
 $dark-grey: #9f9f9c;
 $blue: #00738b; // Title links
-$light-blue: #91bcc5; // Header BG
+$iig-link: #484848; // Header BG
 $tan: #c8b59c; // Shorter Header BG
 $offwhite: #f4f4ee;
 $bg-color: #ececec;
@@ -83,7 +83,7 @@ $modal-header-height: 52px;
 	}
 }
 
-button[data-type="reader-button"] {
+button[data-type="iig-button"] {
 	position: relative;
 	width: 160px;
 	height: 42px;

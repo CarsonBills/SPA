@@ -23,7 +23,10 @@
     box-shadow:  0 0 0 1px #d9d9d9,
         0 0 0 $inset white,
         $ofx $ofy $expand $spread $col;
+}
 
+@mixin grid-shadow($ofx: 0, $ofy: 2px, $expand: 5px, $col: rgba(0, 0, 0, 0.3)) {
+    box-shadow: $ofx $ofy $expand $col;
 }
 
 @mixin locked($position: relative, $top: $top-bar-height) {
