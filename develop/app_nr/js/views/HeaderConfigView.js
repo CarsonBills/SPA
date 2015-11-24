@@ -14,12 +14,15 @@ var HeaderConfigView = Backbone.View.extend({
     render: function() {
         'use strict';
         var img = this.model.get('headerImage'),
-            headerConfigTemplate;
+            headerConfigTemplate,
+            context = this.model.toJSON();
+
+        context.baseUrl = Norton.baseUrl;
 
         if (Norton.siteCode === 'nortonreader') {
-            headerConfigTemplate = this.templateNR(this.model.toJSON());
+            headerConfigTemplate = this.templateNR(context);
         } else {
-            headerConfigTemplate = this.templateIig(this.model.toJSON());
+            headerConfigTemplate = this.templateIig(context);
         }
         this.$el.append(headerConfigTemplate);
 
