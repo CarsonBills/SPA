@@ -1,6 +1,5 @@
 
 
-$header-text: #f2f2ec;
 // #siteHeader
 .header {
     width: 100%;
@@ -76,7 +75,7 @@ $header-text: #f2f2ec;
 	    	float: left;
 	    	margin-left: 7.4rem;
 			a {
-				@include athelas($size: 2.4rem);
+				@include opensans($size: 1.6rem);
 			    color: $header-text;
 			    letter-spacing: 1px;
 			    text-decoration: none;
@@ -96,13 +95,14 @@ $header-text: #f2f2ec;
 	    }
 
 	    .links {
-			@include vertical-align(absolute);
+			@include vertical-align();
 			float: right;
 			margin-right: $gutter;
 	    	right: 0;
+
 	    	a {
 				@include opensans($size: 1.4rem, $weight: 600);
-			    color: $header-text;
+			    color: lighten($header-text, 10%);
     			&:hover {
     				text-decoration: none;
     			}
@@ -121,15 +121,14 @@ $header-text: #f2f2ec;
 	    }
 
 		.my-account {
-			@include vertical-align(absolute);
-		    right: 10px;
+			@include vertical-align();
+			float: right;
+			margin-right: $gutter;
+			right: 0;
 		    cursor: pointer;
 
 		    a {
-		    	color: #7d8084;
-
-		    	&:hover {
-		    	}
+		    	color: lighten($header-text, 10%);
 		    }
 
 		    .glyphicon {
@@ -216,6 +215,12 @@ $header-text: #f2f2ec;
 	.header {
 		.cover {
 			height: 50vw;
+		}
+
+		.top-bar {
+			.my-account a .icon-label {
+				display: none;
+			}
 		}
 	}
 	.title-screen {
