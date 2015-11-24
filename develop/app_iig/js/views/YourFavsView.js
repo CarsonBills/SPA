@@ -99,7 +99,7 @@ var YourFavsView = Backbone.View.extend({
     updateCount: function () {
         'use strict';
         // show item counter
-        $('#yourFavsCtr').val(this.collection.length);
+        $('#yourFavsCtr').text(this.collection.length);
     },
 
     showPopover: function ($target, mesg) {
@@ -142,15 +142,15 @@ var YourFavsView = Backbone.View.extend({
         favsData.pname = articleData.pname;
         favsData.abstract = articleData.abstract;
         favsData.title = articleData.title;
-        favsData.authorLastName = articleData.primaryAuthor.authorLastName;
-        favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
-        favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
-        favsData.ebookNode = articleData.ebookNode;
+        //favsData.authorLastName = articleData.primaryAuthor.authorLastName;
+        //favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
+        //favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
+        //favsData.ebookNode = articleData.ebookNode;
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
         this.updateCount();
-        this.likeOrUnlikeYourFavs(id, 'like');
+        //this.likeOrUnlikeYourFavs(id, 'like');
         TrackManager.save(id);
 
         return false;
