@@ -26,9 +26,8 @@
 				    </ul>
 
 				    <!-- Load More Section -->
-				    <div class="load-more-section off" data-default="load more" data-loading="Loading">
-				    	<span class="loading-spinner"></span>
-				        <button id="load-more">LOAD MORE</button>
+				    <div class="load-more-section off" data-default="load more">
+				        <button data-type="iig-button" id="load-more">LOAD MORE</button>
 				    </div>
 
 				    <!-- Footer Section -->
@@ -50,21 +49,7 @@
 			    <div class="your-favs-view-section">
 			        <div id="yourFavs" class="your-favs"></div>
 			    </div>
-
-			    <script>
-			        // modals don't detect close event from back button so use event handler to close with popstate change
-			        $(window).bind("popstate", function() {
-			            if (window.location.href == Norton.baseUrl) {
-			                try {
-                    $('#pageContainer').modal('hide');
-                } catch(e) {
-
-                }
-
-            }
-        });
-    </script>
-</div>
+			</div>
 		</div>
 
 @@include('./partials/base/page_bottom.html')

@@ -504,6 +504,14 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
 gulp.task('clean', del.bind(null, [deploy + 'iig_dev/*', deploy + 'iig_prod/*', deploy + 'nr_dev/*', deploy + 'nr_prod/*']));
 
+gulp.task('default', function () {
+    console.log("## Norton Reader ##");
+    console.log("SITE=nr gulp watch");
+    console.log("SITE=nr gulp build");
+    console.log("## IIG ##");
+    console.log("SITE=iig gulp watch");
+    console.log("SITE=iig gulp build");
+});
 
 gulp.task('upload:nr_s3', [], function() {
     var nortonreaderassets = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonreaderassets.json')),

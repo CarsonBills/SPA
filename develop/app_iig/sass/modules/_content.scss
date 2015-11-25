@@ -34,7 +34,6 @@ body {
     @include toggle-offscreen($property: left);
     @include locked($position: fixed, $top:101px);
     @include opensans($size: 1.4rem);
-    color: #484848;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
     padding: 1.2rem;
 
@@ -84,9 +83,9 @@ body {
     .filter-item-cat {
         position:relative;
         @include opensans($size: 1.6rem, $weight: 600);
-        color:  $reader-blue;
+        color:  $iig-link;
         background-color: #fff;
-        margin: 1rem 0;
+        margin: 1.5rem 0;
 
         &.collapsed {
             .glyphicon {
@@ -97,10 +96,11 @@ body {
 
         .glyphicon {
             position: absolute;
+            top: 0;
             right: 0;
-            color: #484848;
-            font-size: 1rem;
-            line-height: 1.4;
+            color: $iig-link;
+            font-size: 1.3rem;
+            line-height: 1.6rem;
             transform: rotate(0deg);
         }
     }
@@ -172,12 +172,12 @@ ul.card {
         width: $card-width;
         height: $card-height;
         background: #fff;
-        @include inner-border();
+        @include grid-shadow();
         overflow: hidden;
         transition: all 0.2s ease-in-out;
 
         &:hover {
-            @include inner-border($spread: 10px);
+            @include grid-shadow($expand: 8px, $col: rgba(0, 0, 0, 0.6));
 
             .card-info {
                 opacity: 0.8;
@@ -200,7 +200,7 @@ ul.card {
                 }
 
                 &.list-title {
-                    color: $reader-blue;
+                    color: $iig-link;
                     margin: 0;
                     @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
                 }
@@ -236,7 +236,7 @@ ul.card {
             .savelist-lnk {
                 float: left;
                 font-size: 1.5rem;
-                color: $reader-blue;
+                color: $iig-link;
                 cursor:pointer;
             }
 
@@ -314,7 +314,7 @@ ul.card {
 
             .list-title {
                 width: 60%;
-                color: $reader-blue;
+                color: $iig-link;
                 @include athelas($size: 1.8rem, $style: italic, $weight: 400);
                 @include ellipsis();
             }
@@ -334,7 +334,7 @@ ul.card {
         .savelist-lnk {
             width: 90px;
             text-align: center;
-            color: $reader-blue;
+            color: $iig-link;
             font-size: 1.5rem;
             cursor: pointer;
             top: 0;
@@ -364,10 +364,27 @@ ul.card {
 // loadmore button
 .load-more-section {
     position: relative;
-    width: 240px;
-    height: 50px;
-    margin: 0 auto 3rem;
+    width: 180px;
+    margin: 5rem auto;
     transition: all 1s;
+
+    button {
+        width: inherit;
+        height: 50px;
+    }
+}
+#load-more {
+    position: relative;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: 100;
+    letter-spacing: 1px;
+    background-color: #fcfcfc;
+
+    .anim & {
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+        padding: 0 4rem 0 7rem;
+    }
 }
 
 // spinner within load more button
@@ -381,20 +398,6 @@ ul.card {
     .anim & {
         display: inline-block;
         animation: lm-rotate-360 0.8s infinite steps(12, end);
-    }
-}
-#load-more {
-    position: relative;
-    padding: 0 5rem;
-    height: 100%;
-    font-size: 1.2em;
-    font-weight: 100;
-    letter-spacing: 1px;
-    background-color: #fcfcfc;
-
-    .anim & {
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
-        padding: 0 4rem 0 7rem;
     }
 }
 /* details page and overall loading graphic*/

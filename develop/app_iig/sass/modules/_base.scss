@@ -6,10 +6,14 @@ $light-grey: #eeeeee;
 $grey: #d6d6d6;
 $dark-grey: #9f9f9c;
 $blue: #00738b; // Title links
-$light-blue: #91bcc5; // Header BG
+$iig-link: #484848; // Header BG
 $tan: #c8b59c; // Shorter Header BG
 $offwhite: #f4f4ee;
 $bg-color: #ececec;
+
+$header-text: #333;
+$topnav-text: #fff;
+$topnav-bg: rgba(0, 0, 0, 0.9);
 
 /* end design colors */
 
@@ -32,8 +36,8 @@ $filter-width: 280px;
 $loading-transform: scale(0.4) translate(-37px, -42px);
 
 
-$card-width: 290px;
-$card-height: 270px;
+$card-width: 320px;
+$card-height: 360px;
 /* modal */
 $modal-header-height: 52px;
 
@@ -79,7 +83,7 @@ $modal-header-height: 52px;
 	}
 }
 
-button[data-type="reader-button"] {
+button[data-type="iig-button"] {
 	position: relative;
 	width: 160px;
 	height: 42px;

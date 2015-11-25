@@ -7,12 +7,13 @@
     position: relative;
     .navbar {
         margin: 0;
+        border: none;
     }
 }
 
 nav {
     position: relative;
-    background: rgba(255, 255, 255, 0.9);
+    background: $topnav-bg;
     height: $top-bar-height;
     display: block;
     width: 100%;
@@ -46,10 +47,11 @@ nav {
     span {
         opacity: 0.9;
         display: inline-block;
-        color: #000;
+        color: $topnav-text;
 
         &:not(.glyphicon) {
             @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+            text-transform: uppercase;
         }
 
         &.glyphicon {
@@ -67,7 +69,7 @@ nav {
 
     input[type="text"] {
         width: 45%;
-        border: 3px solid #eee;
+        border: 1px solid #eee;
         border-radius: 0;
         padding-right: 40px;
         @include athelas($size: 1.8rem);
@@ -80,7 +82,7 @@ nav {
         position: relative;
         display: inline-block;
         transform: translate(-20px, 6px);
-        color: #000;
+        color: #fff;
         cursor: pointer;
         opacity: 0.5;
         font-size: 2rem;
@@ -105,7 +107,6 @@ nav {
 }
 
 /* saved items */
-
 .saved-items {
     letter-spacing: 1px;
     opacity: 1;
@@ -118,17 +119,27 @@ nav {
         line-height: 1.9rem;
 
         &:not(.glyphicon) {
-            @include opensans($size: 1.4rem, $height: 1, $weight: 600);
+            @include opensans($size: 1.4rem, $height: 1);
+            text-transform: uppercase;
+        }
+
+        &.counter {
+            background-color: #721717;
+            padding: 0.5rem 0.6rem;
+            margin-left: 0.5rem;    
+            border-radius: 80% / 2.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+            letter-spacing: 0;
         }
 
         &.glyphicon {
-            color: #000;
             font-size: 1.8rem;
         }
     }
 
     a {
-        color: #000;
+        color: $topnav-text;
         &:hover {
             text-decoration: none;
         }

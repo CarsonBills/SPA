@@ -1,5 +1,8 @@
-/* 822 for QA
-    821 for DEv
+/* 
+    822 for QA
+    821 for Dev
+
+    11/24/2015 --> pointing to 822
 */
 
 var JSConstants = {
@@ -8,14 +11,14 @@ var JSConstants = {
     creditsUrl: '/json/credits.json',
     loginUrl: '//books.wwnorton.com/books//ssl/WebLogin.aspx',
     invalidSiteCodeUrl: '//books.wwnorton.com/books/index.aspx',
-    siteConfigUrl: 'http://bishop:822/ars.svc/v1/getsiteconfig?',
-    searchUrl: 'http://bishop:822/ars.svc/v1//search',
-    getDetailPageUrl: 'http://bishop:822/ars.svc/v1/getpagedetail?',
-    saveTrackingUrl: 'http://bishop:822/Ars.svc/v1/SaveTracking',
-    getTrackingUrl: 'http://bishop:822/Ars.svc/v1/trackingbyasset',
-    likeAssetUrl: 'http://bishop:822/Ars.svc/v1/LikeAsset ',
-    unlikeAssetUrl: 'http://bishop:822/Ars.svc/v1/UnLikeAsset ',
-    getSavedFavsUrl: 'http://bishop:822/Ars.svc/v1/getfavorites',
+    siteConfigUrl: 'http://10.0.10.149:822/ars.svc/v1/getsiteconfig?',
+    searchUrl: 'http://10.0.10.149:822/ars.svc/v1//search',
+    getDetailPageUrl: 'http://10.0.10.149:822/ars.svc/v1/getpagedetail?',
+    saveTrackingUrl: 'http://10.0.10.149:822/Ars.svc/v1/SaveTracking',
+    getTrackingUrl: 'http://10.0.10.149:822/Ars.svc/v1/trackingbyasset',
+    likeAssetUrl: 'http://10.0.10.149:822/Ars.svc/v1/LikeAsset ',
+    unlikeAssetUrl: 'http://10.0.10.149:822/Ars.svc/v1/UnLikeAsset ',
+    getSavedFavsUrl: 'http://10.0.10.149:822/Ars.svc/v1/getfavorites',
 
     tabletLandspaceWidth: 1024,
     tabletPortaitWidth: 768,
