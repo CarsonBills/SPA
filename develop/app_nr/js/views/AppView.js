@@ -171,8 +171,12 @@ var AppView = Backbone.View.extend({
         }
 
         if (Norton.savedRefinements) {
-            //postdata.refinements = JSON.stringify(Norton.savedRefinements);   //  NEED THIS IF USING searchandiser.php
-            postdata.refinements = Norton.savedRefinements;
+            // .NET services want post data as a string, not as key-val object
+            if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
+                postdata.refinements = Norton.savedRefinements;
+            } else {
+                postdata.refinements = JSON.stringify(Norton.savedRefinements);
+            }
             postdata.pruneRefinements = "false";
         }
         if (Norton.sortby) {
@@ -184,9 +188,12 @@ var AppView = Backbone.View.extend({
         postdata.skip = this.collection.recordEnd;
         postdata.pageSize = Norton.perPage;
 
+        // .NET services want post data as a string, not as key-val object
+        if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
+            postdata = JSON.stringify(postdata);
+        }
         this.collection.fetch({
-            data: JSON.stringify(postdata),
-            //data: postdata,   //  NEED THIS IF USING searchandiser.php
+            data: postdata,
             method: "POST",
             datatype: "json",
             remove: false,
