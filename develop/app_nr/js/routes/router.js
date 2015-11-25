@@ -99,13 +99,14 @@ var AppRouter = Backbone.Router.extend({
                     if (NortonApp.headerConfigItem.attributes.siteCode) {
                         try {
                             localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
+                            console.log(localStorage.getItem(lsConfigId));
                         } catch (e) { }
                     }
 
 
                     dfd.resolve();
                 }, this),
-                error: function(){
+                error: function(xhr, response, error){
                     // go to generic error page
                     console.debug('Site Config not available.');
                     ErrorsManager.showGeneric();

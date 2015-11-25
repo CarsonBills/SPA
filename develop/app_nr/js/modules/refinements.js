@@ -28,9 +28,12 @@ Navigation.prototype = {
             pageSize: 1,
             fields: ["availableNavigation"]
         };
+        // .NET services want post data as a string, not as key-val object
+        if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
+            postdata = JSON.stringify(postdata);
+        }
         this.collection.fetch({
-            data: JSON.stringify(postdata),
-            //data: postdata,   //  NEED THIS IF USING searchandiser.php
+            data: postdata,
             method: "POST",
             datatype: "json",
             url: this.url,
