@@ -26,7 +26,6 @@ var YourFavsView = Backbone.View.extend({
 
         //this.collection.on('remove', this.render, this);
         this.collection.on('remove', function (e) {
-            console.log('remove')
             that.render(false);
         });
 
@@ -243,7 +242,7 @@ var YourFavsView = Backbone.View.extend({
                 // eventually, update some popularity indicator somewhere on the site; for now, do nothing
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.debug("Like-Unlike Assets request failed.");
+                Logger.error("Like-Unlike Assets request failed.");
             }
         });
     },
@@ -258,7 +257,7 @@ var YourFavsView = Backbone.View.extend({
             dataType: "json",
             success: function(response) {
                 if (response.code !== 200) {
-                    console.debug("Get Favorites request failed.");
+                    Logger.error("Get Favorites request failed.");
                     return;
                 }
                 if (response.data.length < 1) {
@@ -274,7 +273,7 @@ var YourFavsView = Backbone.View.extend({
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.debug("Get Favorites request failed.");
+                Logger.error("Get Favorites request failed.");
             }
         });
     },

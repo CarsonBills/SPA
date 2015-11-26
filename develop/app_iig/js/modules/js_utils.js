@@ -71,8 +71,6 @@ var Utils = {
                 break;
         }
         data.size = size;
-
-console.log(data);
         return data;
     }
 };

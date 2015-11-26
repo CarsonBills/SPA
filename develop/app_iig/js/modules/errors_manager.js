@@ -18,7 +18,7 @@ var Backbone = require('backbone'),
                         body: ErrorsManager.GENERIC_BODY
                     }
                 });
-                console.debug(msg);
+                Logger.error(msg);
             };
         return {
             show: show,

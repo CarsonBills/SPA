@@ -249,7 +249,7 @@ var AppView = Backbone.View.extend({
             }, this),
 
             error: function(xhr, response, error) {
-                console.debug('Search query not available.');
+                Logger.error('Search query not available.');
                 Norton.Utils.genericError('articles');
             }
         });

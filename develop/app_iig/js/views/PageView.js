@@ -37,7 +37,7 @@ var PageView = Backbone.View.extend({
                 that.render();
             }, this),
             error: function(xhr, response, error) {
-                console.debug('Detail Page not available.');
+                Logger.error('Detail Page not available.');
                 ErrorsManager.showGeneric();
             }
         });

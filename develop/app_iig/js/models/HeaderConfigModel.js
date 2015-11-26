@@ -50,7 +50,7 @@ var HeaderConfigModel = Backbone.Model.extend({
     parse: function(response) {
         "use strict";
         if (response.code !== 200) {
-            //console.debug('Site Config return code is" ' + response.code);
+            Logger.debug('Site Config return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
             return false;
@@ -62,10 +62,7 @@ var HeaderConfigModel = Backbone.Model.extend({
             if (link.target === "modal") {
                 response.data.headerLinks[index].link = Norton.Constants.creditsUrl;
             }
-        })
-
-
-        console.log(response);
+        });
 
         return response.data;
     }

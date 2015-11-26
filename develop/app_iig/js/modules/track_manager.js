@@ -24,7 +24,7 @@ var Backbone = require('backbone'),
                     // eventually, update some popularity indicator somewhere on the site; for now, do nothing
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.debug("Save Tracking request failed.");
+                    Logger.error("Save Tracking request failed.");
                 }
             });
         };

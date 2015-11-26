@@ -48,7 +48,7 @@ Navigation.prototype = {
                 }
             },
             error: function(xhr, response, error) {
-                console.debug(error);
+                Logger.error(error);
                 that.deferred.reject(error);
             }
         });

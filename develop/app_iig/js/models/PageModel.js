@@ -45,7 +45,7 @@ var PageModel = Backbone.Model.extend({
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
-            console.debug('Search return code is" ' + response.code);
+            Logger.debug('Search return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
             return;

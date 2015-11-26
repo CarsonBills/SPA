@@ -36,8 +36,6 @@ var HeaderConfigView = Backbone.View.extend({
         'use strict';
         var $div = $('<div></div>');
 
-        console.log(credits)
-
         $div.html(this.templateCredits(credits));
 
         ModalManager.show({
@@ -58,7 +56,7 @@ var HeaderConfigView = Backbone.View.extend({
                 that.showCredits(response);
             },
             error: function(xhr, response, error) {
-                console.debug('Credits Page not available.');
+                Logger.error('Credits Page not available.');
                 ErrorsManager.showGeneric();
             }
         });

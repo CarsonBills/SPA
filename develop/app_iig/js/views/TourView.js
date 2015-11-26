@@ -6,8 +6,6 @@ var TourView = Backbone.View.extend({
 
     initialize: function() {
         "use strict";
-
-        //console.log(this.collection);
         this.render();
     },
     
