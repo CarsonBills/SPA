@@ -54,6 +54,7 @@ var gulp = require('gulp'),
         php: '/php/',
         css: '/css/',
         js: '/js/',
+        js_logger: '/js/logger/',
         js_vendor: '/js/vendor/',
         json: '/json/',
         svg: '/images/svg/',
@@ -370,12 +371,29 @@ gulp.task('customize:modernizr', function() {
 });
 
 gulp.task('browserify', function () {
+    var logger = ifElse(argv.prod,
+        function () { 
+           return 'production.js';
+        },
+        function () { 
+           return 'develop.js';
+        });
     return gulp.src([
             app + site + settings.js + 'app.js',
             '!' + app + site + settings.js_vendor + '**/*.js'
         ])
         //.pipe($.jshint())
         //.pipe($.jshint.reporter('jshint-stylish'))
+        .pipe($.inject(
+            gulp.src([app + site + settings.js_logger + logger], {read: true}), {
+                transform: function (filepath, file) {
+                    return file.contents.toString('utf8');
+                },
+                starttag: '/* inject:logger */',
+                endtag: '/* endinject */',
+                removeTags: true
+            }
+        ))
         .pipe($.browserify({
             transform: ['debowerify', hbsfy]
         }))
@@ -496,6 +514,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
     gulp.watch([app + site + settings.page_templates + '**/*.html'], ['fileinclude']);
     gulp.watch([app + site + settings.templates + '**/*.hbs'], ['browserify']);
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
+    gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
     gulp.watch([app + site + settings.js + '**/*.js'], ['browserify']);
     gulp.watch([app + site + settings.php + '**/*.php'], ['copy_php']);
     gulp.watch([app + site + settings.images + '**', '!' + settings.svg + '*.svg'], ['png_sprite', 'copy_images']);
