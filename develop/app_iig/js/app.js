@@ -1,6 +1,7 @@
 /* jshint -W030 */
 /* Declare here to build into bundle */
 
+
 window.$ = require('jquery');
 window.jQuery = $;
 
@@ -20,6 +21,10 @@ Backbone.$ = $;
 
 Norton.Constants = require('./modules/js_constants');
 Norton.Utils = require('./modules/js_utils');
+
+
+/* inject:logger */
+/* endinject */
 
 $(function() {
     'use strict';
