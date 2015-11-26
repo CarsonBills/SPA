@@ -24,6 +24,8 @@ var HeaderConfigView = Backbone.View.extend({
             headerConfigTemplate = this.templateNR(context);
         } else {
             headerConfigTemplate = this.templateIig(context);
+            // show bg pattern
+            this.$el.addClass('bg');
         }
         this.$el.append(headerConfigTemplate);
     },
