@@ -56,7 +56,7 @@ var HeaderConfigView = Backbone.View.extend({
                 that.showCredits(response);
             },
             error: function(xhr, response, error) {
-                Logger.error('Credits Page not available.');
+                Logger.get(that.MODULE).error('Credits Page not available.');
                 ErrorsManager.showGeneric();
             }
         });

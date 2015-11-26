@@ -218,20 +218,21 @@ var YourFavsView = Backbone.View.extend({
     },
     likeOrUnlikeYourFavs: function (id, mode) {
         'use strict';
-        var model = this.collection.getModelByAttribute("id", id);
-        var data = {
-            sitecode: Norton.siteCode,
-            asset: id,
-            abstract: model.abstract.substr(0, 250),
-            title: model.title,
-            downloadAsset: model.downloadAsset,
-            pname: model.pname
-        }
+        var that = this,
+            model = this.collection.getModelByAttribute("id", id),
+            data = {
+                sitecode: Norton.siteCode,
+                asset: id,
+                abstract: model.abstract.substr(0, 250),
+                title: model.title,
+                downloadAsset: model.downloadAsset,
+                pname: model.pname
+            },
 
-        var postdata = {
-            asset: id,
-            asset_data: data
-        };
+            postdata = {
+                asset: id,
+                asset_data: data
+            };
 
         $.ajax({
             type:'POST',
@@ -242,7 +243,7 @@ var YourFavsView = Backbone.View.extend({
                 // eventually, update some popularity indicator somewhere on the site; for now, do nothing
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                Logger.error("Like-Unlike Assets request failed.");
+                Logger.get(that.MODULE).error("Like-Unlike Assets request failed.");
             }
         });
     },
@@ -273,7 +274,7 @@ var YourFavsView = Backbone.View.extend({
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                Logger.error("Get Favorites request failed.");
+                Logger.get(that.MODULE).error("Get Favorites request failed.");
             }
         });
     },

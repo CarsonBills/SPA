@@ -12,7 +12,7 @@ var Backbone = require('backbone'),
     ScrollHelper = require('../modules/scroll_helper');
 
 var AppView = Backbone.View.extend({
-
+    MODULE: 'AppView',
     deferred: $.Deferred(),
     introPanelView: null,
     topNavView: null,
@@ -249,7 +249,7 @@ var AppView = Backbone.View.extend({
             }, this),
 
             error: function(xhr, response, error) {
-                Logger.error('Search query not available.');
+                Logger.get(that.MODULE).error('Search query not available.');
                 Norton.Utils.genericError('articles');
             }
         });
