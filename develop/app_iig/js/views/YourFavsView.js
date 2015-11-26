@@ -29,7 +29,7 @@ var YourFavsView = Backbone.View.extend({
             that.render(false);
         });
 
-        this.getSavedFavs();
+        //this.getSavedFavs();
     },
 
     events: {
