@@ -61,7 +61,7 @@ $(function() {
     /**
      * Authentication setup
      */
-    Norton.isLoggedIn = (Norton.Utils.getCookie('IISPROTECTLOGIN')) ? true : false;
+    Norton.isLoggedIn = (Norton.Utils.getCookie('ecm2')) ? true : false;
 
     Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash
 
