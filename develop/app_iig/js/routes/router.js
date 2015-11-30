@@ -5,6 +5,7 @@ var Backbone = require("backbone"),
 
 var AppRouter = Backbone.Router.extend({
 
+    MODULE: 'router',
     appView: null,
     deferred: $.Deferred(),
     refinements: Refinements.getInstance(),
@@ -42,7 +43,7 @@ var AppRouter = Backbone.Router.extend({
             },
             function (res1, res2) {
                 ErrorsManager.showGeneric();
-                Logger.error(res1, res2);
+                Logger.get(that.MODULE).error(res1, res2);
             });
         return this.deferred.promise();
     },
@@ -110,7 +111,7 @@ var AppRouter = Backbone.Router.extend({
                 }, this),
                 error: function(){
                     // go to generic error page
-                    Logger.error('Site Config not available.');
+                    Logger.get(that.MODULE).error('Site Config not available.');
                     ErrorsManager.showGeneric();
                     dfd.reject();
                 }
