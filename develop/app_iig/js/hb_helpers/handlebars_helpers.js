@@ -81,11 +81,34 @@ module.exports = (function() {
         }
         return node;
     });
+
+    Handlebars.registerHelper('HBDetailTags', function(data) {
+        var node = "";
+         _.each(data, function (val, index) {
+            if (val !== "") {
+                node += (val);
+                // don't append the last one
+                if (index < data.length - 1) {
+                    node += " | ";
+                }
+            }
+         });
+        return node;
+    });
     Handlebars.registerHelper('HBFaved', function(bool, saved, unsaved) {
         return (bool) ? saved : unsaved;
     });    
     Handlebars.registerHelper('HBPageLinkWithPname', function(url, pname) {
         return url + "#/page/" + pname;
+    }); 
+    Handlebars.registerHelper('HBNotEmpty', function(obj, options) {
+        if (!_.isEmpty(obj) && _.isObject(obj)) {
+            return options.fn(this);
+        }
+
+        if (_.isString(obj) && obj !== '') {
+            return options.fn(this);
+        }
     });
 
 })();

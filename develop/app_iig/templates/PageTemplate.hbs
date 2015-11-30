@@ -6,38 +6,51 @@
     </div>
     <div class="modal-header">
         <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
-        <div>
-            {{#if data.headerImage}}
-                <img src="{{data.headerImage}}" />
-            {{/if}}
-        </div>
         <div class="modal-title">{{{HBTrim data.title 50}}}</div>
     </div>
     <div class="modal-body">
+        {{#HBNotEmpty data.headerImage}}
+        <img class="hdr-img" src="{{data.headerImage}}" />
+        {{/HBNotEmpty}}
 
         <div class="modal-utils" data-item-id='{{id}}'>
             <button data-type="iig-button" class="savelist-lnk" data-item-id='{{id}}'><span class="icon"></span><span class="title">Save to list</span></button>
             {{#if data.downloadAsset}}
-                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}' data-download-url="{{{assetURL}}}"><span class="icon"></span><span class="title">Download {{assetSize}}</span></button>
+                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}' data-download-url="{{{data.downloadAsset.src}}}"><span class="icon"></span><span class="title">Download {{data.downloadAsset.fileSize}}</span></button>
             {{/if}}
         </div>
 
-        <p>
-            {{#if data.downloadAsset}}
-                {{{assetHtml}}}
-            {{/if}}
-        </p>
+        <p class="hdr-excerpt">{{{data.introCopy}}}</p>
 
-        <p class="excerpt">{{{data.introCopy}}}</p>
-
+        {{!-- Page Details Sections & Blocks --}}
+        <div data-type="iig-section" class="sections">
+          {{#HBEach data.sections}}
+            <div class="section">
+                {{#HBEach this.blocks}}
+                    <div data-type="iig-block" class="block">
+                        {{{HBAssets this}}}
+                    </div>
+                {{/HBEach}}
+            </div>
+          {{/HBEach}}
+        </div>
 
         <div class="misc">
-            <p class="pub-date">Creation Date: {{data.publicationDate}}</p>
+            {{#HBNotEmpty data.publicationDate}}
+                <p class="pub-date">Creation Date: {{data.publicationDate}}</p>
+            {{/HBNotEmpty}}
+
             {{#if data.downloadAsset}}
-                <p class="page-number">Format: {{{data.downloadAsset.format}}}</p>
+                <p class="format"><strong>Format:</strong> {{{data.downloadAsset.format}}}</p>
+                <p class="size"><strong>Size:</strong> {{{data.downloadAsset.fileSize}}}</p>
             {{/if}}
 
-            <p class="page-filters">
+            <p class="tags">
+                <strong>Tags:</strong>
+                {{HBDetailTags data.tags}}   
+            </p>
+
+            <p class="page-filters">  
                 {{#each data.filters}}
                     <span class="page-filter">{{{HBDetailFilters this}}}</span>
                 {{/each}}

@@ -9,7 +9,12 @@ var Backbone = require('backbone'),
 	fastClick = require('fastclick'),
 	jQuery_UI = require('jquery-ui'),
     Handlebars = require('handlebars/runtime'),
+    
+    // Handlebars helpers and blocks are intialized here
+    hb_helpers = require('./hb_helpers/pagedetails_blocks'),
     hb_helpers = require('./hb_helpers/handlebars_helpers'),
+    // End Handlebars initialization
+
 	bootstrap = require('bootstrap-sass'),
 	jQuery_UI_Touch = require('jquery-ui-touch-punch'),
 	_ = require('underscore'),

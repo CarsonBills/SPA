@@ -1,9 +1,10 @@
 var Backbone = require("backbone"),
-    ErrorsManager = require('../modules/errors_manager');
+    ErrorsManager = require('../modules/errors_manager'),
+    DetailsParser = require('../modules/details_model_parser');
 
 var PageModel = Backbone.Model.extend({
 
-
+    MODULE: 'page_model',
     url: function() {
         'use strict';
         return Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=" + this.id;
@@ -37,7 +38,6 @@ var PageModel = Backbone.Model.extend({
                 }
             ]
         },
-        "assetHtml": "",
         "assetIcon": "",
         "assetSize": "",
         "assetURL": ""
@@ -45,22 +45,21 @@ var PageModel = Backbone.Model.extend({
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
-            Logger.debug('Search return code is" ' + response.code);
+            Logger.get(this.MODULE).error('Search return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
             return;
         }
 
-        if (response.data.data.downloadAsset != undefined) {
+        /*if (response.data.data.downloadAsset != undefined) {
             var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
             this.set({
-                "assetHtml": assetData.html,
                 "assetIcon": assetData.icon,
                 "assetSize": assetData.size,
                 "assetURL": assetData.url
             });
-        }
-
+        }*/
+        Logger.get(this.MODULE).info(response.data.data);
 
         return response.data;
     },

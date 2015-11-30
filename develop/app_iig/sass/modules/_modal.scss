@@ -18,7 +18,7 @@
 	@include vertical-align();
 	margin: 1rem;
 	font-size: 3rem;
-	color: #666;
+	color: $dark-grey;
 	cursor: pointer;
 	z-index: 999;
 	
@@ -35,10 +35,10 @@
 }
 .modal-header {
 	@include opensans($size: 1.8rem, $height: 2rem);
-	background-color: $reader-blue;
 	border: none;
-	color: #fff;
 	text-align: left;
+	background-color: $black;
+	color: $white;
 	height: $modal-header-height;
 
 	.close {
@@ -46,7 +46,7 @@
 		opacity: 1;
 		line-height: 1;
 		font-size: 2.3rem;
-		color: #fff;
+		color: $white;
 		text-shadow: none;
 
 		.glyphicon {
@@ -241,6 +241,15 @@
 				}
 			}
 		}
+		&[data-module=details] {
+			/* .modal-header {
+				color: $black;
+				background-color: $white;
+			}
+			.close {
+				color: $black;
+			} */
+		}
 
 		&[data-module=errors] {
 			/* .modal-header {
@@ -305,7 +314,6 @@
 
 				.list-title {
 					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
-					color: $reader-blue;
 					flex-grow: 1; /* flex to fill rest of available space */
 	    			min-width: auto;
 				}
@@ -317,7 +325,34 @@
 		}
 	}
 
+	div[data-type="iig-section"] {
+		margin-bottom: 2rem;
+	}
+
+	div[data-type="iig-block"] {
+		text-align: left;
+
+		a {
+			color: $black;
+		}
+		
+		[data-type="image"] {
+		}	
+
+		[data-type="text only"] {
+			padding: 0 4rem;
+			p {
+				padding: 0;
+			}
+		}	
+
+		[data-type="custom link"] {
+			padding: 0 4rem;
+		}
+	}
 }
+
+
 /* end modal */
 @media only screen and (max-width: $tablet-landspace-width) {
 	#modal-container {

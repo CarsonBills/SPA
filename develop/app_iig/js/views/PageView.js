@@ -34,6 +34,7 @@ var PageView = Backbone.View.extend({
                 withCredentials: true
             },
             success: $.proxy (function(data) {
+                Logger.get(that.MODULE).info(data);
                 that.render();
             }, this),
             error: function(xhr, response, error) {
