@@ -11,8 +11,8 @@ var Backbone = require('backbone'),
 
             var postdata = {
                 sitecode: Norton.siteCode,
-                asset: id,
-                eventType: 1
+                siteversion: Norton.version,
+                asset: id
             };
 
             $.ajax({
