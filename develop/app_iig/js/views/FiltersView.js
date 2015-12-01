@@ -3,7 +3,7 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
     _ = require("underscore"),
-    Refinements = require('../modules/refinements')
+    Refinements = require('../modules/refinements'),
     ScrollHelper = require('../modules/scroll_helper'),
     ResizeHelper = require('../modules/resize_helper');
 
@@ -24,7 +24,7 @@ var FiltersView = Backbone.View.extend({
 
     initialize: function(params) {
         'use strict';
-        this.collection.on('update', this.preRender, this);
+        this.collection.once('update', this.preRender, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -47,6 +47,8 @@ var FiltersView = Backbone.View.extend({
 
         this.collection.filters = this.refinements.compare(this.collection.filters);
         this.render();
+        this.adjustHieght();
+        this.checkSelected();
     },
 
     render: function () {
@@ -70,10 +72,11 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
-        this.$('.filter-item').on('show.bs.collapse', function () {
+        // used to allow only one expanded filter
+        /* this.$('.filter-item').on('show.bs.collapse', function () {
             that.$('.filter-item-cat').addClass('collapsed');
             that.$('.filter-item').removeClass('in');
-        });
+        });*/
 
         this.showActive();
 
@@ -118,15 +121,46 @@ var FiltersView = Backbone.View.extend({
         };
     },
 
+    checkSelected: function () {
+        'use strict';
+        
+        // collapse all
+        this.$('.filter-item-cat').addClass('collapsed');
 
-    showActive: function () {
+        var that = this,
+            checked = this.$('.filter-item input[checked]'),
+            cat;
+
+        if (checked.length > 0 ) {
+            _.each(checked, function (item) {
+                cat = $(item).data('filter-cat');
+                that.showActive('#' + cat);
+            })
+        } else {
+            // if nothing checked expand the first one
+            this.showActive(this.ACTIVE);
+        }
+            
+    },
+
+    collapseAll: function () {
         'use strict';
         this.$('.filter-item-cat').addClass('collapsed');
-        this.$('div[data-target=' + this.active + ']').removeClass('collapsed');
+        this.$('.filter-item').removeClass('in');
+    },
+
+    showActive: function (category) {
+        'use strict';
+
+        var $cat = this.$('div[data-target=' + category + ']');
+        if ($cat.hasClass('collapsed')) {
+            $cat.removeClass('collapsed');
 
         this.$('.filter-item').removeClass('in');
-        this.$(this.active).addClass('in');
+            this.$(category).addClass('in');
 
+            this.adjustHieght();
+        }
     },
 
     toggleItem: function (e) {
@@ -196,9 +230,8 @@ var FiltersView = Backbone.View.extend({
      */
     removeAllFilters: function(e) {
         'use strict';
-        $('.selected-filters').remove();
+        $('.filters-selected').empty();
         $('.filter-checkbox').attr('checked', false);
-        $('.remove-all-filters').remove();
         Norton.savedRefinements = null;
 
         var url = Norton.baseUrl;
@@ -207,8 +240,9 @@ var FiltersView = Backbone.View.extend({
 
         this.app.formatRefinements();   // call getArticles() in AppView
 
-
+        this.collapseAll();
         this.active = this.ACTIVE;
+        this.showActive(this.ACTIVE);
 
     },
     buildFilterUrl: function(url) {
