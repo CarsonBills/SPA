@@ -14,10 +14,10 @@
         {{/HBNotEmpty}}
 
         <div class="modal-utils" data-item-id='{{id}}'>
-            <button data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class=" glyphicon {{HBFaved faved 'glyphicon-heart-empty' 'glyphicon-heart'}}"></span><span class="button-label">{{HBFaved faved "Remove list" "Save to list"}}</span></button>
+            <button data-type="iig-button" class="savelist-lnk" data-item-id='{{id}}'><span class=" glyphicon {{HBFaved faved 'glyphicon-heart-empty' 'glyphicon-heart'}}"></span><span class="button-label">{{HBFaved faved "Remove list" "Save to list"}}</span></button>
             
             {{#if data.downloadAsset}}
-                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}' data-download-url="{{{data.downloadAsset.src}}}"><span class="icon"></span><span class="title">Download {{data.downloadAsset.fileSize}}</span></button>
+                <button data-type="iig-button" class="download-lnk" data-item-id='{{id}}' data-download-url="{{{data.downloadAsset.src}}}"><span class="icon"></span><span class="button-label">Download</span></button>
             {{/if}}
         </div>
 

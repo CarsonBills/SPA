@@ -92,62 +92,6 @@
 			}
 		}
 
-		&[data-module=introduction] {
-			width: 990px;
-			height: 770px;
-			text-align: center;
-
-			.modal-body {
-				padding: 3rem 1.5rem;
-			}
-
-			.border {
-				height: 100%;
-				position: relative;
-				border: 2px solid #bcbaba;
-			}
-
-			.modal-title {
-				position: relative;
-				margin-top: 2rem;
-				@include athelas($size: 4.8rem);
-				z-index: 99;
-				align-self: flex-start;
-			}
-
-			.modal-copy {
-				@include opensans($size: 1.7rem);
-				text-align: left;
-				color: #444;
-				position: relative;
-				width: 600px;
-				line-height: 1.5;
-				z-index: 99;
-				margin: 4rem auto 0;
-
-				& p {
-					padding: 0;
-				}
-			}
-
-			.modal-links {
-				position: absolute;
-				float: right;
-				right: 2rem;
-				bottom: 1rem;
-
-				a {
-					margin-left: 1.5rem;
-				}
-			}
-
-			.intro-bg {
-				position: absolute;
-				display: block;
-				top: 10rem;
-			}
-		}
-
 		&[data-module=errors],
 		&[data-module=details] {
 			width: 768px;
@@ -271,6 +215,8 @@
 		}
 
 		&[data-module=favorites] {
+			min-height: 600px;
+			height: auto;
 
 			.modal-title {
 				.glyphicon {
@@ -279,13 +225,43 @@
 					margin-left: 1rem;
 				}
 			}
+
+			.modal-body {    
+				overflow-y: scroll;
+				min-height: 0;
+				height: 480px;
+			}
+
+			.modal-footer {
+				padding: 0;
+    			text-align: center;
+			}
+
 			.empty-list {
 				text-align: center;
 				font-size: 1.8rem;
 				margin-top: 5rem;
 			}
 
-			.download-favs {
+			.button-container {
+				position: relative;
+				margin-top: 1rem;
+				height: auto;
+				@include clearfix();
+
+				a {
+					display: inline-block;
+					margin-bottom: 1rem;	
+					margin-right: 1rem;	
+				}
+
+				.glyphicon {
+					line-height: 38px;
+					margin-left: 1rem;
+				}
+			}
+
+			/* .download-favs {
 				position: absolute;
 				width: 100%;
 				text-transform: uppercase;
@@ -296,36 +272,52 @@
 				.glyphicon {
 					margin-left: 1.3rem;
 				}
-			}
-
+			} */
 			.list-format {
 				width: 98%;
 				margin: 0 auto;
 				padding: 1rem;
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-			    align-items: center;
-			    align-content: center;
 			    min-height: 4.5rem;
+			    cursor: move;
 			    @include  one-sided-shadow($offset-y: 1px, $blur: 1px, $spread: 0px);
+
+			    display: table;
+			    table-layout: fixed;
 
 				.list-author {
 					@include opensans($size: 1.4rem, $weight: 600);
 					color: #6f6f6f;
 					text-transform: uppercase;
-					flex-grow: 1; /* flex to fill rest of available space */
-	    			min-width: auto;
+					width: 30%;
+					display: table-cell;
+					line-height: 1.8rem;
 				}
 
 				.list-title {
-					@include athelas($size: 1.6rem, $style: italic, $weight: 700);
-					flex-grow: 1; /* flex to fill rest of available space */
-	    			min-width: auto;
+					@include athelas($size: 1.8rem, $style: italic, $weight: 400);
+	    			width: 62%;
+	    			display: table-cell;
+					line-height: 1.8rem;
+
+					a {
+						color: $dark-grey;
+						text-decoration: none;
+
+						&:hover {
+							text-decoration: underline;
+						}
+					}
 				}
+
 				.remove {
-					cursor: pointer;
-					color: $dark-grey;
+				    cursor: pointer;
+					display: table-cell;	
+					vertical-align: middle;
+					width: 20px;
+
+					span {
+						color: $dark-grey;
+					}
 				}
 			}
 		}
@@ -364,6 +356,7 @@
 	#modal-container {
 		.modal-dialog {
 
+			&[data-module=favorites],
 			&[data-module=credits] {
 				width: 90%;
 			}
@@ -402,17 +395,6 @@
 						display: block;
 						line-height: 1.3;
 					}
-				}
-
-				.modal-utils {
-					margin: 2rem auto;
-					text-align: center;
-				}
-
-				.moreinfo-lnk {
-					margin: 2rem auto;
-					display: block;
-					float: none;
 				}
 			}
 		}
@@ -456,6 +438,33 @@
 
 			&[data-module=errors],
 			&[data-module=details] {
+				.modal-utils {
+					margin: 2rem auto;
+					text-align: center;
+				}
+
+				.moreinfo-lnk {
+					margin: 2rem auto;
+					display: block;
+					float: none;
+				}
+			}
+
+			&[data-module=favorites] {
+				.list-format {
+
+					.list-author {
+						width: 30%;
+					}
+
+					.list-title {
+		    			width: 58%;
+					}
+
+					.remove {
+
+					}
+				}
 			}
 		}
 	}

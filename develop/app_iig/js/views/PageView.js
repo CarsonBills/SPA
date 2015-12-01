@@ -90,6 +90,7 @@ var PageView = Backbone.View.extend({
                 withCredentials: true
             },
             success: $.proxy (function(data) {
+                console.log(data);
                 that.render();
             }, this),
             error: function(xhr, response, error) {
