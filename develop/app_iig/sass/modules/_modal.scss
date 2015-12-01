@@ -159,9 +159,6 @@
 
 			.modal-title {
 				@include athelas($size: 2rem, $style:italic, $weight: 400);
-				p {
-					margin: 0;
-				}
 			}
 
 			.loading-container {
@@ -194,6 +191,13 @@
 
 				.savelist-lnk {
 					margin-right: 1rem;
+
+					.glyphicon {
+						line-height: 4rem;
+						font-size: 1.5rem;
+						color: $dark-grey;
+						top: 0;
+					}
 				}
 			}
 
@@ -232,9 +236,11 @@
 				clear: both;
 			}
 			.page-filter {
+				font-size: 1.3rem;
 				line-height: 1.6;
 				margin-bottom: 1rem;
-				display: block;
+				display: line-block;
+				color: $dark-grey;
 
 				strong {
 					font-weight: 600;
