@@ -364,27 +364,10 @@ ul.card {
 // loadmore button
 .load-more-section {
     position: relative;
-    width: 180px;
-    margin: 5rem auto;
+    width: 240px;
+    height: 50px;
+    margin: 0 auto 3rem;
     transition: all 1s;
-
-    button {
-        width: inherit;
-        height: 50px;
-    }
-}
-#load-more {
-    position: relative;
-    height: 100%;
-    font-size: 1.2em;
-    font-weight: 100;
-    letter-spacing: 1px;
-    background-color: #fcfcfc;
-
-    .anim & {
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
-        padding: 0 4rem 0 7rem;
-    }
 }
 
 // spinner within load more button
@@ -398,6 +381,20 @@ ul.card {
     .anim & {
         display: inline-block;
         animation: lm-rotate-360 0.8s infinite steps(12, end);
+    }
+}
+#load-more {
+    position: relative;
+    padding: 0 5rem;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: 100;
+    letter-spacing: 1px;
+    background-color: #fcfcfc;
+
+    .anim & {
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+        padding: 0 4rem 0 7rem;
     }
 }
 /* details page and overall loading graphic*/
@@ -426,7 +423,6 @@ ul.card {
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 9998;
     color: #fff;
-    visibility: hidden;
 
     &.hide {
         opacity: 0;
