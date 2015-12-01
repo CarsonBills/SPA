@@ -11,6 +11,7 @@ var NavigationCollection = require('../collections/NavigationCollection'),
 
 Navigation.prototype = {
     collection: null,
+    MODULE: 'refinements',
     url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
 
@@ -48,7 +49,7 @@ Navigation.prototype = {
                 }
             },
             error: function(xhr, response, error) {
-                Logger.error(error);
+                Logger.get(that.MODULE).error(error);
                 that.deferred.reject(error);
             }
         });
