@@ -31,7 +31,6 @@ var ArticleView = Backbone.View.extend({
 
         this.app = params.app;
 
-
         this.shouldRefresh = this.shouldRefreshWrapper();
         /* window scroll callbacks */
         this.stickScroll = this.stickScrollWrapper();
@@ -46,6 +45,7 @@ var ArticleView = Backbone.View.extend({
         });
     },
     renderIfEmpty: function() {
+        'use strict';
         if(this.collection.isEmpty()) {
             this.render(true);
         } else {
@@ -100,16 +100,41 @@ var ArticleView = Backbone.View.extend({
     },
 
     events: {
+        'click .icon-grid-view': 'onGrid',
+        'click .icon-list-view': 'onList',
+
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage"
     },
 
-    isfaved: function (pname) {
+    /* Grid/List view toggle */
+    toggleView: function(type) {
         'use strict';
-        var found = _.find(NortonApp.yourFavsList.models, function (item) {
-            return (item.get('pname') === pname);
+        this.collection.setShowGrid(type === EventManager.GRID_VIEW);
+
+        this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
+            view: type
         });
+    },
+
+    onGrid: function(e) {
+        'use strict';
+        if (!this.collection.showGrid()) {
+            this.toggleView(EventManager.GRID_VIEW);
+        }
+    },
+
+    onList: function(e) {
+        'use strict';
+        if (this.collection.showGrid()) {
+            this.toggleView(EventManager.LIST_VIEW);
+        }
+    },
+
+    isfaved: function (id) {
+        'use strict';
+        var found = this.favorites.getModelByAttribute('pname', id);
         return (found != undefined);
     },
 
@@ -146,7 +171,6 @@ var ArticleView = Backbone.View.extend({
             }
         };
     },
-
     showDetail: function (id) {
         'use strict';
 
@@ -157,24 +181,25 @@ var ArticleView = Backbone.View.extend({
             this.resolveToBase();
             return false;
         }*/
-
-        if (model === undefined) {
+        if (this.pageView === null) {
             this.pageView = new NortonApp.Views.Page({
+                favorites: this.favorites,
                 el: "#modal-container"
             });
+        }
 
-        } else {
+        if (model != undefined) {
             this.baseUrl = model.get('baseUrl');
 
             this.pageItem = new NortonApp.Models.Page({
+                faved: this.favorites.getModelByAttribute('pname', id),
                 id: id,
                 prevId: model.get('prevId'),
                 nextId: model.get('nextId')
             });
-            this.pageView = new NortonApp.Views.Page({
-                model: this.pageItem,
-                el: "#modal-container"
-            });
+
+            this.pageView.model = this.pageItem;
+            this.pageView.getPage();
         }
     },
 

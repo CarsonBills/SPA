@@ -82,9 +82,9 @@ var AppView = Backbone.View.extend({
         this.footerView = new NortonApp.Views.Footer({
             model: NortonApp.headerConfigItem,
             el: ".page-footer"
-        })
+        });
 
-        this.toggleView(EventManager.LIST_VIEW);
+        this.articleView.toggleView(EventManager.LIST_VIEW);
 
         this.deferred.promise().done(function () {
             that.toggleFilter();
@@ -94,9 +94,6 @@ var AppView = Backbone.View.extend({
 
     },
     events: {
-        'click .icon-grid-view': 'onGrid',
-        'click .icon-list-view': 'onList',
-
         'change #sortArticles': 'sortArticles',
         /**
          * Remove this event handler when REAL filter button is working.
@@ -125,37 +122,12 @@ var AppView = Backbone.View.extend({
         return false;
     },
 
-    /* Grid/List view toggle */
-    toggleView: function(type) {
-        'use strict';
-        this.collection.setShowGrid(type === EventManager.GRID_VIEW);
-
-        this.evtMgr.trigger(EventManager.CONTENT_VIEW_CHANGE, {
-            view: type
-        });
-    },
-
-    onGrid: function(e) {
-        'use strict';
-        if (!this.collection.showGrid()) {
-            this.toggleView(EventManager.GRID_VIEW);
-        }
-    },
-
-    onList: function(e) {
-        'use strict';
-        if (this.collection.showGrid()) {
-            this.toggleView(EventManager.LIST_VIEW);
-        }
-    },
-
     showHidden: function () {
         'use strict';
         if (!this.dataReady) {
             this.$('.load-more-section').removeClass('off');
             this.$('.page-footer').removeClass('off');
             this.$('.results-bar').removeClass('off');
-
         }
     },
 
