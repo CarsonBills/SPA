@@ -23,7 +23,8 @@ module.exports = (function() {
                 result = require('../../templates/page/image_type.hbs')(context);
             break;
             case "text only":
-                result = '<div data-type="' + context.type + '">' + convert(context.copy) + '</div>';
+                //result = '<div data-type="' + context.type + '">' + convert(context.copy) + '</div>';
+                result = require('../../templates/page/text_type.hbs')(context);
             break;
             case "custom link":
                 result = require('../../templates/page/link_type.hbs')(context);

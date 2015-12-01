@@ -119,14 +119,6 @@
 				@include opensans($size: 1.5rem, $height: 1.4);
 			}
 
-			// flattened
-			.excerpt {
-				& + p {
-					text-align: left;
-				}
-				margin-bottom: 3rem;
-			}
-
 			.modal-utils {
 				margin: 3rem 5rem;
 				text-align: right;
@@ -347,7 +339,14 @@
 				list-style-image: none;
 		}
 
-		
+		[data-type="intro"] {
+			// flattened
+			& + p {
+				text-align: left;
+			}
+			margin-bottom: 3rem;
+		}
+
 		[data-type="image"] {
 		}	
 
