@@ -146,17 +146,10 @@ var AppView = Backbone.View.extend({
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
-            //this.collection.url = '//ec2-52-91-226-102.compute-1.amazonaws.com/search2.php';
         }
 
         if (Norton.savedRefinements) {
-            // .NET services want post data as a string, not as key-val object
-            if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
-                postdata.refinements = Norton.savedRefinements;
-            } else {
-                postdata.refinements = JSON.stringify(Norton.savedRefinements);
-            }
-
+            postdata.refinements = JSON.stringify(Norton.savedRefinements);
             postdata.pruneRefinements = "false";
         }
         if (Norton.sortby) {
@@ -168,10 +161,6 @@ var AppView = Backbone.View.extend({
         postdata.skip = this.collection.recordEnd;
         postdata.pageSize = Norton.perPage;
 
-        // .NET services want post data as a string, not as key-val object
-        if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
-            postdata = JSON.stringify(postdata);
-        }
         this.collection.fetch({
             data: postdata,
             method: "POST",
@@ -184,7 +173,6 @@ var AppView = Backbone.View.extend({
                 
                 that.loadingView.hide();
                 that.showResultsTotals();
-
 
                 that.articleView.showHighlight({
                     showHint: showHint,
