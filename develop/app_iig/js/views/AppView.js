@@ -18,8 +18,8 @@ var AppView = Backbone.View.extend({
     topNavView: null,
     articleView: null,
     filtersView: null,
+    searchView: null,
     errorView: null,
-    tourView: null,
     loadingView: null,
     footerView: null,
     evtMgr: EventManager.getInstance(),
@@ -73,18 +73,16 @@ var AppView = Backbone.View.extend({
             app: this
         });
 
+        this.searchView = new NortonApp.Views.Search({
+            el: '.search',
+            collection: this.collection,
+            app: this
+        });
+
         this.footerView = new NortonApp.Views.Footer({
             model: NortonApp.headerConfigItem,
             el: ".page-footer"
         })
-
-        if (Norton.siteCode === "nortonreader") {
-            this.introPanelView = new NortonApp.Views.IntroPanel({
-                model: NortonApp.headerConfigItem,
-                el: ".container",
-                app: this
-            });
-        }
 
         this.toggleView(EventManager.LIST_VIEW);
 
@@ -104,28 +102,11 @@ var AppView = Backbone.View.extend({
          * Remove this event handler when REAL filter button is working.
          */
         'click #navFilters a': 'toggleFilter',
-        'click #resetSearch' : 'onResetSearch',
-        'click #searchButton': 'searchArticles',
-        'keypress #searchTextInput': function(e) {
-            'use strict';
-            if (e.keyCode === 13) {
-                this.searchArticles();
-            }
-        },
         'click #load-more': function() {
             'use strict';
             // pass true to show hint
             this.getArticles(true);
         }
-    },
-
-    showTour: function () {
-        'use strict';
-
-        this.tourView = new NortonApp.Views.Tour({
-            el: '.container',
-            collection: new NortonApp.Collections.Tour()
-        });
     },
 
     toggleFilter: function (e) {
@@ -291,29 +272,6 @@ var AppView = Backbone.View.extend({
 
         this.collection.cleanupAndReset();
         this.getArticles();
-    },
-    searchArticles: function() {
-        'use strict';
-        /**
-         * Clear out collection, reset "skip" to zero, then run search query.
-         */
-        if ($('#searchTextInput').val() !== '') {
-            Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
-            this.collection.cleanupAndReset();
-            this.getArticles();
-        } else {
-            $('#searchTextInput').val(Norton.Constants.emptySeach);
-            setTimeout(function () {
-                $('#searchTextInput').val('');
-            }, 1500);
-        }
-    },
-
-    onResetSearch: function (e) {
-        'use strict';
-        Norton.searchQuery = $('#searchTextInput').val('');
-        //this.searchArticles();
-        return false;
     },
 
     // called from router

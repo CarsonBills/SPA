@@ -117,13 +117,12 @@ $(function() {
     NortonApp.Views.TopNav = require("./views/TopNavView.js");
     NortonApp.Views.Article = require("./views/ArticleView.js");
     NortonApp.Views.Filters = require("./views/FiltersView.js");
+    NortonApp.Views.Search = require("./views/SearchView.js");
     NortonApp.Views.YourFavs = require("./views/YourFavsView.js");
     NortonApp.Views.Page = require("./views/PageView.js");
     NortonApp.Views.HeaderConfig = require("./views/HeaderConfigView.js");
-    NortonApp.Views.IntroPanel = require("./views/IntroPanelView.js");
     NortonApp.Views.ErrorPage = require("./views/ErrorPageView.js");
     NortonApp.Views.App = require("./views/AppView.js");
-    NortonApp.Views.Tour = require("./views/TourView.js");
     NortonApp.Views.Loading = require("./views/LoadingView.js");
     NortonApp.Views.Footer = require("./views/FooterView.js");
 
