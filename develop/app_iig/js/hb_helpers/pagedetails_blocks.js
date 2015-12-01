@@ -6,10 +6,10 @@ var Handlebars = require('handlebars/runtime'),
 module.exports = (function() {
     'use strict';
 
-    var strip = function (html) {
-        var tmp = document.createElement("DIV");
-        tmp.innerHTML = html;
-        return tmp.textContent || tmp.innerText;
+    var convert = function (raw) {
+        var html = document.createElement("div");
+        html.innerHTML = raw;
+        return html.textContent || html.innerText;
     };
 
     Handlebars.registerHelper('HBAssets', function(context, options) {
@@ -19,8 +19,7 @@ module.exports = (function() {
                 result = require('../../templates/page/image_type.hbs')(context);
             break;
             case "text only":
-                //result = require('../../templates/page/text_type.hbs')(context);
-                result = '<div data-type="' + context.type + '">' + strip(context.copy) + '</div>';
+                result = '<div data-type="' + context.type + '">' + convert(context.copy) + '</div>';
             break;
             case "custom link":
                 result = require('../../templates/page/link_type.hbs')(context);

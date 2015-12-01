@@ -15,7 +15,7 @@
 	height: inherit;
 }
 .modal-arrow-container {
-	@include vertical-align();
+	top: 50vh;
 	margin: 1rem;
 	font-size: 3rem;
 	color: $dark-grey;
@@ -111,6 +111,7 @@
 
 			.modal-body {
 				text-align: left;
+				@include opensans($size: 1.5rem, $height: 1.4);
 			}
 
 			// flattened
@@ -118,6 +119,7 @@
 				& + p {
 					text-align: left;
 				}
+				margin-bottom: 3rem;
 			}
 
 			.modal-utils {
