@@ -1,6 +1,7 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    ModalManager = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    CookieHelper = require('../modules/cookie_helper');
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
@@ -23,7 +24,10 @@ var HeaderConfigView = Backbone.View.extend({
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(context);
         } else {
+            //console.log(JSON.parse(Norton.Utils.getCookie('ecm2')));
+            context.user = CookieHelper.getUser('ecm2:username');
             headerConfigTemplate = this.templateIig(context);
+
             // show bg pattern
             this.$el.addClass('bg');
         }
