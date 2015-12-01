@@ -66,6 +66,12 @@
 .modal-body {
 	height: inherit;
 	@include opensans($size: 1.8rem, $height: 1.4);
+
+	p {
+		strong {
+			color: $dark-grey;
+		}
+	}
 }
 /* modal specific */
 #modal-container {
@@ -99,7 +105,6 @@
 			height: auto;
 			position: relative;
 			text-align: left;
-
 
 			.modal-title {
 				@include athelas($size: 2rem, $style:italic, $weight: 400);
@@ -185,7 +190,7 @@
 				font-size: 1.3rem;
 				line-height: 1.6;
 				margin-bottom: 1rem;
-				display: line-block;
+				display: block;
 				color: $dark-grey;
 
 				strong {
@@ -334,13 +339,23 @@
 
 		a {
 			color: $black;
+		}		
+
+		ul {
+			list-style-type: disc;
+				list-style-position: inside;
+				list-style-image: none;
 		}
+
 		
 		[data-type="image"] {
 		}	
 
 		[data-type="text only"] {
 			padding: 0 4rem;
+			img {
+				padding: 1rem;
+			}
 			p {
 				padding: 0;
 			}
@@ -349,6 +364,8 @@
 		[data-type="custom link"] {
 			padding: 0 4rem;
 		}
+
+		@include clearfix();
 	}
 }
 

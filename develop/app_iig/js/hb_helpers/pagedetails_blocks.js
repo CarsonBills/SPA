@@ -12,6 +12,10 @@ module.exports = (function() {
         return html.textContent || html.innerText;
     };
 
+    Handlebars.registerHelper('HBHTMLContent', function(data, options) {
+        return new Handlebars.SafeString(convert(data));
+    });
+
     Handlebars.registerHelper('HBAssets', function(context, options) {
         var result; 
         switch (context.type) {
