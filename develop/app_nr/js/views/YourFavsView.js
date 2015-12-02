@@ -137,7 +137,6 @@ var YourFavsView = Backbone.View.extend({
             this.removeItem(model);
             return false;
         }
-        console.log(articleData)
 
         this.showPopover($target, "Item Added");
 

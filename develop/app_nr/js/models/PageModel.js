@@ -3,7 +3,7 @@ var Backbone = require("backbone"),
 
 var PageModel = Backbone.Model.extend({
 
-
+    MODULE: 'PageModel',
     url: function() {
         'use strict';
         return Norton.Constants.getDetailPageUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&pname=" + this.id;
@@ -46,7 +46,7 @@ var PageModel = Backbone.Model.extend({
     parse: function(response) {
         'use strict';
         if (response.code !== 200) {
-            console.debug('Search return code is" ' + response.code);
+            Logger.get(this.MODULE).error('Search return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
             return;
