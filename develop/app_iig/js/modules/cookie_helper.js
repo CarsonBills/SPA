@@ -8,7 +8,8 @@ var Backbone = require('backbone'),
 var CookieHelper = (function() {
     'use strict';
 
-    var get = function(name) {
+    var ANON = 'Anynomous',
+    get = function(name) {
         "use strict";
         var result = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
         return (result === null) ? null : result[2];
@@ -23,14 +24,17 @@ var CookieHelper = (function() {
     getUser = function (query) {
 
         var params = query.split(':'),
-            cs = get(params[0]).split('&'),
+            cs = get(params[0]),
             u = params[1],
-            result;
-        _.each(cs, function (item) {
-            if (item.indexOf(u) > -1 ) {
-               result = item.split('=')[1];
-            }
-        })
+            result = ANON;
+        if (cs !== null ) {
+            cs = cs.split('&');
+            _.each(cs, function (item) {
+                if (item.indexOf(u) > -1 ) {
+                   result = item.split('=')[1];
+                }
+            })
+        }
 
         return result;
     };
