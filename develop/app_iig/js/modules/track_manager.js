@@ -12,13 +12,13 @@ var Backbone = require('backbone'),
             var postdata = {
                 sitecode: Norton.siteCode,
                 siteversion: Norton.version,
-                asset: id
+                asset_id: id
             };
 
             $.ajax({
                 type:'POST',
                 url: Norton.Constants.saveTrackingUrl,
-                data: JSON.stringify(postdata),
+                data: postdata,
                 dataType: "json",
                 success: function(response) {
                     // eventually, update some popularity indicator somewhere on the site; for now, do nothing

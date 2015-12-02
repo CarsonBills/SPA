@@ -5,11 +5,10 @@ var YourFavsModel = Backbone.Model.extend({
         "pname":'',
         "abstract":'',
         "title":'',
-        "authorLastName":'',
-        "authorFirstName":'',
-        "authorMiddleName":'',
-        "ebookNode":'',
-        "id":''
+        "id":'',
+        "download_src":'',
+        "doanload_fmt":'',
+        "chapter_id":''
     }
 });
 
