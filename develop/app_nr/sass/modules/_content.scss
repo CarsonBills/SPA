@@ -373,33 +373,14 @@ ul.card {
     margin: 0 auto 3rem;
     transition: all 1s;
 }
-
-// spinner within load more button
-.loading-spinner {
-    position: absolute;
-    display: none;
-    transform: $loading-transform;
-    z-index: 99;
-    @include svg-sprite(loading_spinner);
-
-    .anim & {
-        display: inline-block;
-        animation: lm-rotate-360 0.8s infinite steps(12, end);
-    }
-}
 #load-more {
     position: relative;
-    padding: 0 5rem;
     height: 100%;
+    padding: 0 4rem;
     font-size: 1.2em;
     font-weight: 100;
     letter-spacing: 1px;
     background-color: #fcfcfc;
-
-    .anim & {
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
-        padding: 0 4rem 0 7rem;
-    }
 }
 /* details page and overall loading graphic*/
 .loading-container {

@@ -7,9 +7,9 @@
 	        <div class="modal-links">
 	        {{#each introPanelCalloutAction}}
 		        {{#HBMatchWord actionText "Give Me a Tour"}}
-	            	<a class="tour" href="#"><button type="button">{{actionText}}</button></a>
+	            	<a class="tour" href="#"><button data-type="reader-button">{{actionText}}</button></a>
 			    {{else}}
-	            	<a href="#" data-dismiss="modal"><button type="button">{{actionText}}</button></a>
+	            	<a href="#" data-dismiss="modal"><button data-type="reader-button">{{actionText}}</button></a>
 			    {{/HBMatchWord}}
 	        {{/each}}
 	        </div>
