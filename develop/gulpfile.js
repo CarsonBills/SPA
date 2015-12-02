@@ -384,6 +384,7 @@ gulp.task('browserify', function () {
         ])
         //.pipe($.jshint())
         //.pipe($.jshint.reporter('jshint-stylish'))
+        /* Injecet Logger */
         .pipe($.inject(
             gulp.src([app + site + settings.js_logger + logger], {read: true}), {
                 transform: function (filepath, file) {
