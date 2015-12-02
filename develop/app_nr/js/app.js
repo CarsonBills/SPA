@@ -21,6 +21,10 @@ Backbone.$ = $;
 Norton.Constants = require('./modules/js_constants');
 Norton.Utils = require('./modules/js_utils');
 
+
+/* inject:logger */
+/* endinject */
+
 $(function() {
     'use strict';
     /**
