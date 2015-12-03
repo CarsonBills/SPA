@@ -19,7 +19,7 @@ var TourView = Backbone.View.extend({
             this.$el.append($('<div class="tour-bg"></div>'));
             this.$bg = this.$('.tour-bg');
         } else {
-            TweenLite.to(this.$bg, 1, {autoAlpha: 0, onComplete: function () {
+            TweenLite.to(this.$bg, 1, {autoAlpha: 0, ease: Quad.easeOut, onComplete: function () {
                 that.$bg.remove();
             }});
         }
