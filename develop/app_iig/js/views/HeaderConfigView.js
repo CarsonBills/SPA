@@ -25,6 +25,7 @@ var HeaderConfigView = Backbone.View.extend({
             headerConfigTemplate = this.templateNR(context);
         } else {
             context.user = CookieHelper.getUser('ecm2:username');
+            context.signedIn = (context.user !== CookieHelper.ANON);
             headerConfigTemplate = this.templateIig(context);
 
             // show bg pattern

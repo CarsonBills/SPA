@@ -8,7 +8,12 @@
         {{/each}}
         </div>
         <div class="my-account">
-            <a><span class="glyphicon glyphicon-user"></span><span class="icon-label">{{user}}</span></a>
+            <span class="glyphicon glyphicon-user"></span>
+            {{#if signedIn}}
+                <span class="signed-in" icon-label">{{user}}</span>
+            {{else}}
+                <a class="sign-in" href="#" ><span icon-label">Sgin in</span></a>
+            {{/if}}
         </div>
     </div>
 </div>

@@ -42,7 +42,8 @@ var CookieHelper = (function() {
     return {
         get: get,
         set: set,
-        getUser: getUser
+        getUser: getUser,
+        ANON: ANON
     };
 })();
 
