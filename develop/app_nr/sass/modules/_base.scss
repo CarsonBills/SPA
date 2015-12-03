@@ -85,10 +85,10 @@ $modal-header-height: 52px;
 
 button[data-type="reader-button"] {
 	position: relative;
-	width: 160px;
+	min-width: 130px;
 	height: 42px;
 	line-height: 42px;
-	padding: 0;
+	padding: 0 1rem;
 	margin: 0;
 
 	/* .icon {

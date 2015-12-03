@@ -73,7 +73,8 @@ var AppRouter = Backbone.Router.extend({
     },
     handleSiteConfig: function() {
         "use strict";
-        var dfd = $.Deferred();
+        var that = this,
+            dfd = $.Deferred();
 
         var lsSiteConfig = false;
         var lsConfigId = 'config_' + Norton.siteCode + "_" + Norton.version;
@@ -96,7 +97,7 @@ var AppRouter = Backbone.Router.extend({
                 xhrFields: {
                     withCredentials: true
                 },
-                success: $.proxy (function(response) {
+                success: $.proxy(function(response) {
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage

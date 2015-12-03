@@ -137,7 +137,6 @@ var YourFavsView = Backbone.View.extend({
             this.removeItem(model);
             return false;
         }
-        console.log(articleData)
 
         this.showPopover($target, "Item Added");
 
@@ -182,6 +181,7 @@ var YourFavsView = Backbone.View.extend({
         Favorites.save({
             title: $('#yourFavsTitle').text(),
             type: $target.data('type'),
+            filename: $target.data('filename'),
             collection: this.collection
         })
 

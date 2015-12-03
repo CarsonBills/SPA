@@ -1,23 +1,31 @@
 {
 	"title": "Credits",
-	"credits": [
-		{
-			"entry": "Zora Neale Hurston: Everett Collection/Alamy"
-		},
-		{
-			"entry": "Langston Hughes: Science Source"
-		},
-		{
-			"entry": "David Foster Wallace: Gary Hannabarger/Corbis"
-		},
-		{
-			"entry": "Annie Dillard: Bill Burkhart"
-		},
-		{
-			"entry": "Alison Bechdel: M. Sharkey/Contour by Getty Images"
-		},
-		{
-			"entry": "Chang Rae Lee: David Levenson/Getty Images"
-		}
-  	]
+	"photoSource": {
+		"head": "Photo Source",
+		"credits": [
+			"Zora Neale Hurston: Everett Collection/Alamy",
+			"Langston Hughes: Science Source",
+			"David Foster Wallace: Gary Hannabarger/Corbis",
+			"Annie Dillard: Bill Burkhart",
+			"Alison Bechdel: M. Sharkey/Contour by Getty Images",
+			"Chang Rae Lee: David Levenson/Getty Images"
+		]
+	},
+	"bookTeam": {
+		"head": "Book Team",
+		"credits": [
+			"Editor: Marilyn Moller",
+			"Associate Editor: Ariella Foss",
+			"Media Editor: Erica Wnek",
+			"Editorial Assistant: Ava Bramson",
+			"Development Manager: Livern Chin",
+			"Interactive Design Lead: Patrick Cartelli",
+			"Interactive Design: Morgan Miranda",
+			"Senior Web Developer: Peter Dietrich",
+			"Senior Front End Developer: Hon Chih Chen",
+			"Senior Product Manager: Marie McHale",
+			"Photo Editor: Aga Millhouse",
+			"Cover Artist: Pete Garceau"
+		]
+	}
 }

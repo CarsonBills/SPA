@@ -38,7 +38,9 @@ var Backbone = require('backbone'),
             },
 
             clear = function () {
-                $content.empty();
+                if ($content) {
+                    $content.empty();
+                }
             },
 
             show = function (params) {

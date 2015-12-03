@@ -37,9 +37,3 @@ var Backbone = require('backbone'),
 }());
 
 module.exports = WindowManager;
-
-
-/*
-
-                    window.open('data:text/html;charset=utf-8,' + uri);
-                    */

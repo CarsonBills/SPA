@@ -106,7 +106,6 @@ var ArticlesCollection = Backbone.Collection.extend({
     },
     current: function(id) {
         'use strict';
-        console.log(this.models)
         return this.indexOf(id);
     },*/
 

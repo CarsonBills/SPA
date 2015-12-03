@@ -7,7 +7,8 @@ var Backbone = require('backbone'),
     'use strict';
 
 
-        var save = function(id) {
+        var MODUE = 'TrackManager',
+            save = function(id) {
 
             var postdata = {
                 sitecode: Norton.siteCode,
@@ -24,7 +25,7 @@ var Backbone = require('backbone'),
                     // eventually, update some popularity indicator somewhere on the site; for now, do nothing
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.debug("Save Tracking request failed.");
+                    Logger.get(MODULE).error("Save Tracking request failed.");
                 }
             });
         };

@@ -5,6 +5,7 @@ var Backbone = require("backbone"),
 
 var AppRouter = Backbone.Router.extend({
 
+    MODULE: 'router',
     appView: null,
     deferred: $.Deferred(),
     refinements: Refinements.getInstance(),
@@ -42,7 +43,6 @@ var AppRouter = Backbone.Router.extend({
             },
             function (res1, res2) {
                 ErrorsManager.showGeneric();
-                //console.log(res1, res2);
             });
         return this.deferred.promise();
     },
@@ -99,16 +99,15 @@ var AppRouter = Backbone.Router.extend({
                     if (NortonApp.headerConfigItem.attributes.siteCode) {
                         try {
                             localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                            console.log(localStorage.getItem(lsConfigId));
+                            Logger.get(this.MODULE).info(localStorage.getItem(lsConfigId));
                         } catch (e) { }
                     }
-
 
                     dfd.resolve();
                 }, this),
                 error: function(xhr, response, error){
                     // go to generic error page
-                    console.debug('Site Config not available.');
+                    Logger.get(this.MODULE).error('Site Config not available.');
                     ErrorsManager.showGeneric();
                     dfd.reject();
                 }

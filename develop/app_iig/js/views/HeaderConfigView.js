@@ -24,7 +24,6 @@ var HeaderConfigView = Backbone.View.extend({
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(context);
         } else {
-            //console.log(JSON.parse(Norton.Utils.getCookie('ecm2')));
             context.user = CookieHelper.getUser('ecm2:username');
             headerConfigTemplate = this.templateIig(context);
 

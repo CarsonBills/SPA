@@ -5,9 +5,19 @@
     </div>
     <div class="modal-body">
         <div class="credits">
-            {{#each credits}}
-                <span>{{entry}}</span></br>
-            {{/each}}
+            <div class="photo-source">
+                <h2>{{photoSource.head}}</h2>
+                {{#each photoSource.credits}}
+                <p>{{this}}</p>
+                {{/each}}
+            </div>
+            
+            <div class="book-team">
+                <h2>{{bookTeam.head}}</h2>
+                {{#each bookTeam.credits}}
+                <p>{{this}}</p>
+                {{/each}}
+            </div>
         </div>
     </div>
 </div>

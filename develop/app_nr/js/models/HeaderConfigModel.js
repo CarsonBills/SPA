@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
 var HeaderConfigModel = Backbone.Model.extend({
     urlRoot: Norton.Constants.siteConfigUrl + "sitecode=" + Norton.siteCode + '&siteversion=' + Norton.version,
     //urlRoot: Norton.Constants.siteConfigUrl  + Norton.siteCode + '/' + Norton.version,
-
+    MODULE: 'HeaderConfigModel',
     defaults: {
         displayTitle: '',
         siteCode: '',
@@ -51,7 +51,7 @@ var HeaderConfigModel = Backbone.Model.extend({
     parse: function(response) {
         "use strict";
         if (response.code !== 200) {
-            //console.debug('Site Config return code is" ' + response.code);
+            Logger.get(this.MODULE).error('Site Config return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
             return false;

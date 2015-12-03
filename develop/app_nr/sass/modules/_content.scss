@@ -16,6 +16,7 @@ body {
         //animation: popover-glow 0.5s ease-out 0s alternate 2;
         //animation-fill-mode: backwards;
         min-width: 110px;
+        z-index: 1000;
     }
 }
 #filters {
@@ -373,33 +374,14 @@ ul.card {
     margin: 0 auto 3rem;
     transition: all 1s;
 }
-
-// spinner within load more button
-.loading-spinner {
-    position: absolute;
-    display: none;
-    transform: $loading-transform;
-    z-index: 99;
-    @include svg-sprite(loading_spinner);
-
-    .anim & {
-        display: inline-block;
-        animation: lm-rotate-360 0.8s infinite steps(12, end);
-    }
-}
 #load-more {
     position: relative;
-    padding: 0 5rem;
     height: 100%;
+    padding: 0 4rem;
     font-size: 1.2em;
     font-weight: 100;
     letter-spacing: 1px;
     background-color: #fcfcfc;
-
-    .anim & {
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
-        padding: 0 4rem 0 7rem;
-    }
 }
 /* details page and overall loading graphic*/
 .loading-container {
@@ -418,6 +400,7 @@ ul.card {
 }
 
 // used to prevent clicking when loading
+.tour-bg, // tag along tour background
 .catch-all {
     position: fixed;
     top: 0;
@@ -425,7 +408,7 @@ ul.card {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 9998;
+    z-index: 999;
     color: #fff;
 
     &.hide {

@@ -223,14 +223,14 @@ var ArticleView = Backbone.View.extend({
         if (params.showHint) {
             $nextItem = this.getNextItemById(params.nextItemID);
             // highlight last record
-            tween = TweenLite.to($nextItem, 0.7, { backgroundColor: "#888", ease: Quad.easeIn, onComplete: function() {
+            tween = TweenLite.to($nextItem, 0.7, { backgroundColor: "#666", ease: Quad.easeIn, onComplete: function() {
                 tween.reverse();
             }, onReverseComplete: function () {
                 //TweenLite.to($nextItem, 0.7, {boxShadow:style, ease: Quad.easeOut});
                 //$nextItem.css({boxShadow: style});
             }});
 
-            $nextItem.find('a.details').focus();
+            //$nextItem.find('a.details').focus();
         }
     },    
 

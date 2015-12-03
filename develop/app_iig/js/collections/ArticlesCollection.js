@@ -3,6 +3,7 @@ var Backbone = require('backbone'),
     ErrorsManager = require('../modules/errors_manager');
 
 var ArticlesCollection = Backbone.Collection.extend({
+    MODULE: 'ArticlesCollection',
     model: NortonApp.Models.Article,
     url: Norton.Constants.searchUrl,
     totalRecords: 0,
@@ -21,6 +22,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         if (res.code !== 200) {
             this.status = ErrorsManager.FAIL_STATE;
             ErrorsManager.showGeneric();
+            Logger.get(this.MODULE).error(res);
             return false;
         }
 
