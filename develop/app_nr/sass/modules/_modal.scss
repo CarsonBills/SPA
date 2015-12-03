@@ -151,10 +151,13 @@
 		&[data-module=errors],
 		&[data-module=details] {
 			width: 768px;
-			min-height: 738px;
 			height: auto;
 			position: relative;
 			text-align: left;
+
+			.modal-body & {
+				min-height: 0;
+			}
 
 
 			.modal-title {
@@ -245,6 +248,11 @@
 				strong {
 					font-weight: 600;
 				}
+			}
+
+			hr {
+				color: $light-grey;
+				margin: 0 4rem 1rem;
 			}
 		}
 
