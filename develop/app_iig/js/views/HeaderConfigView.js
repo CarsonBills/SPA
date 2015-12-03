@@ -2,13 +2,16 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     CookieHelper = require('../modules/cookie_helper');
+    //WindowManager = require('../modules/window_manager');
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
     MODULE: 'credits',
+    ACCOUNT: '.my-account',
     templateNR: require('../../templates/NortonReaderHeaderTemplate.hbs'),
     templateIig: require('../../templates/IigHeaderTemplate.hbs'),
     templateCredits: require('../../templates/HeaderCreditsTemplate.hbs'),
+
     initialize: function() {
         'use strict';
     },
@@ -24,6 +27,10 @@ var HeaderConfigView = Backbone.View.extend({
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(context);
         } else {
+            // only /full shows the login
+            if (context.baseUrl.indexOf('/full') === -1 ) {
+                context.hide = 'hide';
+            }
             context.user = CookieHelper.getUser('ecm2:username');
             context.signedIn = (context.user !== CookieHelper.ANON);
             headerConfigTemplate = this.templateIig(context);
@@ -35,7 +42,17 @@ var HeaderConfigView = Backbone.View.extend({
     },
 
     events: {
-        'click .links a': 'onLinks'
+        'click .links a': 'onLinks',
+        'click .sign-in': 'onSignIn'
+    },
+
+    onSignIn: function (e) {
+        'use strict';
+
+        //WindowManager.openURL(Norton.Constants.loginUrl);
+        window.location = Norton.Constants.loginUrl;
+
+        return false;
     },
 
     showCredits: function (credits) {
