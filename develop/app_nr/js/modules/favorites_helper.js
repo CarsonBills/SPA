@@ -18,7 +18,7 @@ var Backbone = require('backbone'),
 
                 link = document.createElement('a');
                 type = params.type;
-                filename = (params.title !== '') ? params.title: 'my_favorites';
+                filename = (params.title !== '') ? params.title: params.filename;
                 filename += ('.' + params.type);
 
                 // Chrome and FF

@@ -181,6 +181,7 @@ var YourFavsView = Backbone.View.extend({
         Favorites.save({
             title: $('#yourFavsTitle').text(),
             type: $target.data('type'),
+            filename: $target.data('filename'),
             collection: this.collection
         })
 
