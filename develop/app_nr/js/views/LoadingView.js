@@ -41,21 +41,17 @@ var LoadingView = Backbone.View.extend({
 
     show: function () {
         'use strict';
-        //this.$el.removeClass('off').addClass('anim');
         this.$blocker.removeClass('hide');
         this.$loading.addClass('anim');
 
-        //this.$button.text(this.$el.data('loading'));
         this.loading = true;
     },
 
     hide: function () {
         'use strict';
-        //this.$el.removeClass('anim').addClass('off');
         this.$blocker.addClass('hide');
         this.$loading.removeClass('anim');
-
-        //this.$button.text(this.$el.data('default'));
+        
         this.loading = false;
     }
 });
