@@ -533,90 +533,45 @@ gulp.task('default', function () {
     console.log("SITE=iig gulp build");
 });
 
-gulp.task('upload:iig_s3', [], function() {
+gulp.task('upload:s3', [], function() {
     var nortonreaderassets = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonreaderassets.json')),
-    nortonappreaderiig = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonappreaderiig.json')),
-    SITE = 'iig';
+    nortonappreaderiig = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonappreaderiig.json'));
 
     // use 'gulp --select' to upload only the srouces here 
     if (argv.select) {
         return gulp.src([
 
-            deploy + SITE + settings.prod + '/**',
-            '!' + deploy + SITE + settings.prod + '/index.html',
-            '!' + deploy + SITE + settings.prod + settings.fonts + '**',
-            '!' + deploy + SITE + settings.prod + settings.json + '**',
-            '!' + deploy + SITE + settings.prod + settings.php + '**',
-            '!' + deploy + SITE + settings.prod + settings.images + '**'
+            deploy + site + settings.prod + '/**',
+            '!' + deploy + site + settings.prod + '/index.html',
+            '!' + deploy + site + settings.prod + settings.fonts + '**',
+            '!' + deploy + site + settings.prod + settings.json + '**',
+            '!' + deploy + site + settings.prod + settings.php + '**',
+            '!' + deploy + site + settings.prod + settings.images + '**'
         ])
         .pipe($.s3(nortonappreaderiig, {
-            uploadPath: "/nr/",
+            uploadPath: '/' + site + '/',
             headers: awsHeaders
         }));
     }
 
     gulp.src([
-        deploy + SITE + settings.prod + '/**',
-        '!' + deploy + SITE + settings.prod + '/index.html',
-        '!' + deploy + SITE + settings.prod + settings.json + '**',
-        '!' + deploy + SITE + settings.prod + settings.php + '**',
-        '!' + deploy + SITE + settings.prod + settings.images + 'intro_bg.jpg',
-        '!' + deploy + SITE + settings.prod + settings.images + 'header*.jpg'
+        deploy + site + settings.prod + '/**',
+        '!' + deploy + site + settings.prod + '/index.html',
+        '!' + deploy + site + settings.prod + settings.json + '**',
+        '!' + deploy + site + settings.prod + settings.php + '**',
+        '!' + deploy + site + settings.prod + settings.images + 'intro_bg.jpg',
+        '!' + deploy + site + settings.prod + settings.images + 'header*.jpg'
     ])
     .pipe($.s3(nortonappreaderiig, {
-        uploadPath: "/iig/",
+        uploadPath: '/' + site + '/',
         headers: awsHeaders
     }));
     gulp.src([
-        deploy + SITE + settings.prod + settings.images + 'intro_bg.jpg',
-        deploy + SITE + settings.prod + settings.images + 'header*.jpg'
+        deploy + site + settings.prod + settings.images + 'intro_bg.jpg',
+        deploy + site + settings.prod + settings.images + 'header*.jpg'
     ])
     .pipe($.s3(nortonreaderassets, {
-        uploadPath: "/images/",
-        headers: awsHeaders
-    }));
-});
-
-gulp.task('upload:nr_s3', [], function() {
-    var nortonreaderassets = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonreaderassets.json')),
-    nortonappreaderiig = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonappreaderiig.json')),
-    SITE = 'nr';
-
-    // use 'gulp --select' to upload only the srouces here 
-    if (argv.select) {
-        return gulp.src([
-
-            deploy + SITE + settings.prod + '/**',
-            '!' + deploy + SITE + settings.prod + '/index.html',
-            '!' + deploy + SITE + settings.prod + settings.fonts + '**',
-            '!' + deploy + SITE + settings.prod + settings.json + '**',
-            '!' + deploy + SITE + settings.prod + settings.php + '**',
-            '!' + deploy + SITE + settings.prod + settings.images + '**'
-        ])
-        .pipe($.s3(nortonappreaderiig, {
-            uploadPath: "/nr/",
-            headers: awsHeaders
-        }));
-    }
-
-    gulp.src([
-        deploy + SITE + settings.prod + '/**',
-        '!' + deploy + SITE + settings.prod + '/index.html',
-        '!' + deploy + SITE + settings.prod + settings.json + '**',
-        '!' + deploy + SITE + settings.prod + settings.php + '**',
-        '!' + deploy + SITE + settings.prod + settings.images + 'intro_bg.jpg',
-        '!' + deploy + SITE + settings.prod + settings.images + 'header*.jpg'
-    ])
-    .pipe($.s3(nortonappreaderiig, {
-        uploadPath: "/nr/",
-        headers: awsHeaders
-    }));
-    gulp.src([
-        deploy + SITE + settings.prod + settings.images + 'intro_bg.jpg',
-        deploy + SITE + settings.prod + settings.images + 'header*.jpg'
-    ])
-    .pipe($.s3(nortonreaderassets, {
-        uploadPath: "/images/",
+        uploadPath: '/images/',
         headers: awsHeaders
     }));
 });
