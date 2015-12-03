@@ -45,9 +45,9 @@ Navigation.prototype = {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
             },
-            error: function(xhr, response, error) {
-                Logger.get(that.MODULE).error(error);
-                that.deferred.reject(error);
+            error: function(collection, res, options) {
+                Logger.get(that.MODULE).error(res);
+                that.deferred.reject(res);
             }
         });
 

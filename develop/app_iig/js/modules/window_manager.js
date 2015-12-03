@@ -29,10 +29,16 @@ var Backbone = require('backbone'),
                 uri += (template(data))
 
                 win = window.open(uri, params.title);
+            },
+            openURL = function (url) {
+                if (url) {
+                    window.location = url
+                }
             };
 
         return {
-            open: open
+            open: open,
+            openURL: openURL
         };
     }());
 

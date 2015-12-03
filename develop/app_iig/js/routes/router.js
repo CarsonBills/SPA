@@ -107,14 +107,12 @@ var AppRouter = Backbone.Router.extend({
                         } catch (e) { }
                     }
 
-
                     dfd.resolve();
                 }, this),
-                error: function(){
+                error: function(model, res, error){
                     // go to generic error page
                     Logger.get(that.MODULE).error('Site Config not available.');
-                    ErrorsManager.showGeneric();
-                    dfd.reject();
+                    dfd.reject(res.responseText);
                 }
             });
         }
