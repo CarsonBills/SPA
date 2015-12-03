@@ -24,7 +24,7 @@ var Backbone = require('backbone'),
 
 Backbone.$ = $;
 
-Norton.Constants = require('./modules/js_constants');
+Norton.Constants = require('./modules/js_qa_constants');
 Norton.Utils = require('./modules/js_utils');
 
 
