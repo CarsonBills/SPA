@@ -19,6 +19,7 @@ var YourFavsView = Backbone.View.extend({
 
     initialize: function(params) {
         'use strict';
+
         var that = this;
         this.app = params.app;
         this.articles = params.articles;
@@ -29,13 +30,17 @@ var YourFavsView = Backbone.View.extend({
             that.render(false);
         });
 
-        //this.getSavedFavs();
+        if (Norton.isLoggedIn) {
+            this.getSavedFavs();
+        } else {
+            this.loadLocalStorage();
+        }
     },
 
     events: {
         "click .savelist-lnk": "toggleYourFavs",
         "click #navYourFavs": "showYourFavs",
-        "click .download-favs": "downloadYourFavs",
+        "click .button-container a": "saveYourFavs",
         "click .list-format .remove": "removeYourFavs",
     },
 
@@ -72,12 +77,17 @@ var YourFavsView = Backbone.View.extend({
     },
 
     removeItem: function (model) {
-        'use strict'; 
+        'use strict';
+        var id = (model) ? model.get("id") : "";
 
         if (model) {
             this.collection.remove(model);
             this.updateCount();
-            this.likeOrUnlikeYourFavs(id, 'unlike');
+            if (Norton.isLoggedIn) {
+                this.likeOrUnlikeYourFavs(favsData.id, 'unlike');
+            } else {
+                this.saveLocalStorage();
+            }
         }
     },
 
@@ -129,6 +139,7 @@ var YourFavsView = Backbone.View.extend({
             article = this.articles.getModelByAttribute("pname", id),
             articleData = article.attributes.allMeta,
             model = this.collection.getModelByAttribute("pname", id);
+
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
@@ -141,16 +152,17 @@ var YourFavsView = Backbone.View.extend({
         favsData.pname = articleData.pname;
         favsData.abstract = articleData.abstract;
         favsData.title = articleData.title;
-        //favsData.authorLastName = articleData.primaryAuthor.authorLastName;
-        //favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
-        //favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
-        //favsData.ebookNode = articleData.ebookNode;
         favsData.id = articleData.id;
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
         this.updateCount();
-        //this.likeOrUnlikeYourFavs(id, 'like');
-        TrackManager.save(id);
+        if (Norton.isLoggedIn) {
+            this.likeOrUnlikeYourFavs(favsData.id, 'like');
+        } else {
+            this.saveLocalStorage();
+        }
+
+        TrackManager.save(favsData.id);
 
         return false;
     },
@@ -162,36 +174,27 @@ var YourFavsView = Backbone.View.extend({
         return false;
     },
 
-    downloadYourFavs: function() {
+    saveYourFavs: function (e) {
         'use strict';
-        var data = $('#yourFavsTitle').text() + '\t\t\n' +
-            'Title\tAuthor\tExtract\n';
-        this.collection.each(function(article) {
-            data += article.attributes.title + '\t' +
-                article.attributes.authorFirstName + " " + article.attributes.authorLastName + '\t' +
-                article.attributes.abstract + '\n';
-        }, this);
+        var $target = $(e.currentTarget),
+            type = $target.data('type');
 
-        /**
-         * Maybe a better way to do this? This simulates a clickable link of the page.
-         * Create a blob of the data, create a link element and populate it with the blob,
-         * then click the link to open a SAVE dialog box, then remove the link.
-         */
-        // Create a Blob with the data, thlink element populated, click it, then remove it.
-        var blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
-        var url = URL.createObjectURL(blob);
-        var lnk = document.createElement('a');
-        var filename = ($("#yourFavsTitle").html() !== "") ? $("#yourFavsTitle").html() + ".csv" : "my_items.csv";
-        lnk.setAttribute('href', url);
-        lnk.setAttribute('download', filename);
-        lnk.style.visibility = 'hidden';
-        document.body.appendChild(lnk);
-        lnk.click();
-        document.body.removeChild(lnk);
+        Favorites.save({
+            title: $('#yourFavsTitle').text(),
+            type: $target.data('type'),
+            collection: this.collection
+        })
 
         return false;
     },
 
+    saveLocalStorage: function () {
+        'use strict';
+        // save in localstorage
+        try {
+            localStorage.setItem(this.lsMyFavs, JSON.stringify(this.collection));
+        } catch (e) { }
+    },
 
     loadLocalStorage: function() {
         'use strict';
@@ -221,23 +224,32 @@ var YourFavsView = Backbone.View.extend({
         var that = this,
             model = this.collection.getModelByAttribute("id", id),
             data = {
-                sitecode: Norton.siteCode,
-                asset: id,
-                abstract: model.abstract.substr(0, 250),
+                id: id,
+                abstract: model.attributes.abstract.substr(0, 250),
                 title: model.title,
-                downloadAsset: model.downloadAsset,
-                pname: model.pname
+                download_src: model.attributes.download_src,
+                download_fmt: model.attributes.download_fmt,
+                pname: model.attributes.pname,
+                chapter_id: ""
             },
 
             postdata = {
-                asset: id,
-                asset_data: data
+                sitecode: Norton.siteCode,
+                siteversion: Norton.version,
+                asset_id: id,
+                json_str: JSON.stringify(data),
+                mode: mode,
+                //discipline: Norton.discipline
+                discipline: 6
             };
 
         $.ajax({
             type:'POST',
-            url: (mode == 'like') ? Norton.Constants.likeAssetUrl : Norton.Constants.unlikeAssetUrl,
-            data: JSON.stringify(postdata),
+            url: Norton.Constants.likeUnlikeAssetUrl,
+            xhrFields: {
+                withCredentials: true
+            },
+            data: postdata,
             dataType: "json",
             success: function(response) {
                 // eventually, update some popularity indicator somewhere on the site; for now, do nothing
@@ -249,26 +261,38 @@ var YourFavsView = Backbone.View.extend({
     },
     getSavedFavs: function (id, mode) {
         'use strict';
-        var that = this;
+        var that = this,
+            postdata = {
+                sitecode: Norton.siteCode,
+                siteversion: Norton.version
+            };
 
         $.ajax({
             type:'POST',
             url: Norton.Constants.getSavedFavsUrl,
-            data: null,
+            xhrFields: {
+                withCredentials: true
+            },
+            data: postdata,
             dataType: "json",
             success: function(response) {
-                if (response.code !== 200) {
+;               if (response.code !== 200) {
                     Logger.error("Get Favorites request failed.");
                     return;
                 }
+
                 if (response.data.length < 1) {
-//       return; // User had no saved favorites
+                    return; // User had no saved favorites
                 }
-                that.buildSavedFavs(response.data);
-                if (this.app.dataReady) {
-                    this.updateCount();
+
+                for (var i=0; i<response.data.length; i++) {
+                    that.collection.add(new NortonApp.Models.YourFavs(response.data[i]));
+                }
+
+                if (that.app.dataReady) {
+                    that.updateCount();
                 } else {
-                    this.app.deferred.promise().done(function () {
+                    that.app.deferred.promise().done(function () {
                         that.updateCount();
                     });
                 }
@@ -277,16 +301,6 @@ var YourFavsView = Backbone.View.extend({
                 Logger.get(that.MODULE).error("Get Favorites request failed.");
             }
         });
-    },
-    buildSavedFavs: function(records) {
-        'use strict';
-        var favsData;
-
-        for (var i=0; i<records.length; i++) {
-            favsData = JSON.parse(records[i].assetData);
-            favsData.id = records[i].assetId;
-            this.collection.add(new NortonApp.Models.YourFavs(favsData));
-        }
     }
 });
 
