@@ -13,6 +13,7 @@ var Backbone = require('backbone'),
     // Handlebars helpers and blocks are intialized here
     hb_helpers = require('./hb_helpers/pagedetails_blocks'),
     hb_helpers = require('./hb_helpers/handlebars_helpers'),
+    hb_helpers = require('./hb_helpers/handlebars_partials'),
     // End Handlebars initialization
 
 	bootstrap = require('bootstrap-sass'),

@@ -1,0 +1,12 @@
+        {{!-- Page Details Sections & Blocks --}}
+        <div data-type="iig-section" class="sections">
+          {{#HBEach data.sections}}
+            <div class="section">
+                {{#HBEach this.blocks}}
+                    <div data-type="iig-block" class="block">
+                        {{{HBAssets this}}}
+                    </div>
+                {{/HBEach}}
+            </div>
+          {{/HBEach}}
+        </div>
