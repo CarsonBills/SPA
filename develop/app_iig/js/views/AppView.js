@@ -46,7 +46,7 @@ var AppView = Backbone.View.extend({
         }).render();
 
         this.loadingView = new NortonApp.Views.Loading({
-            el: '.load-more-section'
+            el: '.container'
         });
 
         this.topNavView = new NortonApp.Views.TopNav({
