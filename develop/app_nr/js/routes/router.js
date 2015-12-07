@@ -99,7 +99,6 @@ var AppRouter = Backbone.Router.extend({
                     if (NortonApp.headerConfigItem.attributes.siteCode) {
                         try {
                             localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
-                            Logger.get(this.MODULE).info(localStorage.getItem(lsConfigId));
                         } catch (e) { }
                     }
 
