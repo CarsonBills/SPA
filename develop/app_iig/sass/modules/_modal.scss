@@ -422,6 +422,15 @@
 			&[data-module=details] {
 				width: 90%;
 
+				.utils {
+					margin: 2rem auto;
+					text-align: center;
+
+					.savelist-lnk {
+						margin: 0 0 1rem;
+					}
+				}
+
 				.modal-header {
 					min-height: $modal-header-height;
 					height: auto;
@@ -447,10 +456,6 @@
 		.modal-dialog {
 			&[data-module=introduction] {
 				height: auto;
-				
-				.modal-body {
-    				padding: 1rem;
-				}
 
 				.modal-title {
 					font-size: 3.5rem;
@@ -479,10 +484,6 @@
 
 			&[data-module=errors],
 			&[data-module=details] {
-				.modal-utils {
-					margin: 2rem auto;
-					text-align: center;
-				}
 
 				.moreinfo-lnk {
 					margin: 2rem auto;
