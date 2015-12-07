@@ -1,0 +1,29 @@
+
+$('.jp-video').jPlayer({
+	ready: function () {
+	  	$(this).jPlayer('setMedia', {
+	  		m4v: '{{videoSrc}}',
+	    	poster: '{{stillImageSrc}}'
+	  	});
+	},
+	size: {
+		width: '100%',
+		height: 'auto'
+	},
+	preload: 'meta',
+	supplied: 'm4v',
+	cssSelectorAncestor: '.video-container',
+	cssSelector: {
+  	}
+});
+
+$('.jp-video').click(function (e) {
+	console.log('========')
+	var $jp = $(e.currentTarget);
+	if ($('.video-container').hasClass('jp-state-playing')) {
+		$jp.jPlayer('pause');
+	} else {
+		$jp.jPlayer('play');
+	}
+	return false;
+});

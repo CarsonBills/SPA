@@ -59,7 +59,6 @@ var PageModel = Backbone.Model.extend({
                 "assetURL": assetData.url
             });
         }*/
-        Logger.get(this.MODULE).info(response.data.data);
 
         return response.data;
     },
