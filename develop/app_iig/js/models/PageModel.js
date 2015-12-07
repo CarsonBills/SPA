@@ -54,6 +54,7 @@ var PageModel = Backbone.Model.extend({
         /*if (response.data.data.downloadAsset != undefined) {
             var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
             this.set({
+                "assetHtml": assetData.html,
                 "assetIcon": assetData.icon,
                 "assetSize": assetData.size,
                 "assetURL": assetData.url
