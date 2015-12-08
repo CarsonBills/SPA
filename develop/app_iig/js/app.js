@@ -23,9 +23,9 @@ var Backbone = require('backbone'),
 	// Settings
 	namespace = require('./modules/namespace');
 
-Backbone.$ = $;
 
-Norton.Constants = require('./modules/js_qa_constants');
+// dynamically duplicated in gulp
+Norton.Constants = require('./dynamic/constants');
 Norton.Utils = require('./modules/js_utils');
 
 
