@@ -51,7 +51,7 @@ var PageModel = Backbone.Model.extend({
             return;
         }
 
-        /*if (response.data.data.downloadAsset != undefined) {
+        if (response.data.data.downloadAsset != undefined) {
             var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
             this.set({
                 "assetHtml": assetData.html,
@@ -59,7 +59,7 @@ var PageModel = Backbone.Model.extend({
                 "assetSize": assetData.size,
                 "assetURL": assetData.url
             });
-        }*/
+        }
 
         return response.data;
     },

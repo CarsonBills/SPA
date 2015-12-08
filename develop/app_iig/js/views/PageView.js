@@ -53,6 +53,8 @@ var PageView = Backbone.View.extend({
         'use strict';
         var $div = $('<div></div>');
 
+        console.log(this.model.toJSON())
+
         $div.html(this.template(this.model.toJSON()));
 
         ModalManager.show({

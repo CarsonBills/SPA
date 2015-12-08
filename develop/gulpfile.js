@@ -24,7 +24,7 @@ var gulp = require('gulp'),
     port   		= 9000,
     app         = 'app_',
     deploy      = 'deploy/',
-    app_nr      = 'nr',
+    app_nr      = 'nr', 
     app_iig     = 'iig',
     wip 		= '/full',
 
@@ -54,6 +54,7 @@ var gulp = require('gulp'),
         php: '/php/',
         css: '/css/',
         js: '/js/',
+        js_dynamic: '/js/dynamic/',
         js_logger: '/js/logger/',
         js_vendor: '/js/vendor/',
         json: '/json/',
@@ -65,8 +66,6 @@ var gulp = require('gulp'),
     };
 
 
-
-var site = process.env.SITE || 'iig';
 
 function getHTMLAssets(path) {
     return {
@@ -85,14 +84,41 @@ function getHTMLAssets(path) {
     }
 }
 
+function getVersion (version) {
+    var result;
+
+    if (version === 'qa' || version === 'dev' || version === 'prod') {
+        result = '_' + version;
+    } else {
+        result = settings.dev;
+    }
+    console.log('version: ' + result);
+    return result;
+}
+
+function isProd() {
+    return process.env.VERSION === 'prod';
+}
+
+function isDev() {
+    return process.env.VERSION === 'dev';
+}
+
+var site = process.env.SITE || 'iig',
+    version = getVersion(process.env.VERSION);
+
+gulp.task('echo', function () {
+    console.log(getVersion(process.env.VERSION));
+});
+
+
 gulp.task('fileinclude', function () {
-    var assets = ifElse(argv.prod,
-        function () { 
-            return getHTMLAssets(CF_APP_URL + site);
-        },
-        function () { 
-           return getHTMLAssets('');
-        });
+    var assets;
+    if (isProd()) {
+        assets = getHTMLAssets(CF_APP_URL + site);
+    } else {
+        assets = getHTMLAssets('');
+    } 
 
     return gulp.src([app + site +  settings.page_templates + 'index.html'])
         .pipe($.plumber(function (error) {
@@ -105,15 +131,12 @@ gulp.task('fileinclude', function () {
             basepath: '@file'
         }))
         .pipe(htmlreplace(assets))
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod),
-            gulp.dest(deploy + site + settings.dev)
-        ))
+        .pipe(gulp.dest(deploy + site + version))
         .pipe($.size())
         .pipe($.notify({
             message: 'site: ' + site + ' fileinclude done'
         }))
-        .pipe(gulpif(!argv.prod, $.livereload()))
+        .pipe(gulpif(isDev(), $.livereload()))
 });
 
 gulp.task('sass:develop', function () {
@@ -138,7 +161,7 @@ gulp.task('sass:develop', function () {
             message: 'site: ' + site + ' Sass:Develop done'
         }))
         .pipe($.size())
-        .pipe(gulpif(!argv.prod, $.livereload()))
+        .pipe(gulpif(isDev(), $.livereload()))
 });
 
 gulp.task('sass:production', function () {
@@ -147,32 +170,31 @@ gulp.task('sass:production', function () {
             precision: 6,
             outputStyle: 'compact'
         }))
-        .pipe(modifyCssUrls({
+        .pipe(gulpif(isProd(), modifyCssUrls({
             modify: function (url, filePath) {
                 return site + url;
             },
             prepend: CF_APP_URL
-        }))
+        })))
         .pipe($.postcss([
             require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
         .pipe($.csso())
-        .pipe(gulp.dest(deploy + site + settings.prod + settings.css))
+        .pipe(gulp.dest(deploy + site + version + settings.css))
         .pipe($.size());
 });
 
 /* spriteSmith */
 gulp.task('png_sprite', function (cb) {
     // Generate our spritesheet
-
-    var images = app + site + settings.images,
-        spriteData = gulp.src([
-            images  + '/*.png',
+    var images = app + site + settings.images;
+    
+    var spriteData = gulp.src([
+            images  + '*.png',
             '!' + images + 'favicon.png',
             '!' + images + 'header.png',
-            '!' + images + 'header_pattern.png',
-            '!' + app + site + settings.svg + '*.svg'
-        ])
+            '!' + images + 'header_pattern.png'
+        ]) 
         .pipe($.spritesmith({
             imgName: '/images/png_sprite.png',
             cssName: '_png_sprite.scss',
@@ -182,10 +204,8 @@ gulp.task('png_sprite', function (cb) {
     // Pipe image stream through image optimizer and onto disk
     spriteData.img
         .pipe($.imagemin())
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.images),
-            gulp.dest(deploy + site + settings.dev + settings.images)
-        ));
+        .pipe($.size())
+        .pipe(gulp.dest(deploy + site + version + settings.images));
 
     // Pipe CSS stream through CSS optimizer and onto disk
     spriteData.css
@@ -206,13 +226,7 @@ gulp.task('svg_sprite', function () {
                     },
                     "dest": './',
                     "layout": "diagonal",
-                    "sprite": ifElse(argv.prod, 
-                        function () { 
-                            return deploy + site + settings.prod + settings.svg_sprite;
-                        },
-                        function () { 
-                            return deploy + site + settings.dev + settings.svg_sprite;
-                        }),
+                    "sprite":  deploy + site + version + settings.svg_sprite,
                     "bust": false,
                     "render": {
                         "scss": {
@@ -228,13 +242,7 @@ gulp.task('svg_sprite', function () {
 
 /* svg2png */
 gulp.task('svg2png', ['svg_sprite'], function () {
-    var path = ifElse(argv.prod,
-        function () { 
-           return deploy + site + settings.prod;
-        },
-        function () { 
-           return deploy + site + settings.dev;
-        });
+    var path = deploy + site + version;
     return gulp.src([
             path + settings.svg_sprite
         ])
@@ -252,20 +260,14 @@ gulp.task('copy_images', function () {
             images + 'header_pattern.png',
             '!' + svg + '*.svg'
         ])
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.images),
-            gulp.dest(deploy + site + settings.dev + settings.images)   
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.images));
 });
 
 gulp.task('copy_php', function () {
     return gulp.src([
             settings.app_php + '**/*.php'
         ])
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.php),
-            gulp.dest(deploy + site + settings.dev + settings.php)   
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.php));
 });
 
 gulp.task('copy_fonts', function () {
@@ -278,10 +280,7 @@ gulp.task('copy_fonts', function () {
         .pipe($.rename(function (path) {
             path.basename = 'glyphicons-regular';
         }))
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.fonts),
-            gulp.dest(deploy + site + settings.dev + settings.fonts) 
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.fonts));
 });
 
 gulp.task('copy_data', function () {
@@ -291,17 +290,11 @@ gulp.task('copy_data', function () {
         .pipe($.rename(function (path) {
             path.basename = '.htaccess';
         }))
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod),
-            gulp.dest(deploy + site + settings.dev) 
-        ));
+        .pipe(gulp.dest(deploy + site + version));
     return gulp.src([
             app + site + settings.json + '**/*.json'
         ])
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.json),
-            gulp.dest(deploy + site + settings.dev + settings.json) 
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.json));
 });
 
 gulp.task('copy_vendor', function () {
@@ -325,10 +318,7 @@ gulp.task('wiredep', function () {
     .pipe($.rename(function (path) {
         path.basename = 'modernizr';
     }))
-    .pipe(gulpif(argv.prod,
-        gulp.dest(deploy + site + settings.prod + settings.js_vendor),
-        gulp.dest(deploy + site + settings.dev + settings.js_vendor) 
-    ));
+    .pipe(gulp.dest(deploy + site + version + settings.js_vendor));
 });
 
 /*
@@ -371,13 +361,22 @@ gulp.task('customize:modernizr', function() {
 });
 
 gulp.task('browserify', function () {
-    var logger = ifElse(argv.prod,
+    var logger = ifElse(isProd(),
         function () { 
            return 'production.js';
         },
         function () { 
            return 'develop.js';
         });
+    // copy constants
+    gulp.src([
+            app + site + settings.js_dynamic + 'constants' + version + '*.js'
+        ])
+        .pipe($.rename(function (path) {
+            path.basename = 'constants';
+        }))
+        .pipe(gulp.dest(app + site + settings.js_dynamic));
+
     return gulp.src([
             app + site + settings.js + 'app.js',
             '!' + app + site + settings.js_vendor + '**/*.js'
@@ -398,17 +397,14 @@ gulp.task('browserify', function () {
         .pipe($.browserify({
             transform: ['debowerify', hbsfy]
         }))
-        .pipe(gulpif(argv.prod, $.uglify()))
+        .pipe(gulpif(isProd(), $.uglify()))
         .pipe($.rename({basename: 'bundle', extname: '.min.js'}))
-        .pipe(gulpif(!argv.prod, $.livereload()))
+        .pipe(gulpif(isDev(), $.livereload()))
 
         .pipe($.notify({
             message: 'site: ' + site + ' Browserify done'
         }))
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.js),
-            gulp.dest(deploy + site + settings.dev + settings.js) 
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.js));
 });
 
 
@@ -423,10 +419,7 @@ gulp.task('jscs', function () {
             title: 'JSCS',
             message: 'JSCS Passed'
         }))
-        .pipe(gulpif(argv.prod,
-            gulp.dest(deploy + site + settings.prod + settings.js),
-            gulp.dest(deploy + site + settings.dev + settings.js) 
-        ));
+        .pipe(gulp.dest(deploy + site + version + settings.js));
  });
 
 /*
@@ -494,14 +487,14 @@ gulp.task('server', function () {
 gulp.task('build', function () {
     return gulp.src('')
         .pipe($.shell([
-            'gulp wiredep --prod',
-            'gulp copy_data --prod',
-            'gulp copy_php --prod',
-            'gulp svg2png --prod',
-            'gulp copy_images --prod',
-            'gulp copy_fonts --prod',
-            'gulp browserify --prod',
-            'gulp fileinclude --prod',
+            'gulp wiredep',
+            'gulp copy_data',
+            'gulp copy_php',
+            'gulp svg2png',
+            'gulp copy_images',
+            'gulp copy_fonts',
+            'gulp browserify',
+            'gulp fileinclude',
             'gulp sass:production'
         ], {
             maxBuffer: 4000
@@ -522,7 +515,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
 });
 
-gulp.task('clean', del.bind(null, [deploy + 'iig_dev/*', deploy + 'iig_prod/*', deploy + 'nr_dev/*', deploy + 'nr_prod/*']));
+gulp.task('clean', del.bind(null, [deploy + 'iig_dev/*', deploy + 'nr_dev/*', deploy + '*_prod', deploy + '*_qa']));
 
 gulp.task('default', function () {
     console.log("## Norton Reader ##");
