@@ -20,8 +20,9 @@ var Backbone = require('backbone'),
             if (src === undefined) return;
 
             url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
-            // Assuming 4th forward slash and beyond is the file path and name
-            for (i = 4; i < nodes.length; i++) {
+            // Assuming 3rd forward slash and beyond is the file path and name
+            // allows php to detect bucket name
+            for (i = 3; i < nodes.length; i++) {
                 url += "/" + nodes[i].replace("+", "%2b");
             }
             return url;
@@ -49,7 +50,6 @@ var Backbone = require('backbone'),
                     parseBlock(block);
                 });
             });
-
             return raw;
         };
 
