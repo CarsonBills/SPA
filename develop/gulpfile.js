@@ -10,11 +10,14 @@ var gulp = require('gulp'),
     del   		= require('del'),
     argv        = require('yargs').argv,
     hbsfy       = require('browserify-handlebars'),
+    buffer      = require('vinyl-buffer'),
+    merge = require('merge-stream'),
     ifElse      = require('gulp-if-else'),
     gulpif      = require('gulp-if'),
     fileinclude = require('gulp-file-include'),
     htmlreplace = require('gulp-html-replace'),
     modifyCssUrls = require('gulp-modify-css-urls'),
+    spritesmith = require('gulp.spritesmith'),
     runSequence = require('run-sequence'),
     svgSprite = require('gulp-svg-sprite'),
     addsrc      = require('gulp-add-src'),
@@ -185,7 +188,7 @@ gulp.task('sass:production', function () {
 });
 
 /* spriteSmith */
-gulp.task('png_sprite', function (cb) {
+gulp.task('png_sprite', function () {
     // Generate our spritesheet
     var images = app + site + settings.images;
     
@@ -195,23 +198,26 @@ gulp.task('png_sprite', function (cb) {
             '!' + images + 'header.png',
             '!' + images + 'header_pattern.png'
         ]) 
-        .pipe($.spritesmith({
+        .pipe(spritesmith({
             imgName: '/images/png_sprite.png',
             cssName: '_png_sprite.scss',
             cssTemplate: app + site + settings.sass + 'handlebars/handlebarsInheritance.scss.handlebars'
         }));
 
     // Pipe image stream through image optimizer and onto disk
-    spriteData.img
+    console.log(deploy + site + version + settings.images)
+    var imgStream = spriteData.img
+        .pipe(buffer())
         .pipe($.imagemin())
-        .pipe($.size())
-        .pipe(gulp.dest(deploy + site + version + settings.images));
+        .pipe(gulp.dest(deploy + site + version + settings.images))
+        .pipe($.size());
 
     // Pipe CSS stream through CSS optimizer and onto disk
-    spriteData.css
+    var cssStream = spriteData.css
       //.pipe($.csso())
-      .pipe(gulp.dest(app + site + settings.sass + settings.sprite))
-      .on('end', cb);
+      .pipe(gulp.dest(app + site + settings.sass + settings.sprite));
+
+    return merge(imgStream, cssStream);
 });
 
 /* svg_sprite */
@@ -490,6 +496,7 @@ gulp.task('build', function () {
             'gulp wiredep',
             'gulp copy_data',
             'gulp copy_php',
+            'gulp png_sprite',
             'gulp svg2png',
             'gulp copy_images',
             'gulp copy_fonts',
