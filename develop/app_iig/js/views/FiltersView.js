@@ -19,12 +19,11 @@ var FiltersView = Backbone.View.extend({
     ACTIVE: "#chapter",
     active: "",
     adjustHieght: null,
-    active: "",
     currentHeight: 0,
 
     initialize: function(params) {
         'use strict';
-        this.collection.once('update', this.preRender, this);
+        this.collection.on('update', this.preRender, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -41,11 +40,13 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function() {
         'use strict';
+
         if (this.collection.isNotValid()) {
             return false;
         }
 
-        this.collection.filters = this.refinements.compare(this.collection.filters);
+        this.filterContent = this.refinements.compare(this.collection.filters);
+
         this.render();
         this.adjustHieght();
         this.checkSelected();
@@ -55,19 +56,21 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         var that = this,
             filterTemplate,
-            i;
+            i,
+            filters;
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
 
         _.each(this.collection.filters, function (filter) {
+
             filter.cat_display = filter.displayName;
 
             for (i=0; i<filter.refinements.length; i++) {
                 filter.refinements[i].cat = filter.name;
                 filter.refinements[i].cat_display = filter.displayName;
             }
-
+            //console.log(filter);
             filterTemplate = this.template(filter);
             this.$el.append(filterTemplate);
         }, this);
@@ -79,7 +82,6 @@ var FiltersView = Backbone.View.extend({
         });*/
 
         this.showActive();
-
 
         return this;
     },
