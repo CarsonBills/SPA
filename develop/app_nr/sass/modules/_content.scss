@@ -150,20 +150,16 @@ body {
 ul.card {
     position: relative;
     flex-direction: row;
-    //justify-content: space-around;
-    flex-wrap: wrap;
     display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
     width: 100%;
     margin-bottom: 2rem;
     //margin: 0 auto 3rem;
     //max-width: $max-width;
     $card-gutter: 5px;
-
-    .articles {
-        width: 100%;
-        transition: all 1s ease-out;
-    }
-
+    transition: all 1s ease-out;
 
     li.grid-format {
         position: relative;
