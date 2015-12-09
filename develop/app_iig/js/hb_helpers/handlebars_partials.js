@@ -20,6 +20,7 @@ var Handlebars = require('handlebars/runtime'),
 module.exports = (function() {
     'use strict';
     Handlebars.registerPartial({
+        // page details
         'HBPageArrowPrev': require('../../templates/partials/pageDetails/arrowPrev.hbs'),
         'HBPageArrowNext': require('../../templates/partials/pageDetails/arrowNext.hbs'),
         'HBPageHeader': require('../../templates/partials/pageDetails/header.hbs'),
@@ -28,7 +29,9 @@ module.exports = (function() {
         'HBPageMeta': require('../../templates/partials/pageDetails/meta.hbs'),
         'HBPageSections': require('../../templates/partials/pageDetails/sections.hbs'),
         'HBPageUtils': require('../../templates/partials/pageDetails/utils.hbs'),
-        'HBPageJplayer': require('../../templates/partials/pageDetails/jplayer.hbs')
+        'HBPageJplayer': require('../../templates/partials/pageDetails/jplayer.hbs'),
+        // content list view item
+        'HBContentListItem': require('../../templates/partials/content/listItem.hbs')
     });
 
 })();
