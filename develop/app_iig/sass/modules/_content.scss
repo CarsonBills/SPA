@@ -156,12 +156,7 @@ ul.card {
     //margin: 0 auto 3rem;
     //max-width: $max-width;
     $card-gutter: 5px;
-
-    .articles {
-        width: 100%;
-        transition: all 1s ease-out;
-    }
-
+    transition: all 1s ease-out;
 
     li.grid-format {
         position: relative;
