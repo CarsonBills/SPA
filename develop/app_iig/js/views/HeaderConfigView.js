@@ -10,7 +10,6 @@ var HeaderConfigView = Backbone.View.extend({
     ACCOUNT: '.my-account',
     templateNR: require('../../templates/NortonReaderHeaderTemplate.hbs'),
     templateIig: require('../../templates/IigHeaderTemplate.hbs'),
-    templateCredits: require('../../templates/HeaderCreditsTemplate.hbs'),
 
     initialize: function() {
         'use strict';
@@ -55,47 +54,12 @@ var HeaderConfigView = Backbone.View.extend({
         return false;
     },
 
-    showCredits: function (credits) {
-        'use strict';
-        var $div = $('<div></div>');
-
-        $div.html(this.templateCredits(credits));
-
-        ModalManager.show({
-            content: $div,
-            module: this.MODULE
-        });
-    },
-
-    getCredits: function (url) {
-        'use strict';
-
-        var that = this;
-
-        $.ajax({
-            url: url,
-            dataType: "json",
-            success: function(response) {
-                that.showCredits(response);
-            },
-            error: function(xhr, response, error) {
-                Logger.get(that.MODULE).error('Credits Page not available.');
-                ErrorsManager.showGeneric();
-            }
-        });
-
-    },
-
     onLinks: function (e) {
         'use strict';
 
         var $target = $(e.currentTarget);
-        if ($target.prop('target') === 'modal') {
 
-            this.getCredits($target.prop('href'));
-
-            return false;
-        }
+        return false;
 
     }
 }); 

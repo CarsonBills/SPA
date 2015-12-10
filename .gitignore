@@ -5,8 +5,10 @@
 /tmp
 gulptmp
 iig_dev
+iig_qa
 iig_prod
 nr_dev
+nr_qa
 nr_prod
 
 # dependencies

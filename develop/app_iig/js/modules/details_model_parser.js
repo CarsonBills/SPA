@@ -54,7 +54,8 @@ var Backbone = require('backbone'),
         };
 
         return {
-            process: process
+            process: process,
+            parseUrl: parseUrl
         };
 }());
 

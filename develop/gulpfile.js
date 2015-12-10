@@ -95,7 +95,7 @@ function getVersion (version) {
     } else {
         result = settings.dev;
     }
-    console.log('version: ' + result);
+    console.log('current version: ' + result);
     return result;
 }
 
@@ -199,13 +199,13 @@ gulp.task('png_sprite', function () {
             '!' + images + 'header_pattern.png'
         ]) 
         .pipe(spritesmith({
-            imgName: '/images/png_sprite.png',
+            imgName: 'png_sprite.png',
+            imgPath: '/images/png_sprite.png',
             cssName: '_png_sprite.scss',
             cssTemplate: app + site + settings.sass + 'handlebars/handlebarsInheritance.scss.handlebars'
         }));
 
     // Pipe image stream through image optimizer and onto disk
-    console.log(deploy + site + version + settings.images)
     var imgStream = spriteData.img
         .pipe(buffer())
         .pipe($.imagemin())
@@ -513,7 +513,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
     $.livereload.listen();
 
     gulp.watch([app + site + settings.page_templates + '**/*.html'], ['fileinclude']);
-    gulp.watch([app + site + settings.templates + '**/*.hbs'], ['browserify']);
+    gulp.watch([app + site + settings.templates + '**/*'], ['browserify']);
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
     gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
     gulp.watch([app + site + settings.js + '**/*.js'], ['browserify']);

@@ -5,11 +5,11 @@ var Backbone = require('backbone'),
     ScrollHelper = require('../modules/scroll_helper');
 
 var ArticleView = Backbone.View.extend({
-    container: '#articles',
+    container: '#articlesContainer',
     evtMgr: EventManager.getInstance(),
-    templateGrid: require('../../templates/ArticlesGridTemplate.hbs'),
-    templateList: require('../../templates/ArticlesListTemplate.hbs'),
-    templateListHead: require('../../templates/ArticlesListHeadTemplate.hbs'),
+    templateGrid: require('../../templates/modules/ArticlesGridTemplate.hbs'),
+    templateList: require('../../templates/modules/ArticlesListTemplate.hbs'),
+    templateListHead: require('../../templates/modules/ArticlesListHeadTemplate.hbs'),
     app: null,
     stickScroll: null,
     shouldRefresh: null,
@@ -229,7 +229,7 @@ var ArticleView = Backbone.View.extend({
                 //$nextItem.css({boxShadow: style});
             }});
 
-            $nextItem.find('a.details').focus();
+            //$nextItem.find('a.details').focus();
         }
     },    
 

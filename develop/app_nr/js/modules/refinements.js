@@ -46,7 +46,7 @@ Navigation.prototype = {
                 }
             },
             error: function(xhr, response, error) {
-                Logger.get(this.MODULE).error(error);
+                Logger.get(that.MODULE).error(error);
                 that.deferred.reject(error);
             }
         });

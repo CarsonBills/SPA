@@ -1,5 +1,8 @@
 $icons: (
-    sprite: (width: 133px, height: 107px, pngPath: '/images/svg_sprite.png', svgPath: '/images/svg_sprite.svg'),
-    loading_spinner: (width: 84px, height: 84px, backgroundX: 0px, backgroundY: 0px),
-    norton_logo: (width: 49px, height: 23px, backgroundX: -84px, backgroundY: -84px),
+    sprite: (width: 193px, height: 179px, pngPath: '/images/svg_sprite.png', svgPath: '/images/svg_sprite.svg'),
+    filetypes_pdf: (width: 20px, height: 24px, backgroundX: 0px, backgroundY: 0px),
+    filetypes_ppt: (width: 20px, height: 24px, backgroundX: -20px, backgroundY: -24px),
+    filetypes_zip: (width: 20px, height: 24px, backgroundX: -40px, backgroundY: -48px),
+    loading_spinner: (width: 84px, height: 84px, backgroundX: -60px, backgroundY: -72px),
+    norton_logo: (width: 49px, height: 23px, backgroundX: -144px, backgroundY: -156px),
 );

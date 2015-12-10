@@ -28,7 +28,7 @@ body {
     background-color: #fff;
     width: $filter-width;
     float: left;
-    top: 269px;
+    top: 268px;
     left: 0;
     z-index: 999;
     @include toggle-offscreen($property: left);
@@ -62,23 +62,6 @@ body {
             font-weight: 600;
         }
     }
-
-    /* .filter-item {
-        //overflow: hidden;
-        //cursor: pointer;
-        //margin-bottom: 0.5rem;
-        //max-height: 200px;
-        //transition: all 0.4s ease-in-out;
-
-        &.collapsed {
-            //max-height: 36px;
-            //transition: none;
-            .glyphicon {
-                transition: all 0.2s ease-in-out;
-                transform: rotate(90deg);
-            }
-        }
-    } */
 
     .filter-item-cat {
         position:relative;
@@ -142,26 +125,52 @@ body {
     width: calc(100% - #{$filter-width});
     @include locked($top: $top-bar-height);
     @include toggle-fullscreen();
+}
 
+%content-type {
+    width: $list-height - 1;
+    height: $list-height - 1;
+    text-align: center;
+
+    // custom icon
+    .content-custom {
+        position: relative;
+        width: $list-height / 2;
+        height: $list-height / 2;
+        @include vertical-align();
+    }
+
+    .filetypes,
+    .glyphicon {
+        font-size: 2rem;
+        color: #ccc;
+        @include vertical-align(); 
+    }
+    .filetypes {
+        &.filetypes-pdf {
+            @include svg_sprite(filetypes_pdf);
+        }
+        &.filetypes-ppt {
+            @include svg_sprite(filetypes_ppt); 
+        }
+        &.filetypes-zip {
+            @include svg_sprite(filetypes_zip);
+        }
+    }
 }
 
 ul.card {
+    
     position: relative;
-    flex-direction: row;
-    //justify-content: space-around;
-    flex-wrap: wrap;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
     width: 100%;
     margin-bottom: 2rem;
-    //margin: 0 auto 3rem;
-    //max-width: $max-width;
-    $card-gutter: 5px;
-
-    .articles {
-        width: 100%;
-        transition: all 1s ease-out;
-    }
-
+    $card-gutter: 1rem;
+    transition: all 1s ease-out;
 
     li.grid-format {
         position: relative;
@@ -184,69 +193,55 @@ ul.card {
             }
         }
 
-        a.details {
-            width: $card-width;
-            color: #777;
-            transition: 0.1s all;
-            text-decoration: none;
+        .content-type {
+            @extend %content-type;
+            float: left;
+        }
 
-            div {
-                margin: 5px 0 0;
-                padding: 5px $card-gutter;
-                font-size: 2rem;
-
-                &.list-author {
-                    @include opensans($size: 1.8rem, $weight: 600);
-                }
-
-                &.list-title {
-                    color: $iig-link;
-                    margin: 0;
-                    @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
-                }
-
-            }
-
-            p {
-                margin: 0 0 12px;
-                padding: 2px $card-gutter;
-                /* overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap; */
-
-                .card-info {
-                    width: 100%;
-                    background-color: white;
-                    display: block;
-                    position: relative;
-                    height: 35px;
-                    opacity: 0.5;
-                }
+        .content-abstract,
+        .content-title {
+            margin: 5px 0 0;
+            padding: 5px $card-gutter;
+            font-size: 2rem;
+            @include opensans($size: 1.4rem);
+            a {
+                color: #777;
+                text-decoration: none;
             }
         }
 
-        .cardlinks {
+        .content-title {
+            font-weight: 700;
+            width: 250px;
+            line-height: 1.8rem;
+            float: left;
+        }
+
+        .content-abstract {
+            font-size: 1.3rem;
+            line-height: 2.1rem;
+            padding: $card-gutter;
+            @include clearfix();
+        }
+
+        .content-tags {
             position: absolute;
-            bottom: 1.6rem;
-            margin: 0;
-            padding: 0 $card-gutter;
-            width: $card-width - 20px;
-            display: block;
+            padding: $card-gutter;
+            padding-right: 45px;
+            font-size: 1.1rem;
+            color: #7f7f7f;
+            bottom: 30px;
+        }
 
-            .savelist-lnk {
-                float: left;
-                font-size: 1.5rem;
-                color: $iig-link;
-                cursor:pointer;
-            }
-
-            .ebook-lnk {
-                float: right;
-                line-height: 3;
-                //@include svg-sprite(ebook_icon);
-                text-indent: -9999px;
-                cursor: pointer;
-            }
+        .savelist-lnk {
+            position: absolute;
+            font-size: 2.5rem;
+            color: $iig-link;
+            cursor:pointer;
+            padding: $card-gutter;
+            bottom: 0;
+            right: 10px;
+            top: inherit;
         }
     }
 
@@ -259,7 +254,7 @@ ul.card {
 
     .list-format,
     .listview-head {
-
+        position: relative;
         display: flex;
         align-items: center;
         text-align: left;
@@ -269,20 +264,21 @@ ul.card {
         div {
             padding: 0 1rem;
             display: inline-block;
-            &.list-author {
-                flex-grow: 20;
+            &.content-type {
+                width: $list-height - 1;
             }
 
-            &.list-title {
-                flex-grow: 49;
+            &.content-title {
+                width: 40%;
             }
 
-            &.ebook {
-                flex-grow: 1;
+            &.content-tags {
+                width: 40%;
             }
 
-            &.savelist {
-                flex-grow: 1;
+            &.savelist,
+            &.savelist-lnk {
+                width: $list-height;
             }
         }
     }
@@ -290,54 +286,41 @@ ul.card {
         display: flex;
         align-items: center;
         text-align: left;
-        width: 95%;
-        margin: 0 auto;
+        height: 50px;
         padding: 0;
         transition: all 1s ease;
 
-        div {
-            padding: 0 1rem;
+        .content-type {
+            @extend %content-type;
         }
-        a {
-            color: transparent;
-            width: 87%;
-            &.details {
-                div {
-                    display: inline-block;
-                }
-            }
-            .list-author {
-                width: 31.5%;
-                line-height: 1.3;
-                color: #6f6f6f;
-            }
 
-            .list-title {
-                width: 60%;
+        .content-title {
+            display: block;
+            color: transparent;
+            @include ellipsis();
+
+            & > a {
                 color: $iig-link;
                 @include athelas($size: 1.8rem, $style: italic, $weight: 400);
                 @include ellipsis();
+                display: block;
             }
         }
 
-        .ebook {
-            text-align: center;
-            width: 50px;
-            .ebook-lnk {
-                //@include svg-sprite(ebook_icon);
-                text-indent: -999px;
-                display: block;
-                overflow: hidden;
-            }
+        .content-tags {
+            color: #7f7f7f;
+            text-align: left;
+            @include opensans($size: 1.1rem, $height: 1.3);
         }
 
         .savelist-lnk {
-            width: 90px;
+            @include vertical-align(absolute);
+            position: absolute;
+            right: 0;
             text-align: center;
             color: $iig-link;
             font-size: 1.5rem;
             cursor: pointer;
-            top: 0;
         }
     }
 
