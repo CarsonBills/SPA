@@ -20,16 +20,16 @@ module.exports = (function() {
         var result; 
         switch (context.type) {
             case "image":
-                result = require('../../templates/partials/pageDetails/types/image.hbs')(context);
+                result = require('../../templates/partials/page/types/image.hbs')(context);
             break;
             case "video":
-                result = require('../../templates/partials/pageDetails/types/video.hbs')(context);
+                result = require('../../templates/partials/page/types/video.hbs')(context);
             break;
             case "text only":
-                result = require('../../templates/partials/pageDetails/types/text.hbs')(context);
+                result = require('../../templates/partials/page/types/text.hbs')(context);
             break;
             case "custom link":
-                result = require('../../templates/partials/pageDetails/types/link.hbs')(context);
+                result = require('../../templates/partials/page/types/link.hbs')(context);
             break;
         }
         return result;

@@ -95,7 +95,7 @@ function getVersion (version) {
     } else {
         result = settings.dev;
     }
-    console.log('version: ' + result);
+    console.log('current version: ' + result);
     return result;
 }
 
