@@ -1,67 +1,18 @@
 <div class="modal-container">
-    <div class="modal-arrow-container prev-page">
-        {{#if prevId}}
-            <div class="glyphicon glyphicon-chevron-left modal-arrow" id="prevArticle" data-prev-id="{{prevId}}" data-id="{{id}}"></div>
-        {{/if}}
-    </div>
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-2"></span></a>
-        <div class="modal-title">{{{HBTrim data.title 50}}}</div>
-    </div>
+    {{> HBPageArrowPrev}}
+    {{> HBPageHeader}}
+
     <div class="modal-body">
-        {{#HBNotEmpty data.headerImage}}
-        <img class="hdr-img" src="{{data.headerImage}}" />
-        {{/HBNotEmpty}}
+        {{> HBPageHeaderImage}}
 
-        <div class="modal-utils" data-item-id='{{id}}'>
-            <button data-type="iig-button" class="savelist-lnk" data-item-id='{{id}}'><span class=" glyphicon {{HBFaved faved 'glyphicon-heart-empty' 'glyphicon-heart'}}"></span><span class="button-label">{{HBFaved faved "Remove list" "Save to list"}}</span></button>
-            
-            {{#if data.downloadAsset}}
-                <a href="{{{data.downloadAsset.src}}}"><button data-type="iig-button" data-item-id="{{id}}"><span class="icon"></span><span class="button-label">Download</span></button></a>
-            {{/if}}
-        </div>
+        {{> HBPageUtils}}
 
-        <div data-type="intro">{{HBHTMLContent data.introCopy}}</div>
+        {{> HBPageIntroCopy}}
 
-        {{!-- Page Details Sections & Blocks --}}
-        <div data-type="iig-section" class="sections">
-          {{#HBEach data.sections}}
-            <div class="section">
-                {{#HBEach this.blocks}}
-                    <div data-type="iig-block" class="block">
-                        {{{HBAssets this}}}
-                    </div>
-                {{/HBEach}}
-            </div>
-          {{/HBEach}}
-        </div>
+        {{> HBPageSections}}
 
-        <div class="misc">
-            {{#HBNotEmpty data.publicationDate}}
-                <p class="pub-date">Creation Date: {{data.publicationDate}}</p>
-            {{/HBNotEmpty}}
-
-            {{#if data.downloadAsset}}
-                <p class="format"><strong>Format:</strong> {{{data.downloadAsset.format}}}</p>
-                <p class="size"><strong>Size:</strong> {{{data.downloadAsset.fileSize}}}</p>
-            {{/if}}
-
-            <p class="tags">
-                <strong>Tags:</strong>
-                {{HBDetailTags data.tags}}   
-            </p>
-
-            <p class="page-filters">  
-                {{#each data.filters}}
-                    <span class="page-filter">{{{HBDetailFilters this}}}</span>
-                {{/each}}
-            </p>
-        </div>
-
+        {{> HBPageMeta}}
     </div>
-    <div class="modal-arrow-container next-page">
-        {{#if nextId}}
-            <div class="glyphicon glyphicon-chevron-right modal-arrow" id="nextArticle" data-next-id="{{nextId}}" data-id="{{id}}"></div>
-        {{/if}}
-    </div>
+    
+    {{> HBPageArrowNext}}
 </div>

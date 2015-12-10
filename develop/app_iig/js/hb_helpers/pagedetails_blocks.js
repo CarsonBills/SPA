@@ -16,21 +16,22 @@ module.exports = (function() {
         return new Handlebars.SafeString(convert(data));
     });
 
-    Handlebars.registerHelper('HBAssets', function(context, options) {
+    Handlebars.registerHelper('HBBlocks', function(context, options) {
         var result; 
         switch (context.type) {
             case "image":
-                result = require('../../templates/page/image_type.hbs')(context);
+                result = require('../../templates/partials/pageDetails/types/image.hbs')(context);
+            break;
+            case "video":
+                result = require('../../templates/partials/pageDetails/types/video.hbs')(context);
             break;
             case "text only":
-                //result = '<div data-type="' + context.type + '">' + convert(context.copy) + '</div>';
-                result = require('../../templates/page/text_type.hbs')(context);
+                result = require('../../templates/partials/pageDetails/types/text.hbs')(context);
             break;
             case "custom link":
-                result = require('../../templates/page/link_type.hbs')(context);
+                result = require('../../templates/partials/pageDetails/types/link.hbs')(context);
             break;
         }
-        Logger.info(result);
         return result;
     });
 
@@ -40,7 +41,6 @@ module.exports = (function() {
         for(var i=0, j=context.length; i<j; i++) {
             result = result + options.fn(context[i]);
         }
-
         return result;
     });
 

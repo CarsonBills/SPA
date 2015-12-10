@@ -51,15 +51,18 @@ var PageModel = Backbone.Model.extend({
             return;
         }
 
+        return DetailsParser.process(response.data);
+
         /*if (response.data.data.downloadAsset != undefined) {
+            console.log(response.data.data.downloadAsset)
             var assetData = Norton.Utils.buildAssetObject(response.data.data.downloadAsset);
             this.set({
+                "assetHtml": assetData.html,
                 "assetIcon": assetData.icon,
                 "assetSize": assetData.size,
                 "assetURL": assetData.url
             });
         }*/
-        Logger.get(this.MODULE).info(response.data.data);
 
         return response.data;
     },

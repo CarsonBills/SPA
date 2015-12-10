@@ -13,6 +13,7 @@ var Backbone = require('backbone'),
     // Handlebars helpers and blocks are intialized here
     hb_helpers = require('./hb_helpers/pagedetails_blocks'),
     hb_helpers = require('./hb_helpers/handlebars_helpers'),
+    hb_helpers = require('./hb_helpers/handlebars_partials'),
     // End Handlebars initialization
 
 	bootstrap = require('bootstrap-sass'),
@@ -22,9 +23,9 @@ var Backbone = require('backbone'),
 	// Settings
 	namespace = require('./modules/namespace');
 
-Backbone.$ = $;
 
-Norton.Constants = require('./modules/js_qa_constants');
+// dynamically duplicated in gulp
+Norton.Constants = require('./dynamic/constants');
 Norton.Utils = require('./modules/js_utils');
 
 

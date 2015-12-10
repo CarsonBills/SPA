@@ -98,6 +98,7 @@ var AppRouter = Backbone.Router.extend({
                     withCredentials: true
                 },
                 success: $.proxy(function(response) {
+                    console.log(response)
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
@@ -112,7 +113,7 @@ var AppRouter = Backbone.Router.extend({
                 error: function(model, res, error){
                     // go to generic error page
                     Logger.get(that.MODULE).error('Site Config not available.');
-                    dfd.reject(res.responseText);
+                    dfd.reject(error);
                 }
             });
         }

@@ -7,13 +7,16 @@
  */
 var Backbone = require('backbone'),
     $ = require('jquery'),
+    jPlayer = require('jplayer'),
     ModalManager = require('../modules/modal_manager'),
-    ErrorsManager = require('../modules/errors_manager');
+    ErrorsManager = require('../modules/errors_manager'),
+    VideoPlayer = require('../modules/video_player');
 
 var PageView = Backbone.View.extend({
     MODULE: 'details',
     PLUS: 'glyphicon-heart',
     MINUS: 'glyphicon-heart-empty',
+    PLAYER: '.jp-video',
     template: require('../../templates/PageTemplate.hbs'),
     templateLoading: require("../../templates/PageLoadingTemplate.hbs"),
     content: '.modal-content',
@@ -57,6 +60,10 @@ var PageView = Backbone.View.extend({
             module: this.MODULE
         });
 
+        /*if (this.$('div[data-type=video]').length > 0){
+            this.showVideo();
+        }*/
+
         if (ModalManager.shown()) {
             TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
         }
@@ -90,7 +97,6 @@ var PageView = Backbone.View.extend({
                 withCredentials: true
             },
             success: $.proxy (function(data) {
-                console.log(data);
                 that.render();
             }, this),
             error: function(xhr, response, error) {
@@ -100,8 +106,14 @@ var PageView = Backbone.View.extend({
         });
     },
 
+    showVideo: function () {
+        console.log(this.model.toJSON());
+        VideoPlayer.show(this.$(this.PLAYER));
+    },
+
     cleanUp: function () {
         'use strict';
+        VideoPlayer.cleanUp();
  
         this.unbind(); // Unbind all local event bindings
     }

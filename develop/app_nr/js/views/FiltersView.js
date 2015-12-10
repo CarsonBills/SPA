@@ -25,7 +25,7 @@ var FiltersView = Backbone.View.extend({
     initialize: function(params) {
         'use strict';
         // use once to prevent intialize from executing multiple times
-        this.collection.once('update', this.preRender, this);
+        this.collection.on('update', this.preRender, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -42,6 +42,7 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function() {
         'use strict';
+
         if (this.collection.isNotValid()) {
             return false;
         }
@@ -289,7 +290,7 @@ var FiltersView = Backbone.View.extend({
             splt = cats[cat].split("=");
             refs[splt[0]] = cats[cat];
         }
-
+        
         Norton.savedRefinements = refs;
         this.app.formatRefinements();   // call getArticles() in AppView
 

@@ -18,7 +18,8 @@ var Backbone = require('backbone'),
 
 Backbone.$ = $;
 
-Norton.Constants = require('./modules/js_wcf_constants');
+// dynamically duplicated in gulp
+Norton.Constants = require('./dynamic/constants');
 Norton.Utils = require('./modules/js_utils');
 
 

@@ -44,7 +44,7 @@
 	.close {
 		margin: 0;
 		opacity: 1;
-		line-height: 1;
+		line-height: inherit;
 		font-size: 2.3rem;
 		color: $white;
 		text-shadow: none;
@@ -65,6 +65,7 @@
 
 .modal-body {
 	height: inherit;
+	padding: 0 4rem 2rem;
 	@include opensans($size: 1.8rem, $height: 1.4);
 
 	p {
@@ -106,6 +107,10 @@
 			position: relative;
 			text-align: left;
 
+			p {
+				padding: 0;
+			}
+
 			.modal-title {
 				@include athelas($size: 2rem, $style:italic, $weight: 400);
 			}
@@ -119,7 +124,7 @@
 				@include opensans($size: 1.5rem, $height: 1.4);
 			}
 
-			.modal-utils {
+			.utils {
 				margin: 3rem 5rem;
 				text-align: right;
 				font-weight: 600;
@@ -144,13 +149,9 @@
 				}
 			}
 
-			.misc {
+			.meta {
 				font-size: 1.4rem;
 				clear: both;
-			}
-
-			p {
-				padding: 0 4rem;
 			}
 
 			.about-author {
@@ -322,39 +323,61 @@
 		}
 	}
 
-	div[data-type="iig-section"] {
+	div[data-type="intro"] {
+		// flattened
+		& + p {
+			text-align: left;
+		}
+		margin-bottom: 3rem;
+	}
+
+	div[data-type="section"] {
 		margin-bottom: 2rem;
 	}
 
-	div[data-type="iig-block"] {
+	div[data-type="block"] {
+		margin-bottom: 2rem;
 		text-align: left;
 
 		a {
 			color: $black;
 		}		
 
-		ul {
+		/* ul {
 			list-style-type: disc;
 				list-style-position: inside;
 				list-style-image: none;
-		}
-
-		[data-type="intro"] {
-			// flattened
-			& + p {
-				text-align: left;
-			}
-			margin-bottom: 3rem;
-		}
+		} */
 
 		[data-type="image"] {
+		}
+
+		[data-type="video"] {
+			.video-container {
+				margin: 2rem 0;
+				width: 100%;
+				position: relative;
+
+				&:hover {
+					.playback {
+						opacity: 0.8;
+					}
+				}
+			}
+			.jp-video {
+				margin: 0 auto;
+				line-height: 0;
+				background-color: $bg-color;
+			}
+
+			.playback {
+				//@include svg-sprite(playback);
+				//@include center(absolute);
+				opacity: 0.6;
+			}
 		}	
 
 		[data-type="text only"] {
-			padding: 0 4rem;
-			img {
-				padding: 1rem;
-			}
 			p {
 				padding: 0;
 			}
@@ -399,6 +422,15 @@
 			&[data-module=details] {
 				width: 90%;
 
+				.utils {
+					margin: 2rem auto;
+					text-align: center;
+
+					.savelist-lnk {
+						margin: 0 0 1rem;
+					}
+				}
+
 				.modal-header {
 					min-height: $modal-header-height;
 					height: auto;
@@ -424,10 +456,6 @@
 		.modal-dialog {
 			&[data-module=introduction] {
 				height: auto;
-				
-				.modal-body {
-    				padding: 1rem;
-				}
 
 				.modal-title {
 					font-size: 3.5rem;
@@ -456,10 +484,6 @@
 
 			&[data-module=errors],
 			&[data-module=details] {
-				.modal-utils {
-					margin: 2rem auto;
-					text-align: center;
-				}
 
 				.moreinfo-lnk {
 					margin: 2rem auto;
