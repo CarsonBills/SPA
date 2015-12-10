@@ -7,8 +7,8 @@ var Backbone = require('backbone'),
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
-    templateHdr: require('../../templates/YourFavsHeaderTemplate.hbs'),
-    templateItem: require('../../templates/YourFavsTemplate.hbs'),
+    templateHdr: require('../../templates/modules/YourFavsHeaderTemplate.hbs'),
+    templateItem: require('../../templates/modules/YourFavsTemplate.hbs'),
     modal: '#modal-container',
     content: '.modal-content',
     body: '.modal-body',
@@ -52,9 +52,10 @@ var YourFavsView = Backbone.View.extend({
             $div = $('<div></div>'),
             hasContent = (this.collection.length > 0),
             template;
-
+            
         template = this.templateHdr({
-            hasContent: hasContent
+            hasContent: hasContent,
+            title: NortonApp.headerConfigItem.get('displayTitle')
         });
 
         $div.html(template);
