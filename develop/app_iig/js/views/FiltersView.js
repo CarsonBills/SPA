@@ -12,19 +12,18 @@ var FiltersView = Backbone.View.extend({
     el: "#filters",
     template: require("../../templates/FiltersTemplate.hbs"),
     refinements: Refinements.getInstance(),
-    //cat: "",
     filterContent: "",
     delay: true,
     app: null,
     ACTIVE: "#chapter",
     active: "",
     adjustHieght: null,
-    active: "",
     currentHeight: 0,
+    firstTime: false,
 
     initialize: function(params) {
         'use strict';
-        this.collection.once('update', this.preRender, this);
+        this.collection.on('update', this.preRender, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -41,11 +40,13 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function() {
         'use strict';
+
         if (this.collection.isNotValid()) {
             return false;
         }
 
-        this.collection.filters = this.refinements.compare(this.collection.filters);
+        this.filterContent = this.refinements.compare(this.collection.filters);
+
         this.render();
         this.adjustHieght();
         this.checkSelected();
@@ -55,31 +56,28 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         var that = this,
             filterTemplate,
-            i;
+            i,
+            filters;
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
+        Logger.get("Filters before render").error(this.filterContent);
 
-        _.each(this.collection.filters, function (filter) {
+
+        _.each(this.filterContent, function (filter) {
+        //_.each(this.refinements.refFilters, function (filter) {
             filter.cat_display = filter.displayName;
 
-            for (i=0; i<filter.refinements.length; i++) {
-                filter.refinements[i].cat = filter.name;
-                filter.refinements[i].cat_display = filter.displayName;
+            for (i=0; i<filter.refs.length; i++) {
+                filter.refs[i].cat_display = filter.displayName;
             }
 
             filterTemplate = this.template(filter);
             this.$el.append(filterTemplate);
         }, this);
 
-        // used to allow only one expanded filter
-        /* this.$('.filter-item').on('show.bs.collapse', function () {
-            that.$('.filter-item-cat').addClass('collapsed');
-            that.$('.filter-item').removeClass('in');
-        });*/
-
         this.showActive();
-
+        this.firstTime = true;
 
         return this;
     },
@@ -184,7 +182,9 @@ var FiltersView = Backbone.View.extend({
     showSelectedFilter: function() {
         'use strict';
         var html = "",
-            selCat = "";
+            selCat = "",
+            displayName,
+            nameParts;
 
         $("#selectedFilters").empty();
 
@@ -195,7 +195,15 @@ var FiltersView = Backbone.View.extend({
                     html += '<div class="sel-filter-cat">'+selCat+'</div>';
                 }
 
-                html += '<div class="selected-filters"><div class="active-filter">' + $(this).attr('data-filter-name') +
+                // chapters: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
+                // subchapters: 3b0540f9265bcbff096e_030_Big Question: What Are the Five Foundations of Economics?
+                if ($(this).attr('data-filter-name').indexOf("_") >= 0) {
+                    nameParts = $(this).attr('data-filter-name').split("_");
+                    displayName = (nameParts[0].length == 3) ? nameParts[1] : nameParts[2] ;
+                } else {
+                    displayName = $(this).attr('data-filter-name');
+                }
+                html += '<div class="selected-filters"><div class="active-filter">' + displayName +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
                     '" class="clear-filter">x</span></div></div>';

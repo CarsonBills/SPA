@@ -1,22 +1,35 @@
 {{#if cat_display}}
-    <div role="button" data-target="#{{name}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat {{name}}">{{cat_display}}
+    <div role="button" data-target="#{{catName}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat {{catName}}">{{cat_display}}
     <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
 
-    <div class="filter-item collapse" role="tab-panel" id="{{name}}">
-    {{#each refinements}}
-        {{#if value}}
+    <div class="filter-item collapse" role="tab-panel" id="{{catName}}">
+    {{#each refs}}
+        {{#if name}}
             {{#if count}}
                     <div class="filter-item-name">
-                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{value}}' data-filter-cat="{{cat}}"  data-filter-cat-display="{{cat_display}}" {{checked}}/></a>
-                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{../catName}}"  data-filter-cat-display="{{cat_display}}" {{checked}}/></a>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
                     </div>
             {{else}}
                     <div class="filter-item-name filter-greyed-out">
-                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{cat}}"/>
-                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{../catName}}"/>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
                     </div>
             {{/if}}
+            {{#each subnav}}
+                {{#if count}}
+                    <div class="filter-item-name" style="font-size:10px; margin-left:20px;>
+                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{subCatName}}"  data-filter-cat-display="{{cat_display}}" {{checked}}/></a>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
+                    </div>
+                {{else}}
+                    <div class="filter-item-name filter-greyed-out"  style="font-size:10px; margin-left:20px;">
+                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{subCatName}}"/>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
+                    </div>
+                {{/if}}
+            {{/each}}
         {{/if}}
     {{/each}}
     </div>
