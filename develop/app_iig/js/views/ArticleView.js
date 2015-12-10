@@ -5,6 +5,7 @@ var Backbone = require('backbone'),
     ScrollHelper = require('../modules/scroll_helper');
 
 var ArticleView = Backbone.View.extend({
+    TAG_LABEL: 'Tags:',
     container: '#articlesContainer',
     evtMgr: EventManager.getInstance(),
     templateGrid: require('../../templates/modules/ArticlesGridTemplate.hbs'),
@@ -64,7 +65,6 @@ var ArticleView = Backbone.View.extend({
             articleTemplate,
             $articles = this.$(this.container),
             article;
-
 
         $articles.empty();
 
@@ -174,7 +174,12 @@ var ArticleView = Backbone.View.extend({
     showDetail: function (id) {
         'use strict';
 
-        var model = this.collection.getModelByAttribute('pname', id);
+        var model = this.collection.getModelByAttribute('pname', id),
+            tagLabel = NortonApp.headerConfigItem.get('tagLabel');
+
+        if (tagLabel === undefined) {
+            tagLabel = this.TAG_LABEL;
+        }
 
         // TODO throw fallback when page cannot be found
         /*if (typeof model === 'undefined') {
@@ -195,7 +200,8 @@ var ArticleView = Backbone.View.extend({
                 faved: this.favorites.getModelByAttribute('pname', id),
                 id: id,
                 prevId: model.get('prevId'),
-                nextId: model.get('nextId')
+                nextId: model.get('nextId'),
+                tagLabel: tagLabel
             });
 
             this.pageView.model = this.pageItem;
