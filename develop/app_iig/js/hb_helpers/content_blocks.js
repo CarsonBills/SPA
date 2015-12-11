@@ -25,11 +25,10 @@ module.exports = (function() {
             case "zip": 
                 result = "filetypes filetypes-zip";
             break;
-            case "generic": 
-                result = "glyphicons glyphicons-file";
-            break;
+            case "generic":
+            // fall thru here
             default:
-                result = "glyphicons glyphicons-file";
+                result = "glyphicon glyphicon-file";
             break;
         }
 
