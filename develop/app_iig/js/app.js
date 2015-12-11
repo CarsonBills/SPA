@@ -56,6 +56,7 @@ $(function() {
         field: "pname",
         order: "Ascending"
     };
+    Norton.discipline = null;
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};

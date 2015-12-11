@@ -17,7 +17,6 @@ var Backbone = require('backbone'),
                     title: model.attributes.title,
                     downloads: model.attributes.downloads,
                     pname: model.attributes.pname,
-                    downloads: model.attributes.downloads,
                     customIcon: model.attributes.customIcon,
                     chapter_id: ""
                 };
