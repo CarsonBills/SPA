@@ -111,3 +111,37 @@ button[data-type="iig-button"] {
 		}
 	}
 }
+
+
+/* custom icon for list/gird/favs */
+%content-type {
+    width: $list-height;
+    height: $list-height;
+    text-align: center;
+
+    // custom icon
+    .content-custom {
+        position: relative;
+        width: $list-height / 2;
+        height: $list-height / 2;
+        @include vertical-align();
+    }
+
+    .filetypes,
+    .glyphicon {
+        font-size: 2rem;
+        color: #ccc;
+        @include vertical-align(); 
+    }
+    .filetypes {
+        &.filetypes-pdf {
+            @include svg_sprite(filetypes_pdf);
+        }
+        &.filetypes-ppt {
+            @include svg_sprite(filetypes_ppt); 
+        }
+        &.filetypes-zip {
+            @include svg_sprite(filetypes_zip);
+        }
+    }
+}

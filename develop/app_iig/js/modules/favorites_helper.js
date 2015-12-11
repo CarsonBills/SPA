@@ -2,7 +2,7 @@
 var Backbone = require('backbone'),
     _ = require('underscore'),
     DocumentExport = require('../modules/document_export'),
-    WindowManager = require('../modules/window_manager'),
+    WindowManager = require('../modules/window_manager');
 
     Favorites = (function() {
         'use strict';

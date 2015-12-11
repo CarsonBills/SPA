@@ -6,8 +6,7 @@ var YourFavsModel = Backbone.Model.extend({
         "abstract":'',
         "title":'',
         "id":'',
-        "download_src":'',
-        "doanload_fmt":'',
+        "downloads":'',
         "chapter_id":''
     }
 });

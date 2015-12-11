@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager');
+    FavoritesData = require('../modules/favorites_data');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -52,7 +53,7 @@ var YourFavsView = Backbone.View.extend({
             $div = $('<div></div>'),
             hasContent = (this.collection.length > 0),
             template;
-            
+
         template = this.templateHdr({
             hasContent: hasContent,
             title: NortonApp.headerConfigItem.get('displayTitle')
@@ -81,13 +82,15 @@ var YourFavsView = Backbone.View.extend({
 
     removeItem: function (model) {
         'use strict';
-        var id = (model) ? model.get("id") : "";
+        var cloned;
 
         if (model) {
+            cloned = model.clone();
             this.collection.remove(model);
+
             this.updateCount();
             if (Norton.isLoggedIn) {
-                this.likeOrUnlikeYourFavs(id, 'unlike');
+                this.likeOrUnlikeYourFavs(cloned, 'unlike');
             } else {
                 this.saveLocalStorage();
             }
@@ -118,9 +121,9 @@ var YourFavsView = Backbone.View.extend({
         'use strict';
         var direction = "left";
 
-        if (this.articles.showGrid()) {
+        /*if (this.articles.showGrid()) {
             direction = "right";
-        }
+        }*/
         $target.popover({
             content: mesg,
             placement: direction,
@@ -138,7 +141,7 @@ var YourFavsView = Backbone.View.extend({
         // Add item to yourFavsList collection
         var $target = $(e.currentTarget),
             id = $target.data('item-id'),
-            favsData = {},
+            favs,
             article = this.articles.getModelByAttribute("pname", id),
             articleData = article.attributes.allMeta,
             model = this.collection.getModelByAttribute("pname", id);
@@ -152,20 +155,17 @@ var YourFavsView = Backbone.View.extend({
 
         this.showPopover($target, "Item Added");
 
-        favsData.pname = articleData.pname;
-        favsData.abstract = articleData.abstract;
-        favsData.title = articleData.title;
-        favsData.id = articleData.id;
-        this.collection.add(new NortonApp.Models.YourFavs(favsData));
+        favs = FavoritesData.input(articleData);
+        this.collection.add(favs);
 
         this.updateCount();
         if (Norton.isLoggedIn) {
-            this.likeOrUnlikeYourFavs(favsData.id, 'like');
+            this.likeOrUnlikeYourFavs(favs, 'like');
         } else {
             this.saveLocalStorage();
         }
 
-        TrackManager.save(favsData.id);
+        TrackManager.save(articleData.id);
 
         return false;
     },
@@ -222,29 +222,24 @@ var YourFavsView = Backbone.View.extend({
             }
         } catch(e) {}
     },
-    likeOrUnlikeYourFavs: function (id, mode) {
+    likeOrUnlikeYourFavs: function (model, mode) {
         'use strict';
         var that = this,
-            model = this.collection.getModelByAttribute("id", id),
-            data = {
-                id: id,
-                abstract: model.attributes.abstract.substr(0, 250),
-                title: model.title,
-                download_src: model.attributes.download_src,
-                download_fmt: model.attributes.download_fmt,
-                pname: model.attributes.pname,
-                chapter_id: ""
-            },
+            data,
+            id = model.get('id'),
+            postdata;
 
-            postdata = {
-                sitecode: Norton.siteCode,
-                siteversion: Norton.version,
-                asset_id: id,
-                json_str: JSON.stringify(data),
-                mode: mode,
-                //discipline: Norton.discipline
-                discipline: 6
-            };
+        data = FavoritesData.output(model);
+
+        postdata = {
+            sitecode: Norton.siteCode,
+            siteversion: Norton.version,
+            asset_id: id,
+            json_str: JSON.stringify(data),
+            mode: mode,
+            //discipline: Norton.discipline
+            discipline: 6
+        };
 
         $.ajax({
             type:'POST',

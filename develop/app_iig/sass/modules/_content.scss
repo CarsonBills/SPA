@@ -127,38 +127,6 @@ body {
     @include toggle-fullscreen();
 }
 
-%content-type {
-    width: $list-height - 1;
-    height: $list-height - 1;
-    text-align: center;
-
-    // custom icon
-    .content-custom {
-        position: relative;
-        width: $list-height / 2;
-        height: $list-height / 2;
-        @include vertical-align();
-    }
-
-    .filetypes,
-    .glyphicon {
-        font-size: 2rem;
-        color: #ccc;
-        @include vertical-align(); 
-    }
-    .filetypes {
-        &.filetypes-pdf {
-            @include svg_sprite(filetypes_pdf);
-        }
-        &.filetypes-ppt {
-            @include svg_sprite(filetypes_ppt); 
-        }
-        &.filetypes-zip {
-            @include svg_sprite(filetypes_zip);
-        }
-    }
-}
-
 ul.card {
     
     position: relative;
@@ -266,7 +234,6 @@ ul.card {
             padding: 0 1rem;
             display: inline-block;
             &.content-type {
-                width: $list-height - 1;
             }
 
             &.content-title {
@@ -287,7 +254,7 @@ ul.card {
         display: flex;
         align-items: center;
         text-align: left;
-        height: 50px;
+        min-height: 50px;
         padding: 0;
         transition: all 1s ease;
 
@@ -311,6 +278,7 @@ ul.card {
         .content-tags {
             color: #7f7f7f;
             text-align: left;
+            padding: 1rem 0;
             @include opensans($size: 1.1rem, $height: 1.3);
         }
 

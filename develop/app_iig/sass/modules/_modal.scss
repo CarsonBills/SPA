@@ -191,34 +191,28 @@
 				}
 			}
 		}
-		&[data-module=details] {
-			/* .modal-header {
-				color: $black;
-				background-color: $white;
-			}
-			.close {
-				color: $black;
-			} */
-		}
 
 		&[data-module=errors] {
-			/* .modal-header {
-				background-color: #000;
-				border: none;
-				color: #fff;
-				height: $modal-header-height;
-				
-				.close {
-					color: inherit;
+			.modal-body {
+				p {
+					display: block;
+					margin: 2rem auto;
 				}
-			} */
+			}
 		}
 
 		&[data-module=favorites] {
 			min-height: 600px;
 			height: auto;
 
-			.modal-title {
+			.empty-list {
+				text-align: center;
+				font-size: 1.8rem;
+				margin-top: 5rem;
+			}
+
+
+			/* .modal-title {
 				.glyphicon {
 					font-size: 1.6rem;
 					line-height: 1.5;
@@ -229,20 +223,13 @@
 			.modal-body {    
 				overflow-y: scroll;
 				min-height: 0;
-				height: 480px;
+				height: 548px;
 			}
 
 			.modal-footer {
 				padding: 0;
     			text-align: center;
 			}
-
-			.empty-list {
-				text-align: center;
-				font-size: 1.8rem;
-				margin-top: 5rem;
-			}
-
 			.button-container {
 				position: relative;
 				margin-top: 1rem;
@@ -259,20 +246,8 @@
 					line-height: 38px;
 					margin-left: 1rem;
 				}
-			}
-
-			/* .download-favs {
-				position: absolute;
-				width: 100%;
-				text-transform: uppercase;
-				text-align: center;
-				line-height: 1.4;
-				bottom: 4rem;
-
-				.glyphicon {
-					margin-left: 1.3rem;
-				}
 			} */
+
 			.list-format {
 				width: 98%;
 				margin: 0 auto;
@@ -284,20 +259,17 @@
 			    display: table;
 			    table-layout: fixed;
 
-				.list-author {
-					@include opensans($size: 1.4rem, $weight: 600);
-					color: #6f6f6f;
-					text-transform: uppercase;
-					width: 30%;
-					display: table-cell;
-					line-height: 1.8rem;
-				}
+			    .favs-icon {
+			    	display: table-cell;
+			    	vertical-align: center;
+            		@extend %content-type;
+            		top: inherit;
+			    }
 
-				.list-title {
-					@include athelas($size: 1.8rem, $style: italic, $weight: 400);
-	    			width: 62%;
-	    			display: table-cell;
-					line-height: 1.8rem;
+				.favs-title {
+			    	display: table-cell;
+			    	vertical-align: middle;
+					@include opensans($size: 1.1rem, $weight: 600, $height: 1.4);
 
 					a {
 						color: $dark-grey;
@@ -309,11 +281,13 @@
 					}
 				}
 
+				.download,
 				.remove {
-				    cursor: pointer;
-					display: table-cell;	
+			    	display: table-cell;
+				    cursor: pointer;	
 					vertical-align: middle;
 					width: 20px;
+					padding: 0 2rem 0 1rem;
 
 					span {
 						color: $dark-grey;
@@ -447,6 +421,16 @@
 					}
 				}
 			}
+
+			&[data-module=favorites] {
+				.modal-body {
+					padding: 0;
+				}
+				.list-format {
+					width: 100%;
+					padding: 0;
+				}
+			}
 		}
 	}
 }
@@ -489,23 +473,6 @@
 					margin: 2rem auto;
 					display: block;
 					float: none;
-				}
-			}
-
-			&[data-module=favorites] {
-				.list-format {
-
-					.list-author {
-						width: 30%;
-					}
-
-					.list-title {
-		    			width: 58%;
-					}
-
-					.remove {
-
-					}
 				}
 			}
 		}
