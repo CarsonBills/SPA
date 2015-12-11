@@ -329,9 +329,9 @@
 
 		[data-type="video"] {
 			.video-container {
+				position: relative;
 				margin: 2rem 0;
 				width: 100%;
-				position: relative;
 
 				&:hover {
 					.playback {
@@ -340,9 +340,23 @@
 				}
 			}
 			.jp-video {
-				margin: 0 auto;
-				line-height: 0;
+				width: 100%;
+				position: relative;
+				padding-top: 75%;
 				background-color: $bg-color;
+				text-align: center;
+
+				img {
+					display: block;
+					@include center(absolute);
+				}
+
+				video {
+					position: absolute;
+				    top: 0;
+				    left: 0;
+					width: 100% !important;
+				}
 			}
 
 			.playback {

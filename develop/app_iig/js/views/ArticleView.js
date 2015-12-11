@@ -177,7 +177,7 @@ var ArticleView = Backbone.View.extend({
         var model = this.collection.getModelByAttribute('pname', id),
             tagLabel = NortonApp.headerConfigItem.get('tagLabel');
 
-        if (tagLabel === undefined) {
+        if (tagLabel === undefined || tagLabel === '') {
             tagLabel = this.TAG_LABEL;
         }
 

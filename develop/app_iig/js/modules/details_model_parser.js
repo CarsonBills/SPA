@@ -13,7 +13,6 @@ var Backbone = require('backbone'),
          */
         
         var parseUrl = function (src) {
-            console.log(src)
             var i,
                 url,
                 nodes;
