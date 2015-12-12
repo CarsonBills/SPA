@@ -8,8 +8,8 @@ var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
     MODULE: 'credits',
     ACCOUNT: '.my-account',
-    templateNR: require('../../templates/NortonReaderHeaderTemplate.hbs'),
-    templateIig: require('../../templates/IigHeaderTemplate.hbs'),
+    templateNR: require('../../templates/modules/NortonReaderHeaderTemplate.hbs'),
+    templateIig: require('../../templates/modules/IigHeaderTemplate.hbs'),
 
     initialize: function() {
         'use strict';
@@ -17,11 +17,12 @@ var HeaderConfigView = Backbone.View.extend({
 
     render: function() {
         'use strict';
-        var img = this.model.get('headerImage'),
-            headerConfigTemplate,
+        var headerConfigTemplate,
             context = this.model.toJSON();
 
         context.baseUrl = Norton.baseUrl;
+
+        $('html').addClass(Norton.siteCode);
 
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(context);
