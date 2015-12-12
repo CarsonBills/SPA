@@ -90,7 +90,7 @@ var AppRouter = Backbone.Router.extend({
         if (lsSiteConfig) {
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
-                this.protectedContentCheck();
+            this.protectedContentCheck();
 
             dfd.resolve();
         } else {

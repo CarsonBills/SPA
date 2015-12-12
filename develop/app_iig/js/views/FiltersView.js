@@ -45,6 +45,7 @@ var FiltersView = Backbone.View.extend({
             return false;
         }
 
+        // Update the filter counts
         this.filterContent = this.refinements.compare(this.collection.filters);
 
         this.render();
@@ -56,16 +57,12 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         var that = this,
             filterTemplate,
-            i,
-            filters;
+            i;
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
-        Logger.get("Filters before render").error(this.filterContent);
-
 
         _.each(this.filterContent, function (filter) {
-        //_.each(this.refinements.refFilters, function (filter) {
             filter.cat_display = filter.displayName;
 
             for (i=0; i<filter.refs.length; i++) {
