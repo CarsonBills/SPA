@@ -285,7 +285,6 @@ var YourFavsView = Backbone.View.extend({
                 for (var i=0; i<response.data.length; i++) {
                     that.collection.add(new NortonApp.Models.YourFavs(response.data[i]));
                 }
-                Logger.get('favs').error( that.collection);
 
                 if (that.app.dataReady) {
                     that.updateCount();

@@ -16,6 +16,7 @@ Navigation.prototype = {
     deferred: $.Deferred(),
     refFilters: null,
 
+
     initialize: function () {
         "use strict";
         this.collection = new NavigationCollection();
@@ -44,10 +45,7 @@ Navigation.prototype = {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
                     that.deferred.resolve(data);
                     // Build navFilter list
-
-                    //this.filterContent = this.refinements.compare(this.collection.filters);
                     that.buildnewFilters();
-                    Logger.get("original collection").error(that.refFilters);
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -82,7 +80,8 @@ Navigation.prototype = {
             nameParts,
             order,
             suborder,
-            unorderedIndex;
+            unorderedIndex = 9900;
+
             filters = this.collection.availNav;
 
         // Have to do this in 3 passes so we keep get subchapters after chapters and subtopics after topics
@@ -144,7 +143,6 @@ Navigation.prototype = {
 
             for (var k=0; k < newFilters[idx].refs.length; k++) {
                 jdx = 0;
-                unorderedIndex = 9900;
                 for (var j = 0; j < filters[i].refinements.length; j++) {
                     nameParts = filters[i].refinements[j].value.split("_");
                     suborder = nameParts[1];
@@ -153,7 +151,7 @@ Navigation.prototype = {
                     }
 
                     if (newFilters[idx].refs[k].id == nameParts[0]) {
-                        newFilters[idx].refs[k].subnav[jdx] = [];
+                        newFilters[idx].refs[k].subnav[jdx] = {};
                         newFilters[idx].refs[k].subnav[jdx].suborder = suborder;
                         newFilters[idx].refs[k].subnav[jdx].id = nameParts[0];
                         newFilters[idx].refs[k].subnav[jdx].name = nameParts.slice(2).join("_"); // handle any underscores in title
@@ -202,20 +200,21 @@ Navigation.prototype = {
      * refFilters object built in buildnewFilters. When we find a match, update the refFilters count
      */
     compare: function (filteredNav) {
-        var originalNav = this.refFilters,
-            idx,       // filterNav index which may need not be in sync with originalNav index
+        Logger.get("orig filters").error(this.refFilters);
+        Logger.get("new filters").error(filteredNav);
+
+        // NOTE: If your object has functions, they won't be copied using this technique
+        // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
+        var originalNav = JSON.parse(JSON.stringify(this.refFilters)),
+            idx = 0,       // filterNav index which may need not be in sync with originalNav index
             savedRefs,
             selectedFilter; // this filter was "checked" in the navigation;
-
-        Logger.get("start of compare function").error(this.refFilters[1].refs[0].count);
 
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
 
         // iterate over the filteredNav objects
         for(var i=0; i<filteredNav.length; i++) {
-            idx = 0;
-
             // get index value in originalNav
             for (var oidx = 0; oidx < originalNav.length; oidx++) {
                 if (originalNav[oidx].catName == filteredNav[i].name) {
@@ -249,12 +248,12 @@ Navigation.prototype = {
                         originalNav[idx].refs[j].checked = "";
                     }
                 }
-            }
+            } else if (filteredNav[i].name == "dimChaptersL1" || filteredNav[i].name == "dimTopicsL1") {
+                // subnav is a new array element in the returned nav, but it's the same as it's parent in the save nav.
+                idx--;
 
             // Handle subchapters and subtopics
-            if (filteredNav[i].name == "dimChaptersL1" || filteredNav[i].name == "dimTopicsL1") {
                 for (var j=0; j < originalNav[idx].refs.length; j++) {
-                    Logger.get("originalNav refs").error(originalNav[idx].refs[j]);
                     for (var k=0; k < originalNav[idx].refs[j].subnav.length; k++) {
                         selectedFilter = false;
                         for (var m = 0; m < filteredNav[i].refinements.length; m++) {
@@ -279,10 +278,8 @@ Navigation.prototype = {
 
                     }
                 }
-            }
-
+            } else  if (filteredNav[i].name.substr(0, 11) != "dimChapters" && filteredNav[i].name.substr(0, 9) != "dimTopics") {
             // Handle other nav
-            if (filters[i].name.substr(0, 11) != "dimChapters" && filters[i].name.substr(0, 9) != "dimTopics") {
                 for (var j=0; j < originalNav[idx].refs.length; j++) {
                     selectedFilter = false;
                     for (var k = 0; k < filteredNav[i].refinements.length; k++) {
@@ -306,10 +303,9 @@ Navigation.prototype = {
                     }
                 }
             }
-
+            idx++;
         }
-        Logger.get("end of compare function").error(this.refFilters[1].refs[0].count);
-        Logger.get("originalNav").error(originalNav);
+
         return originalNav;
     }
 };
