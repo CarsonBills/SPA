@@ -21,6 +21,22 @@ body {
         min-width: 110px;
     }
 }
+
+/* hero */
+div[data-type="iig-hero"] {
+    .hero-container {
+        max-width: 1090px;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;    
+    }
+}
+
+/* filters */
 #filters {
     @include locked();
 
@@ -135,6 +151,8 @@ ul.card {
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1090px;
     width: 100%;
     margin-bottom: 2rem;
     $card-gutter: 1rem;
