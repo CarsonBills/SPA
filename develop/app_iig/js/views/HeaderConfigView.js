@@ -22,6 +22,9 @@ var HeaderConfigView = Backbone.View.extend({
         HeaderLoader.load(css).then(function(mesg) {
             Logger.get(that.MODULE).info(mesg);
             that.render();
+        }, function(err) {
+            Logger.get(that.MODULE).error(err);
+            that.render();
         });
     },
 

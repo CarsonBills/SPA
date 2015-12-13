@@ -1,14 +1,36 @@
+@import "../mixins/utils";
+
 $site-code: "devtest";
-$bg-color: #474c50;
+$bg-color: #FBB829;
 $fg-color: #fff;
-$topbar-color: #666;
+$topbar-color: #fcce19;
 
 .#{$site-code} {
 
 	div[data-type="iig-hero"] {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		width: 100%;
+		height: 100%;
+		background: url(/site_assets/#{$site-code}/hero_pattern.png);
+		background-color: $bg-color;
+
 		.book-cover {
+			margin: 6rem 2rem 0;
+			display: block;
+			background: url(/site_assets/#{$site-code}/book_cover.png) no-repeat;
+			width: 154px;
+			height: 198px;
+			box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
 		}
 		.hero-title {
+			display: block;
+			margin: 2rem 5rem 3rem;
+			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
+			width: 321px;
+			height: 73px;
 		}
 	}
 
@@ -19,7 +41,9 @@ $topbar-color: #666;
 		.top-bar {
 
 			.bg {
-				background-color: $topbar-color;
+				background: $topbar-color ;
+	    		@include one-sided-shadow($offset-y: 1px);
+				opacity: 0.8;
 			}
 
 			div {
@@ -27,13 +51,15 @@ $topbar-color: #666;
 					color: $fg-color;
 				}
 			}
-			.signed-in,
-			.glyphicon {
+			.signed-in {
 				color: $fg-color;
 			}
 
+			.glyphicon {
+			}
+
 			.norton-logo {
-				color: $fg-color;
+				color: #272423;
 				svg {
 					fill: currentColor;
 				}
@@ -44,4 +70,5 @@ $topbar-color: #666;
 
 		}
 	}
+
 }

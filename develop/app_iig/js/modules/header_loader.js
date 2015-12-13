@@ -15,7 +15,11 @@ var $ = require('jquery'),
                 })[0];
 
                 css.onload = function(){
-                    deferred.resolve(Norton.siteCode + "css loaded");
+                    deferred.resolve(Norton.siteCode + ": css loaded");
+                };
+
+                css.onerror = function(){
+                    deferred.reject(Norton.siteCode + ": css not found");
                 };
 
                 document.getElementsByTagName("head")[0].appendChild(css);
