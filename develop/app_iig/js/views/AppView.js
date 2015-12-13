@@ -43,7 +43,7 @@ var AppView = Backbone.View.extend({
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem,
             el: "#siteHeader"
-        }).render();
+        });
 
         this.loadingView = new NortonApp.Views.Loading({
             el: '.container'

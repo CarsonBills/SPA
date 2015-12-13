@@ -19,6 +19,9 @@ var Handlebars = require('handlebars/runtime'),
 module.exports = (function() {
     'use strict';
     Handlebars.registerPartial({
+        // header
+        'HBLogo': require('../../templates/partials/header/logo.hbs'),
+
         // page details
         'HBPageArrowPrev': require('../../templates/partials/page/arrowPrev.hbs'),
         'HBPageArrowNext': require('../../templates/partials/page/arrowNext.hbs'),

@@ -3,14 +3,10 @@
 // #siteHeader
 .header {
     width: 100%;
-    height: 217px;
+    height: 380px;
     position: relative;
     display: block;
 	margin: 0 auto;
-
-	&.bg {
-		background: url("/images/header_pattern.png");
-	}
 
 	.cover {
     	width: 100%;
@@ -23,18 +19,6 @@
 			position: fixed;
 			top: -167px;
 			z-index: 99;
-		}
-
-		.header-bg {
-			width: 100%;
-			height: 100%;
-			//background-size: cover;
-
-		    //min-width: 1024px;
-		    top: 0;
-		    left: 0;
-		    background: url("/images/header.jpg") top/cover no-repeat;
-			//max-width: $max-width;
 		}
 	}
 
@@ -56,17 +40,16 @@
    			width: 100%;
 			height: $top-bar-height;
 			background-color: $bg-color;
-    		//transition: all 0.3s;
-			opacity: 0;
 
-    		.stick & {
+    		/* .stick & {
     			opacity: 0.9;
-    		}
+    		} */
     	}
 
 		.norton-logo {
-			@include svg-sprite(norton_logo);
 			@include vertical-align(absolute);
+			width: 49px;
+			height: 23px;
 		    margin-left: $gutter;
 	    	float: left;
 	    	z-index: 50;
@@ -126,13 +109,13 @@
 		.my-account {
 			@include vertical-align();
 			float: right;
-			margin-right: $gutter;
+			margin-right: 2rem;
 			right: 0;
 
 		    .sign-in,
 		    .signed-in {
 		    	color: lighten($header-text, 10%);
-		    	margin-left: 1rem;
+		    	margin-left: 0.3rem;
 		    }
 
 		    .glyphicon {

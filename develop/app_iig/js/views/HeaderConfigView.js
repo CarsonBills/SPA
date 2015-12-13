@@ -1,8 +1,8 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
-    CookieHelper = require('../modules/cookie_helper');
-    //WindowManager = require('../modules/window_manager');
+    CookieHelper = require('../modules/cookie_helper'),
+    HeaderLoader = require('../modules/header_loader');
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
@@ -13,6 +13,16 @@ var HeaderConfigView = Backbone.View.extend({
 
     initialize: function() {
         'use strict';
+
+        var that = this,
+            css = '/css/sites/' + Norton.siteCode + '.css';
+
+        $('html').addClass(Norton.siteCode);
+
+        HeaderLoader.load(css).then(function(mesg) {
+            console.log(mesg);
+            that.render();
+        });
     },
 
     render: function() {
@@ -21,8 +31,6 @@ var HeaderConfigView = Backbone.View.extend({
             context = this.model.toJSON();
 
         context.baseUrl = Norton.baseUrl;
-
-        $('html').addClass(Norton.siteCode);
 
         if (Norton.siteCode === 'nortonreader') {
             headerConfigTemplate = this.templateNR(context);
@@ -34,9 +42,7 @@ var HeaderConfigView = Backbone.View.extend({
             context.user = CookieHelper.getUser('ecm2:username');
             context.signedIn = (context.user !== CookieHelper.ANON);
             headerConfigTemplate = this.templateIig(context);
-
-            // show bg pattern
-            this.$el.addClass('bg');
+            
         }
         this.$el.append(headerConfigTemplate);
     },

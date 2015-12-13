@@ -61,6 +61,7 @@ var gulp = require('gulp'),
         js_logger: '/js/logger/',
         js_vendor: '/js/vendor/',
         json: '/json/',
+        site_assets: '/site_assets/',
         svg: '/images/svg/',
         sprite: '/sprite/',
         svg_sprite: '/images/svg_sprite.svg',
@@ -274,6 +275,13 @@ gulp.task('copy_php', function () {
             settings.app_php + '**/*.php'
         ])
         .pipe(gulp.dest(deploy + site + version + settings.php));
+});
+
+gulp.task('copy_assets', function () {
+    return gulp.src([
+            app + site + settings.site_assets + '**/*'
+        ])
+        .pipe(gulp.dest(deploy + site + version + settings.site_assets));
 });
 
 gulp.task('copy_fonts', function () {
@@ -508,7 +516,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
+gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_assets', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
 
     $.livereload.listen();
 
@@ -516,6 +524,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
     gulp.watch([app + site + settings.templates + '**/*'], ['browserify']);
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
     gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
+    gulp.watch([app + site + settings.site_assets + '**/*'], ['copy_assets']);
     gulp.watch([app + site + settings.js + '**/*.js'], ['browserify']);
     gulp.watch([app + site + settings.php + '**/*.php'], ['copy_php']);
     gulp.watch([app + site + settings.images + '**', '!' + settings.svg + '*.svg'], ['png_sprite', 'copy_images']);
