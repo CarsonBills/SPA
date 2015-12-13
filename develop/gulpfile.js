@@ -508,6 +508,7 @@ gulp.task('build', function () {
             'gulp svg2png',
             'gulp copy_images',
             'gulp copy_fonts',
+            'gulp copy_assets',
             'gulp browserify',
             'gulp fileinclude',
             'gulp sass:production'
