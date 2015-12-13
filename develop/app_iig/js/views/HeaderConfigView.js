@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
-    MODULE: 'credits',
+    MODULE: 'headerView',
     ACCOUNT: '.my-account',
     templateNR: require('../../templates/modules/NortonReaderHeaderTemplate.hbs'),
     templateIig: require('../../templates/modules/IigHeaderTemplate.hbs'),
@@ -20,7 +20,7 @@ var HeaderConfigView = Backbone.View.extend({
         $('html').addClass(Norton.siteCode);
 
         HeaderLoader.load(css).then(function(mesg) {
-            console.log(mesg);
+            Logger.get(that.MODULE).info(mesg);
             that.render();
         });
     },

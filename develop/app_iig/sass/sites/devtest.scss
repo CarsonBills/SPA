@@ -1,0 +1,47 @@
+$site-code: "devtest";
+$bg-color: #474c50;
+$fg-color: #fff;
+$topbar-color: #666;
+
+.#{$site-code} {
+
+	div[data-type="iig-hero"] {
+		.book-cover {
+		}
+		.hero-title {
+		}
+	}
+
+	.header {
+		.cover {
+		}
+
+		.top-bar {
+
+			.bg {
+				background-color: $topbar-color;
+			}
+
+			div {
+				a {
+					color: $fg-color;
+				}
+			}
+			.signed-in,
+			.glyphicon {
+				color: $fg-color;
+			}
+
+			.norton-logo {
+				color: $fg-color;
+				svg {
+					fill: currentColor;
+				}
+			}
+
+			.header-title {
+			}
+
+		}
+	}
+}

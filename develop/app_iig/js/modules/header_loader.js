@@ -5,7 +5,8 @@ var $ = require('jquery'),
 
 	HeaderLoader = (function() {
     'use strict';
-        var deferred = $.Deferred(),
+        var MODULE = "HeadeLoader",
+            deferred = $.Deferred(),
             load = function (url) {
                 var css = $("<link>", {
                     "rel" : "stylesheet",
@@ -14,7 +15,7 @@ var $ = require('jquery'),
                 })[0];
 
                 css.onload = function(){
-                    deferred.resolve("CSS IN IFRAME LOADED");
+                    deferred.resolve(Norton.siteCode + "css loaded");
                 };
 
                 document.getElementsByTagName("head")[0].appendChild(css);
