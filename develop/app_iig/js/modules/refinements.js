@@ -158,6 +158,7 @@ Navigation.prototype = {
                         newFilters[idx].refs[k].subnav[jdx].count = 0;
                         newFilters[idx].refs[k].subnav[jdx].subCatName = filters[i].name;
                         newFilters[idx].refs[k].subnav[jdx].fullName = filters[i].refinements[j].value;
+                        newFilters[idx].refs[k].subnav[jdx].parent = newFilters[idx].refs[k].fullName;
                         jdx++;
                     }
                 }

@@ -83,6 +83,7 @@ var FiltersView = Backbone.View.extend({
        "click .filter-item-cat" : "toggleItem",
         "click .filter-checkbox": function(e) {
             'use strict';
+
             if ($(e.target).prop('checked')) {
                 this.showSelectedFilter();
             } else {
@@ -187,6 +188,12 @@ var FiltersView = Backbone.View.extend({
 
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
+                if ($(this).attr("data-filter-parent") &&
+                    $( "input[data-filter-name='" + $(this).attr("data-filter-parent") + "']" ).is(":checked") == true
+                ) {
+                    return true;
+                }
+
                 if (selCat != $(this).attr('data-filter-cat-display')) {
                     selCat = $(this).attr('data-filter-cat-display');
                     html += '<div class="sel-filter-cat">'+selCat+'</div>';
@@ -204,6 +211,10 @@ var FiltersView = Backbone.View.extend({
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
                     '" class="clear-filter">x</span></div></div>';
+
+                if ($(this).attr("data-filter-is-parent")) {
+                    $( "input[data-filter-parent='" + $(this).attr("data-filter-name") + "']" ).attr('checked', true);
+                }
             }
         });
 
@@ -222,10 +233,17 @@ var FiltersView = Backbone.View.extend({
         var sel ='';
         var tgt = $(e.target);
 
+        if ($(e.target).attr("data-filter-is-parent")) {
+            $( "input[data-filter-parent='" + $(e.target).attr("data-filter-name") + "']" ).attr('checked', false);
+        }
+
         if (typ) {
             sel = "input[data-filter-name='" + tgt.attr('data-close-filter-name') + "']" +
                 "[data-filter-cat='" + tgt.attr('data-close-filter-cat') + "']";
             $(sel).attr('checked', false);
+            if ($(sel).attr("data-filter-is-parent")) {
+                $( "input[data-filter-parent='" + $(sel).attr("data-filter-name") + "']" ).attr('checked', false);
+            }
         }
 
         this.showSelectedFilter();
