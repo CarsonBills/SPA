@@ -4,7 +4,7 @@ var Backbone = require("backbone"),
 
 var LoadingView = Backbone.View.extend({
 
-    loadingTemplate: require("../../templates/LoadingTemplate.hbs"),
+    loadingTemplate: require("../../templates/modules/LoadingTemplate.hbs"),
     $el: null, // load more container
     $button: null, // load more button
     $blocker: null, // catch-all blocker

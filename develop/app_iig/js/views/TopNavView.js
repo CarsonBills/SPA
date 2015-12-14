@@ -9,7 +9,7 @@ var TopNavView = Backbone.View.extend({
     evtMgr: EventManager.getInstance(),
     $toggleView: null,
 
-    template: require('../../templates/TopNavTemplate.hbs'),
+    template: require('../../templates/modules/TopNavTemplate.hbs'),
 
     initialize: function() {
         'use strict';

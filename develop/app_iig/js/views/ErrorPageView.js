@@ -5,7 +5,7 @@ var Backbone = require("backbone"),
 var ErrorPageView = Backbone.View.extend({
     MODULE: 'errors',
     //el: "#errorPage",
-    template: require("../../templates/ErrorPageTemplate.hbs"),
+    template: require("../../templates/modules/ErrorPageTemplate.hbs"),
 
     initialize: function() {
         "use strict";

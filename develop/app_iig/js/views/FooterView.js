@@ -4,7 +4,7 @@ var Backbone = require("backbone"),
 var FooterView = Backbone.View.extend({
     MODULE: 'errors',
     //el: "#errorPage",
-    template: require("../../templates/FooterTemplate.hbs"),
+    template: require("../../templates/modules/FooterTemplate.hbs"),
 
     initialize: function() {
         "use strict";
