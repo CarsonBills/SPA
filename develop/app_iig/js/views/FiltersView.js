@@ -206,9 +206,10 @@ var FiltersView = Backbone.View.extend({
         // If e is undefined, this method executed without a filter being checked so don't manipulate checkboxes
         if (e) {
             // Uncheck parent if a subchapter was checked; Else uncheck subchapters if chapter was checked
-            if ($(e.target).attr("data-filter-parent")) {
-                $("input[data-filter-name='" + $(e.target).attr("data-filter-parent") + "']").attr('checked', false);
-            } else if ($(e.target).attr("data-filter-is-parent")) {
+            //if ($(e.target).attr("data-filter-parent")) {
+            //    $("input[data-filter-name='" + $(e.target).attr("data-filter-parent") + "']").attr('checked', false);
+            //} else
+            if ($(e.target).attr("data-filter-is-parent")) {
                 $("input[data-filter-parent='" + $(e.target).attr("data-filter-name") + "']").attr('checked', false);
             }
         }
