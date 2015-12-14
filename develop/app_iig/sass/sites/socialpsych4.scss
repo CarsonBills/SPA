@@ -13,9 +13,6 @@ $topbar-color: #fcce19;
 		background: url(/site_assets/#{$site-code}/hero_pattern.png);
 		background-color: $bg-color;
 
-		.hero-container {			
-		}
-
 		.book-cover {
 			margin: 6rem 2rem 0;
 			display: block;
@@ -42,7 +39,7 @@ $topbar-color: #fcce19;
 			.bg {
 				background: $topbar-color ;
 	    		@include one-sided-shadow($offset-y: 1px);
-				opacity: 0.8;
+				opacity: 0.9;
 			}
 
 			div {

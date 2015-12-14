@@ -11,7 +11,7 @@ var JSConstants = {
     saveTrackingUrl: '//dev2-services.wwnorton.com/tracking.php',
     likeUnlikeAssetUrl: '//dev2-services.wwnorton.com/like_unlike.php',
     getSavedFavsUrl: '//dev2-services.wwnorton.com/get_favorites.php',
-    siteAssetsUrl: 'http://d2ybxpb8b9c7qj.cloudfront.net/iig',
+    siteAssetsUrl: '',
     tabletLandspaceWidth: 1024,
     tabletPortaitWidth: 768,
     mobileWidth: 480,

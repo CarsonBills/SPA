@@ -10,7 +10,7 @@ var Backbone = require("backbone"),
 var FiltersView = Backbone.View.extend({
     THRESHOLD: 10,
     el: "#filters",
-    template: require("../../templates/FiltersTemplate.hbs"),
+    template: require("../../templates/modules/FiltersTemplate.hbs"),
     refinements: Refinements.getInstance(),
     filterContent: "",
     delay: true,
@@ -74,6 +74,7 @@ var FiltersView = Backbone.View.extend({
         }, this);
 
         this.showActive();
+        this.toggleChecked();
         this.firstTime = true;
 
         return this;
@@ -85,7 +86,7 @@ var FiltersView = Backbone.View.extend({
             'use strict';
 
             if ($(e.target).prop('checked')) {
-                this.showSelectedFilter();
+                this.showSelectedFilter(e);
             } else {
                 this.removeSelectedFilter(e, "cb");
             }
@@ -145,6 +146,22 @@ var FiltersView = Backbone.View.extend({
         this.$('.filter-item').removeClass('in');
     },
 
+    toggleChecked: function () {
+        'use strict';
+
+        var group;
+
+        _.each(this.$('.filter-checkbox'), function (item) {
+            if ($(item).data('parent') !== undefined && $(item).data('filter-cat') === 'dimChapters') {
+                if ($(item).is(":checked") === true) {
+                    group = $(item).data('parent');
+                    $(group).addClass('in');
+                }
+            }
+        })
+
+    },
+
     showActive: function (category) {
         'use strict';
 
@@ -152,7 +169,7 @@ var FiltersView = Backbone.View.extend({
         if ($cat.hasClass('collapsed')) {
             $cat.removeClass('collapsed');
 
-        this.$('.filter-item').removeClass('in');
+            this.$('.filter-item').removeClass('in');
             this.$(category).addClass('in');
 
             this.adjustHieght();
@@ -177,7 +194,7 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
-    showSelectedFilter: function() {
+    showSelectedFilter: function(e) {
         'use strict';
         var html = "",
             selCat = "",

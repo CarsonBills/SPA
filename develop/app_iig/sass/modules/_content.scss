@@ -103,6 +103,7 @@ div[data-type="iig-hero"] {
             transform: rotate(0deg);
         }
     }
+
     .filter-item-name {
         position:relative;
 
@@ -110,13 +111,29 @@ div[data-type="iig-hero"] {
             margin-bottom: 0.7rem;
         }
 
+        a {
+            display: inline-block;
+        }
+
         .filter-name {
+            display: inline-block;
+            width: 200px;
+            font-size: 1.1rem;
             margin-left: 0.7rem;
             @include ellipsis();
         }
         .count {
             position: absolute;
             right: 0;
+        }
+    }
+
+    .filter-item-group {
+        margin-left: 1rem;
+        margin-bottom: 0.7rem;
+
+        .filter-item-name {
+            margin-bottom: 0.2rem;
         }
     }
 
