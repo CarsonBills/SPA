@@ -159,7 +159,12 @@ var AppView = Backbone.View.extend({
         // query would be populated with Search box data
         var that = this,
             postdata = {},
-            nextItemID;
+            nextItemID,
+            versionRef = {
+                type: "Value",
+                navigationName: "siteversion",
+                value: Norton.version
+            };
 
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();
@@ -171,15 +176,16 @@ var AppView = Backbone.View.extend({
             postdata.query = Norton.searchQuery;
         }
 
-        if (Norton.savedRefinements) {
-            // .NET services want post data as a string, not as key-val object
-            if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
-                postdata.refinements = Norton.savedRefinements;
-            } else {
-                postdata.refinements = JSON.stringify(Norton.savedRefinements);
-            }
-            postdata.pruneRefinements = "false";
+        Norton.savedRefinements.push(versionRef);
+
+        // .NET services want post data as a string, not as key-val object
+        if (Norton.Constants.siteConfigUrl.indexOf("ars.svc") > 0) {
+            postdata.refinements = Norton.savedRefinements;
+        } else {
+            postdata.refinements = JSON.stringify(Norton.savedRefinements);
         }
+        postdata.pruneRefinements = "false";
+
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
