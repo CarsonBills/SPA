@@ -10,9 +10,11 @@ var Backbone = require('backbone'),
     jPlayer = require('jplayer'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
-    VideoPlayer = require('../modules/video_player');
+    VideoPlayer = require('../modules/video_player'),
+    EventManager = require('../modules/event_manager');
 
 var PageView = Backbone.View.extend({
+    evtMgr: EventManager.getInstance(),
     MODULE: 'details',
     PLUS: 'glyphicon-heart',
     MINUS: 'glyphicon-heart-empty',
@@ -34,6 +36,7 @@ var PageView = Backbone.View.extend({
         this.favorites = params.favorites;
 
         this.favorites.on('update', this.isFaved, this);
+        this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
     },
 
     showLoading: function () {
@@ -70,6 +73,14 @@ var PageView = Backbone.View.extend({
 
         return this;
     },
+
+    tagLinkClicked: function (params, e) {
+        'use strict';
+        if (params.tag !== undefined || params.tag !== '') {
+            ModalManager.hide();
+        }
+    },
+
     isFaved: function (e) {
         'use strict';
         var id = this.model.get('id'),
@@ -107,7 +118,6 @@ var PageView = Backbone.View.extend({
     },
 
     showVideo: function () {
-        console.log(this.model.toJSON());
         VideoPlayer.show(this.$(this.PLAYER));
     },
 

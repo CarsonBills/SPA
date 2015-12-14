@@ -100,12 +100,21 @@ var ArticleView = Backbone.View.extend({
     },
 
     events: {
+        'click a[data-type="tag-link"]': 'onTagClick',
         'click .icon-grid-view': 'onGrid',
         'click .icon-list-view': 'onList',
 
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage"
+    },
+
+    onTagClick: function (e) {
+        'use strict';
+        this.evtMgr.trigger(EventManager.TAG_LINK_CLICK, {
+            tag: $(e.currentTarget).text()
+        });
+        return false;
     },
 
     /* Grid/List view toggle */

@@ -11,6 +11,7 @@ var Backbone = require('backbone'),
             DEEPLINK: 'deeplink',
             // Events
             CONTENT_VIEW_CHANGE: 'content_view_change',
+            TAG_LINK_CLICK: 'tag_link_click',
             REWRITE_PAGE: 'rewritePage',
             WINDOW_RESIZE: 'windowResizeEvent',
 

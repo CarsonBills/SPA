@@ -112,6 +112,10 @@ button[data-type="iig-button"] {
 	}
 }
 
+a[data-type="tag-link"] {
+	color: $iig-link;
+}
+
 
 /* custom icon for list/gird/favs */
 %content-type {

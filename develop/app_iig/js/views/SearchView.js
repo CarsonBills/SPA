@@ -1,14 +1,18 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
-    ModalManager = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    EventManager = require('../modules/event_manager');
 
 var SearchView = Backbone.View.extend({
 
     app: null,
+    evtMgr: EventManager.getInstance(),
 
     initialize: function(params) {
         'use strict';
         this.app = params.app;
+
+        this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
     },
 
     events: {
@@ -19,6 +23,14 @@ var SearchView = Backbone.View.extend({
             if (e.keyCode === 13) {
                 this.searchArticles();
             }
+        }
+    },
+
+    tagLinkClicked: function (params, e) {
+        'use strict';
+        if (params.tag !== undefined || params.tag !== '') {
+            $('#searchTextInput').val(params.tag);
+            this.searchArticles();
         }
     },
 

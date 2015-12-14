@@ -46,10 +46,11 @@ module.exports = (function() {
     });
     Handlebars.registerHelper('HBContentItemTags', function(data, options) {
         var result = '',
-            tags = data.tags;
+            tags = data.tags,
+            link = require('../../templates/partials/content/types/tagLink.hbs');
 
         _.each(tags, function (tag, index) {
-            result += tag;
+            result += link({tag: tag});
             if (index < tags.length - 1) {
                 result += " | ";
             }
