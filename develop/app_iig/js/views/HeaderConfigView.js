@@ -15,7 +15,7 @@ var HeaderConfigView = Backbone.View.extend({
         'use strict';
 
         var that = this,
-            css = '/css/sites/' + Norton.siteCode + '.css';
+            css = Norton.Constants.siteAssetsUrl + '/css/sites/' + Norton.siteCode + '.css';
 
         $('html').addClass(Norton.siteCode);
 
