@@ -8,7 +8,7 @@
         {{#if name}}
             {{#if count}}
                 <div class="filter-item-name">
-                    <a href="#/filter/"><input type="checkbox" class="filter-checkbox"  data-toggle="collapse" data-parent="#{{../catName}}{{@index}}" data-filter-name='{{fullName}}' data-filter-cat="{{../catName}}"  data-filter-cat-display="{{cat_display}}"  data-filter-is-parent="1" {{checked}}/></a>
+                    <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}" data-filter-name='{{fullName}}' data-filter-cat="{{../catName}}" data-filter-cat-display="{{cat_display}}"  data-filter-is-parent="1" {{checked}}/></a>
                     <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
                 </div>
             {{else}}
@@ -21,13 +21,13 @@
             {{#each subnav}}
                 {{#if count}}
                     <div class="filter-item-name">
-                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{subCatName}}"  data-filter-parent="{{parent}}" {{checked}}/></a>
-                        <span class="filter-name">{{name}}</span> <!--<span class="count">{{count}}</span> -->
+                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{subCatName}}"  data-filter-parent="{{parent}}" data-filter-cat-display="{{../name}}" {{checked}}/></a>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
                     </div>
                 {{else}}
                     <div class="filter-item-name filter-greyed-out">
-                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{subCatName}}"/>
-                        <span class="filter-name">{{name}}</span> <!-- <span class="count">{{count}}</span>-->
+                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{subCatName}}" data-filter-cat-display="{{../name}}"/>
+                        <span class="filter-name">{{name}}</span> <span class="count">{{count}}</span>
                     </div>
                 {{/if}}
             {{/each}}
