@@ -85,7 +85,7 @@ var FiltersView = Backbone.View.extend({
             'use strict';
 
             if ($(e.target).prop('checked')) {
-                this.showSelectedFilter();
+                this.showSelectedFilter(e);
             } else {
                 this.removeSelectedFilter(e, "cb");
             }
@@ -177,7 +177,7 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
-    showSelectedFilter: function() {
+    showSelectedFilter: function(e) {
         'use strict';
         var html = "",
             selCat = "",
@@ -186,13 +186,18 @@ var FiltersView = Backbone.View.extend({
 
         $("#selectedFilters").empty();
 
+        // If e is undefined, this method executed without a filter being checked so don't manipulate checkboxes
+        if (e) {
+            // Uncheck parent if a subchapter was checked; Else uncheck subchapters if chapter was checked
+            if ($(e.target).attr("data-filter-parent")) {
+                $("input[data-filter-name='" + $(e.target).attr("data-filter-parent") + "']").attr('checked', false);
+            } else if ($(e.target).attr("data-filter-is-parent")) {
+                $("input[data-filter-parent='" + $(e.target).attr("data-filter-name") + "']").attr('checked', false);
+            }
+        }
+
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
-                if ($(this).attr("data-filter-parent") &&
-                    $( "input[data-filter-name='" + $(this).attr("data-filter-parent") + "']" ).is(":checked") == true
-                ) {
-                    return true;
-                }
 
                 if (selCat != $(this).attr('data-filter-cat-display')) {
                     selCat = $(this).attr('data-filter-cat-display');
@@ -207,14 +212,11 @@ var FiltersView = Backbone.View.extend({
                 } else {
                     displayName = $(this).attr('data-filter-name');
                 }
+
                 html += '<div class="selected-filters"><div class="active-filter">' + displayName +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
                     '" class="clear-filter">x</span></div></div>';
-
-                if ($(this).attr("data-filter-is-parent")) {
-                    $( "input[data-filter-parent='" + $(this).attr("data-filter-name") + "']" ).attr('checked', true);
-                }
             }
         });
 
@@ -308,7 +310,7 @@ var FiltersView = Backbone.View.extend({
         var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
 
         cats = (qs) ? qs.split("&") : ""; // don't want cat's to be 1 element array with empty key-val
-        var obj;
+
         for (var cat in cats) {
             splt = cats[cat].split("=");
             refs[splt[0]] = cats[cat];
