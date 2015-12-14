@@ -547,6 +547,23 @@ gulp.task('upload:s3', [], function() {
     var nortonreaderassets = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonreaderassets.json')),
     nortonappreaderiig = JSON.parse(fs.readFileSync('/Volumes/wwn_vault/nortonappreaderiig.json'));
 
+    if (argv.siteAssets) {
+        return gulp.src([
+
+            deploy + 'iig' + settings.prod + '/**',
+            '!' + deploy + 'iig' + settings.prod + '/index.html',
+            '!' + deploy + 'iig' + settings.prod + settings.css + '/app.css',
+            '!' + deploy + 'iig' + settings.prod + settings.fonts + '**',
+            '!' + deploy + 'iig' + settings.prod + settings.images + '**',
+            '!' + deploy + 'iig' + settings.prod + settings.js + '**',
+            '!' + deploy + 'iig' + settings.prod + settings.php + '**',
+        ])
+        .pipe($.s3(nortonappreaderiig, {
+            uploadPath: '/' + 'iig' + '/',
+            headers: awsHeaders
+        }));
+
+    }
     // use 'gulp --select' to upload only the srouces here 
     if (argv.select) {
         return gulp.src([
@@ -556,7 +573,9 @@ gulp.task('upload:s3', [], function() {
             '!' + deploy + site + settings.prod + settings.fonts + '**',
             '!' + deploy + site + settings.prod + settings.json + '**',
             '!' + deploy + site + settings.prod + settings.php + '**',
-            '!' + deploy + site + settings.prod + settings.images + '**'
+            '!' + deploy + site + settings.prod + settings.images + '**',
+            '!' + deploy + site + settings.prod + settings.css + 'sites/**',
+            '!' + deploy + site + settings.prod + settings.site_assets + '**'
         ])
         .pipe($.s3(nortonappreaderiig, {
             uploadPath: '/' + site + '/',
