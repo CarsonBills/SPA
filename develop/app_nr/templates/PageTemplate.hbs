@@ -22,8 +22,10 @@
         </div>
 
         <div class="misc">
+            {{#if mainAuthorBio}}
             <p class="about-author">About {{{mainAuthorName}}}</p>
             <p class="author-bio">{{{mainAuthorBio}}}</p>
+            {{/if}}
 
             {{#if data.author.0.website}}
                 <button data-type="reader-button" class="moreinfo-lnk"><a href="{{data.author.0.website}}" target="_blank">More on the Author</a></button>
