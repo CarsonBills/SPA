@@ -1,15 +1,17 @@
 
-$('.jp-video').jPlayer({
+$('.jp-jplayer').jPlayer({
 	ready: function () {
 	  	$(this).jPlayer('setMedia', {
 	  		m4v: '{{{videoSrc}}}',
 	    	poster: '{{{stillImageSrc}}}'
 	  	});
 	},
+	autoBlur: true,
 	size: {
 		width: 'auto',
 		height: 'auto'
 	},
+	useStateClassSkin: true,
 	preload: 'meta',
 	supplied: 'm4v',
 	cssSelectorAncestor: '.video-container',
@@ -17,7 +19,7 @@ $('.jp-video').jPlayer({
   	}
 });
 
-$('.jp-video').click(function (e) {
+/*$('.jp-jplayer').click(function (e) {
 	var $jp = $(e.currentTarget);
 	if ($('.video-container').hasClass('jp-state-playing')) {
 		$jp.jPlayer('pause');
@@ -25,4 +27,4 @@ $('.jp-video').click(function (e) {
 		$jp.jPlayer('play');
 	}
 	return false;
-});
+});*/
