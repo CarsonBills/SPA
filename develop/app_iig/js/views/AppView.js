@@ -139,7 +139,7 @@ var AppView = Backbone.View.extend({
             nextItemID,
             versionRef = {
                 type: "Value",
-                navigationName: "siteVersion",
+                navigationName: "siteversion",
                 value: Norton.version
             };
         ;
@@ -154,7 +154,7 @@ var AppView = Backbone.View.extend({
             postdata.query = Norton.searchQuery;
         }
 
-        //Norton.savedRefinements.push(versionRef);
+        Norton.savedRefinements.push(versionRef);
         postdata.refinements = JSON.stringify(Norton.savedRefinements);
         postdata.pruneRefinements = "false";
 
