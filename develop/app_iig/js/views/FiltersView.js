@@ -344,6 +344,27 @@ var FiltersView = Backbone.View.extend({
                 that.showSelectedFilter();
             });
         }
+    },
+    findParentFilter: function(subFilter) {
+        var originalNav = JSON.parse(JSON.stringify(this.refinements.refFilters)),
+            target = decodeURIComponent(subFilter);
+
+        for (var i=0; i < originalNav.length; i++) {
+            if (originalNav[i].name == "dimChapters" || originalNav[i].name == "dimTopics") {
+                for (var j=0; j < originalNav[i].refs.length; j++) {
+                    for (var k=0; k < originalNav[i].refs[j].subnav.length; k++) {
+                        if (originalNav[i].refs[j].subnav[k].fullName == target) {
+                            return {
+                                type: "Value",
+                                navigationName: originalNav[i].name,
+                                value: decodeURIComponent(originalNav[i].refs[j].fullName)
+                            };
+                        }
+                    }
+                }
+            }
+        }
+
     }
 });
 

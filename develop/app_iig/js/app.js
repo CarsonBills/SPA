@@ -51,7 +51,7 @@ $(function() {
     Norton.siteCode = null;
     Norton.version = null;
     Norton.searchQuery = "";
-    Norton.savedRefinements = null;
+    Norton.savedRefinements = [];
     Norton.sortby = {
         field: "pname",
         order: "Ascending"

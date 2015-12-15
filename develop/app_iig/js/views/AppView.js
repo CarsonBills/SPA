@@ -136,7 +136,13 @@ var AppView = Backbone.View.extend({
         // query would be populated with Search box data
         var that = this,
             postdata = {},
-            nextItemID;
+            nextItemID,
+            versionRef = {
+                type: "Value",
+                navigationName: "siteVersion",
+                value: Norton.version
+            };
+        ;
 
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();
@@ -148,10 +154,10 @@ var AppView = Backbone.View.extend({
             postdata.query = Norton.searchQuery;
         }
 
-        if (Norton.savedRefinements) {
-            postdata.refinements = JSON.stringify(Norton.savedRefinements);
-            postdata.pruneRefinements = "false";
-        }
+        //Norton.savedRefinements.push(versionRef);
+        postdata.refinements = JSON.stringify(Norton.savedRefinements);
+        postdata.pruneRefinements = "false";
+
         if (Norton.sortby) {
             postdata.sort = Norton.sortby;
         }
@@ -201,7 +207,8 @@ var AppView = Backbone.View.extend({
         var refs = [],
             ref,
             splt,
-            obj = {};
+            obj = {},
+            parentObj = {};
 
         for (var cat in Norton.savedRefinements) {
             splt = Norton.savedRefinements[cat].split("=");
@@ -214,6 +221,13 @@ var AppView = Backbone.View.extend({
                 };
 
                 refs.push(obj);
+
+                if (cat == "dimChaptersL1") {
+                    parentObj = this.filtersView.findParentFilter(ref[i]);
+                    if (parentObj) {
+                        refs.push(parentObj);
+                    }
+                }
             }
         }
 
