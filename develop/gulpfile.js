@@ -124,7 +124,10 @@ gulp.task('fileinclude', function () {
         assets = getHTMLAssets('');
     } 
 
-    return gulp.src([app + site +  settings.page_templates + 'index.html'])
+    return gulp.src([
+            app + site + settings.page_templates + 'index.html',
+            app + site + settings.page_templates + 'errors.html'
+        ])
         .pipe($.plumber(function (error) {
             $.util.beep();
             $.util.log($.util.colors.red(error));
@@ -521,7 +524,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
     $.livereload.listen();
 
-    gulp.watch([app + site + settings.page_templates + '**/*.html'], ['fileinclude']);
+    gulp.watch([app + site + settings.page_templates + '*.html'], ['fileinclude']);
     gulp.watch([app + site + settings.templates + '**/*'], ['browserify']);
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
     gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
