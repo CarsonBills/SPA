@@ -33,8 +33,8 @@ var gulp = require('gulp'),
 
     fs = require('fs'),
     s3 = require('gulp-s3'),
-    CF_APP_URL = "http://d2ybxpb8b9c7qj.cloudfront.net/",
-    CF_ASSETS_URL = "http://dk93p46l5vp3c.cloudfront.net/",
+    CF_APP_URL = "//d2ybxpb8b9c7qj.cloudfront.net/",
+    CF_ASSETS_URL = "//dk93p46l5vp3c.cloudfront.net/",
     awsHeaders = {'x-amz-acl': 'public-read'},
 
     settings 		= {
@@ -78,7 +78,9 @@ function getHTMLAssets(path) {
             tpl: '<link rel="stylesheet" href="%s">'
         },
         js: {
-            src: [path + '/js/vendor/modernizr.js', path + '/js/bundle.min.js'],
+            src: [
+                path + '/js/vendor/modernizr.js',
+                path + '/js/bundle.min.js'],
             tpl: '<script src="%s"></script>'
         },
         icon: {
@@ -332,9 +334,9 @@ gulp.task('wiredep', function () {
         //settings.app_js_vendor + 'modernizr-custom.min.js'
         app + site + settings.js_vendor + 'modernizr.js'
     ])
-    .pipe($.rename(function (path) {
+    /*.pipe($.rename(function (path) {
         path.basename = 'modernizr';
-    }))
+    }))*/
     .pipe(gulp.dest(deploy + site + version + settings.js_vendor));
 });
 
