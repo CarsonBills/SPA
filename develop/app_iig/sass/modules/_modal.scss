@@ -332,37 +332,6 @@
 				position: relative;
 				margin: 2rem 0;
 				width: 100%;
-
-				&:hover {
-					.playback {
-						opacity: 0.8;
-					}
-				}
-			}
-			.jp-video {
-				width: 100%;
-				position: relative;
-				padding-top: 75%;
-				background-color: $bg-color;
-				text-align: center;
-
-				img {
-					display: block;
-					@include center(absolute);
-				}
-
-				video {
-					position: absolute;
-				    top: 0;
-				    left: 0;
-					width: 100% !important;
-				}
-			}
-
-			.playback {
-				//@include svg-sprite(playback);
-				//@include center(absolute);
-				opacity: 0.6;
 			}
 		}	
 
