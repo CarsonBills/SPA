@@ -66,7 +66,11 @@ var HeaderConfigView = Backbone.View.extend({
 
     onLinks: function (e) {
         'use strict';
+
         var $target = $(e.currentTarget);
+        if ($target.prop('target') === 'modal') {
+            this.getCredits($target.prop('href'));
+        }
         return false;
     }
 }); 
