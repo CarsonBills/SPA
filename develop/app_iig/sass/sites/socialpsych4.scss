@@ -16,6 +16,7 @@ $topbar-color: #fcce19;
 			margin: 6rem 2rem 0;
 			display: block;
 			background: url(/site_assets/#{$site-code}/book_cover.png) no-repeat;
+			background-size: cover;
 			width: 154px;
 			height: 198px;
 			box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
