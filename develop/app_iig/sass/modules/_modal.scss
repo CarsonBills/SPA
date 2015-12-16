@@ -15,7 +15,7 @@
 	height: inherit;
 }
 .modal-arrow-container {
-	top: 50vh;
+	@include vertical-align();
 	margin: 1rem;
 	font-size: 3rem;
 	color: $dark-grey;
