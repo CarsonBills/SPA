@@ -1,14 +1,86 @@
+$vidoe-bar-height: 3rem;
 div[data-type="video-player"] {
-	.jp-seek-bar,
+	position: relative;
+
+	.jp-interface {
+		position: relative;
+		background-color: #999;
+		width:100%;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.jp-progress {
+		display: inline-block;
+		overflow:hidden;
+		background-color: #aaa;
+		top:0px;
+		left:0px;
+		width:100%;
+		height: 6px;
+	}
 	.jp-seek-bar {
-		width: 200px;
-		height: 10px;
-		background-color: #666;
+		width:0px;
+		height:100%;
+		cursor: pointer;
+		background-color: #bbb;
+	}
+	.jp-play-bar {
+		width:0px;
+		height:100%;
+		background-color: #555;
+	}
+
+	.jp-controls {
+		display: inline-block;
+		width: 40px;
+		height: 32px;
+	}
+
+	.jp-mute,
+	.jp-unmute,
+	.jp-play,
+	.jp-pause,
+	.jp-stop {
+		width: 40px;
+		height: 32px;
+		display: inline-block;
+		width: $vidoe-bar-height;
+	    height: $vidoe-bar-height;
+	    padding: 0;
+	    margin: 0;
+	    border: none;
+	    cursor: pointer;
+
+	    .glyphicon {
+	    	top: 0;	    	
+		    font-size: 2rem;
+		    line-height: 3.2rem;
+
+	    }
+	}
+	.jp-mute,
+	.jp-unmute {
+		position: relative;
+		margin-right: 0.5rem;
+		.glyphicon {
+			line-height: 3rem;
+		}
 	}
 
 	.jp-duration,
 	.jp-current-time {
-		width: 20px;
-		height: 20px;
+		@include opensans($size: 1.1rem, $height: 3rem, $weight: 600);
+		display: inline-block;
+		width: 35px;
+		height: $vidoe-bar-height;
+		margin: 0 1rem 0 0.5rem;
+	}
+
+	.jp-duration {
+		cursor: pointer;
+
 	}
 }

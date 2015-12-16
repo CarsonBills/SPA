@@ -33,5 +33,6 @@ $icon-font-path: if($bootstrap-sass-asset-helper, "/fonts/", "/fonts/") !default
 @import "modules/content";
 @import "modules/footer";
 
+//@import "vendor/jplayer.blue.monday";
 @import "modules/jplayer";
 

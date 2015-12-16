@@ -7,7 +7,6 @@
  */
 var Backbone = require('backbone'),
     $ = require('jquery'),
-    jPlayer = require('jplayer'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     VideoPlayer = require('../modules/video_player'),

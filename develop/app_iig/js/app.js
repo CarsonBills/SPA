@@ -8,6 +8,7 @@ window.jQuery = $;
 var Backbone = require('backbone'),
 	fastClick = require('fastclick'),
 	jQuery_UI = require('jquery-ui'),
+    jPlayer = require('jplayer'),
     Handlebars = require('handlebars/runtime'),
     
     // Handlebars helpers and blocks are intialized here
@@ -133,6 +134,8 @@ $(function() {
      * Initializers
      */
     NortonApp.evtMgr.getInstance();
+
+
 
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
