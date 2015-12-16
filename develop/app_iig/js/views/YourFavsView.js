@@ -4,7 +4,8 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager');
-    FavoritesData = require('../modules/favorites_data');
+    FavoritesData = require('../modules/favorites_data'),
+    DetailsParser = require('../modules/details_model_parser');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -52,7 +53,8 @@ var YourFavsView = Backbone.View.extend({
         var that = this,
             $div = $('<div></div>'),
             hasContent = (this.collection.length > 0),
-            template;
+            template,
+            tmpObj;
 
         template = this.templateHdr({
             hasContent: hasContent,
@@ -63,7 +65,10 @@ var YourFavsView = Backbone.View.extend({
 
         if (hasContent) {
             _.each(this.collection.models, function(article) {
-                template = that.templateItem(article.toJSON());
+                tmpObj = $.extend({}, article.toJSON());
+                tmpObj.downloads.src = DetailsParser.parseUrl(tmpObj.downloads.src);
+
+                template = that.templateItem(tmpObj);
                 $div.find(that.body).append(template);
             });
         } else {
