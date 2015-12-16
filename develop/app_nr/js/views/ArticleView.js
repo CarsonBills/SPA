@@ -175,7 +175,10 @@ var ArticleView = Backbone.View.extend({
     showDetail: function (id) {
         'use strict';
 
-        var model = this.collection.getModelByAttribute('pname', id);
+        var that = this,
+            model = this.collection.getModelByAttribute('pname', id),
+            faved = this.favorites.getModelByAttribute('pname', id), 
+            pageData;
 
         // TODO throw fallback when page cannot be found
         /*if (typeof model === 'undefined') {
@@ -189,19 +192,32 @@ var ArticleView = Backbone.View.extend({
             });
         }
 
-        if (model != undefined) {
+        if (model !== undefined) {
             this.baseUrl = model.get('baseUrl');
 
             this.pageItem = new NortonApp.Models.Page({
-                faved: this.favorites.getModelByAttribute('pname', id),
+                faved: faved,
                 id: id,
                 prevId: model.get('prevId'),
                 nextId: model.get('nextId')
             });
-
-            this.pageView.model = this.pageItem;
-            this.pageView.getPage();
+        } else {
+            this.pageItem = new NortonApp.Models.Page({
+                faved: faved,
+                id: id
+            });
         }
+        this.pageView.model = this.pageItem;
+        this.pageView.getPage().then(function(data) {
+
+            if (model === undefined) {
+                pageData = jQuery.extend({}, data);
+                pageData.faved = faved;
+                pageData.id = id;
+                that.pageItem = new NortonApp.Models.Page(pageData);
+            }
+            that.collection.saveCurrentPageDetail(that.pageItem);
+        });
     },
 
     showHighlight: function (params) {

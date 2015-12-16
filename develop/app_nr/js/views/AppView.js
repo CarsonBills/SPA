@@ -302,11 +302,11 @@ var AppView = Backbone.View.extend({
             });
         }        
     },
+
     showResultsTotals: function() {
         'use strict';        
         this.$('#perPage').html(this.collection.length);
         this.$('#nbrRecords').html(this.collection.totalRecords);
-
     }
 });
 

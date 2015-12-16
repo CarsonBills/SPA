@@ -14,6 +14,7 @@ var PageView = Backbone.View.extend({
     MODULE: 'details',
     PLUS: 'glyphicon-plus',
     MINUS: 'glyphicon-minus',
+    deferred: $.Deferred(),
     template: require('../../templates/PageTemplate.hbs'),
     templateLoading: require("../../templates/PageLoadingTemplate.hbs"),
     content: '.modal-content',
@@ -88,14 +89,16 @@ var PageView = Backbone.View.extend({
         var that = this;
         this.showLoading();
         this.model.fetch({
-            success: $.proxy (function(data) {
+            success: function(data) {
+                that.deferred.resolve(data.toJSON());
                 that.render();
-            }, this),
+            },
             error: function(xhr, response, error) {
                 Logger.get(that.MODULE).error('Detail Page not available.');
                 ErrorsManager.showGeneric();
             }
         });
+        return this.deferred.promise();
     },
 
     cleanUp: function () {

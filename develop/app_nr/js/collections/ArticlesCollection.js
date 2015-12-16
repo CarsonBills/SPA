@@ -10,6 +10,8 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
+    currentPage: null,
+
     initialize: function() {
     },
     parse: function(res) {
@@ -140,7 +142,43 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return model;
+    },
+
+    /*
+    favsData.pname = articleData.pname;
+    favsData.pageNumber = articleData.pageNumber;
+    favsData.abstract = articleData.abstract;
+    favsData.title = articleData.title;
+    favsData.authorLastName = articleData.primaryAuthor.authorLastName;
+    favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
+    favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
+    favsData.ebookNode = articleData.ebookNode;
+    favsData.baseUrl = Norton.baseUrl;
+    */
+
+    /*
+
+    "mainAuthorName": response.data.data.author[0].authorFirstName + " " +
+        response.data.data.author[0].authorMiddleName + " " +
+        response.data.data.author[0].authorLastName,
+    "mainAuthorBio": response.data.data.author[0].authorBio
+    */
+
+    saveCurrentPageDetail: function (model) {
+        'use strict';
+        if (model) {
+            this.currentPage = model;
+        }
+    },
+
+    getCurrentPageDetail: function (id) {
+        'use strict';
+        if (this.currentPage.get('id') === id) {
+            return this.currentPage;
+        }
+        return null;
     }
+
 });
 
 module.exports = ArticlesCollection;

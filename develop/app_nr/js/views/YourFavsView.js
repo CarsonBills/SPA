@@ -129,8 +129,10 @@ var YourFavsView = Backbone.View.extend({
             id = $target.data('item-id'),
             favsData = {},
             article = this.articles.getModelByAttribute("pname", id),
-            articleData = article.attributes.allMeta,
-            model = this.collection.getModelByAttribute("pname", id);
+            articleData,
+            model = this.collection.getModelByAttribute("pname", id),
+            currentPage;
+
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
@@ -138,18 +140,38 @@ var YourFavsView = Backbone.View.extend({
             return false;
         }
 
-        this.showPopover($target, "Item Added");
+        // found already in the collection
+        if (article) {
+            articleData = article.attributes.allMeta;
 
-        favsData.pname = articleData.pname;
-        favsData.pageNumber = articleData.pageNumber;
-        favsData.abstract = articleData.abstract;
-        favsData.title = articleData.title;
-        favsData.authorLastName = articleData.primaryAuthor.authorLastName;
-        favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
-        favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
-        favsData.ebookNode = articleData.ebookNode;
-        favsData.baseUrl = Norton.baseUrl;
-        favsData.id = articleData.id;
+            this.showPopover($target, "Item Added");
+
+            favsData.pname = articleData.pname;
+            favsData.pageNumber = articleData.pageNumber;
+            favsData.abstract = articleData.abstract;
+            favsData.title = articleData.title;
+            favsData.authorLastName = articleData.primaryAuthor.authorLastName;
+            favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
+            favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
+            favsData.ebookNode = articleData.ebookNode;
+            favsData.baseUrl = Norton.baseUrl;
+            favsData.id = articleData.id;
+        } else {
+            // this is triggered from page not in the collection
+            currentPage = this.articles.getCurrentPageDetail(id);
+            // This pname id thing is confusing
+            favsData.pname = currentPage.id;
+            favsData.pageNumber = currentPage.attributes.data.pageNumber;
+            favsData.abstract = currentPage.attributes.data.excerpt;
+            favsData.title = currentPage.attributes.data.title;
+            favsData.authorLastName = currentPage.attributes.data.author[0].authorLastName;
+            favsData.authorFirstName = currentPage.attributes.data.author[0].authorFirstName;
+            favsData.authorMiddleName = currentPage.attributes.data.author[0].authorMiddleName;
+            favsData.ebookNode = currentPage.attributes.data.ebookLink;
+            favsData.baseUrl = Norton.baseUrl;
+            favsData.id = currentPage.attributes.data.id;
+
+        }
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
 
         this.saveLocalStorage();
