@@ -99,7 +99,6 @@ var AppRouter = Backbone.Router.extend({
                     withCredentials: true
                 },
                 success: $.proxy(function(response) {
-                    console.log(response)
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage

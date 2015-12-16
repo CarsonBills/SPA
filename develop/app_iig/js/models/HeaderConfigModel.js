@@ -57,7 +57,7 @@ var HeaderConfigModel = Backbone.Model.extend({
         }
 
         _.each(response.data.headerLinks, function(link, index) {
-            response.data.headerLinks[index].target = (link.target === "") ? "_blank" : link.target;
+            response.data.headerLinks[index].target = (link.target === undefined) ? "_blank" : link.target;
 
             if (link.target === "modal") {
                 response.data.headerLinks[index].link = Norton.Constants.creditsUrl;
