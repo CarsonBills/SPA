@@ -3,7 +3,7 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
-    TrackManager = require('../modules/track_manager');
+    TrackManager = require('../modules/track_manager'),
     FavoritesData = require('../modules/favorites_data'),
     DetailsParser = require('../modules/details_model_parser');
 
@@ -163,13 +163,12 @@ var YourFavsView = Backbone.View.extend({
         }
         if (article) {
             articleData = article.attributes.allMeta;
-            favs = FavoritesData.input(articleData);
+
+            this.showPopover($target, "Item Added");
         } else {
             articleData = this.articles.getCurrentPageDetail(id);
-            favs = FavoritesData.input(articleData);
         }
-
-        this.showPopover($target, "Item Added");
+        favs = FavoritesData.input(articleData);
 
         this.collection.add(favs);
 

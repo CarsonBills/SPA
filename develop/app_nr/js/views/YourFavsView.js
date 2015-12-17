@@ -4,7 +4,7 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager'),
-    Favorites =  require('../modules/favorites_helper');
+    FavoritesData = require('../modules/favorites_data');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -142,36 +142,16 @@ var YourFavsView = Backbone.View.extend({
         // found already in the collection
         if (article) {
             articleData = article.attributes.allMeta;
+            favsData = FavoritesData.input(articleData);
 
             this.showPopover($target, "Item Added");
 
-            favsData.pname = articleData.pname;
-            favsData.pageNumber = articleData.pageNumber;
-            favsData.abstract = articleData.abstract;
-            favsData.title = articleData.title;
-            favsData.authorLastName = articleData.primaryAuthor.authorLastName;
-            favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
-            favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
-            favsData.ebookNode = articleData.ebookNode;
-            favsData.baseUrl = Norton.baseUrl;
-            favsData.id = articleData.id;
         } else {
             // this is triggered from page not in the collection
             articleData = this.articles.getCurrentPageDetail(id);
-            // This pname id thing is confusing
-            favsData.pname = articleData.id;
-            favsData.pageNumber = articleData.attributes.data.pageNumber;
-            favsData.abstract = articleData.attributes.data.excerpt;
-            favsData.title = articleData.attributes.data.title;
-            favsData.authorLastName = articleData.attributes.data.author[0].authorLastName;
-            favsData.authorFirstName = articleData.attributes.data.author[0].authorFirstName;
-            favsData.authorMiddleName = articleData.attributes.data.author[0].authorMiddleName;
-            favsData.ebookNode = articleData.attributes.data.ebookLink;
-            favsData.baseUrl = Norton.baseUrl;
-            favsData.id = articleData.attributes.data.id;
-
+            favsData = FavoritesData.inputCurrentPage(articleData);
         }
-        this.collection.add(new NortonApp.Models.YourFavs(favsData));
+        this.collection.add(favsData);
 
         this.saveLocalStorage();
         this.updateCount();
