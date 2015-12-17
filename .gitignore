@@ -10,6 +10,7 @@ iig_prod
 nr_dev
 nr_qa
 nr_prod
+develop/app_nr/js/dynamic/constants.js
 
 # dependencies
 node_modules

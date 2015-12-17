@@ -66,6 +66,7 @@ var gulp = require('gulp'),
         sprite: '/sprite/',
         svg_sprite: '/images/svg_sprite.svg',
         prod: '_prod',
+        qa: '_qa',
         dev: '_dev'
     };
 
@@ -574,7 +575,7 @@ gulp.task('upload:s3', [], function() {
         return gulp.src([
 
             deploy + site + settings.prod + '/**',
-            '!' + deploy + site + settings.prod + '/index.html',
+            '!' + deploy + site + settings.prod + '/*.html',
             '!' + deploy + site + settings.prod + settings.fonts + '**',
             '!' + deploy + site + settings.prod + settings.json + '**',
             '!' + deploy + site + settings.prod + settings.php + '**',
@@ -590,7 +591,7 @@ gulp.task('upload:s3', [], function() {
 
     gulp.src([
         deploy + site + settings.prod + '/**',
-        '!' + deploy + site + settings.prod + '/index.html',
+        '!' + deploy + site + settings.prod + '/*.html',
         '!' + deploy + site + settings.prod + settings.json + '**',
         '!' + deploy + site + settings.prod + settings.php + '**',
         '!' + deploy + site + settings.prod + settings.images + 'intro_bg.jpg',
