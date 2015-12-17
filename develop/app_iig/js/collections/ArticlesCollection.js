@@ -11,6 +11,8 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
+    currentPage: null,
+    
     initialize: function() {
     },
     parse: function(res) {
@@ -104,6 +106,21 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return model;
+    },
+
+    saveCurrentPageDetail: function (model) {
+        'use strict';
+        if (model) {
+            this.currentPage = model;
+        }
+    },
+
+    getCurrentPageDetail: function (id) {
+        'use strict';
+        if (this.currentPage.get('id') === id) {
+            return this.currentPage;
+        }
+        return null;
     }
 });
 

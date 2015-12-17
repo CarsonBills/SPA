@@ -66,7 +66,13 @@ var YourFavsView = Backbone.View.extend({
         if (hasContent) {
             _.each(this.collection.models, function(article) {
                 tmpObj = $.extend({}, article.toJSON());
-                tmpObj.downloads.src = DetailsParser.parseUrl(tmpObj.downloads.src);
+                if (tmpObj.downloads.src) {
+                    tmpObj.downloads.src = DetailsParser.parseUrl(tmpObj.downloads.src);
+                }
+
+                tmpObj.baseUrl = Norton.baseUrl;
+
+                console.log(tmpObj)
 
                 template = that.templateItem(tmpObj);
                 $div.find(that.body).append(template);
@@ -148,7 +154,7 @@ var YourFavsView = Backbone.View.extend({
             id = $target.data('item-id'),
             favs,
             article = this.articles.getModelByAttribute("pname", id),
-            articleData = article.attributes.allMeta,
+            articleData,
             model = this.collection.getModelByAttribute("pname", id);
 
         // Don't add again
@@ -157,10 +163,16 @@ var YourFavsView = Backbone.View.extend({
             this.removeItem(model);
             return false;
         }
+        if (article) {
+            articleData = article.attributes.allMeta;
+            favs = FavoritesData.input(articleData);
+        } else {
+            articleData = this.articles.getCurrentPageDetail(id);
+            favs = FavoritesData.input(articleData);
+        }
 
         this.showPopover($target, "Item Added");
 
-        favs = FavoritesData.input(articleData);
         this.collection.add(favs);
 
         this.updateCount();

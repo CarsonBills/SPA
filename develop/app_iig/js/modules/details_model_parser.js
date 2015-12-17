@@ -44,7 +44,7 @@ var Backbone = require('backbone'),
 
         process = function(raw) {
             // download aset
-            raw.data.downloadAsset.src = parseUrl(raw.data.downloadAsset.src);
+            //raw.data.downloadAsset.src = parseUrl(raw.data.downloadAsset.src);
 
             // blocks
             _.each(raw.data.sections, function (section) {

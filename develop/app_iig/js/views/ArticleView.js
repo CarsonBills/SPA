@@ -183,18 +183,18 @@ var ArticleView = Backbone.View.extend({
     showDetail: function (id) {
         'use strict';
 
-        var model = this.collection.getModelByAttribute('pname', id),
+        var that = this,
+            model = this.collection.getModelByAttribute('pname', id),
+            faved = this.favorites.getModelByAttribute('pname', id), 
+            pageData,
             tagLabel = NortonApp.headerConfigItem.get('tagLabel');
+
+        faved = (faved === undefined) ? false: true;
 
         if (tagLabel === undefined || tagLabel === '') {
             tagLabel = this.TAG_LABEL;
         }
 
-        // TODO throw fallback when page cannot be found
-        /*if (typeof model === 'undefined') {
-            this.resolveToBase();
-            return false;
-        }*/
         if (this.pageView === null) {
             this.pageView = new NortonApp.Views.Page({
                 favorites: this.favorites,
@@ -206,16 +206,31 @@ var ArticleView = Backbone.View.extend({
             this.baseUrl = model.get('baseUrl');
 
             this.pageItem = new NortonApp.Models.Page({
-                faved: this.favorites.getModelByAttribute('pname', id),
+                faved: faved,
                 id: id,
                 prevId: model.get('prevId'),
                 nextId: model.get('nextId'),
                 tagLabel: tagLabel
             });
-
-            this.pageView.model = this.pageItem;
-            this.pageView.getPage();
+        } else {
+            this.pageItem = new NortonApp.Models.Page({
+                faved: faved,
+                id: id,
+                tagLabel: tagLabel
+            });
         }
+        
+        this.pageView.model = this.pageItem;
+        this.pageView.getPage().then(function(data) {
+            console.log(data)
+
+            if (model === undefined) {
+                pageData = jQuery.extend({}, data);
+
+                that.pageItem = new NortonApp.Models.Page(pageData);
+            }
+            that.collection.saveCurrentPageDetail(that.pageItem);
+        });
     },
 
     showHighlight: function (params) {
