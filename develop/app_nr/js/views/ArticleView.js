@@ -180,11 +180,6 @@ var ArticleView = Backbone.View.extend({
             faved = this.favorites.getModelByAttribute('pname', id), 
             pageData;
 
-        // TODO throw fallback when page cannot be found
-        /*if (typeof model === 'undefined') {
-            this.resolveToBase();
-            return false;
-        }*/
         if (this.pageView === null) {
             this.pageView = new NortonApp.Views.Page({
                 favorites: this.favorites,

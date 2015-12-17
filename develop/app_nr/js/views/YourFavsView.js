@@ -130,8 +130,7 @@ var YourFavsView = Backbone.View.extend({
             favsData = {},
             article = this.articles.getModelByAttribute("pname", id),
             articleData,
-            model = this.collection.getModelByAttribute("pname", id),
-            currentPage;
+            model = this.collection.getModelByAttribute("pname", id);
 
         // Don't add again
         if ( model !== undefined) {
@@ -158,18 +157,18 @@ var YourFavsView = Backbone.View.extend({
             favsData.id = articleData.id;
         } else {
             // this is triggered from page not in the collection
-            currentPage = this.articles.getCurrentPageDetail(id);
+            articleData = this.articles.getCurrentPageDetail(id);
             // This pname id thing is confusing
-            favsData.pname = currentPage.id;
-            favsData.pageNumber = currentPage.attributes.data.pageNumber;
-            favsData.abstract = currentPage.attributes.data.excerpt;
-            favsData.title = currentPage.attributes.data.title;
-            favsData.authorLastName = currentPage.attributes.data.author[0].authorLastName;
-            favsData.authorFirstName = currentPage.attributes.data.author[0].authorFirstName;
-            favsData.authorMiddleName = currentPage.attributes.data.author[0].authorMiddleName;
-            favsData.ebookNode = currentPage.attributes.data.ebookLink;
+            favsData.pname = articleData.id;
+            favsData.pageNumber = articleData.attributes.data.pageNumber;
+            favsData.abstract = articleData.attributes.data.excerpt;
+            favsData.title = articleData.attributes.data.title;
+            favsData.authorLastName = articleData.attributes.data.author[0].authorLastName;
+            favsData.authorFirstName = articleData.attributes.data.author[0].authorFirstName;
+            favsData.authorMiddleName = articleData.attributes.data.author[0].authorMiddleName;
+            favsData.ebookNode = articleData.attributes.data.ebookLink;
             favsData.baseUrl = Norton.baseUrl;
-            favsData.id = currentPage.attributes.data.id;
+            favsData.id = articleData.attributes.data.id;
 
         }
         this.collection.add(new NortonApp.Models.YourFavs(favsData));
