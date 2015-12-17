@@ -1,0 +1,73 @@
+** May need to use sudo with all commands depending on owner of /usr/local directory
+
+npm install --save-dev backbone {underscore.js is a dependency so it's also installed}
+npm install --save-dev browserify-css
+npm install --save-dev handlebars
+npm install --save-dev jquery jquery-ui
+npm install --save-dev jquery-ui-touch-punch@0.2.3
+npm install --save-dev hbsfy
+npm install --save-dev fastclick
+npm install --save-dev booststrap
+npm install --save-dev magnific-popup
+npm install --save-dev uglifyify
+
+browserify -t hbsfy -t [browserify-css --minify=true] app.js > bundle.js
+
+
+Not used
+//npm install --save-dev browserify-fs // so we can use the node.js filesystem commands
+//npm install jquery@2.1.0 --save-dev
+
+
+
+to include several transforms in same browserify command; also to use options on transform command
+
+browserify -t hbsfy -t [browserify-css --minify=true] app.js > bundle.js
+
+browserify -t [ hbsfy --precompilerOptions [ --knownHelpersOnly --knownHelpers [ --trimString ] ] ] -t [browserify-css --minify=true] app.js > bundle.js
+
+/**
+THis is for use with Yeoman generator - which installs everything using bower, instead of npm -
+which then becomes problematic to use browserify to "compile" all js into one bundle.js file.
+So maybe we won't use Yeoman
+*/
+
+Yeoman backbone generator
+npm install -g yo bower grunt-cli gulp
+npm install -g generator-webapp
+yo - yeoman is a scaffolder for web apps
+
+
+https://github.com/yeoman/generator-backbone
+sudo npm install -g generator-backbone
+create dir and cd into it then run "yo backbone" - creates "app" directory OR pass in folder name
+THEN:
+yo backbone:model app
+yo backbone:collection app
+yo backbone:router app
+yo backbone:view app
+bower install --save handlebars
+bower install jqueryui-touch-punch
+
+
+
+
+From Searchandizer:
+
+Query for entries
+===================
+
+Total books meeting query
+Number returned
+Page Number
+
+Each entry:
+	ID
+	Title
+	Media type
+	First Name
+	Last Name
+	Extract
+	Media URL
+	Ebook URL
+	??? List of Filters applicable to entry ???

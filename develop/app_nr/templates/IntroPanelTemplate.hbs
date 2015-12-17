@@ -1,0 +1,18 @@
+<div class="modal-container">
+    <div class="modal-body">
+    	<div class="border">
+	        <div class="modal-title">{{displayTitle}}</div>
+	        <div class="modal-copy">{{{introPanelCopy}}}</div>
+	        <img class="intro-bg" src="{{introPanelImage.src}}" />
+	        <div class="modal-links">
+	        {{#each introPanelCalloutAction}}
+		        {{#HBMatchWord actionText "Give Me a Tour"}}
+	            	<a class="tour" href="#"><button data-type="reader-button">{{actionText}}</button></a>
+			    {{else}}
+	            	<a href="#" data-dismiss="modal"><button data-type="reader-button">{{actionText}}</button></a>
+			    {{/HBMatchWord}}
+	        {{/each}}
+	        </div>
+        </div>
+    </div>
+</div>

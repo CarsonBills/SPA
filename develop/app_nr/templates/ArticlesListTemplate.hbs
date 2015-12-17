@@ -1,0 +1,12 @@
+<li class="list-format" data-id={{allMeta.id}} data-item-id='{{allMeta.pname}}'>
+    <a class="details" href="{{baseUrl}}#/page/{{allMeta.pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
+        <div class="list-author">{{{HBAuthors allMeta.authors}}}</div>
+        <div class="list-title">{{{allMeta.title}}}</div>
+    </a>
+    <div class="ebook">
+        {{#if allMeta.ebookNode}}
+            <a class="ebook-lnk" href="{{allMeta.ebookNode}}" target="_new">View Ebook</a>
+        {{/if}}
+    </div>
+    <div class="savelist-lnk glyphicon {{HBFaved faved 'glyphicon-minus' 'glyphicon-plus'}}" alt="Add to My Items" data-item-id='{{allMeta.pname}}'></div>
+</li>

@@ -3,15 +3,28 @@
 # compiled output
 /dist
 /tmp
+gulptmp
+iig_dev
+iig_qa
+iig_prod
+nr_dev
+nr_qa
+nr_prod
 
 # dependencies
-/node_modules
-/bower_components
+node_modules
+bower_components
 
 # misc
+.gitignore.swp
+.idea
+.DS_Store
 /.sass-cache
 /connect.lock
 /coverage/*
 /libpeerconnection.log
 npm-debug.log
 testem.log
+
+# vagrant
+.vagrant

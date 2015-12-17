@@ -1,0 +1,12 @@
+        {{!-- Page Details Sections & Blocks --}}
+        <div data-type="section">
+          {{#HBEach data.sections}}
+            <div class="section">
+                {{#HBEach this.blocks}}
+                    <div data-type="block">
+                        {{{HBBlocks this}}}
+                    </div>
+                {{/HBEach}}
+            </div>
+          {{/HBEach}}
+        </div>

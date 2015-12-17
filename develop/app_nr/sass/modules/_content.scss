@@ -1,0 +1,498 @@
+body {
+    background: url(/images/article_pattern.jpg) repeat;
+}
+
+#container {
+}
+.container {
+    padding: 0;
+    margin: 0;
+    padding-bottom: $top-bar-height;
+    height: 120vh;
+
+    // override popover style
+    .popover {
+        border-radius: 0;
+        //animation: popover-glow 0.5s ease-out 0s alternate 2;
+        //animation-fill-mode: backwards;
+        min-width: 110px;
+        z-index: 1000;
+    }
+}
+#filters {
+    @include locked();
+
+    position: absolute;
+    background-color: #fff;
+    width: $filter-width;
+    float: left;
+    top: 268px;
+    left: 0;
+    z-index: 999;
+    @include toggle-offscreen($property: left);
+    @include locked($position: fixed, $top:101px);
+    @include opensans($size: 1.4rem);
+    color: #484848;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem;
+
+    height: 100vh;
+    overflow-y: auto;
+
+    &.off-screen {
+        left: -$filter-width;
+    }
+
+    .filters-selected {
+        position: relative;
+        margin-bottom: 2rem;
+        .remove-all-filters {
+            position: relative;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .sel-filter-cat {
+            margin: 0 0 1rem 2rem; 
+        }
+        .selected-filters {
+            position: relative;
+            margin: 0 0 1rem 2rem;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+
+        .clear-filter {
+            font-weight: 600;
+        }
+    }
+
+    /* .filter-item {
+        //overflow: hidden;
+        //cursor: pointer;
+        //margin-bottom: 0.5rem;
+        //max-height: 200px;
+        //transition: all 0.4s ease-in-out;
+
+        &.collapsed {
+            //max-height: 36px;
+            //transition: none;
+            .glyphicon {
+                transition: all 0.2s ease-in-out;
+                transform: rotate(90deg);
+            }
+        }
+    } */
+
+    .filter-item-cat {
+        position:relative;
+        @include opensans($size: 1.6rem, $weight: 600);
+        color:  $reader-blue;
+        background-color: #fff;
+        margin: 1rem 0;
+
+        &.collapsed {
+            .glyphicon {
+                transition: all 0.2s ease-in-out;
+                transform: rotate(-90deg);
+            }
+        }
+
+        .glyphicon {
+            position: absolute;
+            right: 0;
+            color: #484848;
+            font-size: 1rem;
+            line-height: 1.4;
+            transform: rotate(0deg);
+        }
+    }
+    .filter-item-name {
+        position:relative;
+
+        &:not(:last-child) {
+            margin-bottom: 0.7rem;
+        }
+
+        .filter-name {
+            margin-left: 0.7rem;
+            @include ellipsis();
+        }
+        .count {
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    .filter-greyed-out {
+        opacity:0.5;
+    }
+
+    .sel-filter-cat {
+        font-weight: bold;
+        margin: 0 0 .5rem 1rem;
+    }
+}
+
+/* CARDS STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* content card diemnstion */
+.content {
+    position: relative;
+    padding-top: $top-bar-height;
+    margin-left: $filter-width;
+    width: calc(100% - #{$filter-width});
+    @include locked($top: $top-bar-height);
+    @include toggle-fullscreen();
+
+}
+
+ul.card {
+    position: relative;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 2rem;
+    //margin: 0 auto 3rem;
+    //max-width: $max-width;
+    $card-gutter: 5px;
+    transition: all 1s ease-out;
+
+    li.grid-format {
+        position: relative;
+        margin: 1.8rem 2rem;
+        padding: 1rem;
+        vertical-align: top;
+        text-align: left;
+        width: $card-width;
+        height: $card-height;
+        background: #fff;
+        @include inner-border();
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            @include inner-border($spread: 10px);
+
+            .card-info {
+                opacity: 0.8;
+            }
+        }
+
+        a.details {
+            width: $card-width;
+            color: #777;
+            transition: 0.1s all;
+            text-decoration: none;
+
+            div {
+                margin: 5px 0 0;
+                padding: 5px $card-gutter;
+                font-size: 2rem;
+
+                &.list-author {
+                    @include opensans($size: 1.8rem, $weight: 600);
+                }
+
+                &.list-title {
+                    color: $reader-blue;
+                    margin: 0;
+                    @include athelas($size: 1.8rem, $weight: 600, $style: italic, $height: 1.1);
+                }
+
+            }
+
+            p {
+                margin: 0 0 12px;
+                padding: 2px $card-gutter;
+                /* overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap; */
+
+                .card-info {
+                    width: 100%;
+                    background-color: white;
+                    display: block;
+                    position: relative;
+                    height: 35px;
+                    opacity: 0.5;
+                }
+            }
+        }
+
+        .cardlinks {
+            position: absolute;
+            bottom: 1.6rem;
+            margin: 0;
+            padding: 0 $card-gutter;
+            width: $card-width - 20px;
+            display: block;
+
+            .savelist-lnk {
+                float: left;
+                font-size: 1.5rem;
+                color: $reader-blue;
+                cursor:pointer;
+            }
+
+            .ebook-lnk {
+                float: right;
+                line-height: 3;
+                @include svg-sprite(ebook_icon);
+                text-indent: -9999px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .listview-head {
+        div {
+            font-weight: 600;
+            color: #666;
+        }
+    }
+
+    .list-format,
+    .listview-head {
+
+        display: flex;
+        align-items: center;
+        text-align: left;
+        margin: 0 auto;
+        width: 95%;
+
+        div {
+            padding: 0 1rem;
+            display: inline-block;
+            &.list-author {
+                flex-grow: 20;
+            }
+
+            &.list-title {
+                flex-grow: 43;
+            }
+
+            &.ebook {
+                flex-grow: 1;
+            }
+
+            &.savelist {
+                flex-grow: 1;
+            }
+        }
+    }
+    li.list-format {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        width: 95%;
+        margin: 0 auto;
+        padding: 0;
+        transition: all 1s ease;
+
+        div {
+            padding: 0 1rem;
+        }
+        a {
+            color: transparent;
+            width: 87%;
+
+            display: flex;
+            &.details {
+                div {
+                    display: inline-block;
+                }
+            }
+            .list-author {
+                flex-flow: 2;
+                width: 31.5%;
+                color: #6f6f6f;
+            }
+
+            .list-title {
+                flex-flow: 3;
+                width: 60%;
+                color: $reader-blue;
+                @include athelas($size: 1.8rem, $style: italic, $weight: 400);
+                //@include ellipsis();
+            }
+        }
+
+        .ebook {
+            text-align: center;
+            width: 50px;
+            .ebook-lnk {
+                @include svg-sprite(ebook_icon);
+                text-indent: -999px;
+                display: block;
+                overflow: hidden;
+            }
+        }
+
+        .savelist-lnk {
+            width: 90px;
+            text-align: center;
+            color: $reader-blue;
+            font-size: 1.5rem;
+            cursor: pointer;
+            top: 0;
+        }
+    }
+
+    .list-format {
+        @include opensans($size: 1.4rem, $weight: 600);
+        min-height: 45px;
+        background-color: #fff;
+        display: block;
+        border-bottom: 1px solid #9e9e9a;
+        @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
+
+        &:hover {
+            @include one-sided-hover();
+        }
+    }
+
+    .listview-head {
+        @include opensans($size: 1.2rem, $weight: 300);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+}
+
+// loadmore button
+.load-more-section {
+    position: relative;
+    width: 240px;
+    height: 50px;
+    margin: 0 auto 3rem;
+    transition: all 1s;
+}
+#load-more {
+    position: relative;
+    height: 100%;
+    padding: 0 4rem;
+    font-size: 1.2em;
+    font-weight: 100;
+    letter-spacing: 1px;
+    background-color: #fcfcfc;
+}
+/* details page and overall loading graphic*/
+.loading-container {
+    @include vertical-align($top: 40%);
+    text-align: center;
+    @include opensans($size: 1.4rem);
+}
+
+.loading-graphic {
+    position: relative;
+    @include svg-sprite(loading_spinner);
+
+    .anim & {
+        animation: rotate-360 0.8s infinite steps(12, end);
+    }
+}
+
+// used to prevent clicking when loading
+.tour-bg, // tag along tour background
+.catch-all {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    color: #fff;
+
+    &.hide {
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    .loading-container {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 200px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+    .loading-graphic {
+        margin-top: 2rem;
+    }
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+    #filters {
+        top: 269px;
+    }
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    li.list-format {
+        a {
+
+            .list-author {
+                line-height: 1.3;
+            }
+            .list-title {
+                @include ellipsis();
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: $mobile-width) {
+    #filters {
+        top: 250px;
+    }
+    ul.card {
+        .listview-head {
+            div {
+                &.author {
+                    flex-grow: 1;
+                }
+                &.list-title {
+                    flex-grow: 8;
+                }
+                &.ebook,
+                &.savelist {
+                    display: none;
+                }
+            }
+
+        }
+        li.list-format {
+            .ebook,
+            .savelist {
+                width: 15px;
+            }
+
+            a {
+                display: block;
+                width: 100%;
+                .author {
+                    line-height: 1.2;
+                    max-width: 80px;
+                }
+
+                .list-title {
+                    max-width: 170px;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: $mobile-width-sm) {
+    #filters {
+        top: 210px;
+    }
+}
+

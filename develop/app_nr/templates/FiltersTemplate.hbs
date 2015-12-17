@@ -1,0 +1,23 @@
+{{#if cat_display}}
+    <div role="button" data-target="#{{name}}" data-toggle="collapse" data-parent="#filters" class="filter-item-cat {{name}}">{{cat_display}}
+    <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+
+    <div class="filter-item collapse" role="tab-panel" id="{{name}}">
+    {{#each refinements}}
+        {{#if value}}
+            {{#if count}}
+                    <div class="filter-item-name">
+                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{value}}' data-filter-cat="{{cat}}"  data-filter-cat-display="{{cat_display}}" {{checked}}/></a>
+                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                    </div>
+            {{else}}
+                    <div class="filter-item-name filter-greyed-out">
+                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{cat}}"/>
+                        <span class="filter-name">{{value}}</span> <span class="count">{{count}}</span>
+                    </div>
+            {{/if}}
+        {{/if}}
+    {{/each}}
+    </div>
+{{/if}}

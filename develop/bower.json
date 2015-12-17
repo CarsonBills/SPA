@@ -1,0 +1,31 @@
+{
+  "name": "norton_reader",
+  "version": "0.0.0",
+  "authors": [
+    "Hon Chih Chen <honchih@biglaker.com>"
+  ],
+  "description": "Norton Reader",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.3",
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
+    "fastclick": "~1.0.6",
+    "foundation": "~5.5.2",
+    "gsap": "~1.18.0",
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4",
+    "jquery-ui-touch-punch": "*",
+    "modernizr": "~3.0.0",
+    "respond": "~1.4.2",
+    "skeleton-sass": "~2.5.1",
+    "underscore": "~1.8.3"
+  },
+  "devDependencies": {}
+}

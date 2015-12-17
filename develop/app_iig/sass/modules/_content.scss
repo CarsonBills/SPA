@@ -1,0 +1,458 @@
+body {
+    background-color: $bg-color;
+    @include opensans($size: 1.5rem, $height: 1.6);
+    color: #222;
+    min-height: 120vh;
+}
+
+#container {
+}
+.container {
+    padding: 0;
+    margin: 0;
+    padding-bottom: $top-bar-height;
+    height: 120vh;
+
+    // override popover style
+    .popover {
+        border-radius: 0;
+        //animation: popover-glow 0.5s ease-out 0s alternate 2;
+        //animation-fill-mode: backwards;
+        min-width: 110px;
+    }
+}
+
+/* hero */
+div[data-type="iig-hero"] {
+    .hero-container {
+        max-width: 1090px;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;    
+    }
+}
+
+/* filters */
+#filters {
+    @include locked();
+
+    position: absolute;
+    background-color: #fff;
+    width: $filter-width;
+    float: left;
+    top: 430px;
+    left: 0;
+    z-index: 999;
+    @include toggle-offscreen($property: left);
+    @include locked($position: fixed, $top:101px);
+    @include opensans($size: 1.4rem);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem;
+
+    height: 100vh;
+    overflow-y: auto;
+
+    &.off-screen {
+        left: -$filter-width;
+    }
+
+    .filters-selected {
+        position: relative;
+        .remove-all-filters {
+            position: relative;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .selected-filters {
+            position: relative;
+            margin: 0 0 1rem 2rem;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+
+        .active-filter {
+            font-size: 1.2rem;
+            colo: red;
+        }
+
+        .clear-filter {
+            font-weight: 600;
+        }
+    }
+
+    .filter-item-cat {
+        position:relative;
+        @include opensans($size: 1.6rem, $weight: 600);
+        color:  $iig-link;
+        background-color: #fff;
+        margin: 1.5rem 0;
+
+        &.collapsed {
+            .glyphicon {
+                transition: all 0.2s ease-in-out;
+                transform: rotate(-90deg);
+            }
+        }
+
+        .glyphicon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: $iig-link;
+            font-size: 1.3rem;
+            line-height: 1.6rem;
+            transform: rotate(0deg);
+        }
+    }
+
+    .filter-item-name {
+        position:relative;
+
+        &:not(:last-child) {
+            margin-bottom: 0.7rem;
+        }
+
+        a {
+            display: inline-block;
+        }
+
+        .filter-name {
+            display: inline-block;
+            width: 200px;
+            font-size: 1.1rem;
+            margin-left: 0.7rem;
+            @include ellipsis();
+        }
+        .count {
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    .filter-item-group {
+        margin-left: 1rem;
+        margin-bottom: 0.7rem;
+
+        .filter-item-name {
+            margin-bottom: 0.2rem;
+        }
+    }
+
+    .filter-greyed-out {
+        color: $grey;
+        line-height: 1.3;
+    }
+
+    .sel-filter-cat {
+        font-weight: bold;
+        margin: 0 0 .5rem 1rem;
+    }
+}
+
+/* CARDS STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* content card diemnstion */
+.content {
+    position: relative;
+    padding-top: $top-bar-height;
+    margin-left: $filter-width;
+    width: calc(100% - #{$filter-width});
+    @include locked($top: $top-bar-height);
+    @include toggle-fullscreen();
+}
+
+ul.card {
+    
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1090px;
+    width: 100%;
+    margin-bottom: 2rem;
+    $card-gutter: 1rem;
+    transition: all 1s ease-out;
+
+    li.grid-format {
+        position: relative;
+        margin: 1.8rem 2rem;
+        padding: 1rem;
+        vertical-align: top;
+        text-align: left;
+        width: $card-width;
+        height: $card-height;
+        background: #fff;
+        @include grid-shadow();
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            @include grid-shadow($expand: 8px, $col: rgba(0, 0, 0, 0.6));
+
+            .card-info {
+                opacity: 0.8;
+            }
+        }
+
+        .content-type {
+            @extend %content-type;
+            float: left;
+        }
+
+        .content-abstract,
+        .content-title {
+            margin: 5px 0 0;
+            padding: 5px $card-gutter;
+            font-size: 2rem;
+            @include opensans($size: 1.4rem);
+            a {
+                color: #777;
+                text-decoration: none;
+                background-color: #fff;
+            }
+        }
+
+        .content-title {
+            font-weight: 700;
+            width: 250px;
+            line-height: 1.8rem;
+            float: left;
+        }
+
+        .content-abstract {
+            font-size: 1.3rem;
+            line-height: 2.1rem;
+            padding: $card-gutter;
+            @include clearfix();
+        }
+
+        .content-tags {
+            position: absolute;
+            padding: $card-gutter;
+            padding-right: 45px;
+            font-size: 1.1rem;
+            color: #7f7f7f;
+            bottom: 30px;
+        }
+
+        .savelist-lnk {
+            position: absolute;
+            font-size: 2.5rem;
+            color: $iig-link;
+            cursor:pointer;
+            padding: $card-gutter;
+            bottom: 0;
+            right: 10px;
+            top: inherit;
+        }
+    }
+
+    .listview-head {
+        div {
+            font-weight: 600;
+            color: #666;
+        }
+    }
+
+    .list-format,
+    .listview-head {
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        margin: 0 auto;
+        width: 95%;
+
+        div {
+            padding: 0 1rem;
+            display: inline-block;
+            &.content-type {
+            }
+
+            &.content-title {
+                width: 40%;
+            }
+
+            &.content-tags {
+                width: 40%;
+            }
+
+            &.savelist,
+            &.savelist-lnk {
+                width: $list-height;
+            }
+        }
+    }
+    li.list-format {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        min-height: 50px;
+        padding: 0;
+        transition: all 1s ease;
+
+        .content-type {
+            @extend %content-type;
+        }
+
+        .content-title {
+            display: block;
+            color: transparent;
+            @include ellipsis();
+
+            & > a {
+                color: $iig-link;
+                @include athelas($size: 1.8rem, $style: italic, $weight: 400);
+                @include ellipsis();
+                display: block;
+            }
+        }
+
+        .content-tags {
+            color: #7f7f7f;
+            text-align: left;
+            padding: 1rem;
+            @include opensans($size: 1.1rem, $height: 1.3);
+        }
+
+        .savelist-lnk {
+            @include vertical-align(absolute);
+            position: absolute;
+            right: 0;
+            text-align: center;
+            color: $iig-link;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+
+    .list-format {
+        @include opensans($size: 1.4rem, $weight: 600);
+        min-height: 45px;
+        background-color: #fff;
+        display: block;
+        border-bottom: 1px solid #9e9e9a;
+        @include one-sided-shadow($offset-x: 0, $offset-y: 1px, $blur: 1px, $spread: 0px);
+
+        &:hover {
+            @include one-sided-hover();
+        }
+    }
+
+    .listview-head {
+        @include opensans($size: 1.2rem, $weight: 300);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+}
+
+// loadmore button
+.load-more-section {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    margin: 0 auto 3rem;
+    transition: all 1s;
+}
+
+// spinner within load more button
+.loading-spinner {
+    position: absolute;
+    display: none;
+    transform: $loading-transform;
+    z-index: 99;
+    @include svg-sprite(loading_spinner);
+
+    .anim & {
+        display: inline-block;
+        animation: lm-rotate-360 0.8s infinite steps(12, end);
+    }
+}
+#load-more {
+    position: relative;
+    height: 100%;
+    width: inherit;
+    font-size: 1.2em;
+    font-weight: 100;
+    letter-spacing: 1px;
+    background-color: #fcfcfc;
+
+    .anim & {
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+        padding: 0 4rem 0 7rem;
+    }
+}
+/* details page and overall loading graphic*/
+.loading-container {
+    @include vertical-align($top: 40%);
+    text-align: center;
+    @include opensans($size: 1.4rem);
+}
+
+.loading-graphic {
+    position: relative;
+    @include svg-sprite(loading_spinner);
+
+    .anim & {
+        animation: rotate-360 0.8s infinite steps(12, end);
+    }
+}
+
+// used to prevent clicking when loading
+.catch-all {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    color: #fff;
+
+    &.hide {
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    .loading-container {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 200px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+    .loading-graphic {
+        margin-top: 2rem;
+    }
+}
+
+@media only screen and (max-width: $tablet-portait-width) {
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+
+@media only screen and (max-width: $mobile-width) {
+    #filters {
+        top: 412px;
+    }
+    ul.card {
+        .list-format {
+            .savelist.lnk {
+                width: 15px;
+            }
+        }
+    }
+}
+
