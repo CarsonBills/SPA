@@ -4,6 +4,7 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager'),
+    Favorites = require('../modules/favorites_helper'),
     FavoritesData = require('../modules/favorites_data');
 
 var YourFavsView = Backbone.View.extend({
