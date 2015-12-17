@@ -63,17 +63,18 @@ var ArticleView = Backbone.View.extend({
         var showGrid = this.collection.showGrid(),
             articleTemplate,
             $articles = this.$(this.container),
-            article;
-
+            article,
+            fullVersion = (Norton.version === "full");
 
         $articles.empty();
 
         if (!showGrid) {
-            $articles.append(this.templateListHead);
+            $articles.append(this.templateListHead({fullVersion: fullVersion}));
         }
 
         this.collection.each(function(record) {
             article = record.toJSON();
+            article.fullVersion = fullVersion;
             article.faved = this.isfaved(article.allMeta.pname);
             if (showGrid) {
                 articleTemplate = this.templateGrid(article);

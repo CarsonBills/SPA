@@ -8,10 +8,15 @@ var Backbone = require('backbone'),
 	fastClick = require('fastclick'),
 	jQuery_UI = require('jquery-ui'),
     Handlebars = require('handlebars/runtime'),
-    hb_helpers = require('./hb_helpers/handlebars_helpers'),
 	bootstrap = require('bootstrap-sass'),
 	jQuery_UI_Touch = require('jquery-ui-touch-punch'),
 	_ = require('underscore'),
+
+    
+    // Handlebars helpers and blocks are intialized here
+    hb_helpers = require('./hb_helpers/handlebars_helpers'),
+    hb_partials = require('./hb_helpers/handlebars_partials'),
+    // End Handlebars initialization
 
 	// Settings
 	namespace = require('./modules/namespace');

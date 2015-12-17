@@ -90,5 +90,10 @@ module.exports = (function() {
     Handlebars.registerHelper('HBPageLinkWithPname', function(url, pname) {
         return url + "#/page/" + pname;
     });
+    Handlebars.registerHelper('HBFullVersion', function(bool, options) {
+        if (bool) {
+            return options.fn(this);
+        }
+    });
 
 })();

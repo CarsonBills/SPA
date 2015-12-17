@@ -17,6 +17,7 @@ var HeaderConfigView = Backbone.View.extend({
             headerConfigTemplate,
             context = this.model.toJSON();
 
+
         context.baseUrl = Norton.baseUrl;
 
         if (Norton.siteCode === 'nortonreader') {
@@ -26,6 +27,8 @@ var HeaderConfigView = Backbone.View.extend({
         }
         this.$el.append(headerConfigTemplate);
 
+        // toggle full/short
+        $('html').addClass(Norton.version);
         // insert background image url (full/short are different)
         if (img) {
             this.$('.header-bg').css('background', 'url("' + img + '") top/cover no-repeat');
