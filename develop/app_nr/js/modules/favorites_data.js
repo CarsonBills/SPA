@@ -35,7 +35,7 @@ var Backbone = require('backbone'),
                     ebookNode : data.ebookNode,
                     baseUrl : Norton.baseUrl,
                     id : data.id
-                }
+                };
                 return new NortonApp.Models.YourFavs(favs);
             },
 
@@ -53,7 +53,7 @@ var Backbone = require('backbone'),
                     ebookNode : articleData.attributes.data.ebookLink,
                     baseUrl : Norton.baseUrl,
                     id : articleData.attributes.data.id
-                }
+                };
                 favsData = new NortonApp.Models.YourFavs(favs);
 
                 return favsData;

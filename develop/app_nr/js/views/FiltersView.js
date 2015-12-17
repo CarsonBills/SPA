@@ -136,7 +136,7 @@ var FiltersView = Backbone.View.extend({
             _.each(checked, function (item) {
                 cat = $(item).data('filter-cat');
                 that.showActive('#' + cat);
-            })
+            });
         } else {
             // if nothing checked expand the first one
             this.showActive(this.ACTIVE);

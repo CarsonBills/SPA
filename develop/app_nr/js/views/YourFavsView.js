@@ -184,7 +184,7 @@ var YourFavsView = Backbone.View.extend({
             type: $target.data('type'),
             filename: $target.data('filename'),
             collection: this.collection
-        })
+        });
 
         return false;
     },
