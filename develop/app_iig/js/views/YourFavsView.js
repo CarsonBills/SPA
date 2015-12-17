@@ -72,8 +72,6 @@ var YourFavsView = Backbone.View.extend({
 
                 tmpObj.baseUrl = Norton.baseUrl;
 
-                console.log(tmpObj)
-
                 template = that.templateItem(tmpObj);
                 $div.find(that.body).append(template);
             });

@@ -57,10 +57,7 @@ var PageView = Backbone.View.extend({
         var $div = $('<div></div>');
 
         $div.html(this.template(this.model.toJSON()));
-
-        console.log('page detail')
-        console.log(this.model.toJSON())
-
+        
         ModalManager.show({
             content: $div,
             module: this.MODULE
