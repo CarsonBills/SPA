@@ -9,6 +9,8 @@ var Backbone = require('backbone'),
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
+    SAVE: 'save',
+    REMOVE: 'remove',
     templateHdr: require('../../templates/modules/YourFavsHeaderTemplate.hbs'),
     templateItem: require('../../templates/modules/YourFavsTemplate.hbs'),
     modal: '#modal-container',
@@ -144,6 +146,11 @@ var YourFavsView = Backbone.View.extend({
         }, 1000);
     },
 
+    updateButtonLabel: function ($target, action) {
+        var str = $target.data(action);
+        $target.find('.button-label').text(str);
+    },
+
     toggleYourFavs: function(e) {
         'use strict';
 
@@ -158,6 +165,7 @@ var YourFavsView = Backbone.View.extend({
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
+            this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
             return false;
         }
@@ -171,6 +179,7 @@ var YourFavsView = Backbone.View.extend({
         favs = FavoritesData.input(articleData);
 
         this.collection.add(favs);
+        this.updateButtonLabel($target, this.REMOVE);
 
         this.updateCount();
         if (Norton.isLoggedIn) {

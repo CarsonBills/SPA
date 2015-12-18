@@ -124,7 +124,7 @@ var YourFavsView = Backbone.View.extend({
         }});
     },
 
-    checkButtonLabel: function ($target, action) {
+    updateButtonLabel: function ($target, action) {
         var str = $target.data(action);
         $target.find('.button-label').text(str);
     },
@@ -143,7 +143,7 @@ var YourFavsView = Backbone.View.extend({
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
-            this.checkButtonLabel($target, this.SAVE);
+            this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
             return false;
         }
@@ -165,7 +165,7 @@ var YourFavsView = Backbone.View.extend({
             favsData = FavoritesData.inputCurrentPage(articleData.get('data'));
         }
         this.collection.add(favsData);
-        this.checkButtonLabel($target, this.REMOVE);
+        this.updateButtonLabel($target, this.REMOVE);
 
         this.saveLocalStorage();
         this.updateCount();
