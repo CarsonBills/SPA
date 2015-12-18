@@ -52,7 +52,7 @@ var Backbone = require('backbone'),
                 }
 
                 var favs = {
-                    pname : data.id,
+                    pname : data.pname,
                     pageNumber : data.pageNumber,
                     abstract : data.excerpt,
                     title : data.title,
