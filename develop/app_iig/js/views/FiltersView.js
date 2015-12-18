@@ -82,6 +82,7 @@ var FiltersView = Backbone.View.extend({
 
     events: {
        "click .filter-item-cat" : "toggleItem",
+       "click .filter-item-name": "toggleSubCategory",
         "click .filter-checkbox": function(e) {
             'use strict';
 
@@ -138,6 +139,13 @@ var FiltersView = Backbone.View.extend({
             this.showActive(this.ACTIVE);
         }
             
+    },
+
+    toggleSubCategory: function (e) {
+        'use strict';
+        var $target = $(e.currentTarget).next();
+        $target.toggleClass('in');
+        return false;
     },
 
     collapseAll: function () {

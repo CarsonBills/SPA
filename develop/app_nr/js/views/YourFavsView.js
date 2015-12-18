@@ -150,6 +150,7 @@ var YourFavsView = Backbone.View.extend({
         } else {
             // this is triggered from page not in the collection
             articleData = this.articles.getCurrentPageDetail(id);
+            console.log(articleData)
             favsData = FavoritesData.inputCurrentPage(articleData);
         }
         this.collection.add(favsData);

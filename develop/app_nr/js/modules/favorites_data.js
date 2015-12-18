@@ -40,19 +40,20 @@ var Backbone = require('backbone'),
             },
 
             inputCurrentPage = function (data) {
+                console.log(data)
 
                 var favs = {
                     // This pname id thing is confusing
-                    pname : articleData.id,
-                    pageNumber : articleData.attributes.data.pageNumber,
-                    abstract : articleData.attributes.data.excerpt,
-                    title : articleData.attributes.data.title,
-                    authorLastName : articleData.attributes.data.author[0].authorLastName,
-                    authorFirstName : articleData.attributes.data.author[0].authorFirstName,
-                    authorMiddleName : articleData.attributes.data.author[0].authorMiddleName,
-                    ebookNode : articleData.attributes.data.ebookLink,
+                    pname : data.id,
+                    pageNumber : data.attributes.data.pageNumber,
+                    abstract : data.attributes.data.excerpt,
+                    title : data.attributes.data.title,
+                    authorLastName : data.attributes.data.author[0].authorLastName,
+                    authorFirstName : data.attributes.data.author[0].authorFirstName,
+                    authorMiddleName : data.attributes.data.author[0].authorMiddleName,
+                    ebookNode : data.attributes.data.ebookLink,
                     baseUrl : Norton.baseUrl,
-                    id : articleData.attributes.data.id
+                    id : data.attributes.data.id
                 };
                 favsData = new NortonApp.Models.YourFavs(favs);
 

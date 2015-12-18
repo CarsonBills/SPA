@@ -90,6 +90,7 @@ div[data-type="iig-hero"] {
         color:  $iig-link;
         background-color: #fff;
         margin: 1.5rem 0;
+        padding-left: 2rem;
 
         &.collapsed {
             .glyphicon {
@@ -101,7 +102,7 @@ div[data-type="iig-hero"] {
         .glyphicon {
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
             color: $iig-link;
             font-size: 1.3rem;
             line-height: 1.6rem;
@@ -111,23 +112,36 @@ div[data-type="iig-hero"] {
 
     .filter-item-name {
         position:relative;
+        font-size: 1.1rem;
+        padding: 0.5rem 0.2rem;
+        background-color: #eee;
+        cursor: pointer;
+
+        &:hover {
+            .filter-name {
+                text-decoration: underline;
+            }
+        }
 
         &:not(:last-child) {
-            margin-bottom: 0.7rem;
+            margin-bottom: 0;
         }
 
         a {
             display: inline-block;
         }
+        .filter-checkbox {
+            margin: 0;
+        }
 
-        .filter-name {
+        & > .filter-name {
             display: inline-block;
             width: 200px;
-            font-size: 1.1rem;
             margin-left: 0.7rem;
             @include ellipsis();
+
         }
-        .count {
+        & > .count {
             position: absolute;
             right: 0;
         }
