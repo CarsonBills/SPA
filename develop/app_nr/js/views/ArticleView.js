@@ -209,7 +209,7 @@ var ArticleView = Backbone.View.extend({
             if (model === undefined) {
                 pageData = jQuery.extend({}, data);
                 pageData.faved = faved;
-                pageData.id = id;
+                pageData.pname = id;
                 that.pageItem = new NortonApp.Models.Page(pageData);
             }
             that.collection.saveCurrentPageDetail(that.pageItem);

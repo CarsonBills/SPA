@@ -28,6 +28,13 @@ var Utils = {
     returnToBase: function () {
         "use strict";
         window.history.pushState(null,null,Norton.baseUrl);
+    },
+
+    stripHTML: function (markup) {
+        "use strict";
+        var html = document.createElement("div");
+        html.innerHTML = markup;
+        return html.textContent || html.innerText;
     }
 };
 

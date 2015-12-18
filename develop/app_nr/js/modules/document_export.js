@@ -18,7 +18,7 @@ var Backbone = require('backbone'),
                 data += (params.legend.join(separator) + '\n');
 
                 _.each(params.collection.models, function(article) {
-                    data += article.attributes.title + separator +
+                    data += Norton.Utils.stripHTML(article.attributes.title) + separator +
                     article.attributes.authorFirstName + ' ' + article.attributes.authorLastName + separator +
                     ' page ' + article.attributes.pageNumber + '\n';
                 });

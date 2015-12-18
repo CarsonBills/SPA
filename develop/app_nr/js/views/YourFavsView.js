@@ -143,15 +143,18 @@ var YourFavsView = Backbone.View.extend({
         // found already in the collection
         if (article) {
             articleData = article.attributes.allMeta;
-            favsData = FavoritesData.input(articleData);
+            favsData = FavoritesData.input({
+                data: articleData,
+                version: Norton.version
+            });
 
             this.showPopover($target, "Item Added");
 
         } else {
             // this is triggered from page not in the collection
             articleData = this.articles.getCurrentPageDetail(id);
-            console.log(articleData)
-            favsData = FavoritesData.inputCurrentPage(articleData);
+
+            favsData = FavoritesData.inputCurrentPage(articleData.get('data'));
         }
         this.collection.add(favsData);
 
