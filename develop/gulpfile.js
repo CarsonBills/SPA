@@ -80,7 +80,7 @@ function getHTMLAssets(path) {
         },
         js: {
             src: [
-                path + '/js/vendor/modernizr.js',
+                //path + '/js/vendor/modernizr.js',
                 path + '/js/bundle.min.js'],
             tpl: '<script src="%s"></script>'
         },
@@ -94,7 +94,7 @@ function getHTMLAssets(path) {
 function getVersion (version) {
     var result;
 
-    if (version === 'qa' || version === 'dev' || version === 'prod') {
+    if (version === 'qa' || version === 'prod') {
         result = '_' + version;
     } else {
         result = settings.dev;
@@ -108,16 +108,16 @@ function isProd() {
 }
 
 function isDev() {
-    return process.env.VERSION === 'dev';
+    return getVersion() === settings.dev;
 }
 
 var site = process.env.SITE || 'iig',
     version = getVersion(process.env.VERSION);
 
+
 gulp.task('echo', function () {
     console.log(getVersion(process.env.VERSION));
 });
-
 
 gulp.task('fileinclude', function () {
     var assets;
@@ -171,7 +171,7 @@ gulp.task('sass:develop', function () {
             message: 'site: ' + site + ' Sass:Develop done'
         }))
         .pipe($.size())
-        .pipe(gulpif(isDev(), $.livereload()))
+        .pipe($.livereload())
 });
 
 gulp.task('sass:production', function () {
@@ -357,9 +357,9 @@ gulp.task('customize:modernizr', function() {
             'prefixes',
             'hasEvent',
             'mq',
-            'testProp',
+            /*'testProp',
             'testStyles',
-            'setClasses',
+            'setClasses',*/
             'addTest',
             'html5printshiv'
         ],
