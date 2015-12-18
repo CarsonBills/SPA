@@ -80,7 +80,7 @@ function getHTMLAssets(path) {
         },
         js: {
             src: [
-                path + '/js/vendor/modernizr.js',
+                //path + '/js/vendor/modernizr.js',
                 path + '/js/bundle.min.js'],
             tpl: '<script src="%s"></script>'
         },
