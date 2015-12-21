@@ -201,9 +201,6 @@ Navigation.prototype = {
      * refFilters object built in buildnewFilters. When we find a match, update the refFilters count
      */
     compare: function (filteredNav) {
-        Logger.get("orig filters").error(this.refFilters);
-        Logger.get("new filters").error(filteredNav);
-
         // NOTE: If your object has functions, they won't be copied using this technique
         // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
         var originalNav = JSON.parse(JSON.stringify(this.refFilters)),
