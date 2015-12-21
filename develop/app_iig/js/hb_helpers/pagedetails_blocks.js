@@ -56,5 +56,12 @@ module.exports = (function() {
         "<a " + attrs.join(" ") + ">" + Handlebars.escapeExpression(text) + "</a>"
       );
     });
+    Handlebars.registerHelper('HBHasVideo', function(conditional, options) {
+        if(conditional) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+    });
 
 })();

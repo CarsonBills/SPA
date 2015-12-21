@@ -2,25 +2,8 @@
 	<h2>{{videoTitle}}</h2>
 	<div>{{HBHTMLContent transcript}}</div>
 	<div>{{HBHTMLContent blurb}}</div>
-	<div data-type="video-player" id="jp_container_1" class="jp-video jp-video-360p" role="application" aria-label="media player">
-		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-		<div class="jp-interface">
-			<div class="jp-controls">
-				<button class="jp-play" tabindex="0"><span class="glyphicon glyphicon-play"></span></button>
-				<button class="jp-pause" tabindex="0"><span class="glyphicon glyphicon-pause"></span></button>
-				<!--button class="jp-stop" tabindex="0"><span class="glyphicon glyphicon-stop"></span></button-->
-			</div>
-			<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-			<div class="jp-progress">
-				<div class="jp-seek-bar">
-					<div class="jp-play-bar"></div>
-				</div>
-			</div>
-			<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-			<button class="jp-mute" tabindex="0"><span class="glyphicon glyphicon-volume-down"></span></button>
-			<button class="jp-unmute" tabindex="0"><span class="glyphicon glyphicon-mute"></span></button>
-		</div>
-	</div>
+	
+	{{> HBPageVideoPLayer}}
 
 	<script>
 	{{> HBPageJplayer}}

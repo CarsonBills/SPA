@@ -1,3 +1,10 @@
-        {{#HBNotEmpty data.headerImage}}
-        <img class="header-img" src="{{data.headerImage}}" />
-        {{/HBNotEmpty}}
+        {{#HBHasVideo data.headerImage.videoSrc}}
+	        {{> HBPageVideoPLayer}}
+
+			<script>
+			{{> HBPageJplayer}}
+			</script>
+
+		{{else HBHasVideo data.headerImage.src}}
+        	<img class="header-img" src="{{data.headerImage.src}}" />
+        {{/HBHasVideo}}

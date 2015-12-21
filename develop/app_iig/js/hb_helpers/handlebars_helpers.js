@@ -110,5 +110,8 @@ module.exports = (function() {
             return options.fn(this);
         }
     });
+    Handlebars.registerHelper('HBFilterChecked', function(checked) {
+        return (checked !== '') ? ' in' : '';
+    });   
 
 })();

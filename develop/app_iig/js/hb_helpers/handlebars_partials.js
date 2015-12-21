@@ -31,6 +31,7 @@ module.exports = (function() {
         'HBPageMeta': require('../../templates/partials/page/meta.hbs'),
         'HBPageSections': require('../../templates/partials/page/sections.hbs'),
         'HBPageUtils': require('../../templates/partials/page/utils.hbs'),
+        'HBPageVideoPLayer': require('../../templates/partials/page/videoPlayer.hbs'),
         'HBPageJplayer': require('../../templates/partials/page/jplayer.hbs'),
 
         // content list/grid view items
@@ -45,7 +46,11 @@ module.exports = (function() {
         'HBFavsTitle': require('../../templates/partials/favs/title.hbs'),
         'HBFavsAbstract': require('../../templates/partials/favs/abstract.hbs'),
         'HBFavsDownload': require('../../templates/partials/favs/download.hbs'),
-        'HBFavsRemove': require('../../templates/partials/favs/remove.hbs')
+        'HBFavsRemove': require('../../templates/partials/favs/remove.hbs'),
+
+        // filters
+        'HBFiltersCount': require('../../templates/partials/filters/count.hbs'),
+
 
     });
 

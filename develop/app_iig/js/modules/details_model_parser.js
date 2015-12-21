@@ -46,6 +46,18 @@ var Backbone = require('backbone'),
             // download aset
             //raw.data.downloadAsset.src = parseUrl(raw.data.downloadAsset.src);
 
+            if (raw.data.headerImage.videoSrc) {
+                raw.videoSrc = parseUrl(raw.data.headerImage.videoSrc);
+            } else {
+                raw.videoSrc = "";
+            }
+
+            if (raw.data.headerImage.src) {
+                raw.stillImageSrc = parseUrl(raw.data.headerImage.src);
+            } else {
+                raw.stillImageSrc = "";
+            }
+
             // blocks
             _.each(raw.data.sections, function (section) {
                 _.each(section.blocks, function (block) {
