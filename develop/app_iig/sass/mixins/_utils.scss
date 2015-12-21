@@ -40,6 +40,12 @@
 	transition: $property 0.5s ease-in-out;
 }
 
+@mixin text-hover() {
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 @mixin toggle-fullscreen() {
 	@include toggle-offscreen();
     &.full-screen {
