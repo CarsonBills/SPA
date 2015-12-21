@@ -56,8 +56,8 @@ module.exports = (function() {
         "<a " + attrs.join(" ") + ">" + Handlebars.escapeExpression(text) + "</a>"
       );
     });
-    Handlebars.registerHelper('HBHasVideo', function(conditional, options) {
-        if(conditional) {
+    Handlebars.registerHelper('HBHasVideo', function(context, options) {
+        if(context) {
             return options.fn(this);
         } else {
             return options.inverse(this);

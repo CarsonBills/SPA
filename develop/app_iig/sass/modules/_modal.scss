@@ -124,8 +124,14 @@
 				@include opensans($size: 1.5rem, $height: 1.4);
 			}
 
+			.header-img {
+				margin-top: 2rem;
+				display: block;
+				max-width: 100%;
+			}
+
 			.utils {
-				margin: 3rem 1rem;
+				margin: 3rem 0;
 				text-align: right;
 				font-weight: 600;
 

@@ -48,14 +48,10 @@ var Backbone = require('backbone'),
 
             if (raw.data.headerImage.videoSrc) {
                 raw.videoSrc = parseUrl(raw.data.headerImage.videoSrc);
-            } else {
-                raw.videoSrc = "";
             }
 
             if (raw.data.headerImage.src) {
                 raw.stillImageSrc = parseUrl(raw.data.headerImage.src);
-            } else {
-                raw.stillImageSrc = "";
             }
 
             // blocks
@@ -64,6 +60,7 @@ var Backbone = require('backbone'),
                     parseBlock(block);
                 });
             });
+            console.log(raw)
             return raw;
         };
 

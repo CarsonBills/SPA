@@ -1,10 +1,10 @@
-        {{#HBHasVideo data.headerImage.videoSrc}}
+        {{#HBHasVideo videoSrc}}
 	        {{> HBPageVideoPLayer}}
 
 			<script>
 			{{> HBPageJplayer}}
 			</script>
 
-		{{else HBHasVideo data.headerImage.src}}
-        	<img class="header-img" src="{{data.headerImage.src}}" />
+		{{else HBHasVideo stillImageSrc}}
+        	<img class="header-img" src="{{stillImageSrc}}" />
         {{/HBHasVideo}}
