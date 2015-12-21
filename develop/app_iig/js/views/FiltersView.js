@@ -202,7 +202,7 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
-    showSelectedFilter: function(e) {
+    showSelectedFilter: function(e, fromUrl) {
         'use strict';
         var html = "",
             selCat = "",
@@ -224,7 +224,6 @@ var FiltersView = Backbone.View.extend({
 
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
-
                 if (selCat != $(this).attr('data-filter-cat-display')) {
                     selCat = $(this).attr('data-filter-cat-display');
                     html += '<div class="sel-filter-cat">'+selCat+'</div>';
@@ -252,7 +251,13 @@ var FiltersView = Backbone.View.extend({
 
         $("#selectedFilters").append(html);
 
-        var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+        if (fromUrl) {
+            var url = window.location.href;
+        } else {
+            var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+        }
+
+
 
         window.history.pushState(null,null,url);
     },
@@ -317,6 +322,7 @@ var FiltersView = Backbone.View.extend({
         });
 
         Norton.savedRefinements = cats;
+
         this.app.formatRefinements();   // call getArticles() in AppView
 
         for (key in cats) {
@@ -343,14 +349,14 @@ var FiltersView = Backbone.View.extend({
         }
 
         Norton.savedRefinements = refs;
-        
+
         if (this.app.dataReady) {
             this.app.formatRefinements();   // call getArticles() in AppView
-            this.showSelectedFilter();
+            this.showSelectedFilter(null, 'fromUrl');
         } else {
             this.app.deferred.promise().done(function () {
                 that.app.formatRefinements();   // call getArticles() in AppView
-                that.showSelectedFilter();
+                that.showSelectedFilter(null, 'fromUrl');
             });
         }
     },
