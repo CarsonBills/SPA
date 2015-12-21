@@ -343,12 +343,13 @@ var FiltersView = Backbone.View.extend({
         }
 
         Norton.savedRefinements = refs;
-        this.app.formatRefinements();   // call getArticles() in AppView
-
+        
         if (this.app.dataReady) {
+            this.app.formatRefinements();   // call getArticles() in AppView
             this.showSelectedFilter();
         } else {
             this.app.deferred.promise().done(function () {
+                that.app.formatRefinements();   // call getArticles() in AppView
                 that.showSelectedFilter();
             });
         }
