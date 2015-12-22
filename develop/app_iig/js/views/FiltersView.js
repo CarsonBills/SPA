@@ -84,7 +84,6 @@ var FiltersView = Backbone.View.extend({
 
     events: {
        "click .filter-item-cat" : "toggleItem",
-       //"click .filter-item-name": "toggleSubCategory",
         "click .filter-checkbox": function(e) {
             'use strict';
 
@@ -141,13 +140,6 @@ var FiltersView = Backbone.View.extend({
             this.showActive(this.ACTIVE);
         }
             
-    },
-
-    toggleSubCategory: function (e) {
-        'use strict';
-        var $target = $(e.currentTarget).next();
-        $target.toggleClass('in');
-        return false;
     },
 
     collapseAll: function () {
@@ -237,8 +229,6 @@ var FiltersView = Backbone.View.extend({
                         parent = that.PARENT;
                     }
                 }
-
-                console.log('ttt')
 
                 // chapters: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
                 // subchapters: 3b0540f9265bcbff096e_030_Big Question: What Are the Five Foundations of Economics?

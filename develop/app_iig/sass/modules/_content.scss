@@ -127,17 +127,20 @@ body {
             color: $iig-link;
             margin-left: 0.5rem;
             max-width: 210px;
-            line-height: 1.4rem;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
         }
 
         .filter-checkbox {
             margin: 0.1rem 0 0.3rem 0.1rem;
         }
 
-        & > .filter-name {
+        .filter-name {
             display: inline-block;
-            width: 195px;
-            margin-left: 0.7rem;
+            width: 185px;
+            margin-left: 0.5rem;
             @include ellipsis();
 
         }
