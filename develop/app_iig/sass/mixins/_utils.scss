@@ -59,3 +59,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@mixin rounded-tab($radius: 0) {
+    border-radius: $radius;
+    background-color: rgba(230, 230, 230, 0.5);
+}

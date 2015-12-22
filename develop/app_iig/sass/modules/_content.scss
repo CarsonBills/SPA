@@ -22,20 +22,6 @@ body {
     }
 }
 
-/* hero */
-div[data-type="iig-hero"] {
-    .hero-container {
-        max-width: 1090px;
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;    
-    }
-}
-
 /* filters */
 #filters {
     @include locked();
@@ -60,37 +46,46 @@ div[data-type="iig-hero"] {
         left: -$filter-width;
     }
 
+    // flat:parent
     .filters-selected {
         position: relative;
-        .remove-all-filters {
-            position: relative;
-            margin-bottom: 1rem;
-            cursor: pointer;
-        }
-        .selected-filters {
-            position: relative;
-            margin: 0 0 1rem 2rem;
-            line-height: 1.2;
-            cursor: pointer;
-        }
+        padding: 0.5rem 0;
+        transition: all 1s;
+    }
 
-        .active-filter {
-            font-size: 1.2rem;
-            colo: red;
-        }
+    .remove-all-filters {
+        position: relative;
+        width: inherit;
+        height: 23px;
+    }
 
-        .clear-filter {
-            font-weight: 600;
-        }
+    .sel-filter-cat {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $iig-link;
+        margin: 0.5rem;
+    }
+    .selected-filters {
+        text-align: left;
+        display: inline-block;
+        width: 240px;
+        height: 23px;
+        text-transform: none;
+        @include ellipsis();
+    }
+
+    .clear-filter {
+        color: #999;
+        margin-right: 0.5rem;
     }
 
     .filter-item-cat {
         position:relative;
         @include opensans($size: 1.6rem, $weight: 600);
-        color:  $iig-link;
-        background-color: #fff;
-        margin: 1.5rem 0;
+        color: $iig-link;
+        margin: 1rem 0;
         padding-left: 2rem;
+        @include text-hover();
 
         &.collapsed {
             .glyphicon {
@@ -111,59 +106,62 @@ div[data-type="iig-hero"] {
     }
 
     .filter-item-name {
+        display: flex;
         position:relative;
         font-size: 1.1rem;
         padding: 0.5rem 0.2rem;
-        background-color: #eee;
-        cursor: pointer;
+        @include rounded-tab();
+        border-bottom: 1px solid rgba(230, 230, 230, 0.8);
 
-        &:hover {
-            .filter-name {
-                text-decoration: underline;
+        &:not('.filter-greyed-out') {
+            cursor: pointer;
+            &:hover {
+                .filter-name {
+                    text-decoration: underline;
+                }
             }
-        }
-
-        &:not(:last-child) {
-            margin-bottom: 0;
         }
 
         a {
             display: inline-block;
+            color: $iig-link;
+            margin-left: 0.5rem;
+            max-width: 210px;
+            line-height: 1.4rem;
         }
+
         .filter-checkbox {
-            margin: 0;
+            margin: 0.1rem 0 0.3rem 0.1rem;
         }
 
         & > .filter-name {
             display: inline-block;
-            width: 200px;
+            width: 195px;
             margin-left: 0.7rem;
             @include ellipsis();
 
         }
-        & > .count {
+        & .count {
             position: absolute;
-            right: 0;
+            right: 0.5rem;
         }
     }
 
     .filter-item-group {
-        margin-left: 1rem;
         margin-bottom: 0.7rem;
 
         .filter-item-name {
+            padding-left: 1rem;
             margin-bottom: 0.2rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(230, 230, 230, 0.8);
         }
     }
 
     .filter-greyed-out {
         color: $grey;
         line-height: 1.3;
-    }
-
-    .sel-filter-cat {
-        font-weight: bold;
-        margin: 0 0 .5rem 1rem;
     }
 }
 
