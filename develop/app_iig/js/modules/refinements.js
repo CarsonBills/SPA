@@ -181,9 +181,12 @@ Navigation.prototype = {
              * For Order,use an increment
              */
             for (var j = 0; j < filters[i].refinements.length; j++) {
+                nameParts = filters[i].refinements[j].value.split("_");
+
                 newFilters[otherIndex].refs[j] = {};
                 newFilters[otherIndex].refs[j].id = filters[i].refinements[j].value;
                 newFilters[otherIndex].refs[j].name = filters[i].refinements[j].value;
+                newFilters[otherIndex].refs[j].name = nameParts[1];
                 newFilters[otherIndex].refs[j].count = 0;
                 newFilters[otherIndex].refs[j].cat_display = filters[i].displayName;
                 newFilters[otherIndex].refs[j].cat = filters[i].refinements[j].value;
