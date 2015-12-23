@@ -65,7 +65,7 @@
 
 .modal-body {
 	height: inherit;
-	padding: 0 4rem 2rem;
+	padding: 0 5rem 2rem;
 	@include opensans($size: 1.8rem, $height: 1.4);
 
 	p {
@@ -166,6 +166,10 @@
 			.meta {
 				font-size: 1.4rem;
 				clear: both;
+
+				span {
+					line-height: 2.5rem;
+				}
 			}
 
 			.about-author {
@@ -188,16 +192,11 @@
 				text-transform: uppercase;
 			}
 
-			.pub-date,
-			.page-number {
-				font-weight: 600;
-				clear: both;
-			}
 			.page-filter {
 				font-size: 1.3rem;
 				line-height: 1.6;
 				margin-bottom: 1rem;
-				display: block;
+				display: inline-block;
 				color: $dark-grey;
 
 				strong {
