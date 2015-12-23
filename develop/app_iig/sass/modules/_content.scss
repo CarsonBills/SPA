@@ -72,7 +72,7 @@ ul.card {
         }
 
         .content-type {
-            @extend %content-type;
+            @include content-type($length:40px);
             float: left;
         }
 
@@ -169,7 +169,7 @@ ul.card {
         transition: all 1s ease;
 
         .content-type {
-            @extend %content-type;
+            @include content-type($length:45px);
         }
 
         .content-title {

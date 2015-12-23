@@ -37,7 +37,7 @@ $filter-width: 280px;
 
 $loading-transform: scale(0.4) translate(-37px, -42px);
 
-$list-height: 35px;
+$list-height: 45px;
 $card-width: 320px;
 $card-height: 360px;
 /* modal */
@@ -138,40 +138,5 @@ div[data-type="iig-hero"] {
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;    
-    }
-}
-
-
-/* custom icon for list/gird/favs */
-%content-type {
-    width: $list-height;
-    height: $list-height;
-    margin: 1rem;
-    text-align: center;
-
-    // custom icon
-    .content-custom {
-        position: relative;
-        max-width: 100%;
-        max-height: 100%;
-        @include vertical-align();
-    }
-
-    .filetypes,
-    .glyphicon {
-        font-size: 2rem;
-        color: #ccc;
-        @include vertical-align(); 
-    }
-    .filetypes {
-        &.filetypes-pdf {
-            @include svg_sprite(filetypes_pdf);
-        }
-        &.filetypes-ppt {
-            @include svg_sprite(filetypes_ppt); 
-        }
-        &.filetypes-zip {
-            @include svg_sprite(filetypes_zip);
-        }
     }
 }
