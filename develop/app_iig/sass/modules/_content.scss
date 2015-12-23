@@ -310,6 +310,13 @@ ul.card {
     .content {
         width: 100%;
         margin-left: 0;
+        ul.card {
+            li.list-format {
+                .content-type {
+                    margin: 0;
+                }
+            }
+        }
     }
 }
 
