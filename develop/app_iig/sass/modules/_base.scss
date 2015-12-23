@@ -45,6 +45,10 @@ $modal-header-height: 52px;
 
 /* shared functionality */
 
+ol {
+	list-style-position: inside;
+}
+
 .off {
 	opacity: 0;
 	transition: opacity 1s;
