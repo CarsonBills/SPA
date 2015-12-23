@@ -93,7 +93,7 @@ button[data-type="iig-filters"] {
     margin-bottom: 0.5rem;
     line-height: 1;
     border-radius: 0.5rem;
-    @include text-hover();
+    //@include text-hover();
 }
 
 
@@ -137,6 +137,6 @@ div[data-type="iig-hero"] {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-wrap: wrap;    
+        flex-wrap: wrap; 
     }
 }

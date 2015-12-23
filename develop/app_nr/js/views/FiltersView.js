@@ -210,7 +210,12 @@ var FiltersView = Backbone.View.extend({
 
         var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
 
-        window.history.pushState(null,null,url);
+        // TODO: Fix this hack for Firefox overwriting querystring in URL
+        if (navigator.userAgent.search("Firefox") >= 0) {
+            setTimeout(function(){ window.history.pushState(null, null, url); }, 500);
+        } else {
+            window.history.pushState(null, null, url);
+        }
     },
     removeSelectedFilter: function(e, typ) {
         'use strict';

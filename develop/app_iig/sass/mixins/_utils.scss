@@ -64,9 +64,6 @@
     border-radius: $radius;
     background-color: rgba(230, 230, 230, 0.5);
 }
-
-
-
 /* custom icon for list/gird/favs */
 @mixin content-type($length: 40px) {
     width: $length;
@@ -100,4 +97,3 @@
         }
     }
 }
-

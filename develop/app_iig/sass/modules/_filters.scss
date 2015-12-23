@@ -38,15 +38,16 @@
     }
 
     .sel-filter-cat {
-        font-weight: bold;
+        font-weight: 600;
         font-size: 1.2rem;
         color: $iig-link;
         margin: 0.5rem;
     }
     .selected-filters {
         text-align: left;
+        font-weight: 400;
         display: inline-block;
-        width: 256px;
+        width: 241px;
         height: 23px;
         text-transform: none;
         @include ellipsis();
