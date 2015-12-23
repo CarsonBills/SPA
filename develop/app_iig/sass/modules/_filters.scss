@@ -1,0 +1,146 @@
+
+
+/* filters */
+#filters {
+    @include locked();
+
+    position: absolute;
+    background-color: #fff;
+    width: $filter-width;
+    float: left;
+    top: 430px;
+    left: 0;
+    z-index: 999;
+    @include toggle-offscreen($property: left);
+    @include locked($position: fixed, $top:101px);
+    @include opensans($size: 1.4rem);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem;
+
+    height: 100vh;
+    overflow-y: auto;
+
+    &.off-screen {
+        left: -$filter-width;
+    }
+
+    // flat:parent
+    .filters-selected {
+        position: relative;
+        padding: 0.5rem 0;
+        transition: all 1s;
+    }
+
+    .remove-all-filters {
+        position: relative;
+        width: inherit;
+        height: 23px;
+    }
+
+    .sel-filter-cat {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $iig-link;
+        margin: 0.5rem;
+    }
+    .selected-filters {
+        text-align: left;
+        display: inline-block;
+        width: 256px;
+        height: 23px;
+        text-transform: none;
+        @include ellipsis();
+    }
+
+    .clear-filter {
+        color: #999;
+        margin-right: 0.5rem;
+    }
+
+    .filter-item-cat {
+        position:relative;
+        @include opensans($size: 1.6rem, $weight: 600);
+        color: $iig-link;
+        margin: 1rem 0;
+        padding-left: 2rem;
+        @include text-hover();
+
+        &.collapsed {
+            .glyphicon {
+                transition: all 0.2s ease-in-out;
+                transform: rotate(-90deg);
+            }
+        }
+
+        .glyphicon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: $iig-link;
+            font-size: 1.3rem;
+            line-height: 1.6rem;
+            transform: rotate(0deg);
+        }
+    }
+
+    .filter-item-name {
+        display: flex;
+        position:relative;
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid rgba(230, 230, 230, 0.8);
+
+        &.nested {
+            background-color: rgba(230, 230, 230, 0.5);
+        }
+
+        &:not('.filter-greyed-out') {
+            cursor: pointer;
+            &:hover {
+                .filter-name {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        a {
+            display: inline-block;
+            color: $iig-link;
+            max-width: 210px;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        .filter-checkbox {
+            margin: 0.1rem 0 0.3rem 0.1rem;
+        }
+
+        .filter-name {
+            display: inline-block;
+            width: 185px;
+            margin-left: 0.5rem;
+            @include ellipsis();
+
+        }
+        & .count {
+            position: absolute;
+            right: 0.5rem;
+        }
+    }
+
+    .filter-item-group {
+        .filter-item-name {
+            padding-left: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(230, 230, 230, 0.8);
+        }
+    }
+
+    .filter-greyed-out {
+        color: $grey;
+        line-height: 1.3;
+    }
+}

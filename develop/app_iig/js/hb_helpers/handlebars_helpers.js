@@ -35,9 +35,7 @@ module.exports = (function() {
     });
     // filters helper
     Handlebars.registerHelper('HBMatchWord', function(name, match, options) {
-        var fnTrue = options.fn, 
-            fnFalse = options.inverse;
-        return (name === match) ? fnTrue(this) : fnFalse(this);
+        return (name === match) ? options.fn(this) : options.inverse(this);
     });
     Handlebars.registerHelper('HBIsCollapsed', function(name) {
         return (name === "chapter") ? "collapsed" : "";

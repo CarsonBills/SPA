@@ -2,10 +2,11 @@
 // Data constructor
 var NavigationCollection = require('../collections/NavigationCollection'),
     $ = require('jquery'),
+    _ = require('underscore'),
     ErrorsManager = require('../modules/errors_manager'),
 
     Navigation = function (options) {
-        "use strict";
+        'use strict';
         this.initialize();
     };
 
@@ -18,12 +19,12 @@ Navigation.prototype = {
 
 
     initialize: function () {
-        "use strict";
+        'use strict';
         this.collection = new NavigationCollection();
 
     },
     fetch: function () {
-        "use strict";
+        'use strict';
         var that = this;
         var postdata = {
             sitecode: Norton.siteCode,
@@ -60,6 +61,18 @@ Navigation.prototype = {
 
     },
 
+    getMetaData: function (meta, prop) {
+        'use strict';
+        var result;
+
+        _.each(meta, function(item) {
+            if (item.key === prop) {
+                result = item.value;
+            }
+        });
+        return result;
+    },
+
 
     /**
      * Chapters/Topics and subchapters/substopics come as 2 separate objects in searchandiser json. The only link is a hash-in-common.
@@ -71,6 +84,7 @@ Navigation.prototype = {
      * Also, Keep the objects consistent whether for chapters/topics or other categories
      */
     buildnewFilters: function() {
+        'use strict';
         var newFilters = [],
             chaptersIndex,
             topicsIndex,
@@ -80,8 +94,8 @@ Navigation.prototype = {
             nameParts,
             order,
             suborder,
-            unorderedIndex = 9900;
-
+            unorderedIndex = 9900,
+            nested,
             filters = this.collection.availNav;
 
         // Have to do this in 3 passes so we keep get subchapters after chapters and subtopics after topics
@@ -92,9 +106,12 @@ Navigation.prototype = {
                 continue;
             }
 
+            nested = this.getMetaData(filters[i].metadata, 'nested');
+
             newFilters[i] = {};
             newFilters[i].catName = filters[i].name;
             newFilters[i].displayName = filters[i].displayName;
+            newFilters[i].nested = nested;
             newFilters[i].refs = [];
 
             if (filters[i].name == "dimChapters") {
@@ -181,9 +198,12 @@ Navigation.prototype = {
              * For Order,use an increment
              */
             for (var j = 0; j < filters[i].refinements.length; j++) {
+                nameParts = filters[i].refinements[j].value.split("_");
+
                 newFilters[otherIndex].refs[j] = {};
                 newFilters[otherIndex].refs[j].id = filters[i].refinements[j].value;
                 newFilters[otherIndex].refs[j].name = filters[i].refinements[j].value;
+                newFilters[otherIndex].refs[j].name = nameParts[1];
                 newFilters[otherIndex].refs[j].count = 0;
                 newFilters[otherIndex].refs[j].cat_display = filters[i].displayName;
                 newFilters[otherIndex].refs[j].cat = filters[i].refinements[j].value;
@@ -201,6 +221,7 @@ Navigation.prototype = {
      * refFilters object built in buildnewFilters. When we find a match, update the refFilters count
      */
     compare: function (filteredNav) {
+        'use strict';
         // NOTE: If your object has functions, they won't be copied using this technique
         // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
         var originalNav = JSON.parse(JSON.stringify(this.refFilters)),

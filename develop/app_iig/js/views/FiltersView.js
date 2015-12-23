@@ -9,17 +9,18 @@ var Backbone = require("backbone"),
 
 var FiltersView = Backbone.View.extend({
     THRESHOLD: 10,
+    PARENT: 'parent',
     el: "#filters",
     template: require("../../templates/modules/FiltersTemplate.hbs"),
+    selectedTemplate: require("../../templates/modules/FiltersSelectedTemplate.hbs"),
     refinements: Refinements.getInstance(),
     filterContent: "",
     delay: true,
     app: null,
-    ACTIVE: "#chapter",
+    ACTIVE: "#dimChapters",
     active: "",
     adjustHieght: null,
     currentHeight: 0,
-    firstTime: false,
 
     initialize: function(params) {
         'use strict';
@@ -50,7 +51,6 @@ var FiltersView = Backbone.View.extend({
 
         this.render();
         this.adjustHieght();
-        this.checkSelected();
     },
 
     render: function () {
@@ -58,6 +58,7 @@ var FiltersView = Backbone.View.extend({
         var that = this,
             filterTemplate,
             i;
+
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
@@ -75,14 +76,14 @@ var FiltersView = Backbone.View.extend({
 
         this.showActive();
         this.toggleChecked();
-        this.firstTime = true;
+        this.checkSelected();
+        this.showSelectedFilter(null, 'fromUrl');
 
         return this;
     },
 
     events: {
        "click .filter-item-cat" : "toggleItem",
-       "click .filter-item-name": "toggleSubCategory",
         "click .filter-checkbox": function(e) {
             'use strict';
 
@@ -141,13 +142,6 @@ var FiltersView = Backbone.View.extend({
             
     },
 
-    toggleSubCategory: function (e) {
-        'use strict';
-        var $target = $(e.currentTarget).next();
-        $target.toggleClass('in');
-        return false;
-    },
-
     collapseAll: function () {
         'use strict';
         this.$('.filter-item-cat').addClass('collapsed');
@@ -177,7 +171,7 @@ var FiltersView = Backbone.View.extend({
         if ($cat.hasClass('collapsed')) {
             $cat.removeClass('collapsed');
 
-            this.$('.filter-item').removeClass('in');
+            //this.$('.filter-item').removeClass('in');
             this.$(category).addClass('in');
 
             this.adjustHieght();
@@ -204,10 +198,12 @@ var FiltersView = Backbone.View.extend({
      */
     showSelectedFilter: function(e, fromUrl) {
         'use strict';
-        var html = "",
+       var that = this,
+            html = "",
             selCat = "",
             displayName,
-            nameParts;
+            nameParts,
+            parent = "";
 
         $("#selectedFilters").empty();
 
@@ -226,7 +222,12 @@ var FiltersView = Backbone.View.extend({
             if ($(this).prop('checked')) {
                 if (selCat != $(this).attr('data-filter-cat-display')) {
                     selCat = $(this).attr('data-filter-cat-display');
-                    html += '<div class="sel-filter-cat">'+selCat+'</div>';
+                    //html += '<div class="sel-filter-cat">'+selCat+'</div>';
+
+
+                    if ($(this).data('filter-is-parent')) {
+                        parent = that.PARENT;
+                    }
                 }
 
                 // chapters: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
@@ -238,15 +239,21 @@ var FiltersView = Backbone.View.extend({
                     displayName = $(this).attr('data-filter-name');
                 }
 
-                html += '<div class="selected-filters"><div class="active-filter">' + displayName +
+                html += that.selectedTemplate({
+                    displayName: displayName,
+                    filterName: $(this).attr('data-filter-name'),
+                    filterCat: $(this).attr('data-filter-cat')
+                });
+
+                /*html += '<div class="selected-filters"><div class="active-filter">' + displayName +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
-                    '" class="clear-filter">x</span></div></div>';
+                    '" class="clear-filter">x</span></div></div>';*/
             }
         });
 
         if (html) {
-            html = '<div class="remove-all-filters" id="removeAllFilters">Remove all filters</div>' + html;
+            html = '<button class="remove-all-filters" data-type="iig-filters" id="removeAllFilters">Remove all filters</button>' + html;
         }
 
         $("#selectedFilters").append(html);
@@ -352,11 +359,11 @@ var FiltersView = Backbone.View.extend({
 
         if (this.app.dataReady) {
             this.app.formatRefinements();   // call getArticles() in AppView
-            this.showSelectedFilter(null, 'fromUrl');
+            //this.showSelectedFilter(null, 'fromUrl');
         } else {
             this.app.deferred.promise().done(function () {
                 that.app.formatRefinements();   // call getArticles() in AppView
-                that.showSelectedFilter(null, 'fromUrl');
+                //that.showSelectedFilter(null, 'fromUrl');
             });
         }
     },

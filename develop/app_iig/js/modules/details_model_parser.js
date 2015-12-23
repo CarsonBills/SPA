@@ -60,7 +60,6 @@ var Backbone = require('backbone'),
                     parseBlock(block);
                 });
             });
-            console.log(raw)
             return raw;
         };
 
