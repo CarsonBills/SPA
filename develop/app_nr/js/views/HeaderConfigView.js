@@ -78,9 +78,6 @@ var HeaderConfigView = Backbone.View.extend({
 
             this.getCredits($target.prop('href'));
         }
-
-        return false;
-
     }
 }); 
 
