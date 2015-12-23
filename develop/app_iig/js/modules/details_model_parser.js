@@ -44,7 +44,7 @@ var Backbone = require('backbone'),
 
         process = function(raw) {
             // download aset
-            //raw.data.downloadAsset.src = parseUrl(raw.data.downloadAsset.src);
+            //raw.data.downloads.src = parseUrl(raw.data.downloads.src);
 
             if (raw.data.headerImage.videoSrc) {
                 raw.videoSrc = parseUrl(raw.data.headerImage.videoSrc);
