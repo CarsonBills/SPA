@@ -141,21 +141,24 @@ ul.card {
         div {
             padding: 0 1rem;
             display: inline-block;
-            &.content-type {
-            }
+        }
 
-            &.content-title {
-                width: 40%;
-            }
+        .content-type {
+            width: 65px;
+            text-align: center;
+        }
 
-            &.content-tags {
-                width: 40%;
-            }
+        .content-title {
+            width: 40%;
+        }
 
-            &.savelist,
-            &.savelist-lnk {
-                width: $list-height;
-            }
+        .content-tags {
+            width: 40%;
+        }
+
+        .savelist,
+        .savelist-lnk {
+            width: $list-height;
         }
     }
     li.list-format {
@@ -307,16 +310,23 @@ ul.card {
 }
 
 @media only screen and (max-width: $tablet-portait-width) {
+
+    ul.card {
+        .listview-head {
+            .content-type {
+                width: 50px;
+            }
+
+        }
+        li.list-format {
+            .content-type {
+                margin: 0;
+            }
+        }
+    }
     .content {
         width: 100%;
         margin-left: 0;
-        ul.card {
-            li.list-format {
-                .content-type {
-                    margin: 0;
-                }
-            }
-        }
     }
 }
 
