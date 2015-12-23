@@ -128,7 +128,7 @@ Navigation.prototype = {
             for (var j = 0; j < filters[i].refinements.length; j++) {
                 nameParts = filters[i].refinements[j].value.split("_");
                 order = nameParts[0];
-                if (!order) {   // item may not be ordered in which case force it to the end of the nav
+                if (!$.isNumeric(order) || order == 999) {   // item may not be ordered in which case force it to the end of the nav
                     order = unorderedIndex++;
                 }
                 newFilters[i].refs[j] = {};
@@ -163,7 +163,7 @@ Navigation.prototype = {
                 for (var j = 0; j < filters[i].refinements.length; j++) {
                     nameParts = filters[i].refinements[j].value.split("_");
                     suborder = nameParts[1];
-                    if (!suborder) {    // item may not be ordered in which case force it to the end of the nav
+                    if (!$.isNumeric(suborder) || suborder == 999) {    // item may not be ordered in which case force it to the end of the nav
                         suborder = unorderedIndex++;
                     }
 
