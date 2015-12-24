@@ -157,8 +157,10 @@
 
 				.download {
 					margin-left: 1rem;
-					a {
-						color: #555;
+
+					a:focus,
+					a:hover {
+						text-decoration: none;
 					}
 				}
 			}
@@ -276,7 +278,7 @@
 			    .favs-icon {
 			    	display: table-cell;
 			    	vertical-align: middle;
-            		@extend %content-type;
+            		@include content-type($length:40px);
             		top: inherit;
         		    width: 35px;
 					height: 35px;
