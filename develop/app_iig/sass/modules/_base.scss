@@ -127,6 +127,12 @@ button[data-type="iig-button"] {
 	border-radius: 0;
 	margin: 0;
 
+	&:hover {
+		a {
+			text-decoration: none;
+		}
+	}
+
 	.icon {
 		@include vertical-align(absolute);
 		left: 1.2rem;
