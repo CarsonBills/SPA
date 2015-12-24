@@ -1,6 +1,7 @@
 
 // Data constructor
 var NavigationCollection = require('../collections/NavigationCollection'),
+    //SubNavManager = require('../modules/sub_nav_manager'),
     $ = require('jquery'),
     _ = require('underscore'),
     ErrorsManager = require('../modules/errors_manager'),
@@ -15,8 +16,7 @@ Navigation.prototype = {
     MODULE: 'refinements',
     url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
-    refFilters: null,
-
+    savedFilters: null,
 
     initialize: function () {
         'use strict';
@@ -44,9 +44,18 @@ Navigation.prototype = {
             url: this.url,
             success: function(data) {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
+                    $.when(that.replaceSubNav())
+                        .then(function (res1) {
+                            that.buildnewFilters()
+                            that.deferred.resolve();
+                        },
+                        function (res1) {
+                            ErrorsManager.showGeneric();
+                            Logger.get(that.MODULE).error(res1);
+                        });
+                    //return that.deferred.promise();
+
                     that.deferred.resolve(data);
-                    // Build navFilter list
-                    that.buildnewFilters();
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -73,6 +82,83 @@ Navigation.prototype = {
         return result;
     },
 
+    replaceSubNav: function() {
+        var that = this,
+            deferred = $.Deferred(),
+            filters = this.collection.availNav;
+
+        var subNav = this.getSubNavIds();
+
+        var postdata = {
+            sitecode: Norton.searchRepo,
+            siteversion: Norton.version,
+            nav: subNav
+        };
+
+        $.ajax({
+            type:'POST',
+            url: Norton.Constants.subNavUrl,
+            data: postdata,
+            dataType: "json",
+
+            success: function(response) {
+                if (response.status !== ErrorsManager.FAIL_STATE) {
+                    for (var j=0; j< filters.length; j++) {
+                        if (filters[j].name == subNav) {
+                            filters[j].refinements = response.data.navigation.refinements;
+                        }
+                    }
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject(ErrorsManager.FAIL_STATE);
+                }
+            },
+            error: function(collection, res, options) {
+                Logger.error("SubNav request failed.");
+                deferred.reject(res);
+            }
+        });
+
+        return this.deferred.promise();
+    },
+
+    getSubNavIds: function () {
+        var filters = this.collection.availNav,
+            nested = 0,
+            subNavNames = "";
+
+        for (var i=0; i<filters.length; i++) {
+            nested = 0;
+            for (var j=0; j < filters[i].metadata.length; j++) {
+
+                if (filters[i].metadata[j].key == "subnavname") {
+                    subNavNames  = filters[i].metadata[j].value;
+                    return subNavNames;
+                }
+            }
+        }
+
+        return subNavNames;
+    },
+    
+/*    getSubNavIds: function () {
+        var filters = this.collection.availNav,
+            nested = 0,
+            subNavNames = [];
+
+        for (var i=0; i<filters.length; i++) {
+            nested = 0;
+            for (var j=0; j < filters[i].metadata.length; j++) {
+
+                if (filters[i].metadata[j].key == "subnavname") {
+                    subNavNames.push(filters[i].metadata[j].value);
+                }
+            }
+        }
+
+        return subNavNames;
+    },
+*/
 
     /**
      * Chapters/Topics and subchapters/substopics come as 2 separate objects in searchandiser json. The only link is a hash-in-common.
@@ -85,6 +171,7 @@ Navigation.prototype = {
      */
     buildnewFilters: function() {
         'use strict';
+
         var newFilters = [],
             chaptersIndex,
             topicsIndex,
@@ -101,7 +188,10 @@ Navigation.prototype = {
         // Have to do this in 3 passes so we keep get subchapters after chapters and subtopics after topics
         // Handle Chapters and Topics
         for (var i=0; i<filters.length; i++) {
-            // ignore any nav that is not a chapter or topic for now
+
+            if (filters[i].metadata[0]) {
+
+            }
             if (filters[i].name != "dimChapters" && filters[i].name != "dimTopics") {
                 continue;
             }
@@ -214,21 +304,21 @@ Navigation.prototype = {
             otherIndex++;
         }
 
-        this.refFilters = newFilters;
+        this.savedFilters = newFilters;
     },
     /**
      * Take the filtered nav returned by searchandiser and compare it to the
-     * refFilters object built in buildnewFilters. When we find a match, update the refFilters count
+     * savedFilters object built in buildnewFilters. When we find a match, update the savedFilters count
      */
     compare: function (filteredNav) {
         'use strict';
         // NOTE: If your object has functions, they won't be copied using this technique
         // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-        var originalNav = JSON.parse(JSON.stringify(this.refFilters)),
+        var originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
             idx = 0,       // filterNav index which may need not be in sync with originalNav index
             savedRefs,
             selectedFilter; // this filter was "checked" in the navigation;
-
+console.log('fn'); console.log(originalNav);
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
 

@@ -368,7 +368,7 @@ var FiltersView = Backbone.View.extend({
         }
     },
     findParentFilter: function(subFilter) {
-        var originalNav = JSON.parse(JSON.stringify(this.refinements.refFilters)),
+        var originalNav = JSON.parse(JSON.stringify(this.refinements.savedFilters)),
             target = decodeURIComponent(subFilter);
 
         for (var i=0; i < originalNav.length; i++) {

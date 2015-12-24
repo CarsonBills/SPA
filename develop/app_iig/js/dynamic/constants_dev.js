@@ -6,6 +6,7 @@ var JSConstants = {
     invalidSiteCodeUrl: '//books.wwnorton.com/books/index.aspx',
     siteConfigUrl: '//dev2-services.wwnorton.com/getsiteconfig.php?',
     searchUrl: '//dev2-services.wwnorton.com/search.php',
+    subNavUrl: '//dev2-services.wwnorton.com/refinements.php',
     getDetailPageUrl: '//dev2-services.wwnorton.com/getpagedetail.php?',
     awsContentUrl: '//dev2-services.wwnorton.com/get_content.php?',
     saveTrackingUrl: '//dev2-services.wwnorton.com/tracking.php',
