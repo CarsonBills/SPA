@@ -62,6 +62,18 @@ a {
     }
 }
 
+[role="button"] {
+  cursor: pointer;
+}
+
+* {
+  @include box-sizing(border-box);
+}
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
+
 /* shared functionality */
 
 .off {
