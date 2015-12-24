@@ -44,7 +44,7 @@ var Backbone = require('backbone'),
                         id: data.id,
                         abstract: data.attributes.data.introCopy,
                         title: data.attributes.data.title,
-                        downloads: data.attributes.data.downloadAsset,
+                        downloads: data.attributes.data.downloads,
                         pname: data.id,
                         customIcon: data.customIcon,
                         chapter_id: ""
