@@ -557,7 +557,7 @@ gulp.task('upload:s3', [], function() {
         return gulp.src([
 
             deploy + 'iig' + settings.prod + '/**',
-            '!' + deploy + 'iig' + settings.prod + '/index.html',
+            '!' + deploy + 'iig' + settings.prod + '/*.html',
             '!' + deploy + 'iig' + settings.prod + settings.css + '/app.css',
             '!' + deploy + 'iig' + settings.prod + settings.fonts + '**',
             '!' + deploy + 'iig' + settings.prod + settings.images + '**',
