@@ -58,6 +58,7 @@ $(function() {
         order: "Ascending"
     };
     Norton.discipline = null;
+    Norton.searchRepo = null;
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};
