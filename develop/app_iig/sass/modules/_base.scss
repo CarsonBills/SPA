@@ -43,8 +43,8 @@ $card-height: 360px;
 /* modal */
 $modal-header-height: 52px;
 
-/* shared functionality */
 
+/* global override */
 ul, ol {
 	list-style-position: inside;
 }
@@ -53,11 +53,24 @@ hr {
 	margin: 3rem 0 1.5rem;
 }
 
+a {
+    color: $iig-link;
+    text-decoration: none;
+
+    &:hover {
+    	color: #000;
+    }
+}
+
+/* shared functionality */
+
 .off {
 	opacity: 0;
 	transition: opacity 1s;
 }
 
+
+/* shared functionality */
 @keyframes rotate-360 {
 	from {
 		transform: scale(0.6) rotate(0deg);
