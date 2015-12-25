@@ -17,7 +17,7 @@ var Backbone = require('backbone'),
 
                 $(modal).on('hide.bs.modal', function (e) {
                     reset();
-                    Norton.Utils.returnToBase();
+                    NortonApp.router.returnHome();
                 });
                 // modals don't detect close event from back button so use event handler to close with popstate change
                 $(window).on("popstate", function(e) {

@@ -292,12 +292,8 @@ var ArticleView = Backbone.View.extend({
         /**
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
-        Norton.pageClick = "list";
-        var page = "page/" + $(e.currentTarget).attr('data-id');
-
-        if (Backbone.history.fragment === page) {
-            NortonApp.router.navigate('#/' + page, true);
-        }
+        var page = $(e.currentTarget).attr('data-id');
+        NortonApp.router.navigate('#/page/' + page);
         return false;
     },
     

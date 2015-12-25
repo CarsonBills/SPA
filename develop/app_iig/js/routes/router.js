@@ -48,6 +48,11 @@ var AppRouter = Backbone.Router.extend({
         return this.deferred.promise();
     },
 
+    returnHome: function () {
+        "use strict";
+        window.history.replaceState({}, '',  Norton.baseUrl);
+    },
+
     index: function() {
         "use strict";
     },

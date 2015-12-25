@@ -318,7 +318,6 @@ Navigation.prototype = {
             idx = 0,       // filterNav index which may need not be in sync with originalNav index
             savedRefs,
             selectedFilter; // this filter was "checked" in the navigation;
-console.log('fn'); console.log(originalNav);
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
 
