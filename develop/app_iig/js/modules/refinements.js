@@ -17,6 +17,7 @@ Navigation.prototype = {
     url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
     savedFilters: null,
+    savedSubNav: [],
 
     initialize: function () {
         'use strict';
@@ -44,18 +45,16 @@ Navigation.prototype = {
             url: this.url,
             success: function(data) {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
+                    that.deferred.resolve(data);
                     $.when(that.replaceSubNav())
                         .then(function (res1) {
-                            that.buildnewFilters()
-                            that.deferred.resolve();
+                            that.deferred.resolve(res1);
                         },
                         function (res1) {
                             ErrorsManager.showGeneric();
                             Logger.get(that.MODULE).error(res1);
                         });
-                    //return that.deferred.promise();
 
-                    that.deferred.resolve(data);
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -106,8 +105,10 @@ Navigation.prototype = {
                     for (var j=0; j< filters.length; j++) {
                         if (filters[j].name == subNav) {
                             filters[j].refinements = response.data.navigation.refinements;
+                            that.savedSubNav[j] = response.data.navigation.refinements;
                         }
                     }
+                    that.buildNewFilters();
                     deferred.resolve(response.data);
                 } else {
                     deferred.reject(ErrorsManager.FAIL_STATE);
@@ -169,7 +170,7 @@ Navigation.prototype = {
      *
      * Also, Keep the objects consistent whether for chapters/topics or other categories
      */
-    buildnewFilters: function() {
+    buildNewFilters: function() {
         'use strict';
 
         var newFilters = [],
@@ -308,7 +309,7 @@ Navigation.prototype = {
     },
     /**
      * Take the filtered nav returned by searchandiser and compare it to the
-     * savedFilters object built in buildnewFilters. When we find a match, update the savedFilters count
+     * savedFilters object built in buildNewFilters. When we find a match, update the savedFilters count
      */
     compare: function (filteredNav) {
         'use strict';
@@ -317,10 +318,17 @@ Navigation.prototype = {
         var originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
             idx = 0,       // filterNav index which may need not be in sync with originalNav index
             savedRefs,
-            selectedFilter; // this filter was "checked" in the navigation;
+            selectedFilter, // this filter was "selected" in the navigation;
+            // doSubNavCounts happens when there is no filtering and we need the original counts for subNav
+            doSubNavCounts = (Norton.savedRefinements.length <= 1),
+            localSubNav = this.savedSubNav[1]; // savedSubNav has empty 0th element
+
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
 
+        for (var p=0; p < this.savedSubNav.length; p++) {
+
+        }
         // iterate over the filteredNav objects
         for(var i=0; i<filteredNav.length; i++) {
             // get index value in originalNav
@@ -363,6 +371,13 @@ Navigation.prototype = {
             // Handle subchapters and subtopics
                 for (var j=0; j < originalNav[idx].refs.length; j++) {
                     for (var k=0; k < originalNav[idx].refs[j].subnav.length; k++) {
+                        if (doSubNavCounts) {
+                            for (var p=0; p < localSubNav.length; p++) {
+                                if (originalNav[idx].refs[j].subnav[k].fullName == localSubNav[p].value) {
+                                    originalNav[idx].refs[j].subnav[k].count = localSubNav[p].count;
+                                }
+                            }
+                        }
                         selectedFilter = false;
                         for (var m = 0; m < filteredNav[i].refinements.length; m++) {
                             if (originalNav[idx].refs[j].subnav[k].fullName == filteredNav[i].refinements[m].value) {
