@@ -15,6 +15,7 @@ var ArticlesCollection = Backbone.Collection.extend({
     
     initialize: function() {
     },
+
     parse: function(res) {
         'use strict';
 
@@ -34,7 +35,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         this.recordEnd = response.pageInfo.recordEnd;
         this.filters = response.availableNavigation;
 
-        _.each(response.records, function(record) {
+        _.each(response.records, function(record, index) {
             /**
              * Next/prev links
              */
@@ -50,10 +51,28 @@ var ArticlesCollection = Backbone.Collection.extend({
             });
             record.baseUrl = Norton.baseUrl;
 
-
         });
 
         return response.records;
+    },
+
+    update: function () {
+        'use strict';
+        var index = this.recordStart - 1, // zero based index
+            prev = index - 1,
+            item, // the first article just fetched
+            prevItem; // previous last fetched article
+
+        /* used to reinsert prevId/nextId */
+        if (prev >= 0 && prev < this.length) {
+            item = this.at(index);
+            prevItem = this.at(prev);
+
+            // backbone model form
+            item.set('prevId', prevItem.get('allMeta').pname);
+            prevItem.set('nextId', item.get('allMeta').pname);
+        }
+
     },
 
     isNotValid: function() {
@@ -70,6 +89,7 @@ var ArticlesCollection = Backbone.Collection.extend({
         idx += params.inc;
 
         if (idx >= 0 && idx < params.records.length) {
+            // raw model form
             return params.records[idx].allMeta.pname;
         }
         return null;
