@@ -72,7 +72,6 @@ var ArticlesCollection = Backbone.Collection.extend({
             item.set('prevId', prevItem.get('allMeta').pname);
             prevItem.set('nextId', item.get('allMeta').pname);
         }
-
     },
 
     isNotValid: function() {

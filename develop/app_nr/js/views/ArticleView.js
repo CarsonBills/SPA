@@ -49,6 +49,8 @@ var ArticleView = Backbone.View.extend({
         if(this.collection.isEmpty()) {
             this.render(true);
         } else {
+            // update prevId/nextId on previous articles
+            this.collection.update();
             this.render(false);
         }
     },
