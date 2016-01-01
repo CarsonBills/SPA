@@ -142,7 +142,6 @@ var AppView = Backbone.View.extend({
                 navigationName: "siteversion",
                 value: Norton.version
             };
-        ;
 
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();

@@ -147,6 +147,7 @@ var YourFavsView = Backbone.View.extend({
     },
 
     updateButtonLabel: function ($target, action) {
+        'use strict';
         var str = $target.data(action);
         $target.find('.button-label').text(str);
     },
@@ -209,7 +210,7 @@ var YourFavsView = Backbone.View.extend({
             title: $('#yourFavsTitle').text(),
             type: $target.data('type'),
             collection: this.collection
-        })
+        });
 
         return false;
     },

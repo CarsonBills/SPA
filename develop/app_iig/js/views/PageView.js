@@ -97,6 +97,7 @@ var PageView = Backbone.View.extend({
     },
 
     getPage: function () {
+        'use strict';
         var that = this;
         this.showLoading();
         this.model.fetch({
@@ -116,6 +117,7 @@ var PageView = Backbone.View.extend({
     },
 
     showVideo: function () {
+        'use strict';
         VideoPlayer.show(this.$(this.PLAYER));
     },
 

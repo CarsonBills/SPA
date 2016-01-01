@@ -17,9 +17,11 @@ var Backbone = require('backbone'),
                 url,
                 nodes;
 
-            if (src === undefined) return;
+            if (src === undefined) {
+                return false;
+            }
 
-            nodes = src.split('/')
+            nodes = src.split('/');
 
             url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
             // Assuming 3rd forward slash and beyond is the file path and name

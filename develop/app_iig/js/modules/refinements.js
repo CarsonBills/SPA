@@ -82,6 +82,7 @@ Navigation.prototype = {
     },
 
     replaceSubNav: function() {
+        'use strict';
         var that = this,
             deferred = $.Deferred(),
             filters = this.collection.availNav;
@@ -124,6 +125,7 @@ Navigation.prototype = {
     },
 
     getSubNavIds: function () {
+        'use strict';
         var filters = this.collection.availNav,
             nested = 0,
             subNavNames = "";

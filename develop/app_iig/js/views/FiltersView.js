@@ -134,7 +134,7 @@ var FiltersView = Backbone.View.extend({
             _.each(checked, function (item) {
                 cat = $(item).data('filter-cat');
                 that.showActive('#' + cat);
-            })
+            });
         } else {
             // if nothing checked expand the first one
             this.showActive(this.ACTIVE);
@@ -160,8 +160,7 @@ var FiltersView = Backbone.View.extend({
                     $(group).addClass('in');
                 }
             }
-        })
-
+        });
     },
 
     showActive: function (category) {
@@ -203,7 +202,8 @@ var FiltersView = Backbone.View.extend({
             selCat = "",
             displayName,
             nameParts,
-            parent = "";
+            parent = "",
+            url;
 
         $("#selectedFilters").empty();
 
@@ -259,19 +259,20 @@ var FiltersView = Backbone.View.extend({
         $("#selectedFilters").append(html);
 
         if (fromUrl) {
-            var url = window.location.href;
+            url = window.location.href;
         } else {
-            var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+            url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
         }
 
 
 
         window.history.pushState(null,null,url);
     },
+
     removeSelectedFilter: function(e, typ) {
         'use strict';
-        var sel ='';
-        var tgt = $(e.target);
+        var sel ='',
+            tgt = $(e.target);
 
         if ($(e.target).attr("data-filter-is-parent")) {
             $( "input[data-filter-parent='" + $(e.target).attr("data-filter-name") + "']" ).attr('checked', false);
@@ -368,6 +369,7 @@ var FiltersView = Backbone.View.extend({
         }
     },
     findParentFilter: function(subFilter) {
+        'use strict';
         var originalNav = JSON.parse(JSON.stringify(this.refinements.savedFilters)),
             target = decodeURIComponent(subFilter);
 

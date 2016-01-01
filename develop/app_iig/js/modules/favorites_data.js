@@ -33,7 +33,7 @@ var Backbone = require('backbone'),
                         pname: data.pname,
                         customIcon: data.customIcon,
                         chapter_id: ""
-                    }
+                    };
                 return new NortonApp.Models.YourFavs(favs);
             },
 

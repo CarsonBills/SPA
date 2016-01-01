@@ -26,13 +26,13 @@ var Backbone = require('backbone'),
                     });
                 });
 
-                uri += (template(data))
+                uri += (template(data));
 
                 win = window.open(uri, params.title);
             },
             openURL = function (url) {
                 if (url) {
-                    window.location = url
+                    window.location = url;
                 }
             };
 
