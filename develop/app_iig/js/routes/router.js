@@ -50,7 +50,7 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         "use strict";
-        window.history.replaceState({}, '',  Norton.baseUrl);
+        window.history.pushState(null, null,  Norton.baseUrl);
     },
 
     index: function() {

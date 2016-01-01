@@ -261,7 +261,19 @@ var ArticleView = Backbone.View.extend({
 
             //$nextItem.find('a.details').focus();
         }
-    },    
+    },
+
+    navigate: function (id) {
+        'use strict';
+
+        if (id && id !== '') {
+            var page = "#/page/" + id;
+            NortonApp.router.navigate(page, {
+                trigger: true,
+                replace: true
+            });
+        }
+    }, 
 
     getNextPrevFromPage: function(e) {
         'use strict';
@@ -270,8 +282,7 @@ var ArticleView = Backbone.View.extend({
          * Otherwise, they are determined above in getNextPrevFromList
          */
         Norton.pageClick = "page";
-        var page,
-            id;
+        var id;
 
         if ($(e.currentTarget).attr('data-next-id') !== undefined) {
             id = $(e.currentTarget).attr('data-next-id');
@@ -279,26 +290,16 @@ var ArticleView = Backbone.View.extend({
             id = $(e.currentTarget).attr('data-prev-id');
         }
 
-        page = "page/" + id;
-
-        NortonApp.router.navigate('#/' + page, {
-            trigger: true,
-            replace: true
-        });
+        this.navigate(id);
 
         return false;
     },
 
     getNextPrevFromList: function(e) {
         'use strict';
-        /**
-         * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
-         */
-        var page = "page/" + $(e.currentTarget).attr('data-id');
-
-        if (Backbone.history.fragment === page) {
-            NortonApp.router.navigate('#/' + page, true);
-        }
+        Norton.pageClick = "list";
+        this.navigate($(e.currentTarget).attr('data-id'));
+        return false;
     },
     
     saveLastItemID: function() {
