@@ -1,7 +1,6 @@
 
 // Data constructor
 var NavigationCollection = require('../collections/NavigationCollection'),
-    //SubNavManager = require('../modules/sub_nav_manager'),
     $ = require('jquery'),
     _ = require('underscore'),
     ErrorsManager = require('../modules/errors_manager'),
@@ -17,7 +16,7 @@ Navigation.prototype = {
     url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
     savedFilters: null,
-    savedSubNav: [],
+//    savedSubNav: [],
 
     initialize: function () {
         'use strict';
@@ -46,6 +45,9 @@ Navigation.prototype = {
             success: function(data) {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
                     that.deferred.resolve(data);
+                    // Build navFilter list
+                    that.buildNewFilters();
+/*
                     $.when(that.replaceSubNav())
                         .then(function (res1) {
                             that.deferred.resolve(res1);
@@ -54,7 +56,7 @@ Navigation.prototype = {
                             ErrorsManager.showGeneric();
                             Logger.get(that.MODULE).error(res1);
                         });
-
+*/
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -81,6 +83,7 @@ Navigation.prototype = {
         return result;
     },
 
+/*
     replaceSubNav: function() {
         'use strict';
         var that = this,
@@ -137,24 +140,6 @@ Navigation.prototype = {
                 if (filters[i].metadata[j].key == "subnavname") {
                     subNavNames  = filters[i].metadata[j].value;
                     return subNavNames;
-                }
-            }
-        }
-
-        return subNavNames;
-    },
-    
-/*    getSubNavIds: function () {
-        var filters = this.collection.availNav,
-            nested = 0,
-            subNavNames = [];
-
-        for (var i=0; i<filters.length; i++) {
-            nested = 0;
-            for (var j=0; j < filters[i].metadata.length; j++) {
-
-                if (filters[i].metadata[j].key == "subnavname") {
-                    subNavNames.push(filters[i].metadata[j].value);
                 }
             }
         }
@@ -322,15 +307,12 @@ Navigation.prototype = {
             savedRefs,
             selectedFilter, // this filter was "selected" in the navigation;
             // doSubNavCounts happens when there is no filtering and we need the original counts for subNav
-            doSubNavCounts = (Norton.savedRefinements.length <= 1),
-            localSubNav = this.savedSubNav[1]; // savedSubNav has empty 0th element
+//            doSubNavCounts = (Norton.savedRefinements.length <= 1),
+//            localSubNav = this.savedSubNav[1]; // savedSubNav has empty 0th element
 
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
 
-        for (var p=0; p < this.savedSubNav.length; p++) {
-
-        }
         // iterate over the filteredNav objects
         for(var i=0; i<filteredNav.length; i++) {
             // get index value in originalNav
@@ -373,6 +355,7 @@ Navigation.prototype = {
             // Handle subchapters and subtopics
                 for (var j=0; j < originalNav[idx].refs.length; j++) {
                     for (var k=0; k < originalNav[idx].refs[j].subnav.length; k++) {
+/*
                         if (doSubNavCounts) {
                             for (var p=0; p < localSubNav.length; p++) {
                                 if (originalNav[idx].refs[j].subnav[k].fullName == localSubNav[p].value) {
@@ -380,6 +363,7 @@ Navigation.prototype = {
                                 }
                             }
                         }
+*/
                         selectedFilter = false;
                         for (var m = 0; m < filteredNav[i].refinements.length; m++) {
                             if (originalNav[idx].refs[j].subnav[k].fullName == filteredNav[i].refinements[m].value) {
