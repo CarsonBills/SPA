@@ -79,7 +79,7 @@ $(function() {
         if (!paths[1]) {
             Norton.version = "full";
             Norton.baseUrl += "full";
-            window.history.pushState(null,null,Norton.baseUrl);
+            //window.history.pushState(null,null,Norton.baseUrl);
         } else {
             Norton.version = paths[1];
         }

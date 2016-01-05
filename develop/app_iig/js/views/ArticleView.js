@@ -263,18 +263,6 @@ var ArticleView = Backbone.View.extend({
         }
     },
 
-    navigate: function (id) {
-        'use strict';
-
-        if (id && id !== '') {
-            var page = "#/page/" + id;
-            NortonApp.router.navigate(page, {
-                trigger: true,
-                replace: true
-            });
-        }
-    }, 
-
     getNextPrevFromPage: function(e) {
         'use strict';
         /**
@@ -290,7 +278,7 @@ var ArticleView = Backbone.View.extend({
             id = $(e.currentTarget).attr('data-prev-id');
         }
 
-        this.navigate(id);
+        NortonApp.router.navigateToID(id);
 
         return false;
     },
@@ -298,7 +286,7 @@ var ArticleView = Backbone.View.extend({
     getNextPrevFromList: function(e) {
         'use strict';
         Norton.pageClick = "list";
-        this.navigate($(e.currentTarget).attr('data-id'));
+        NortonApp.router.navigateToID($(e.currentTarget).attr('data-id'));
         return false;
     },
     

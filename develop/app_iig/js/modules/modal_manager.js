@@ -21,6 +21,10 @@ var Backbone = require('backbone'),
                 });
                 // modals don't detect close event from back button so use event handler to close with popstate change
                 $(window).on("popstate", function(e) {
+                    var state = e.originalEvent.state;
+                    if (state) {
+                        NortonApp.router.navigateToID(state.id);
+                    }
                     if (window.location.href === Norton.baseUrl) {
                         try {
                             hide();

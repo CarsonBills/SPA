@@ -20,7 +20,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     initialize: function() {
-        "use strict";
+        'use strict';
         var that = this;
 
         this.getData().then(function() {   // use a promise to wait for site_config if it is not in localstorage
@@ -35,7 +35,7 @@ var AppRouter = Backbone.Router.extend({
     },
 
     getData: function () {
-        "use strict";
+        'use strict';
         var that = this;
         $.when(this.handleSiteConfig(), this.refinements.fetch())
             .then(function (res1, res2) {
@@ -49,35 +49,50 @@ var AppRouter = Backbone.Router.extend({
     },
 
     returnHome: function () {
-        "use strict";
-        window.history.pushState(null, null,  Norton.baseUrl);
+        'use strict';
+        window.history.pushState({}, null,  Norton.baseUrl);
     },
 
+    navigateToID: function (id, pushOnly) {
+        'use strict';
+
+        if (id && id !== '') {
+            var page = "#/page/" + id;
+            if (!pushOnly) {
+                this.navigate(page, {
+                    trigger: true,
+                    replace: false
+                });
+            }
+            window.history.replaceState({id: id}, null,  page);
+        }
+    }, 
+
     index: function() {
-        "use strict";
+        'use strict';
     },
     search: function() {
-        "use strict";
+        'use strict';
 
     },
     page: function(id) {
-        "use strict";
+        'use strict';
         this.appView.showDetailPage(id, true);
     },
     filter: function() {
-        "use strict";
+        'use strict';
         this.appView.filtersView.buildRefinementsFromUrl();
     },
     favs: function() {
-        "use strict";
+        'use strict';
 
     },
     start: function() {
-        "use strict";
+        'use strict';
         Backbone.history.start();
     },
     handleSiteConfig: function() {
-        "use strict";
+        'use strict';
         var that = this,
             dfd = $.Deferred();
 
@@ -129,7 +144,7 @@ var AppRouter = Backbone.Router.extend({
         return dfd.promise();
     },
     protectedContentCheck: function() {
-        "use strict";
+        'use strict';
         if (NortonApp.headerConfigItem.attributes.siteMode === "protected" && !Norton.isLoggedIn) {
             window.location.href = Norton.Constants.loginUrl;
         }

@@ -256,6 +256,8 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
+
+                NortonApp.router.navigateToID(id, true);
                 that.articleView.showDetail(id);
             });
         }        
