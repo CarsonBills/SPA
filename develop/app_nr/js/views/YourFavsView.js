@@ -4,10 +4,13 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager'),
-    Favorites =  require('../modules/favorites_helper');
+    Favorites = require('../modules/favorites_helper'),
+    FavoritesData = require('../modules/favorites_data');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
+    SAVE: 'save',
+    REMOVE: 'remove',
     templateHdr: require('../../templates/YourFavsHeaderTemplate.hbs'),
     templateItem: require('../../templates/YourFavsTemplate.hbs'),
     modal: '#modal-container',
@@ -121,6 +124,11 @@ var YourFavsView = Backbone.View.extend({
         }});
     },
 
+    updateButtonLabel: function ($target, action) {
+        var str = $target.data(action);
+        $target.find('.button-label').text(str);
+    },
+
     toggleYourFavs: function(e) {
         'use strict';
 
@@ -129,28 +137,35 @@ var YourFavsView = Backbone.View.extend({
             id = $target.data('item-id'),
             favsData = {},
             article = this.articles.getModelByAttribute("pname", id),
-            articleData = article.attributes.allMeta,
+            articleData,
             model = this.collection.getModelByAttribute("pname", id);
+
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
+            this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
             return false;
         }
 
-        this.showPopover($target, "Item Added");
+        // found already in the collection
+        if (article) {
+            articleData = article.attributes.allMeta;
+            favsData = FavoritesData.input({
+                data: articleData,
+                version: Norton.version
+            });
 
-        favsData.pname = articleData.pname;
-        favsData.pageNumber = articleData.pageNumber;
-        favsData.abstract = articleData.abstract;
-        favsData.title = articleData.title;
-        favsData.authorLastName = articleData.primaryAuthor.authorLastName;
-        favsData.authorFirstName = articleData.primaryAuthor.authorFirstName;
-        favsData.authorMiddleName = articleData.primaryAuthor.authorMiddleName;
-        favsData.ebookNode = articleData.ebookNode;
-        favsData.baseUrl = Norton.baseUrl;
-        favsData.id = articleData.id;
-        this.collection.add(new NortonApp.Models.YourFavs(favsData));
+            this.showPopover($target, "Item Added");
+
+        } else {
+            // this is triggered from page not in the collection
+            articleData = this.articles.getCurrentPageDetail(id);
+
+            favsData = FavoritesData.inputCurrentPage(articleData.get('data'));
+        }
+        this.collection.add(favsData);
+        this.updateButtonLabel($target, this.REMOVE);
 
         this.saveLocalStorage();
         this.updateCount();
@@ -183,7 +198,7 @@ var YourFavsView = Backbone.View.extend({
             type: $target.data('type'),
             filename: $target.data('filename'),
             collection: this.collection
-        })
+        });
 
         return false;
     },

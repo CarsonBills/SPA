@@ -84,7 +84,7 @@ var AppView = Backbone.View.extend({
             el: ".page-footer"
         });
 
-        this.articleView.toggleView(EventManager.LIST_VIEW);
+        this.articleView.toggleView(EventManager.GRID_VIEW);
 
         this.deferred.promise().done(function () {
             that.toggleFilter();
@@ -142,7 +142,6 @@ var AppView = Backbone.View.extend({
                 navigationName: "siteversion",
                 value: Norton.version
             };
-        ;
 
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();

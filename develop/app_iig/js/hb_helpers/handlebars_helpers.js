@@ -35,9 +35,7 @@ module.exports = (function() {
     });
     // filters helper
     Handlebars.registerHelper('HBMatchWord', function(name, match, options) {
-        var fnTrue = options.fn, 
-            fnFalse = options.inverse;
-        return (name === match) ? fnTrue(this) : fnFalse(this);
+        return (name === match) ? options.fn(this) : options.inverse(this);
     });
     Handlebars.registerHelper('HBIsCollapsed', function(name) {
         return (name === "chapter") ? "collapsed" : "";
@@ -60,10 +58,10 @@ module.exports = (function() {
     });
     Handlebars.registerHelper('HBDetailFilters', function(data) {
         var node = "";
-        if (data.type != "Keyword") {
+        if (data.type !== undefined && data.type !== "Keyword") {
             node += "<strong>" + data.type + ": </strong>";
             if (_.isString(data.value)) {
-                node += (data.value + "</br>");
+                node += (data.value);
             }
             if (_.isArray(data.value)) {
                 _.each(data.value, function (val, index) {
@@ -73,7 +71,7 @@ module.exports = (function() {
                         if (index < data.value.length - 1) {
                             node += "|";
                         } else {
-                            node += "</br>";
+                            //node += "</br>";
                         }
                     }
                 });
@@ -110,5 +108,8 @@ module.exports = (function() {
             return options.fn(this);
         }
     });
+    Handlebars.registerHelper('HBFilterChecked', function(checked) {
+        return (checked !== '') ? ' in' : '';
+    });   
 
 })();

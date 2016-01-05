@@ -2,10 +2,11 @@
 // Data constructor
 var NavigationCollection = require('../collections/NavigationCollection'),
     $ = require('jquery'),
+    _ = require('underscore'),
     ErrorsManager = require('../modules/errors_manager'),
 
     Navigation = function (options) {
-        "use strict";
+        'use strict';
         this.initialize();
     };
 
@@ -14,16 +15,16 @@ Navigation.prototype = {
     MODULE: 'refinements',
     url: Norton.Constants.searchUrl,
     deferred: $.Deferred(),
-    refFilters: null,
-
+    savedFilters: null,
+//    savedSubNav: [],
 
     initialize: function () {
-        "use strict";
+        'use strict';
         this.collection = new NavigationCollection();
 
     },
     fetch: function () {
-        "use strict";
+        'use strict';
         var that = this;
         var postdata = {
             sitecode: Norton.siteCode,
@@ -45,7 +46,17 @@ Navigation.prototype = {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
                     that.deferred.resolve(data);
                     // Build navFilter list
-                    that.buildnewFilters();
+                    that.buildNewFilters();
+/*
+                    $.when(that.replaceSubNav())
+                        .then(function (res1) {
+                            that.deferred.resolve(res1);
+                        },
+                        function (res1) {
+                            ErrorsManager.showGeneric();
+                            Logger.get(that.MODULE).error(res1);
+                        });
+*/
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -60,6 +71,82 @@ Navigation.prototype = {
 
     },
 
+    getMetaData: function (meta, prop) {
+        'use strict';
+        var result;
+
+        _.each(meta, function(item) {
+            if (item.key === prop) {
+                result = item.value;
+            }
+        });
+        return result;
+    },
+
+/*
+    replaceSubNav: function() {
+        'use strict';
+        var that = this,
+            deferred = $.Deferred(),
+            filters = this.collection.availNav;
+
+        var subNav = this.getSubNavIds();
+
+        var postdata = {
+            sitecode: Norton.searchRepo,
+            siteversion: Norton.version,
+            nav: subNav
+        };
+
+        $.ajax({
+            type:'POST',
+            url: Norton.Constants.subNavUrl,
+            data: postdata,
+            dataType: "json",
+
+            success: function(response) {
+                if (response.status !== ErrorsManager.FAIL_STATE) {
+                    for (var j=0; j< filters.length; j++) {
+                        if (filters[j].name == subNav) {
+                            filters[j].refinements = response.data.navigation.refinements;
+                            that.savedSubNav[j] = response.data.navigation.refinements;
+                        }
+                    }
+                    that.buildNewFilters();
+                    deferred.resolve(response.data);
+                } else {
+                    deferred.reject(ErrorsManager.FAIL_STATE);
+                }
+            },
+            error: function(collection, res, options) {
+                Logger.error("SubNav request failed.");
+                deferred.reject(res);
+            }
+        });
+
+        return this.deferred.promise();
+    },
+
+    getSubNavIds: function () {
+        'use strict';
+        var filters = this.collection.availNav,
+            nested = 0,
+            subNavNames = "";
+
+        for (var i=0; i<filters.length; i++) {
+            nested = 0;
+            for (var j=0; j < filters[i].metadata.length; j++) {
+
+                if (filters[i].metadata[j].key == "subnavname") {
+                    subNavNames  = filters[i].metadata[j].value;
+                    return subNavNames;
+                }
+            }
+        }
+
+        return subNavNames;
+    },
+*/
 
     /**
      * Chapters/Topics and subchapters/substopics come as 2 separate objects in searchandiser json. The only link is a hash-in-common.
@@ -70,7 +157,9 @@ Navigation.prototype = {
      *
      * Also, Keep the objects consistent whether for chapters/topics or other categories
      */
-    buildnewFilters: function() {
+    buildNewFilters: function() {
+        'use strict';
+
         var newFilters = [],
             chaptersIndex,
             topicsIndex,
@@ -80,21 +169,27 @@ Navigation.prototype = {
             nameParts,
             order,
             suborder,
-            unorderedIndex = 9900;
-
+            unorderedIndex = 9900,
+            nested,
             filters = this.collection.availNav;
 
         // Have to do this in 3 passes so we keep get subchapters after chapters and subtopics after topics
         // Handle Chapters and Topics
         for (var i=0; i<filters.length; i++) {
-            // ignore any nav that is not a chapter or topic for now
+
+            if (filters[i].metadata[0]) {
+
+            }
             if (filters[i].name != "dimChapters" && filters[i].name != "dimTopics") {
                 continue;
             }
 
+            nested = this.getMetaData(filters[i].metadata, 'nested');
+
             newFilters[i] = {};
             newFilters[i].catName = filters[i].name;
             newFilters[i].displayName = filters[i].displayName;
+            newFilters[i].nested = nested;
             newFilters[i].refs = [];
 
             if (filters[i].name == "dimChapters") {
@@ -111,7 +206,7 @@ Navigation.prototype = {
             for (var j = 0; j < filters[i].refinements.length; j++) {
                 nameParts = filters[i].refinements[j].value.split("_");
                 order = nameParts[0];
-                if (!order) {   // item may not be ordered in which case force it to the end of the nav
+                if (!$.isNumeric(order) || order == 999) {   // item may not be ordered in which case force it to the end of the nav
                     order = unorderedIndex++;
                 }
                 newFilters[i].refs[j] = {};
@@ -146,7 +241,7 @@ Navigation.prototype = {
                 for (var j = 0; j < filters[i].refinements.length; j++) {
                     nameParts = filters[i].refinements[j].value.split("_");
                     suborder = nameParts[1];
-                    if (!suborder) {    // item may not be ordered in which case force it to the end of the nav
+                    if (!$.isNumeric(suborder) || suborder == 999) {    // item may not be ordered in which case force it to the end of the nav
                         suborder = unorderedIndex++;
                     }
 
@@ -181,9 +276,12 @@ Navigation.prototype = {
              * For Order,use an increment
              */
             for (var j = 0; j < filters[i].refinements.length; j++) {
+                nameParts = filters[i].refinements[j].value.split("_");
+
                 newFilters[otherIndex].refs[j] = {};
                 newFilters[otherIndex].refs[j].id = filters[i].refinements[j].value;
                 newFilters[otherIndex].refs[j].name = filters[i].refinements[j].value;
+                newFilters[otherIndex].refs[j].name = nameParts[1];
                 newFilters[otherIndex].refs[j].count = 0;
                 newFilters[otherIndex].refs[j].cat_display = filters[i].displayName;
                 newFilters[otherIndex].refs[j].cat = filters[i].refinements[j].value;
@@ -194,22 +292,23 @@ Navigation.prototype = {
             otherIndex++;
         }
 
-        this.refFilters = newFilters;
+        this.savedFilters = newFilters;
     },
     /**
      * Take the filtered nav returned by searchandiser and compare it to the
-     * refFilters object built in buildnewFilters. When we find a match, update the refFilters count
+     * savedFilters object built in buildNewFilters. When we find a match, update the savedFilters count
      */
     compare: function (filteredNav) {
-        Logger.get("orig filters").error(this.refFilters);
-        Logger.get("new filters").error(filteredNav);
-
+        'use strict';
         // NOTE: If your object has functions, they won't be copied using this technique
         // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-        var originalNav = JSON.parse(JSON.stringify(this.refFilters)),
+        var originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
             idx = 0,       // filterNav index which may need not be in sync with originalNav index
             savedRefs,
-            selectedFilter; // this filter was "checked" in the navigation;
+            selectedFilter, // this filter was "selected" in the navigation;
+            // doSubNavCounts happens when there is no filtering and we need the original counts for subNav
+//            doSubNavCounts = (Norton.savedRefinements.length <= 1),
+//            localSubNav = this.savedSubNav[1]; // savedSubNav has empty 0th element
 
         // do this to eliminate "undefined" check throughout
         savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
@@ -256,6 +355,15 @@ Navigation.prototype = {
             // Handle subchapters and subtopics
                 for (var j=0; j < originalNav[idx].refs.length; j++) {
                     for (var k=0; k < originalNav[idx].refs[j].subnav.length; k++) {
+/*
+                        if (doSubNavCounts) {
+                            for (var p=0; p < localSubNav.length; p++) {
+                                if (originalNav[idx].refs[j].subnav[k].fullName == localSubNav[p].value) {
+                                    originalNav[idx].refs[j].subnav[k].count = localSubNav[p].count;
+                                }
+                            }
+                        }
+*/
                         selectedFilter = false;
                         for (var m = 0; m < filteredNav[i].refinements.length; m++) {
                             if (originalNav[idx].refs[j].subnav[k].fullName == filteredNav[i].refinements[m].value) {

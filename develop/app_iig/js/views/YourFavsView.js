@@ -3,11 +3,14 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
-    TrackManager = require('../modules/track_manager');
-    FavoritesData = require('../modules/favorites_data');
+    TrackManager = require('../modules/track_manager'),
+    FavoritesData = require('../modules/favorites_data'),
+    DetailsParser = require('../modules/details_model_parser');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
+    SAVE: 'save',
+    REMOVE: 'remove',
     templateHdr: require('../../templates/modules/YourFavsHeaderTemplate.hbs'),
     templateItem: require('../../templates/modules/YourFavsTemplate.hbs'),
     modal: '#modal-container',
@@ -52,7 +55,8 @@ var YourFavsView = Backbone.View.extend({
         var that = this,
             $div = $('<div></div>'),
             hasContent = (this.collection.length > 0),
-            template;
+            template,
+            tmpObj;
 
         template = this.templateHdr({
             hasContent: hasContent,
@@ -63,7 +67,14 @@ var YourFavsView = Backbone.View.extend({
 
         if (hasContent) {
             _.each(this.collection.models, function(article) {
-                template = that.templateItem(article.toJSON());
+                tmpObj = $.extend({}, article.toJSON());
+                if (tmpObj.downloads.src) {
+                    tmpObj.downloads.src = DetailsParser.parseUrl(tmpObj.downloads.src);
+                }
+
+                tmpObj.baseUrl = Norton.baseUrl;
+
+                template = that.templateItem(tmpObj);
                 $div.find(that.body).append(template);
             });
         } else {
@@ -135,6 +146,12 @@ var YourFavsView = Backbone.View.extend({
         }, 1000);
     },
 
+    updateButtonLabel: function ($target, action) {
+        'use strict';
+        var str = $target.data(action);
+        $target.find('.button-label').text(str);
+    },
+
     toggleYourFavs: function(e) {
         'use strict';
 
@@ -143,20 +160,27 @@ var YourFavsView = Backbone.View.extend({
             id = $target.data('item-id'),
             favs,
             article = this.articles.getModelByAttribute("pname", id),
-            articleData = article.attributes.allMeta,
+            articleData,
             model = this.collection.getModelByAttribute("pname", id);
 
         // Don't add again
         if ( model !== undefined) {
             this.showPopover($target, "Item Removed");
+            this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
             return false;
         }
+        if (article) {
+            articleData = article.attributes.allMeta;
 
-        this.showPopover($target, "Item Added");
-
+            this.showPopover($target, "Item Added");
+        } else {
+            articleData = this.articles.getCurrentPageDetail(id);
+        }
         favs = FavoritesData.input(articleData);
+
         this.collection.add(favs);
+        this.updateButtonLabel($target, this.REMOVE);
 
         this.updateCount();
         if (Norton.isLoggedIn) {
@@ -186,7 +210,7 @@ var YourFavsView = Backbone.View.extend({
             title: $('#yourFavsTitle').text(),
             type: $target.data('type'),
             collection: this.collection
-        })
+        });
 
         return false;
     },

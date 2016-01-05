@@ -9,17 +9,18 @@ var Backbone = require("backbone"),
 
 var FiltersView = Backbone.View.extend({
     THRESHOLD: 10,
+    PARENT: 'parent',
     el: "#filters",
     template: require("../../templates/modules/FiltersTemplate.hbs"),
+    selectedTemplate: require("../../templates/modules/FiltersSelectedTemplate.hbs"),
     refinements: Refinements.getInstance(),
     filterContent: "",
     delay: true,
     app: null,
-    ACTIVE: "#chapter",
+    ACTIVE: "#dimChapters",
     active: "",
     adjustHieght: null,
     currentHeight: 0,
-    firstTime: false,
 
     initialize: function(params) {
         'use strict';
@@ -50,7 +51,6 @@ var FiltersView = Backbone.View.extend({
 
         this.render();
         this.adjustHieght();
-        this.checkSelected();
     },
 
     render: function () {
@@ -58,6 +58,7 @@ var FiltersView = Backbone.View.extend({
         var that = this,
             filterTemplate,
             i;
+
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
@@ -75,7 +76,8 @@ var FiltersView = Backbone.View.extend({
 
         this.showActive();
         this.toggleChecked();
-        this.firstTime = true;
+        this.checkSelected();
+        this.showSelectedFilter(null, 'fromUrl');
 
         return this;
     },
@@ -132,7 +134,7 @@ var FiltersView = Backbone.View.extend({
             _.each(checked, function (item) {
                 cat = $(item).data('filter-cat');
                 that.showActive('#' + cat);
-            })
+            });
         } else {
             // if nothing checked expand the first one
             this.showActive(this.ACTIVE);
@@ -158,8 +160,7 @@ var FiltersView = Backbone.View.extend({
                     $(group).addClass('in');
                 }
             }
-        })
-
+        });
     },
 
     showActive: function (category) {
@@ -169,7 +170,7 @@ var FiltersView = Backbone.View.extend({
         if ($cat.hasClass('collapsed')) {
             $cat.removeClass('collapsed');
 
-            this.$('.filter-item').removeClass('in');
+            //this.$('.filter-item').removeClass('in');
             this.$(category).addClass('in');
 
             this.adjustHieght();
@@ -194,12 +195,15 @@ var FiltersView = Backbone.View.extend({
      * Display filtered content (refresh ArticleView)
      * @param e
      */
-    showSelectedFilter: function(e) {
+    showSelectedFilter: function(e, fromUrl) {
         'use strict';
-        var html = "",
+       var that = this,
+            html = "",
             selCat = "",
             displayName,
-            nameParts;
+            nameParts,
+            parent = "",
+            url;
 
         $("#selectedFilters").empty();
 
@@ -216,10 +220,14 @@ var FiltersView = Backbone.View.extend({
 
         $(".filter-checkbox").each(function() {
             if ($(this).prop('checked')) {
-
                 if (selCat != $(this).attr('data-filter-cat-display')) {
                     selCat = $(this).attr('data-filter-cat-display');
-                    html += '<div class="sel-filter-cat">'+selCat+'</div>';
+                    //html += '<div class="sel-filter-cat">'+selCat+'</div>';
+
+
+                    if ($(this).data('filter-is-parent')) {
+                        parent = that.PARENT;
+                    }
                 }
 
                 // chapters: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
@@ -231,27 +239,40 @@ var FiltersView = Backbone.View.extend({
                     displayName = $(this).attr('data-filter-name');
                 }
 
-                html += '<div class="selected-filters"><div class="active-filter">' + displayName +
+                html += that.selectedTemplate({
+                    displayName: displayName,
+                    filterName: $(this).attr('data-filter-name'),
+                    filterCat: $(this).attr('data-filter-cat')
+                });
+
+                /*html += '<div class="selected-filters"><div class="active-filter">' + displayName +
                     '&nbsp;&nbsp;&nbsp;&nbsp; <span data-close-filter-name="' + $(this).attr('data-filter-name') +
                     '" data-close-filter-cat="' + $(this).attr('data-filter-cat') +
-                    '" class="clear-filter">x</span></div></div>';
+                    '" class="clear-filter">x</span></div></div>';*/
             }
         });
 
         if (html) {
-            html = '<div class="remove-all-filters" id="removeAllFilters">Remove all filters</div>' + html;
+            html = '<button class="remove-all-filters" data-type="iig-filters" id="removeAllFilters">Remove all filters</button>' + html;
         }
 
         $("#selectedFilters").append(html);
 
-        var url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+        if (fromUrl) {
+            url = window.location.href;
+        } else {
+            url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
+        }
+
+
 
         window.history.pushState(null,null,url);
     },
+
     removeSelectedFilter: function(e, typ) {
         'use strict';
-        var sel ='';
-        var tgt = $(e.target);
+        var sel ='',
+            tgt = $(e.target);
 
         if ($(e.target).attr("data-filter-is-parent")) {
             $( "input[data-filter-parent='" + $(e.target).attr("data-filter-name") + "']" ).attr('checked', false);
@@ -309,6 +330,7 @@ var FiltersView = Backbone.View.extend({
         });
 
         Norton.savedRefinements = cats;
+
         this.app.formatRefinements();   // call getArticles() in AppView
 
         for (key in cats) {
@@ -335,18 +357,20 @@ var FiltersView = Backbone.View.extend({
         }
 
         Norton.savedRefinements = refs;
-        this.app.formatRefinements();   // call getArticles() in AppView
 
         if (this.app.dataReady) {
-            this.showSelectedFilter();
+            this.app.formatRefinements();   // call getArticles() in AppView
+            //this.showSelectedFilter(null, 'fromUrl');
         } else {
             this.app.deferred.promise().done(function () {
-                that.showSelectedFilter();
+                that.app.formatRefinements();   // call getArticles() in AppView
+                //that.showSelectedFilter(null, 'fromUrl');
             });
         }
     },
     findParentFilter: function(subFilter) {
-        var originalNav = JSON.parse(JSON.stringify(this.refinements.refFilters)),
+        'use strict';
+        var originalNav = JSON.parse(JSON.stringify(this.refinements.savedFilters)),
             target = decodeURIComponent(subFilter);
 
         for (var i=0; i < originalNav.length; i++) {

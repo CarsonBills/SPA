@@ -1,21 +1,14 @@
         <div class="meta">
-            {{#if data.downloadAsset}}
-                <p class="format"><strong>Format:</strong> {{{data.downloadAsset.format}}}</p>
-                <p class="size"><strong>Size:</strong> {{{data.downloadAsset.fileSize}}}</p>
-            {{/if}}
+            <hr>
 
             {{#if data.tags}}
-            <p class="tags">
                 <strong>{{tagLabel}}</strong>
-                {{{HBContentItemTags data}}}  
-            </p>
+                <span>{{{HBContentItemTags data}}}</span> 
             {{/if}}
 
             {{#if data.filters}}
-            <p class="page-filters">  
                 {{#each data.filters}}
-                    <span class="page-filter">{{{HBDetailFilters this}}}</span>
+                    <span>{{{HBDetailFilters this}}}</span>
                 {{/each}}
-            </p>
             {{/if}}
         </div>

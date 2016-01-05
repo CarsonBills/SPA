@@ -66,6 +66,7 @@ var gulp = require('gulp'),
         sprite: '/sprite/',
         svg_sprite: '/images/svg_sprite.svg',
         prod: '_prod',
+        qa: '_qa',
         dev: '_dev'
     };
 
@@ -93,12 +94,11 @@ function getHTMLAssets(path) {
 function getVersion (version) {
     var result;
 
-    if (version === 'qa' || version === 'dev' || version === 'prod') {
+    if (version === 'qa' || version === 'prod') {
         result = '_' + version;
     } else {
         result = settings.dev;
     }
-    console.log('current version: ' + result);
     return result;
 }
 
@@ -107,16 +107,16 @@ function isProd() {
 }
 
 function isDev() {
-    return process.env.VERSION === 'dev';
+    return getVersion() === settings.dev;
 }
 
 var site = process.env.SITE || 'iig',
     version = getVersion(process.env.VERSION);
 
+
 gulp.task('echo', function () {
     console.log(getVersion(process.env.VERSION));
 });
-
 
 gulp.task('fileinclude', function () {
     var assets;
@@ -170,7 +170,7 @@ gulp.task('sass:develop', function () {
             message: 'site: ' + site + ' Sass:Develop done'
         }))
         .pipe($.size())
-        .pipe(gulpif(isDev(), $.livereload()))
+        .pipe($.livereload())
 });
 
 gulp.task('sass:production', function () {
@@ -356,9 +356,9 @@ gulp.task('customize:modernizr', function() {
             'prefixes',
             'hasEvent',
             'mq',
-            'testProp',
+            /*'testProp',
             'testStyles',
-            'setClasses',
+            'setClasses',*/
             'addTest',
             'html5printshiv'
         ],
@@ -556,7 +556,7 @@ gulp.task('upload:s3', [], function() {
         return gulp.src([
 
             deploy + 'iig' + settings.prod + '/**',
-            '!' + deploy + 'iig' + settings.prod + '/index.html',
+            '!' + deploy + 'iig' + settings.prod + '/*.html',
             '!' + deploy + 'iig' + settings.prod + settings.css + '/app.css',
             '!' + deploy + 'iig' + settings.prod + settings.fonts + '**',
             '!' + deploy + 'iig' + settings.prod + settings.images + '**',
@@ -574,7 +574,7 @@ gulp.task('upload:s3', [], function() {
         return gulp.src([
 
             deploy + site + settings.prod + '/**',
-            '!' + deploy + site + settings.prod + '/index.html',
+            '!' + deploy + site + settings.prod + '/*.html',
             '!' + deploy + site + settings.prod + settings.fonts + '**',
             '!' + deploy + site + settings.prod + settings.json + '**',
             '!' + deploy + site + settings.prod + settings.php + '**',
@@ -590,7 +590,7 @@ gulp.task('upload:s3', [], function() {
 
     gulp.src([
         deploy + site + settings.prod + '/**',
-        '!' + deploy + site + settings.prod + '/index.html',
+        '!' + deploy + site + settings.prod + '/*.html',
         '!' + deploy + site + settings.prod + settings.json + '**',
         '!' + deploy + site + settings.prod + settings.php + '**',
         '!' + deploy + site + settings.prod + settings.images + 'intro_bg.jpg',

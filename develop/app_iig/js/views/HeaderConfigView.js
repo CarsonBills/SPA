@@ -51,7 +51,7 @@ var HeaderConfigView = Backbone.View.extend({
     },
 
     events: {
-        'click .links a': 'onLinks',
+        //'click .links a': 'onLinks',
         'click .sign-in': 'onSignIn'
     },
 
@@ -68,9 +68,10 @@ var HeaderConfigView = Backbone.View.extend({
         'use strict';
 
         var $target = $(e.currentTarget);
-
+        if ($target.prop('target') === 'modal') {
+            this.getCredits($target.prop('href'));
+        }
         return false;
-
     }
 }); 
 

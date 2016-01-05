@@ -10,6 +10,8 @@ var ArticlesCollection = Backbone.Collection.extend({
     recordEnd: 0,
     filters: null,
     showGridView: false,
+    currentPage: null,
+
     initialize: function() {
     },
     parse: function(res) {
@@ -57,6 +59,24 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return response.records;
+    },  
+
+    update: function () {
+        'use strict';
+        var index = this.recordStart - 1, // zero based index
+            prev = index - 1,
+            item, // the first article just fetched
+            prevItem; // previous last fetched article
+
+        /* used to reinsert prevId/nextId */
+        if (prev >= 0 && prev < this.length) {
+            item = this.at(index);
+            prevItem = this.at(prev);
+
+            // backbone model form
+            item.set('prevId', prevItem.get('allMeta').pname);
+            prevItem.set('nextId', item.get('allMeta').pname);
+        }
     },
 
     isNotValid: function() {
@@ -80,34 +100,6 @@ var ArticlesCollection = Backbone.Collection.extend({
         }
         return null;
     },
-
-    /*prev: function(model) {
-        'use strict';
-
-        var idx = this.current(model);
-        idx -= 1;
-
-        if (idx > 0) {
-            return this.at(idx - 1).attributes.allMeta.pname;
-        }
-
-        return null;
-    },
-    next: function(model) {
-        'use strict';
-
-        var idx = this.current(model);
-        idx += 1;
-
-        if (idx < (this.length - 1)) {
-            return this.at(idx + 1).attributes.allMeta.pname;
-        }
-        return null;
-    },
-    current: function(id) {
-        'use strict';
-        return this.indexOf(id);
-    },*/
 
     setShowGrid: function (bool) {
         'use strict';
@@ -140,6 +132,21 @@ var ArticlesCollection = Backbone.Collection.extend({
         });
 
         return model;
+    },
+
+    saveCurrentPageDetail: function (model) {
+        'use strict';
+        if (model) {
+            this.currentPage = model;
+        }
+    },
+
+    getCurrentPageDetail: function (id) {
+        'use strict';
+        if (this.currentPage.get('id') === id) {
+            return this.currentPage;
+        }
+        return null;
     }
 });
 

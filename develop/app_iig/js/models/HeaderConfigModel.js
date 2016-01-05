@@ -12,6 +12,8 @@ var HeaderConfigModel = Backbone.Model.extend({
         siteVersionLabel: '',
         publishDate: '',
         sunsetDate: '',
+        disciplineId: '',
+        searchRepo: '',
         introPanelCopy: '',
         introPanelImage: {
             type: '',
@@ -49,15 +51,21 @@ var HeaderConfigModel = Backbone.Model.extend({
     },
     parse: function(response) {
         "use strict";
+
         if (response.code !== 200) {
             Logger.debug('Site Config return code is" ' + response.code);
             this.status = ErrorsManager.FAIL_STATE;
-            ErrorsManager.showGeneric();
+            if (response.code == 505) {
+                ErrorsManager.showGeneric("The URL you entered is not valid. Please check it and try again.");
+            } else {
+                ErrorsManager.showGeneric();
+            }
+
             return false;
         }
 
         _.each(response.data.headerLinks, function(link, index) {
-            response.data.headerLinks[index].target = (link.target === "") ? "_blank" : link.target;
+            response.data.headerLinks[index].target = (link.target === undefined) ? "_blank" : link.target;
 
             if (link.target === "modal") {
                 response.data.headerLinks[index].link = Norton.Constants.creditsUrl;

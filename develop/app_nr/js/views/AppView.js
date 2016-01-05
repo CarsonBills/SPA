@@ -302,6 +302,7 @@ var AppView = Backbone.View.extend({
             });
         }        
     },
+
     showResultsTotals: function() {
         'use strict';
         if (this.collection.totalRecords < Norton.perPage) {
@@ -310,7 +311,6 @@ var AppView = Backbone.View.extend({
             this.$('#perPage').html(this.collection.length);
         }
         this.$('#nbrRecords').html(this.collection.totalRecords);
-
     }
 });
 

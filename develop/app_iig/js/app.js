@@ -12,10 +12,10 @@ var Backbone = require('backbone'),
     Handlebars = require('handlebars/runtime'),
     
     // Handlebars helpers and blocks are intialized here
-    hb_helpers = require('./hb_helpers/content_blocks'),
-    hb_helpers = require('./hb_helpers/pagedetails_blocks'),
+    hb_content = require('./hb_helpers/content_blocks'),
+    hb_pagedetails = require('./hb_helpers/pagedetails_blocks'),
     hb_helpers = require('./hb_helpers/handlebars_helpers'),
-    hb_helpers = require('./hb_helpers/handlebars_partials'),
+    hb_partials = require('./hb_helpers/handlebars_partials'),
     // End Handlebars initialization
 
 	bootstrap = require('bootstrap-sass'),
@@ -58,6 +58,7 @@ $(function() {
         order: "Ascending"
     };
     Norton.discipline = null;
+    Norton.searchRepo = null;
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};

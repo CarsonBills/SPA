@@ -17,9 +17,11 @@ var Backbone = require('backbone'),
                 url,
                 nodes;
 
-            if (src === undefined) return;
+            if (src === undefined) {
+                return false;
+            }
 
-            nodes = src.split('/')
+            nodes = src.split('/');
 
             url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
             // Assuming 3rd forward slash and beyond is the file path and name
@@ -44,7 +46,17 @@ var Backbone = require('backbone'),
 
         process = function(raw) {
             // download aset
-            raw.data.downloadAsset.src = parseUrl(raw.data.downloadAsset.src);
+            if (raw.data.downloads.src) {
+                raw.data.downloads.src = parseUrl(raw.data.downloads.src);
+            }
+
+            if (raw.data.headerImage.videoSrc) {
+                raw.videoSrc = parseUrl(raw.data.headerImage.videoSrc);
+            }
+
+            if (raw.data.headerImage.src) {
+                raw.stillImageSrc = parseUrl(raw.data.headerImage.src);
+            }
 
             // blocks
             _.each(raw.data.sections, function (section) {

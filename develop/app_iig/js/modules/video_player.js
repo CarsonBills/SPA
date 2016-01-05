@@ -27,7 +27,6 @@ var Backbone = require('backbone'),
             });
 
             $anchor.click(function (e) {
-                console.log('========')
                 var $jp = $(e.currentTarget);
                 if ($('.video-container').hasClass('jp-state-playing')) {
                     $jp.jPlayer('pause');

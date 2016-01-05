@@ -49,6 +49,8 @@ var ArticleView = Backbone.View.extend({
         if(this.collection.isEmpty()) {
             this.render(true);
         } else {
+            // update prevId/nextId on previous articles
+            this.collection.update();
             this.render(false);
         }
     },
@@ -63,17 +65,18 @@ var ArticleView = Backbone.View.extend({
         var showGrid = this.collection.showGrid(),
             articleTemplate,
             $articles = this.$(this.container),
-            article;
-
+            article,
+            fullVersion = (Norton.version === "full");
 
         $articles.empty();
 
         if (!showGrid) {
-            $articles.append(this.templateListHead);
+            $articles.append(this.templateListHead({fullVersion: fullVersion}));
         }
 
         this.collection.each(function(record) {
             article = record.toJSON();
+            article.fullVersion = fullVersion;
             article.faved = this.isfaved(article.allMeta.pname);
             if (showGrid) {
                 articleTemplate = this.templateGrid(article);
@@ -175,13 +178,11 @@ var ArticleView = Backbone.View.extend({
     showDetail: function (id) {
         'use strict';
 
-        var model = this.collection.getModelByAttribute('pname', id);
+        var that = this,
+            model = this.collection.getModelByAttribute('pname', id),
+            faved = this.favorites.getModelByAttribute('pname', id), 
+            pageData;
 
-        // TODO throw fallback when page cannot be found
-        /*if (typeof model === 'undefined') {
-            this.resolveToBase();
-            return false;
-        }*/
         if (this.pageView === null) {
             this.pageView = new NortonApp.Views.Page({
                 favorites: this.favorites,
@@ -189,19 +190,32 @@ var ArticleView = Backbone.View.extend({
             });
         }
 
-        if (model != undefined) {
+        if (model !== undefined) {
             this.baseUrl = model.get('baseUrl');
 
             this.pageItem = new NortonApp.Models.Page({
-                faved: this.favorites.getModelByAttribute('pname', id),
+                faved: faved,
                 id: id,
                 prevId: model.get('prevId'),
                 nextId: model.get('nextId')
             });
-
-            this.pageView.model = this.pageItem;
-            this.pageView.getPage();
+        } else {
+            this.pageItem = new NortonApp.Models.Page({
+                faved: faved,
+                id: id
+            });
         }
+        this.pageView.model = this.pageItem;
+        this.pageView.getPage().then(function(data) {
+
+            if (model === undefined) {
+                pageData = jQuery.extend({}, data);
+                pageData.faved = faved;
+                pageData.pname = id;
+                that.pageItem = new NortonApp.Models.Page(pageData);
+            }
+            that.collection.saveCurrentPageDetail(that.pageItem);
+        });
     },
 
     showHighlight: function (params) {

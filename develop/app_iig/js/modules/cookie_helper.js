@@ -10,13 +10,11 @@ var CookieHelper = (function() {
 
     var ANON = 'Anynomous',
     get = function(name) {
-        "use strict";
         var result = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
         return (result === null) ? null : result[2];
     },
 
     set = function(name, val, exp, domain) {
-        "use strict";
         var expires = new Date(new Date().getTime() + parseInt(exp) * 1000);
         document.cookie = name + "=" + val + "; expires=" + expires.toGMTString() + "; path=/; domain=." + domain;
     },
@@ -33,7 +31,7 @@ var CookieHelper = (function() {
                 if (item.indexOf(u) > -1 ) {
                    result = item.split('=')[1];
                 }
-            })
+            });
         }
 
         return result;

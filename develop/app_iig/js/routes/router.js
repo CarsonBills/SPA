@@ -48,6 +48,11 @@ var AppRouter = Backbone.Router.extend({
         return this.deferred.promise();
     },
 
+    returnHome: function () {
+        "use strict";
+        window.history.pushState(null, null,  Norton.baseUrl);
+    },
+
     index: function() {
         "use strict";
     },
@@ -90,6 +95,7 @@ var AppRouter = Backbone.Router.extend({
         if (lsSiteConfig) {
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
+            Norton.searchRepo = NortonApp.headerConfigItem.attributes.searchRepo;
             this.protectedContentCheck();
 
             dfd.resolve();
@@ -99,7 +105,6 @@ var AppRouter = Backbone.Router.extend({
                     withCredentials: true
                 },
                 success: $.proxy(function(response) {
-                    console.log(response)
                     NortonApp.headerConfigItem.attributes.expiry = Math.floor((new Date()).getTime()/1000);
                     this.protectedContentCheck();
                     // save config in localstorage
@@ -107,6 +112,7 @@ var AppRouter = Backbone.Router.extend({
                         try {
                             localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
                             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
+                            Norton.searchRepo = NortonApp.headerConfigItem.attributes.searchRepo;
                         } catch (e) { }
                     }
 

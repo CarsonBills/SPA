@@ -49,12 +49,18 @@ module.exports = (function() {
 
       for (var prop in options.hash) {
         attrs.push(
-            Handlebars.escapeExpression(prop) + '="'
-            + Handlebars.escapeExpression(options.hash[prop]) + '"');
+            Handlebars.escapeExpression(prop) + '="' + Handlebars.escapeExpression(options.hash[prop]) + '"');
       }
       return new Handlebars.SafeString(
         "<a " + attrs.join(" ") + ">" + Handlebars.escapeExpression(text) + "</a>"
       );
+    });
+    Handlebars.registerHelper('HBHasVideo', function(context, options) {
+        if(context) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
     });
 
 })();

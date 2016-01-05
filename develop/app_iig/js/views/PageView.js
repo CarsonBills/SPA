@@ -15,9 +15,10 @@ var Backbone = require('backbone'),
 var PageView = Backbone.View.extend({
     evtMgr: EventManager.getInstance(),
     MODULE: 'details',
-    PLUS: 'glyphicon-heart',
-    MINUS: 'glyphicon-heart-empty',
+    HEART: 'glyphicon-heart',
+    HEART_EMPTY: 'glyphicon-heart-empty',
     PLAYER: '.jp-video',
+    deferred: $.Deferred(),
     template: require('../../templates/modules/PageTemplate.hbs'),
     templateLoading: require("../../templates/modules/PageLoadingTemplate.hbs"),
     content: '.modal-content',
@@ -56,15 +57,11 @@ var PageView = Backbone.View.extend({
         var $div = $('<div></div>');
 
         $div.html(this.template(this.model.toJSON()));
-
+        
         ModalManager.show({
             content: $div,
             module: this.MODULE
         });
-
-        /*if (this.$('div[data-type=video]').length > 0){
-            this.showVideo();
-        }*/
 
         if (ModalManager.shown()) {
             TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
@@ -89,10 +86,10 @@ var PageView = Backbone.View.extend({
         this.$glyphicon = this.$('.savelist-lnk > .glyphicon');
         
         if (found !== undefined) {
-            this.$glyphicon.removeClass(this.PLUS).addClass(this.MINUS);
+            this.$glyphicon.removeClass(this.HEART_EMPTY).addClass(this.HEART);
             faved = true;
         } else {
-            this.$glyphicon.removeClass(this.MINUS).addClass(this.PLUS);
+            this.$glyphicon.removeClass(this.HEART).addClass(this.HEART_EMPTY);
             faved = false;
         }
         this.model.set('faved', faved);
@@ -100,6 +97,7 @@ var PageView = Backbone.View.extend({
     },
 
     getPage: function () {
+        'use strict';
         var that = this;
         this.showLoading();
         this.model.fetch({
@@ -107,6 +105,7 @@ var PageView = Backbone.View.extend({
                 withCredentials: true
             },
             success: $.proxy (function(data) {
+                that.deferred.resolve(data.toJSON());
                 that.render();
             }, this),
             error: function(xhr, response, error) {
@@ -114,9 +113,11 @@ var PageView = Backbone.View.extend({
                 ErrorsManager.showGeneric();
             }
         });
+        return this.deferred.promise();
     },
 
     showVideo: function () {
+        'use strict';
         VideoPlayer.show(this.$(this.PLAYER));
     },
 

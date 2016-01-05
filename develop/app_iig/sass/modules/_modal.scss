@@ -15,7 +15,7 @@
 	height: inherit;
 }
 .modal-arrow-container {
-	top: 50vh;
+	top: 35vh;
 	margin: 1rem;
 	font-size: 3rem;
 	color: $dark-grey;
@@ -65,7 +65,7 @@
 
 .modal-body {
 	height: inherit;
-	padding: 0 4rem 2rem;
+	padding: 0 5rem 2rem;
 	@include opensans($size: 1.8rem, $height: 1.4);
 
 	p {
@@ -113,6 +113,8 @@
 
 			.modal-title {
 				@include athelas($size: 2rem, $style:italic, $weight: 400);
+				width: 90%;
+				@include ellipsis();
 			}
 
 			.loading-container {
@@ -124,8 +126,14 @@
 				@include opensans($size: 1.5rem, $height: 1.4);
 			}
 
+			.header-img {
+				margin-top: 2rem;
+				display: block;
+				max-width: 100%;
+			}
+
 			.utils {
-				margin: 3rem 5rem;
+				margin: 3rem 0;
 				text-align: right;
 				font-weight: 600;
 
@@ -138,7 +146,6 @@
 				}
 
 				.savelist-lnk {
-					margin-right: 1rem;
 
 					.glyphicon {
 						line-height: 4rem;
@@ -147,11 +154,24 @@
 						top: 0;
 					}
 				}
+
+				.download {
+					margin-left: 1rem;
+
+					a:focus,
+					a:hover {
+						text-decoration: none;
+					}
+				}
 			}
 
 			.meta {
 				font-size: 1.4rem;
 				clear: both;
+
+				span {
+					line-height: 2.5rem;
+				}
 			}
 
 			.about-author {
@@ -174,16 +194,11 @@
 				text-transform: uppercase;
 			}
 
-			.pub-date,
-			.page-number {
-				font-weight: 600;
-				clear: both;
-			}
 			.page-filter {
 				font-size: 1.3rem;
 				line-height: 1.6;
 				margin-bottom: 1rem;
-				display: block;
+				display: inline-block;
 				color: $dark-grey;
 
 				strong {
@@ -262,9 +277,17 @@
 
 			    .favs-icon {
 			    	display: table-cell;
-			    	vertical-align: center;
-            		@extend %content-type;
+			    	vertical-align: middle;
+            		@include content-type($length:40px);
             		top: inherit;
+        		    width: 35px;
+					height: 35px;
+					padding-right: 0.5rem;
+
+					img {
+						max-width: 100%;
+    					max-height: 100%;
+					}
 			    }
 
 				.favs-title {
@@ -412,7 +435,7 @@
 				}
 				.list-format {
 					width: 100%;
-					padding: 0;
+					padding: 0 1rem;
 				}
 			}
 		}

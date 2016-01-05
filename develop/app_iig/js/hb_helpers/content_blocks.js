@@ -50,9 +50,11 @@ module.exports = (function() {
             link = require('../../templates/partials/content/types/tagLink.hbs');
 
         _.each(tags, function (tag, index) {
-            result += link({tag: tag});
-            if (index < tags.length - 1) {
-                result += " | ";
+            if (tag !== '') {
+                result += link({tag: tag});
+                if (index < tags.length - 1) {
+                    result += " | ";
+                }
             }
         });
         return result;

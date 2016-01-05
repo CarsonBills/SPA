@@ -1,0 +1,147 @@
+### IIG ###
+
+SITE=iig gulp watch
+
+# use to launch gulp watch task, both css and bundle js can be debugged, not minified
+# files generated develop/deploy/iig_dev
+# develop/app_iig/js/dynamic/constants_dev.js is cloned as constants.js and bundled into bundle.min.js
+# develop/app_iig/js/logger/develop.js is bundled, can be used to replace console.log
+
+
+SITE=iig VERSION=qa gulp build
+# files generated develop/deploy/iig_qa, css minified
+# develop/app_iig/js/dynamic/constants_qa.js is cloned as constants.js and bundled into bundle.min.js
+# develop/app_iig/js/logger/develop.js is bundled, can be used to replace console.log
+
+
+SITE=iig VERSION=prod gulp build
+
+# files generated develop/deploy/iig_prod
+# index.html --> prepend //d2ybxpb8b9c7qj.cloudfront.net to favicon.png, app.css, and bundle.min.js
+# app.css --> prepend //d2ybxpb8b9c7qj.cloudfront.net to image assets
+# develop/app_iig/js/dynamic/constants_prod.js is cloned as constants.js and bundled into bundle.min.js
+# develop/app_iig/js/logger/production.js is bundled, can be used to place server call with Logger.setHandler
+
+
+SITE=iig gulp upload:s3
+
+# Launch WWNorton_vault.dmg which contains the necessary jsons for amazon key/secret information
+# Upload everything from develop/deploy/iig_prod/ excecpt html, fonts, json, php, images/intro_bg.jpg, images/header*.jpg
+# Invalidate E1E9IVG29YSJSQ at nortonappreaderiig.s3.amazonaws.com
+# Use upload:s3 --select to upload modernizr.js, app.css, bundle.min.js
+# Upload develop/deploy/iig_prod/json/credits.json, develop/deploy/iig_prod/index.html and errors.html to prod server
+
+
+#develop/deploy/iig_prod/js/vendor/modernizr.js -> /iig/js/vendor/modernizr.js
+#develop/deploy/iig_prod/js/bundle.min.js -> /iig/js/bundle.min.js
+
+#develop/deploy/iig_prod/css/app.css -> /iig/css/app.css
+
+#develop/deploy/iig_prod/css/sites/devtest.css -> /iig/css/sites/devtest.css
+#develop/deploy/iig_prod/css/sites/essentialecon.css -> /iig/css/sites/essentialecon.css
+#develop/deploy/iig_prod/css/sites/psylife2.css -> /iig/css/sites/psylife2.css
+#develop/deploy/iig_prod/css/sites/socialpsych4.css -> /iig/css/sites/socialpsych4.css
+ 
+#develop/deploy/iig_prod/site_assets/psylife2/hero_title.svg -> /iig/site_assets/psylife2/hero_title.svg
+#develop/deploy/iig_prod/site_assets/psylife2/book_cover.png -> /iig/site_assets/psylife2/book_cover.png
+#develop/deploy/iig_prod/site_assets/psylife2/hero-bg.png -> /iig/site_assets/psylife2/hero-bg.png
+#develop/deploy/iig_prod/site_assets/socialpsych4/hero_pattern.png -> /iig/site_assets/socialpsych4/hero_pattern.png
+#develop/deploy/iig_prod/site_assets/socialpsych4/hero_title.svg -> /iig/site_assets/socialpsych4/hero_title.svg
+#develop/deploy/iig_prod/site_assets/socialpsych4/book_cover.png -> /iig/site_assets/socialpsych4/book_cover.png
+#develop/deploy/iig_prod/site_assets/essentialecon/hero_title.svg -> /iig/site_assets/essentialecon/hero_title.svg
+#develop/deploy/iig_prod/site_assets/essentialecon/book_cover.png -> /iig/site_assets/essentialecon/book_cover.png
+#develop/deploy/iig_prod/site_assets/devtest/hero_title.svg -> /iig/site_assets/devtest/hero_title.svg
+#develop/deploy/iig_prod/site_assets/devtest/hero_pattern.png -> /iig/site_assets/devtest/hero_pattern.png
+#develop/deploy/iig_prod/site_assets/devtest/book_cover.png -> /iig/site_assets/devtest/book_cover.png
+ 
+#develop/deploy/iig_prod/images/header_pattern.png -> /iig/images/header_pattern.png
+#develop/deploy/iig_prod/images/favicon.png -> /iig/images/favicon.png
+#develop/deploy/iig_prod/images/svg_sprite.svg -> /iig/images/svg_sprite.svg
+#develop/deploy/iig_prod/images/svg_sprite.png -> /iig/images/svg_sprite.png
+ 
+#develop/deploy/iig_prod/fonts/glyphicons-regular.woff2 -> /iig/fonts/glyphicons-regular.woff2
+#develop/deploy/iig_prod/fonts/glyphicons-regular.eot -> /iig/fonts/glyphicons-regular.eot
+#develop/deploy/iig_prod/fonts/glyphicons-regular.woff -> /iig/fonts/glyphicons-regular.woff
+#develop/deploy/iig_prod/fonts/glyphicons-regular.svg -> /iig/fonts/glyphicons-regular.svg
+#develop/deploy/iig_prod/fonts/glyphicons-regular.ttf -> /iig/fonts/glyphicons-regular.ttf
+
+
+SITE=iig gulp upload:s3 --select
+
+#develop/deploy/iig_prod/js/vendor/modernizr.js -> /iig/js/vendor/modernizr.js
+#develop/deploy/iig_prod/css/app.css -> /iig/css/app.css
+#develop/deploy/iig_prod/js/bundle.min.js -> /iig/js/bundle.min.js
+
+
+SITE=iig gulp upload:s3 --siteAssets
+
+develop/deploy/iig_prod/css/sites/psylife2.css -> /iig/css/sites/psylife2.css
+develop/deploy/iig_prod/site_assets/psylife2/hero_title.svg -> /iig/site_assets/psylife2/hero_title.svg
+develop/deploy/iig_prod/site_assets/psylife2/book_cover.png -> /iig/site_assets/psylife2/book_cover.png
+develop/deploy/iig_prod/site_assets/psylife2/hero-bg.png -> /iig/site_assets/psylife2/hero-bg.png
+develop/deploy/iig_prod/css/sites/essentialecon.css -> /iig/css/sites/essentialecon.css
+develop/deploy/iig_prod/site_assets/essentialecon/book_cover.png -> /iig/site_assets/essentialecon/book_cover.png
+develop/deploy/iig_prod/site_assets/essentialecon/hero_title.svg -> /iig/site_assets/essentialecon/hero_title.svg
+develop/deploy/iig_prod/css/sites/socialpsych4.css -> /iig/css/sites/socialpsych4.css
+develop/deploy/iig_prod/site_assets/socialpsych4/hero_pattern.png -> /iig/site_assets/socialpsych4/hero_pattern.png
+develop/deploy/iig_prod/site_assets/socialpsych4/book_cover.png -> /iig/site_assets/socialpsych4/book_cover.png
+develop/deploy/iig_prod/site_assets/socialpsych4/hero_title.svg -> /iig/site_assets/socialpsych4/hero_title.svg
+develop/deploy/iig_prod/css/sites/devtest.css -> /iig/css/sites/devtest.css
+develop/deploy/iig_prod/site_assets/devtest/hero_pattern.png -> /iig/site_assets/devtest/hero_pattern.png
+develop/deploy/iig_prod/site_assets/devtest/book_cover.png -> /iig/site_assets/devtest/book_cover.png
+develop/deploy/iig_prod/site_assets/devtest/hero_title.svg -> /iig/site_assets/devtest/hero_title.svg
+
+### Norton Reader ###
+
+SITE=nr gulp watch
+
+# use to launch gulp watch task, both css and bundle js can be debugged, not minified
+# files generated develop/deploy/nr_dev
+# develop/app_nr/js/dynamic/constants_dev.js is cloned as constants.js and browserified into bundle.min.js
+# develop/app_nr/js/logger/develop.js is bundled, can be used to replace console.log
+
+SITE=nr VERSION=qa gulp build
+# files generated develop/deploy/nr_qa, css minified
+# develop/app_nr/js/dynamic/constants_qa.js is cloned as constants.js and browserified into bundle.min.js
+# develop/app_nr/js/logger/develop.js is bundled, can be used to replace console.log
+
+
+SITE=nr VERSION=prod gulp build
+
+# files generated develop/deploy/nr_prod
+# index.html --> prepend //d2ybxpb8b9c7qj.cloudfront.net to favicon.png, app.css, and bundle.min.js
+# app.css --> prepend //d2ybxpb8b9c7qj.cloudfront.net to image assets
+# develop/app_nr/js/dynamic/constants_prod.js is cloned as constants.js and bundled into bundle.min.js
+# develop/app_nr/js/logger/production.js is bundled, can be used to place server call with Logger.setHandler
+
+SITE=nr gulp upload:s3
+
+# Launch WWNorton_vault.dmg which contains the necessary jsons for amazon key/secret information
+# Upload everything from develop/deploy/nr_prod/ excecpt html, fonts, json, php, images/intro_bg.jpg, images/header*.jpg
+# Invalidate E1E9IVG29YSJSQ at nortonappreaderiig.s3.amazonaws.com
+# Use upload:s3 --select to upload modernizr.js, app.css, bundle.min.js
+# Upload develop/deploy/nr_prod/json/credits.json, develop/deploy/nr_prod/index.html and errors.html to prod server
+
+#develop/deploy/nr_prod/css/app.css -> /nr/css/app.css
+#develop/deploy/nr_prod/js/bundle.min.js -> /nr/js/bundle.min.js
+#develop/deploy/nr_prod/js/vendor/modernizr.js -> /nr/js/vendor/modernizr.js
+
+#develop/deploy/nr_prod/images/svg_sprite.png -> /nr/images/svg_sprite.png
+#develop/deploy/nr_prod/images/svg_sprite.svg -> /nr/images/svg_sprite.svg
+#develop/deploy/nr_prod/images/favicon.png -> /nr/images/favicon.png
+#develop/deploy/nr_prod/images/article_pattern.jpg -> /nr/images/article_pattern.jpg
+#develop/deploy/nr_prod/images/intro_bg.jpg -> /images/intro_bg.jpg
+
+#develop/deploy/nr_prod/fonts/glyphicons-regular.eot -> /nr/fonts/glyphicons-regular.eot
+#develop/deploy/nr_prod/images/png_sprite.png -> /nr/images/png_sprite.png
+#develop/deploy/nr_prod/images/header.jpg -> /images/header.jpg
+#develop/deploy/nr_prod/fonts/glyphicons-regular.woff -> /nr/fonts/glyphicons-regular.woff
+#develop/deploy/nr_prod/fonts/glyphicons-regular.ttf -> /nr/fonts/glyphicons-regular.ttf
+#develop/deploy/nr_prod/fonts/glyphicons-regular.svg -> /nr/fonts/glyphicons-regular.svg
+#develop/deploy/nr_prod/fonts/glyphicons-regular.woff2 -> /nr/fonts/glyphicons-regular.woff2
+
+SITE=nr gulp upload:s3 --select
+#develop/deploy/nr_prod/js/vendor/modernizr.js -> /nr/js/vendor/modernizr.js
+#develop/deploy/nr_prod/css/app.css -> /nr/css/app.css
+#develop/deploy/nr_prod/js/bundle.min.js -> /nr/js/bundle.min.js
+

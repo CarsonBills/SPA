@@ -15,7 +15,7 @@ var Backbone = require('backbone'),
                 view = new ErrorView({
                     model: {
                         title: ErrorsManager.GENERIC_TITLE,
-                        body: ErrorsManager.GENERIC_BODY
+                        body: (msg) ? msg : ErrorsManager.GENERIC_BODY
                     }
                 });
             };
