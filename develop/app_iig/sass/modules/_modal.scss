@@ -116,7 +116,7 @@
 			}
 
 			.modal-title {
-				@include athelas($size: 2rem, $style:italic, $weight: 400);
+				@include athelas($size: 2rem, $height: 1.1, $style:italic, $weight: 400);
 				width: 90%;
 				@include ellipsis();
 			}

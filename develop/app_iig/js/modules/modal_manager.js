@@ -48,22 +48,12 @@ var Backbone = require('backbone'),
             show = function (params) {
 
                 var options = {},
-                    $meta,
                     redraw = (params.redraw === undefined) ? true : params.redraw;
 
                 $content = $(modal + " " + content);
                 clear();
                 
                 params.content.find(container).unwrap().appendTo($content);
-
-                if (!params.loading) {
-
-                    $meta = $content.find('.meta');
-                        console.log($meta, $meta.innerHeight()) 
-                    if ($(dialog).innerHeight() > $meta.offset().top + $meta.innerHeight()) {
-                        $meta.addClass('pushed');
-                    }
-                }
 
                 $(dialog).attr(MODULE, params.module);
 
