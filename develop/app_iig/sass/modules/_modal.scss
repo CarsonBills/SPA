@@ -74,6 +74,10 @@
 		}
 	}
 }
+.modal-footer {
+	padding: 1.5rem 5rem;
+	text-align: left;
+}
 /* modal specific */
 #modal-container {
 	.modal-body {
@@ -122,6 +126,7 @@
 			}
 
 			.modal-body {
+				position: relative;
 				text-align: left;
 				@include opensans($size: 1.5rem, $height: 1.4);
 			}
@@ -166,11 +171,15 @@
 			}
 
 			.meta {
+				position: relative;
 				font-size: 1.4rem;
 				clear: both;
 
 				span {
 					line-height: 2.5rem;
+				}
+
+				&.pushed {
 				}
 			}
 
@@ -408,7 +417,7 @@
 					text-align: center;
 
 					.savelist-lnk {
-						margin: 0 0 1rem;
+						margin: 0 0 1rem 1rem;
 					}
 				}
 
