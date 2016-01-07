@@ -9,14 +9,14 @@
             {{#if count}}
                 {{#HBFilterHasSubnav ../nested "1" this}}
                 <div class="filter-item-name nested">
-                    <a href="#/filter/" data-target="#{{../catName}}{{@index}}" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}">
-                        {{> HBFiltersCatCheckbox}}
+                    <a href="#/filters/" data-target="#{{../catName}}{{@index}}" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}">
+                        {{> HBFiltersCatCheckbox catName=../catName}}
                         {{> HBFiltersCount}}
                     </a>
                 </div>
                 {{else}}
                 <div class="filter-item-name">
-                    {{> HBFiltersCatCheckbox}}
+                    {{> HBFiltersCatCheckbox catName=../catName}}
                     {{> HBFiltersCount}}
                 </div>
                 {{/HBFilterHasSubnav}}
@@ -31,7 +31,7 @@
             {{#each subnav}}
                 {{#if count}}
                     <div class="filter-item-name">
-                        <a href="#/filter/">
+                        <a href="#/filters/">
                             {{> HBFiltersSubCatCheckbox}}
                             {{> HBFiltersCount}}
                         </a>

@@ -75,7 +75,7 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
-        this.showActive();
+        //this.showActive();
         this.toggleChecked();
         this.checkSelected();
         this.showSelectedFilter(null, 'fromUrl');
@@ -262,9 +262,7 @@ var FiltersView = Backbone.View.extend({
         } else {
             url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
         }
-
-
-
+        
         window.history.pushState(null,null,url);
     },
 

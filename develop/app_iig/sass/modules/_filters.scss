@@ -123,11 +123,14 @@
             width: 185px;
             margin-left: 0.5rem;
             @include ellipsis();
+            // use transform to fix inline-block offset:wq
 
+            transform: translateY(0.1rem);
         }
-        & .count {
+        .count {
             position: absolute;
             right: 0.5rem;
+            margin-top: 0.2rem;
         }
     }
 
