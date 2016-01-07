@@ -59,6 +59,7 @@ var FiltersView = Backbone.View.extend({
             filterTemplate,
             i;
 
+        console.log(this.filterContent)
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
@@ -84,6 +85,7 @@ var FiltersView = Backbone.View.extend({
 
     events: {
        "click .filter-item-cat" : "toggleItem",
+        "click #removeAllFilters": "removeAllFilters",
         "click .filter-checkbox": function(e) {
             'use strict';
 
@@ -92,10 +94,6 @@ var FiltersView = Backbone.View.extend({
             } else {
                 this.removeSelectedFilter(e, "cb");
             }
-        },
-        "click #removeAllFilters": function(e) {
-            'use strict';
-            this.removeAllFilters(e);
         },
         "click .clear-filter": function(e) {
             'use strict';
@@ -124,7 +122,8 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         
         // collapse all
-        this.$('.filter-item-cat').addClass('collapsed');
+        //this.$('.filter-item-cat').addClass('collapsed');
+        this.collapseAll();
 
         var that = this,
             checked = this.$('.filter-item input[checked]'),
@@ -289,24 +288,30 @@ var FiltersView = Backbone.View.extend({
 
         this.showSelectedFilter();
     },
+
+    clearFilters: function (e) {
+        'use strict';
+        $('.filters-selected').empty();
+        $('.filter-checkbox').attr('checked', false);
+        Norton.savedRefinements = null;
+    },
+
     /**
      * Remove all filters, remove saved refinements, reset to baseUrl and do getArticles
      */
     removeAllFilters: function(e) {
         'use strict';
-        $('.filters-selected').empty();
-        $('.filter-checkbox').attr('checked', false);
-        Norton.savedRefinements = null;
 
-        var url = Norton.baseUrl;
+        this.clearFilters();
 
-        window.history.pushState(null,null,url);
-
+        NortonApp.router.returnHome();
         this.app.formatRefinements();   // call getArticles() in AppView
 
         this.collapseAll();
         this.active = this.ACTIVE;
         this.showActive(this.ACTIVE);
+
+        return false;
 
     },
     buildFilterUrl: function(url) {

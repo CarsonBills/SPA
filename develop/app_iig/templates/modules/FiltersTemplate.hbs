@@ -7,43 +7,44 @@
     {{#each refs}}
         {{#if name}}
             {{#if count}}
-                {{#HBMatchWord ../nested "1"}}
+                {{#HBFilterHasSubnav ../nested "1" this}}
                 <div class="filter-item-name nested">
-                    <a href="#/filter/" data-target="#{{../catName}}{{@index}}" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{../catName}}" data-filter-cat-display="{{cat_display}}"  data-filter-is-parent="1" {{checked}}/>
-                    {{> HBFiltersCount}}</a>
+                    <a href="#/filter/" data-target="#{{../catName}}{{@index}}" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}">
+                        {{> HBFiltersCatCheckbox}}
+                        {{> HBFiltersCount}}
+                    </a>
                 </div>
                 {{else}}
                 <div class="filter-item-name">
-                    <input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{../catName}}" data-filter-cat-display="{{cat_display}}"  data-filter-is-parent="1" {{checked}}/>
+                    {{> HBFiltersCatCheckbox}}
                     {{> HBFiltersCount}}
                 </div>
-                {{/HBMatchWord}}
-
+                {{/HBFilterHasSubnav}}
             {{else}}
                 <div class="filter-item-name filter-greyed-out">
-                    <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{../catName}}" data-filter-is-parent="1"/>
-                     {{> HBFiltersCount}}
+                    {{> HBFiltersCatCheckboxDisabled}}
+                    {{> HBFiltersCount}}
                 </div>
             {{/if}}
-            {{#HBMatchWord ../nested "1"}}
+            {{#HBFilterHasSubnav ../nested "1" this}}
             <div class="filter-item-group collapse{{HBFilterChecked checked}}" id="{{../catName}}{{@index}}">
-            {{/HBMatchWord}}
             {{#each subnav}}
                 {{#if count}}
                     <div class="filter-item-name">
-                        <a href="#/filter/"><input type="checkbox" class="filter-checkbox" data-filter-name='{{fullName}}' data-filter-cat="{{subCatName}}"  data-filter-parent="{{parent}}" data-filter-cat-display="{{../name}}" {{checked}}/></a>
-                         {{> HBFiltersCount}}
+                        <a href="#/filter/">
+                            {{> HBFiltersSubCatCheckbox}}
+                            {{> HBFiltersCount}}
+                        </a>
                     </div>
                 {{else}}
                     <div class="filter-item-name filter-greyed-out">
-                        <input disabled type="checkbox" class="filter-checkbox" data-filter-name='0' data-filter-cat="{{subCatName}}" data-filter-cat-display="{{../name}}"/>
-                         {{> HBFiltersCount}}
+                        {{> HBFiltersSubCatCheckboxDisabled}}
+                        {{> HBFiltersCount}}
                     </div>
                 {{/if}}
             {{/each}}
-            {{#HBMatchWord ../nested "1"}}
             </div>
-            {{/HBMatchWord}}
+            {{/HBFilterHasSubnav}}
         {{/if}}
     {{/each}}
     </div>

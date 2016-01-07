@@ -56,6 +56,23 @@ module.exports = (function() {
         }
         return new_text;
     });
+
+    Handlebars.registerHelper('HBTruncate', function(text, length) {
+        var words = text.split(" "),
+            count = 0,
+            i,
+            new_text = text;
+        if (text.length > length){
+            new_text = "";
+            for (i = 0; i <= length; i++) {
+                if (new_text.length <= length) {
+                    new_text += words[i] + " ";
+                }
+            }  
+            new_text = new_text.trim() + " ...";         
+        }
+        return new_text;
+    });
     Handlebars.registerHelper('HBDetailFilters', function(data) {
         var node = "";
         if (data.type !== undefined && data.type !== "Keyword") {
@@ -110,6 +127,13 @@ module.exports = (function() {
     });
     Handlebars.registerHelper('HBFilterChecked', function(checked) {
         return (checked !== '') ? ' in' : '';
+    });
+    Handlebars.registerHelper('HBFilterHasSubnav', function(nested, value, obj, options) {
+        if (nested === value && obj.subnav.length > 0) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
     });   
 
 })();
