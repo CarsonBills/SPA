@@ -216,6 +216,7 @@ Navigation.prototype = {
                 newFilters[i].refs[j].count = 0;
                 newFilters[i].refs[j].cat_display = filters[i].displayName;
                 newFilters[i].refs[j].cat = nameParts[1];
+                newFilters[i].refs[j].subCatName = filters[i].name + j;
                 newFilters[i].refs[j].fullName = filters[i].refinements[j].value;
                 newFilters[i].refs[j].subnav = [];
             }

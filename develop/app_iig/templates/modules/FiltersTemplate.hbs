@@ -3,20 +3,20 @@
         <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
 
-    <div class="filter-item collapse" role="tab-panel" id="{{catName}}">
+    <div class="filter-item collapse" id="{{catName}}">
     {{#each refs}}
         {{#if name}}
             {{#if count}}
                 {{#HBFilterHasSubnav ../nested "1" this}}
                 <div class="filter-item-name nested">
-                    <a href="#/filters/" data-target="#{{../catName}}{{@index}}" data-toggle="collapse" data-parent="#{{../catName}}{{@index}}">
-                        {{> HBFiltersCatCheckbox catName=../catName}}
+                    <a href="#/filters/" data-target="#{{subCatName}}" data-toggle="collapse" data-parent="#{{subCatName}}">
+                        {{> HBFiltersCatCheckbox catName=@root.catName}}
                         {{> HBFiltersCount}}
                     </a>
                 </div>
                 {{else}}
                 <div class="filter-item-name">
-                    {{> HBFiltersCatCheckbox catName=../catName}}
+                    {{> HBFiltersCatCheckbox catName=@root.catName}}
                     {{> HBFiltersCount}}
                 </div>
                 {{/HBFilterHasSubnav}}
@@ -27,14 +27,12 @@
                 </div>
             {{/if}}
             {{#HBFilterHasSubnav ../nested "1" this}}
-            <div class="filter-item-group collapse{{HBFilterChecked checked}}" id="{{../catName}}{{@index}}">
+            <div class="filter-item-group collapse{{HBFilterChecked checked}}" data-parent="#{{@root.catName}}" id="{{@root.catName}}{{@index}}">
             {{#each subnav}}
                 {{#if count}}
                     <div class="filter-item-name">
-                        <a href="#/filters/">
-                            {{> HBFiltersSubCatCheckbox}}
-                            {{> HBFiltersCount}}
-                        </a>
+                        {{> HBFiltersSubCatCheckbox catName=../subCatName subName=../name }}
+                        {{> HBFiltersCount}}
                     </div>
                 {{else}}
                     <div class="filter-item-name filter-greyed-out">

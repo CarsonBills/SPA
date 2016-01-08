@@ -122,7 +122,6 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         
         // collapse all
-        //this.$('.filter-item-cat').addClass('collapsed');
         this.collapseAll();
 
         var that = this,
@@ -131,7 +130,7 @@ var FiltersView = Backbone.View.extend({
 
         if (checked.length > 0 ) {
             _.each(checked, function (item) {
-                cat = $(item).data('filter-cat');
+                cat = $(item).data('target');
                 that.showActive('#' + cat);
             });
         } else {
@@ -165,15 +164,18 @@ var FiltersView = Backbone.View.extend({
     showActive: function (category) {
         'use strict';
 
-        var $cat = this.$('div[data-target=' + category + ']');
-        if ($cat.hasClass('collapsed')) {
-            $cat.removeClass('collapsed');
-
-            //this.$('.filter-item').removeClass('in');
-            this.$(category).addClass('in');
-
-            this.adjustHieght();
+        var $cat = this.$(category),
+            parent = $cat.data('parent');
+        // expand group
+        if (!$cat.is('in')) {
+            $cat.addClass('in');
         }
+        // expand parent
+        if (parent) {
+            this.$(parent).addClass('in');
+        }
+
+        this.adjustHieght();
     },
 
     toggleItem: function (e) {
@@ -203,6 +205,7 @@ var FiltersView = Backbone.View.extend({
             nameParts,
             parent = "",
             url;
+
 
         $("#selectedFilters").empty();
 
