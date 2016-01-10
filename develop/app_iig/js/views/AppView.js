@@ -247,6 +247,23 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
 
+    /* deep link callback */
+    resetSearch: function () {
+        'use strict';
+        this.searchView.onResetSearch();
+    },
+
+    /* deep link callback */
+    searchFor: function (value) {
+        'use strict';
+        var that = this;
+        if (value && value !== '') {
+            this.deferred.promise().done(function () {
+                that.searchView.searchFor(value);
+            });
+        }
+    },
+
     // called from router
     showDetailPage: function(id) {
         'use strict';

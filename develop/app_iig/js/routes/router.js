@@ -1,7 +1,8 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
     Refinements = require('../modules/refinements'),
-    ErrorsManager = require('../modules/errors_manager');
+    ErrorsManager = require('../modules/errors_manager'),
+    ModalManager = require('../modules/modal_manager');
 
 var AppRouter = Backbone.Router.extend({
 
@@ -30,8 +31,41 @@ var AppRouter = Backbone.Router.extend({
             });
 
             that.start();
+            that.initEvent();
         });
 
+    },
+
+    switchState: function (state) {
+        'use strict';
+        var type;
+        if (state) {
+            if (state.page) {
+                this.navigateToID(state.page);
+            }
+            if (state.search) {
+                this.searchFor(state.search);
+            }
+        } else {
+            this.appView.resetSearch();
+        }
+    },
+
+    initEvent: function () {
+        'use strict';
+        var that = this;
+        // modals don't detect close event from back button so use event handler to close with popstate change
+        $(window).on("popstate", function(e) {
+            var state = e.originalEvent.state;
+            that.switchState(state);
+            if (window.location.href === Norton.baseUrl) {
+                try {
+                    ModalManager.hide();
+                } catch(e) {
+
+                }
+            }
+        });
     },
 
     getData: function () {
@@ -46,6 +80,16 @@ var AppRouter = Backbone.Router.extend({
                 Logger.get(that.MODULE).error(res1, res2);
             });
         return this.deferred.promise();
+    },
+
+    searchFor: function (value) {
+        'use strict';
+        var page = "#/search/",
+            value;
+        if (value && value !== '') {
+            page += encodeURIComponent(value);
+            window.history.replaceState({search: value}, null, page);
+        }
     },
 
     returnHome: function () {
@@ -64,17 +108,19 @@ var AppRouter = Backbone.Router.extend({
                     replace: false
                 });
             }
-            window.history.replaceState({id: id}, null,  page);
+            window.history.replaceState({page: id}, null,  page);
         }
     }, 
 
     index: function() {
         'use strict';
     },
-    search: function() {
-        'use strict';
 
+    search: function (value) {
+        'use strict';
+        this.appView.searchFor(value);
     },
+
     page: function(id) {
         'use strict';
         this.appView.showDetailPage(id, true);

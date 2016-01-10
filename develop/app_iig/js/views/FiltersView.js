@@ -5,11 +5,13 @@ var Backbone = require("backbone"),
     _ = require("underscore"),
     Refinements = require('../modules/refinements'),
     ScrollHelper = require('../modules/scroll_helper'),
-    ResizeHelper = require('../modules/resize_helper');
+    ResizeHelper = require('../modules/resize_helper'),
+    EventManager = require('../modules/event_manager');
 
 var FiltersView = Backbone.View.extend({
     THRESHOLD: 10,
     PARENT: 'parent',
+    evtMgr: EventManager.getInstance(),
     el: "#filters",
     template: require("../../templates/modules/FiltersTemplate.hbs"),
     selectedTemplate: require("../../templates/modules/FiltersSelectedTemplate.hbs"),
@@ -25,6 +27,8 @@ var FiltersView = Backbone.View.extend({
     initialize: function(params) {
         'use strict';
         this.collection.on('update', this.preRender, this);
+
+        this.evtMgr.on(EventManager.FILTERS_RESET, this.resetFilters, this);
         this.app = params.app;
 
         this.active = this.ACTIVE;
@@ -58,8 +62,6 @@ var FiltersView = Backbone.View.extend({
         var that = this,
             filterTemplate,
             i;
-
-        console.log(this.filterContent)
 
         $('.filter-item-cat').remove();
         $('.filter-item').remove();
@@ -297,12 +299,20 @@ var FiltersView = Backbone.View.extend({
         Norton.savedRefinements = null;
     },
 
+    /*
+     * Reset filters
+     */
+    resetFilters: function (params, e) {
+        'use strict';
+        this.clearFilters();
+        this.app.formatRefinements();
+    },
+
     /**
      * Remove all filters, remove saved refinements, reset to baseUrl and do getArticles
      */
     removeAllFilters: function(e) {
         'use strict';
-
         this.clearFilters();
 
         NortonApp.router.returnHome();

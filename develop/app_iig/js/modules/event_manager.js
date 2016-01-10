@@ -12,6 +12,7 @@ var Backbone = require('backbone'),
             // Events
             CONTENT_VIEW_CHANGE: 'content_view_change',
             TAG_LINK_CLICK: 'tag_link_click',
+            FILTERS_RESET: 'filters_reset',
             REWRITE_PAGE: 'rewritePage',
             WINDOW_RESIZE: 'windowResizeEvent',
 

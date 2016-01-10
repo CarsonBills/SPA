@@ -29,20 +29,34 @@ var SearchView = Backbone.View.extend({
     tagLinkClicked: function (params, e) {
         'use strict';
         if (params.tag !== undefined || params.tag !== '') {
-            $('#searchTextInput').val(params.tag);
-            this.searchArticles();
+            this.searchFor(params.tag);
         }
     },
 
-    searchArticles: function() {
+    /* */
+    searchFor: function (value) {
         'use strict';
+        if (value && value !== '') {
+            $('#searchTextInput').val(decodeURIComponent(value));
+            this.searchArticles(true);
+        }
+    },
+
+    searchArticles: function(noHistory) {
+        'use strict';
+
+        var value = $('#searchTextInput').val();
         /**
          * Clear out collection, reset "skip" to zero, then run search query.
          */
-        if ($('#searchTextInput').val() !== '') {
+        if (value !== '') {
             Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
             this.collection.cleanupAndReset();
-            this.app.getArticles();
+            this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
+            // record history by default
+            if (noHistory === undefined) {
+                NortonApp.router.searchFor(value);
+            }
         } else {
             $('#searchTextInput').val(Norton.Constants.emptySeach);
             setTimeout(function () {
@@ -57,6 +71,8 @@ var SearchView = Backbone.View.extend({
         if (Norton.searchQuery !== '') {
             Norton.searchQuery = '';
             this.collection.cleanupAndReset();
+
+            NortonApp.router.returnHome();
             this.app.getArticles();
         }
         if ($('#searchTextInput').val() !== '') {
