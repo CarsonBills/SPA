@@ -88,6 +88,9 @@ $(function() {
         Norton.version = paths[2];
     }
 
+
+    //window.history.replaceState({path: '/'},null,Norton.baseUrl);
+
     // Can't allow IIG URL without a site code and version.
     if (!Norton.siteCode || !Norton.version) {
         window.location.href = Norton.Constants.invalidSiteCodeUrl;

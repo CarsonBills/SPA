@@ -43,7 +43,7 @@ var SearchView = Backbone.View.extend({
         }
     },
 
-    searchArticles: function(e, noHistory) {
+    searchArticles: function(e) {
         'use strict';
 
         var value = $('#searchTextInput').val();
@@ -54,8 +54,8 @@ var SearchView = Backbone.View.extend({
             Norton.searchQuery = value.toLowerCase();
             this.collection.cleanupAndReset();
             this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
-            // record history by default
-            if (e && noHistory === undefined) {
+            // record history when triggered by events
+            if (e) {
                 NortonApp.router.searchFor(value);
             }
         } else {

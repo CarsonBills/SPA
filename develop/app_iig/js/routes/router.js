@@ -57,6 +57,7 @@ var AppRouter = Backbone.Router.extend({
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
             var state = e.originalEvent.state;
+            console.log(state)
             that.switchState(state);
             if (window.location.href === Norton.baseUrl) {
                 try {
@@ -105,7 +106,7 @@ var AppRouter = Backbone.Router.extend({
             if (!pushOnly) {
                 this.navigate(page, {
                     trigger: true,
-                    replace: false
+                    replace: true
                 });
             }
             window.history.replaceState({page: id}, null,  page);
