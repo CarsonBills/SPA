@@ -21,28 +21,29 @@ var SearchView = Backbone.View.extend({
         'keypress #searchTextInput': function(e) {
             'use strict';
             if (e.keyCode === 13) {
-                this.searchArticles();
+                this.searchArticles(e);
             }
         }
     },
 
-    tagLinkClicked: function (params, e) {
+    tagLinkClicked: function (params) {
         'use strict';
         if (params.tag !== undefined || params.tag !== '') {
-            this.searchFor(params.tag);
+            $('#searchTextInput').val(decodeURIComponent(params.tag));
+            this.searchArticles(params.event);
         }
     },
 
-    /* */
+    /* triggered from router */
     searchFor: function (value) {
         'use strict';
         if (value && value !== '') {
             $('#searchTextInput').val(decodeURIComponent(value));
-            this.searchArticles(true);
+            this.searchArticles();
         }
     },
 
-    searchArticles: function(noHistory) {
+    searchArticles: function(e, noHistory) {
         'use strict';
 
         var value = $('#searchTextInput').val();
@@ -50,11 +51,11 @@ var SearchView = Backbone.View.extend({
          * Clear out collection, reset "skip" to zero, then run search query.
          */
         if (value !== '') {
-            Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
+            Norton.searchQuery = value.toLowerCase();
             this.collection.cleanupAndReset();
             this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
             // record history by default
-            if (noHistory === undefined) {
+            if (e && noHistory === undefined) {
                 NortonApp.router.searchFor(value);
             }
         } else {

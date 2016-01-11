@@ -114,7 +114,8 @@ var ArticleView = Backbone.View.extend({
     onTagClick: function (e) {
         'use strict';
         this.evtMgr.trigger(EventManager.TAG_LINK_CLICK, {
-            tag: $(e.currentTarget).text()
+            tag: $(e.currentTarget).text(),
+            event: e
         });
         return false;
     },
