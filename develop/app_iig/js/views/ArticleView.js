@@ -83,7 +83,7 @@ var ArticleView = Backbone.View.extend({
             $articles.append(this.templateNoResults);
             return false;
         }
-        console.log('=====')
+        console.log('=====> Has Collection Data')
 
         if (!showGrid) {
             $articles.append(this.templateListHead);

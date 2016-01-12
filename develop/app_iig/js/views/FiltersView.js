@@ -43,8 +43,10 @@ var FiltersView = Backbone.View.extend({
             func: this.adjustHieght
         });
     },
-    preRender: function() {
+    preRender: function(collection, options) {
         'use strict';
+
+        console.log(collection, options)
 
         if (this.collection.isNotValid()) {
             return false;
@@ -86,7 +88,7 @@ var FiltersView = Backbone.View.extend({
     },
 
     events: {
-       "click .filter-item-cat" : "toggleItem",
+        "click .filter-item-cat" : "toggleItem",
         "click #removeAllFilters": "removeAllFilters",
         "click .filter-checkbox": function(e) {
             'use strict';
@@ -122,6 +124,7 @@ var FiltersView = Backbone.View.extend({
 
     postActionCheck: function () {
         'use strict';
+        console.log('filters: postActionCheck')
         this.evtMgr.trigger(EventManager.SEARCH_CLEAR, {});
     },
 
