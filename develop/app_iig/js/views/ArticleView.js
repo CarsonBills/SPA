@@ -8,6 +8,7 @@ var ArticleView = Backbone.View.extend({
     TAG_LABEL: 'Tags:',
     container: '#articlesContainer',
     evtMgr: EventManager.getInstance(),
+    templateNoResults: require('../../templates/modules/ArticlesNoResultsTemplate.hbs'),
     templateGrid: require('../../templates/modules/ArticlesGridTemplate.hbs'),
     templateList: require('../../templates/modules/ArticlesListTemplate.hbs'),
     templateListHead: require('../../templates/modules/ArticlesListHeadTemplate.hbs'),
@@ -59,16 +60,30 @@ var ArticleView = Backbone.View.extend({
     render: function(noresults) {
         'use strict';
 
-        if (this.collection.isNotValid() && !noresults) {
-            return false;
-        }
-
         var showGrid = this.collection.showGrid(),
             articleTemplate,
             $articles = this.$(this.container),
             article;
 
         $articles.empty();
+
+
+        /**
+         * Hide the Load More button if we are at the end of current collection
+         */
+        if (this.collection.hasMore() && !noresults) {
+            $('.load-more-section').show();
+        } else {
+            $('.load-more-section').hide();
+        }
+
+        console.log(this.collection.isNotValid(), this.collection.isEmpty())
+
+        if (this.collection.isNotValid() || noresults) {
+            $articles.append(this.templateNoResults);
+            return false;
+        }
+        console.log('=====')
 
         if (!showGrid) {
             $articles.append(this.templateListHead);
@@ -86,15 +101,6 @@ var ArticleView = Backbone.View.extend({
         }, this);
 
         this.saveLastItemID();
-
-        /**
-         * Hide the Load More button if we are at the end of current collection
-         */
-        if (this.collection.hasMore() && !noresults) {
-            $('.load-more-section').show();
-        } else {
-            $('.load-more-section').hide();
-        }
 
         Norton.saveUrl = $(location).attr('href');
 

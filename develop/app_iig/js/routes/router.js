@@ -42,8 +42,7 @@ var AppRouter = Backbone.Router.extend({
         if (state) {
             if (state.page) {
                 this.navigateToID(state.page);
-            }
-            if (state.search) {
+            } else if (state.search) {
                 this.searchFor(state.search);
             }
         } else {
@@ -89,6 +88,7 @@ var AppRouter = Backbone.Router.extend({
             value;
         if (value && value !== '') {
             page += encodeURIComponent(value);
+            this.navigate(page);
             window.history.replaceState({search: value}, null, page);
         }
     },
@@ -104,10 +104,7 @@ var AppRouter = Backbone.Router.extend({
         if (id && id !== '') {
             var page = "#/page/" + id;
             if (!pushOnly) {
-                this.navigate(page, {
-                    trigger: true,
-                    replace: true
-                });
+                this.navigate(page);
             }
             window.history.replaceState({page: id}, null,  page);
         }

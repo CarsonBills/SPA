@@ -258,9 +258,14 @@ var AppView = Backbone.View.extend({
         'use strict';
         var that = this;
         if (value && value !== '') {
-            this.deferred.promise().done(function () {
+            if (this.dataReady) {
                 that.searchView.searchFor(value);
-            });
+            } else {
+                // Deeplinked content here
+                this.deferred.promise().done(function () {
+                    that.searchView.searchFor(value);
+                });
+            }  
         }
     },
 
