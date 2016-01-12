@@ -120,6 +120,11 @@ var FiltersView = Backbone.View.extend({
         };
     },
 
+    postActionCheck: function () {
+        'use strict';
+        this.evtMgr.trigger(EventManager.SEARCH_CLEAR, {});
+    },
+
     checkSelected: function () {
         'use strict';
         
@@ -269,6 +274,8 @@ var FiltersView = Backbone.View.extend({
         }
         
         window.history.pushState(null,null,url);
+
+        this.postActionCheck();
     },
 
     removeSelectedFilter: function(e, typ) {
@@ -290,6 +297,7 @@ var FiltersView = Backbone.View.extend({
         }
 
         this.showSelectedFilter();
+        this.postActionCheck();
     },
 
     clearFilters: function (e) {
@@ -321,6 +329,8 @@ var FiltersView = Backbone.View.extend({
         this.collapseAll();
         this.active = this.ACTIVE;
         this.showActive(this.ACTIVE);
+
+        this.postActionCheck();
 
         return false;
 

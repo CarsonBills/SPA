@@ -13,6 +13,7 @@ var SearchView = Backbone.View.extend({
         this.app = params.app;
 
         this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
+        this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
     },
 
     events: {
@@ -65,6 +66,13 @@ var SearchView = Backbone.View.extend({
             }, 1500);
         }
         return false;
+    },
+
+    clearSearch: function () {
+        'use strict';       
+        if ($('#searchTextInput').val() !== '') {
+            $('#searchTextInput').val('');
+        }
     },
 
     onResetSearch: function (e) {

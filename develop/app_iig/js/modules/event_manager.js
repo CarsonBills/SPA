@@ -10,9 +10,13 @@ var Backbone = require('backbone'),
             LIST_VIEW: 'icon-list-view',
             DEEPLINK: 'deeplink',
             // Events
+            // gird/list view change
             CONTENT_VIEW_CHANGE: 'content_view_change',
+            // tag click
             TAG_LINK_CLICK: 'tag_link_click',
+            // reset filter
             FILTERS_RESET: 'filters_reset',
+            SEARCH_CLEAR: 'search_clear',
             REWRITE_PAGE: 'rewritePage',
             WINDOW_RESIZE: 'windowResizeEvent',
 
