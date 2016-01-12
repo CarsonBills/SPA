@@ -71,9 +71,17 @@ var AppRouter = Backbone.Router.extend({
     getData: function () {
         'use strict';
         var that = this;
-        $.when(this.handleSiteConfig(), this.refinements.fetch())
+        $.when(this.handleSiteConfig())
             .then(function (res1, res2) {
-                that.deferred.resolve();
+                $.when(that.refinements.fetch())
+                    .then(function (res1, res2) {
+                        that.deferred.resolve();
+                    },
+                    function (res1, res2) {
+                        ErrorsManager.showGeneric();
+                        Logger.get(that.MODULE).error(res1, res2);
+                    });
+
             },
             function (res1, res2) {
                 ErrorsManager.showGeneric();
@@ -157,6 +165,7 @@ var AppRouter = Backbone.Router.extend({
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
             Norton.searchRepo = NortonApp.headerConfigItem.attributes.searchRepo;
+            Norton.navMetadata = NortonApp.headerConfigItem.attributes.navMetadata;
             this.protectedContentCheck();
 
             dfd.resolve();
@@ -174,6 +183,7 @@ var AppRouter = Backbone.Router.extend({
                             localStorage.setItem(lsConfigId, JSON.stringify(NortonApp.headerConfigItem.attributes));
                             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
                             Norton.searchRepo = NortonApp.headerConfigItem.attributes.searchRepo;
+                            Norton.navMetadata = NortonApp.headerConfigItem.attributes.navMetadata;
                         } catch (e) { }
                     }
 

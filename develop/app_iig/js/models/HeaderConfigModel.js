@@ -14,6 +14,7 @@ var HeaderConfigModel = Backbone.Model.extend({
         sunsetDate: '',
         disciplineId: '',
         searchRepo: '',
+        navMetadata: [],
         introPanelCopy: '',
         introPanelImage: {
             type: '',

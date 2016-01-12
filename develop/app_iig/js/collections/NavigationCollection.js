@@ -16,7 +16,7 @@ var Backbone = require('backbone'),
 
 			var response = res.data;
 			this.availNav = response.availableNavigation;
-    		return response;
+    		return response.availableNavigation;
     	}
 	});
 

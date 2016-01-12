@@ -51,7 +51,7 @@ var FiltersView = Backbone.View.extend({
         }
 
         // Update the filter counts
-        this.filterContent = this.refinements.compare(this.collection.filters);
+        this.filterContent = this.refinements.getSavedFilters();
 
         this.render();
         this.adjustHieght();
