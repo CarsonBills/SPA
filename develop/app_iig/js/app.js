@@ -97,7 +97,6 @@ $(function() {
     /**
     *   General
     */
-
     NortonApp.evtMgr = require('./modules/event_manager');
     NortonApp.GSAPLite = require('./vendor/gsap_lite');
 
@@ -137,8 +136,6 @@ $(function() {
      */
     NortonApp.evtMgr.getInstance();
 
-
-
     NortonApp.articlesList = new NortonApp.Collections.Articles();
     NortonApp.articleItem = new NortonApp.Models.Article();
     NortonApp.yourFavsList = new NortonApp.Collections.YourFavs();
@@ -149,12 +146,7 @@ $(function() {
     NortonApp.AppRouter = require('./routes/router.js');
     NortonApp.router = new NortonApp.AppRouter();
 
-
-
     fastClick(document.body);
-    //$(window).scroll(scrollHandler);
-    //stickyRelocate();
-
 });
 
 /**

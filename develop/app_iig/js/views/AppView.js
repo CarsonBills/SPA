@@ -213,6 +213,9 @@ var AppView = Backbone.View.extend({
 
         for (var cat in Norton.savedRefinements) {
             splt = Norton.savedRefinements[cat].split("=");
+            if (splt.length < 2) {  // this can happen because of "#filters" in the URL even though no filters have been selected.
+                continue;
+            }
             ref  = splt[1].split(",");
             for (var i=0; i<ref.length; i++) {
                 obj = {
