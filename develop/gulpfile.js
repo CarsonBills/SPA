@@ -83,11 +83,11 @@ function getHTMLAssets(path) {
                 //path + '/js/vendor/modernizr.js',
                 path + '/js/bundle.min.js'],
             tpl: '<script src="%s"></script>'
-        },
+        }/*,
         icon: {
             src: [path + '/images/favicon.png'],
             tpl: '<link rel="icon" type="image/png" href="%s">'
-        }
+        }*/
     }
 }
 
@@ -526,7 +526,7 @@ gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_spri
 
     $.livereload.listen();
 
-    gulp.watch([app + site + settings.page_templates + '*.html'], ['fileinclude']);
+    gulp.watch([app + site + settings.page_templates + '**/*.html'], ['fileinclude']);
     gulp.watch([app + site + settings.templates + '**/*'], ['browserify']);
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
     gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
