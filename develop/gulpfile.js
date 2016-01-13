@@ -42,7 +42,7 @@ var gulp = require('gulp'),
         bower: 'bower_components/',
         app_css: 'app.css',
         app_js: 'bundle.min.js',
-        app_config: app + app_nr + '/config/',
+        app_config: '/config/',
         app_fonts: app + app_nr + '/fonts/',
         app_php: app + app_nr + '/php/',
         app_js_vendor: app + app_nr + '/js/vendor/',
@@ -304,7 +304,7 @@ gulp.task('copy_fonts', function () {
 
 gulp.task('copy_data', function () {
     gulp.src([
-            settings.app_config + 'dot_htaccess'
+            app + site + settings.app_config + 'dot_htaccess'
         ])
         .pipe($.rename(function (path) {
             path.basename = '.htaccess';
