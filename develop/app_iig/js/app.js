@@ -59,6 +59,7 @@ $(function() {
     };
     Norton.discipline = null;
     Norton.searchRepo = null;
+    Norton.navMetadata = null;
 
     // Filters for Navigation come from ArticlesModel
     Norton.Filters = {};

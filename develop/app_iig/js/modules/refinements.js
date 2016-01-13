@@ -13,10 +13,9 @@ var NavigationCollection = require('../collections/NavigationCollection'),
 Navigation.prototype = {
     collection: null,
     MODULE: 'refinements',
-    url: Norton.Constants.searchUrl,
+    url: Norton.Constants.filterNavUrl,
     deferred: $.Deferred(),
     savedFilters: null,
-//    savedSubNav: [],
 
     initialize: function () {
         'use strict';
@@ -26,37 +25,21 @@ Navigation.prototype = {
     fetch: function () {
         'use strict';
         var that = this;
-        var postdata = {
-            sitecode: Norton.siteCode,
-            siteversion: Norton.version,
-            skip: 0,
-            pageSize: 1,
-            fields: ["availableNavigation"]
-        };
+        var getdata = '?sitecode=' + Norton.siteCode +
+            '&siteversion=' + Norton.version +
+            '&skip=0' +
+            '&pageSize=1' +
+            '&searchRepo=' + Norton.searchRepo +
+            '&navMetadata=' + encodeURIComponent(JSON.stringify(Norton.navMetadata));
 
         this.collection.fetch({
-            data: postdata,
-            method: "POST",
-            xhrFields: {
-                withCredentials: true
-            },
+            method: "GET",
             datatype: "json",
-            url: this.url,
+            url: this.url + getdata,
             success: function(data) {
                 if (that.collection.status !== ErrorsManager.FAIL_STATE) {
                     that.deferred.resolve(data);
-                    // Build navFilter list
-                    that.buildNewFilters();
-/*
-                    $.when(that.replaceSubNav())
-                        .then(function (res1) {
-                            that.deferred.resolve(res1);
-                        },
-                        function (res1) {
-                            ErrorsManager.showGeneric();
-                            Logger.get(that.MODULE).error(res1);
-                        });
-*/
+                    that.savedFilters = data;
                 } else {
                     that.deferred.reject(ErrorsManager.FAIL_STATE);
                 }
@@ -83,340 +66,56 @@ Navigation.prototype = {
         return result;
     },
 
-/*
-    replaceSubNav: function() {
-        'use strict';
-        var that = this,
-            deferred = $.Deferred(),
-            filters = this.collection.availNav;
+    getSavedFilters: function() {
+        // cloning object: http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
+        var savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements,
+            originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
+            selRefs = [];
 
-        var subNav = this.getSubNavIds();
-
-        var postdata = {
-            sitecode: Norton.searchRepo,
-            siteversion: Norton.version,
-            nav: subNav
-        };
-
-        $.ajax({
-            type:'POST',
-            url: Norton.Constants.subNavUrl,
-            data: postdata,
-            dataType: "json",
-
-            success: function(response) {
-                if (response.status !== ErrorsManager.FAIL_STATE) {
-                    for (var j=0; j< filters.length; j++) {
-                        if (filters[j].name == subNav) {
-                            filters[j].refinements = response.data.navigation.refinements;
-                            that.savedSubNav[j] = response.data.navigation.refinements;
-                        }
-                    }
-                    that.buildNewFilters();
-                    deferred.resolve(response.data);
-                } else {
-                    deferred.reject(ErrorsManager.FAIL_STATE);
-                }
-            },
-            error: function(collection, res, options) {
-                Logger.error("SubNav request failed.");
-                deferred.reject(res);
-            }
-        });
-
-        return this.deferred.promise();
-    },
-
-    getSubNavIds: function () {
-        'use strict';
-        var filters = this.collection.availNav,
-            nested = 0,
-            subNavNames = "";
-
-        for (var i=0; i<filters.length; i++) {
-            nested = 0;
-            for (var j=0; j < filters[i].metadata.length; j++) {
-
-                if (filters[i].metadata[j].key == "subnavname") {
-                    subNavNames  = filters[i].metadata[j].value;
-                    return subNavNames;
-                }
-            }
-        }
-
-        return subNavNames;
-    },
-*/
-
-    /**
-     * Chapters/Topics and subchapters/substopics come as 2 separate objects in searchandiser json. The only link is a hash-in-common.
-     * The hash is part of the refinement title. Also part of the title is a 3 digit order number.
-     *
-     * NOTE: The positioning of the embedded parameters in the value field (hash-id, title, order) are important. If they
-     * change, the algorithm will have to change
-     *
-     * Also, Keep the objects consistent whether for chapters/topics or other categories
-     */
-    buildNewFilters: function() {
-        'use strict';
-
-        var newFilters = [],
-            chaptersIndex,
-            topicsIndex,
-            otherIndex,
-            idx,
-            jdx,
-            nameParts,
-            order,
-            suborder,
-            unorderedIndex = 9900,
-            nested,
-            filters = this.collection.availNav;
-
-        // Have to do this in 3 passes so we keep get subchapters after chapters and subtopics after topics
-        // Handle Chapters and Topics
-        for (var i=0; i<filters.length; i++) {
-
-            if (filters[i].metadata[0]) {
-
-            }
-            if (filters[i].name != "dimChapters" && filters[i].name != "dimTopics") {
+        // build simple array of selected filters
+        for (var i=0; i<savedRefs.length; i++) {
+            if (savedRefs[i].navigationName == "siteversion") {
                 continue;
             }
 
-            nested = this.getMetaData(filters[i].metadata, 'nested');
-
-            newFilters[i] = {};
-            newFilters[i].catName = filters[i].name;
-            newFilters[i].displayName = filters[i].displayName;
-            newFilters[i].nested = nested;
-            newFilters[i].refs = [];
-
-            if (filters[i].name == "dimChapters") {
-                chaptersIndex = i;
-            } else {
-                topicsIndex = i;
-            }
-
-            /**
-             * For Chapters/Topics, go through refinements and build array with hash ids
-             * Use Order as key so it sorts when iterated over
-             * Sample Chapter: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
-             */
-            for (var j = 0; j < filters[i].refinements.length; j++) {
-                nameParts = filters[i].refinements[j].value.split("_");
-                order = nameParts[0];
-                if (!$.isNumeric(order) || order == 999) {   // item may not be ordered in which case force it to the end of the nav
-                    order = unorderedIndex++;
-                }
-                newFilters[i].refs[j] = {};
-                newFilters[i].refs[j].order = order;
-                newFilters[i].refs[j].id = nameParts[nameParts.length-1];
-                newFilters[i].refs[j].name = nameParts[1];
-                newFilters[i].refs[j].count = 0;
-                newFilters[i].refs[j].cat_display = filters[i].displayName;
-                newFilters[i].refs[j].cat = nameParts[1];
-                newFilters[i].refs[j].subCatName = filters[i].name + j;
-                newFilters[i].refs[j].fullName = filters[i].refinements[j].value;
-                newFilters[i].refs[j].subnav = [];
-            }
+            selRefs.push(savedRefs[i].value);
         }
-
-        for (var i=0; i<filters.length; i++) {
-            // ignore any nav that is not a level 1 subchapter/subtopic
-            if (filters[i].name != "dimChaptersL1" && filters[i].name != "dimTopicsL1") {
+        // iterate over nav object to get selected state
+        for(var i=0; i<originalNav.length; i++) {
+            if (!originalNav[i].refs) {
                 continue;
             }
 
-            idx = (filters[i].name == "dimChaptersL1") ? chaptersIndex : topicsIndex;
+            for (var j=0; j<originalNav[i].refs.length; j++) {
+                originalNav[i].refs[j].checked = this.checkSelRefs(selRefs, originalNav[i].refs[j].fullName);
 
-            /**
-             * For subchapter/subtopic, go through refinements and find matching chapter, then add the subchapter
-             * in an array that is a property of the matching chapter object
-             *
-             * Sample Subchapter: 3b0540f9265bcbff096e_030_Big Question: What Are the Five Foundations of Economics?
-             */
-
-            for (var k=0; k < newFilters[idx].refs.length; k++) {
-                jdx = 0;
-                for (var j = 0; j < filters[i].refinements.length; j++) {
-                    nameParts = filters[i].refinements[j].value.split("_");
-                    suborder = nameParts[1];
-                    if (!$.isNumeric(suborder) || suborder == 999) {    // item may not be ordered in which case force it to the end of the nav
-                        suborder = unorderedIndex++;
-                    }
-
-                    if (newFilters[idx].refs[k].id == nameParts[0]) {
-                        newFilters[idx].refs[k].subnav[jdx] = {};
-                        newFilters[idx].refs[k].subnav[jdx].suborder = suborder;
-                        newFilters[idx].refs[k].subnav[jdx].id = nameParts[0];
-                        newFilters[idx].refs[k].subnav[jdx].name = nameParts.slice(2).join("_"); // handle any underscores in title
-                        newFilters[idx].refs[k].subnav[jdx].count = 0;
-                        newFilters[idx].refs[k].subnav[jdx].subCatName = filters[i].name;
-                        newFilters[idx].refs[k].subnav[jdx].fullName = filters[i].refinements[j].value;
-                        newFilters[idx].refs[k].subnav[jdx].parent = newFilters[idx].refs[k].fullName;
-                        jdx++;
-                    }
+                if (originalNav[i].refs[j].subnav != undefined && originalNav[i].refs[j].subnav.length > 0) {
+                    this.iterateSubNav(originalNav[i].refs[j].subnav, selRefs);
                 }
             }
-        }
-
-        // Handle all other nav items
-        otherIndex = newFilters.length; // We always do "other" last so this index will be correct no matter the order the nav appears in the json
-        for (var i=0; i<filters.length; i++) {
-            // ignore any nav that is a chapter, subchapter, topic or subtopic
-            if (filters[i].name.substr(0, 11) == "dimChapters" || filters[i].name.substr(0, 9) == "dimTopics") {
-                continue;
-            }
-
-            newFilters[otherIndex] = {};
-            newFilters[otherIndex].catName = filters[i].name;
-            newFilters[otherIndex].displayName = filters[i].displayName;
-            newFilters[otherIndex].refs = [];
-            /**
-             * For Order,use an increment
-             */
-            for (var j = 0; j < filters[i].refinements.length; j++) {
-                nameParts = filters[i].refinements[j].value.split("_");
-
-                newFilters[otherIndex].refs[j] = {};
-                newFilters[otherIndex].refs[j].id = filters[i].refinements[j].value;
-                newFilters[otherIndex].refs[j].name = filters[i].refinements[j].value;
-                newFilters[otherIndex].refs[j].name = nameParts[1];
-                newFilters[otherIndex].refs[j].count = 0;
-                newFilters[otherIndex].refs[j].cat_display = filters[i].displayName;
-                newFilters[otherIndex].refs[j].cat = filters[i].refinements[j].value;
-                newFilters[otherIndex].refs[j].fullName = filters[i].refinements[j].value;
-                newFilters[otherIndex].refs[j].subnav = [];
-            }
-
-            otherIndex++;
-        }
-
-        this.savedFilters = newFilters;
-    },
-    /**
-     * Take the filtered nav returned by searchandiser and compare it to the
-     * savedFilters object built in buildNewFilters. When we find a match, update the savedFilters count
-     */
-    compare: function (filteredNav) {
-        'use strict';
-        // NOTE: If your object has functions, they won't be copied using this technique
-        // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
-        var originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
-            idx = 0,       // filterNav index which may need not be in sync with originalNav index
-            savedRefs,
-            selectedFilter, // this filter was "selected" in the navigation;
-            // doSubNavCounts happens when there is no filtering and we need the original counts for subNav
-//            doSubNavCounts = (Norton.savedRefinements.length <= 1),
-//            localSubNav = this.savedSubNav[1]; // savedSubNav has empty 0th element
-
-        // do this to eliminate "undefined" check throughout
-        savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements;
-
-        // iterate over the filteredNav objects
-        for(var i=0; i<filteredNav.length; i++) {
-            // get index value in originalNav
-            for (var oidx = 0; oidx < originalNav.length; oidx++) {
-                if (originalNav[oidx].catName == filteredNav[i].name) {
-                    idx = oidx;
-                    break;
-                }
-            }
-
-            // Handle chapters and topics
-            if (filteredNav[i].name == "dimChapters" || filteredNav[i].name == "dimTopics") {
-                // iterate over filteredNav refinements and match counts with originalNav
-                for (var j=0; j < originalNav[idx].refs.length; j++) {
-                    selectedFilter = false;
-                    for (var k = 0; k < filteredNav[i].refinements.length; k++) {
-                        if (originalNav[idx].refs[j].fullName == filteredNav[i].refinements[k].value) {
-                            originalNav[idx].refs[j].count = filteredNav[i].refinements[k].count;
-                            for (var r=0; r < savedRefs.length; r++) {
-                                if (filteredNav[i].name === savedRefs[r].navigationName &&
-                                    filteredNav[i].refinements[k].value === savedRefs[r].value
-                                ) {
-                                    selectedFilter = true;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    if (selectedFilter) {
-                        originalNav[idx].refs[j].checked = "checked";
-                    } else {
-                        originalNav[idx].refs[j].checked = "";
-                    }
-                }
-            } else if (filteredNav[i].name == "dimChaptersL1" || filteredNav[i].name == "dimTopicsL1") {
-                // subnav is a new array element in the returned nav, but it's the same as it's parent in the save nav.
-                idx--;
-
-            // Handle subchapters and subtopics
-                for (var j=0; j < originalNav[idx].refs.length; j++) {
-                    for (var k=0; k < originalNav[idx].refs[j].subnav.length; k++) {
-/*
-                        if (doSubNavCounts) {
-                            for (var p=0; p < localSubNav.length; p++) {
-                                if (originalNav[idx].refs[j].subnav[k].fullName == localSubNav[p].value) {
-                                    originalNav[idx].refs[j].subnav[k].count = localSubNav[p].count;
-                                }
-                            }
-                        }
-*/
-                        selectedFilter = false;
-                        for (var m = 0; m < filteredNav[i].refinements.length; m++) {
-                            if (originalNav[idx].refs[j].subnav[k].fullName == filteredNav[i].refinements[m].value) {
-                                originalNav[idx].refs[j].subnav[k].count = filteredNav[i].refinements[m].count;
-                                for (var r=0; r < savedRefs.length; r++) {
-                                    if (filteredNav[i].name === savedRefs[r].navigationName &&
-                                        filteredNav[i].refinements[m].value === savedRefs[r].value
-                                    ) {
-                                        selectedFilter = true;
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                        if (selectedFilter) {
-                            originalNav[idx].refs[j].subnav[k].checked = "checked";
-                        } else {
-                            originalNav[idx].refs[j].subnav[k].checked = "";
-                        }
-
-                    }
-                }
-            } else  if (filteredNav[i].name.substr(0, 11) != "dimChapters" && filteredNav[i].name.substr(0, 9) != "dimTopics") {
-            // Handle other nav
-                for (var j=0; j < originalNav[idx].refs.length; j++) {
-                    selectedFilter = false;
-                    for (var k = 0; k < filteredNav[i].refinements.length; k++) {
-                        if (originalNav[idx].refs[j].fullName == filteredNav[i].refinements[k].value) {
-                            originalNav[idx].refs[j].count = filteredNav[i].refinements[k].count;
-                            for (var r=0; r < savedRefs.length; r++) {
-                                if (filteredNav[i].name === savedRefs[r].navigationName &&
-                                    filteredNav[i].refinements[k].value === savedRefs[r].value
-                                ) {
-                                    selectedFilter = true;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    if (selectedFilter) {
-                        originalNav[idx].refs[j].checked = "checked";
-                    } else {
-                        originalNav[idx].refs[j].checked = "";
-                    }
-                }
-            }
-            idx++;
         }
 
         return originalNav;
+    },
+
+    checkSelRefs: function(selRefs, ref) {
+        for (var i=0; i<selRefs.length; i++) {
+            if (ref == selRefs[i]) {
+                return "checked";
+            }
+        }
+
+        return "";
+    },
+
+    // recursive subnav check for selected filters; may be up to 3 levels of subnav
+    iterateSubNav:  function(navObj, selRefs) {
+        for (var i=0; i<navObj.length; i++) {
+            navObj[i].checked = this.checkSelRefs(selRefs, navObj[i].fullName);
+            if (navObj[i].subnav != undefined && navObj[i].subnav.length > 0) {
+                this.iterateSubNav(navObj[i].subnav,selRefs );
+            }
+        }
     }
 };
 
