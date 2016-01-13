@@ -6,6 +6,8 @@ var Backbone = require('backbone'),
         var instance;
         return {
             // Event constants
+            APP_READY: 'app_ready',
+            //
             GRID_VIEW: 'icon-grid-view',
             LIST_VIEW: 'icon-list-view',
             DEEPLINK: 'deeplink',
