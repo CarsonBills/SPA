@@ -28,8 +28,8 @@ var ArticleView = Backbone.View.extend({
         this.favorites = params.favorites;
 
         // event listeners
-        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.renderIfEmpty, this);
-        this.favorites.on('update', this.renderIfEmpty, this);
+        this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onModuleUpdate, this);
+        this.favorites.on('update', this.onModuleUpdate, this);
 
         this.app = params.app;
 
@@ -54,6 +54,13 @@ var ArticleView = Backbone.View.extend({
             // update prevId/nextId on previous articles
             this.collection.update();
             this.render(false);
+        }
+    },
+
+    onModuleUpdate: function() {
+        'use strict';
+        if(!this.collection.isEmpty()) {
+            this.render();
         }
     },
 

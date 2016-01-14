@@ -39,7 +39,6 @@ var AppView = Backbone.View.extend({
 
         var that = this;
 
-
         this.headerConfigView = new NortonApp.Views.HeaderConfig({
             model: NortonApp.headerConfigItem,
             el: "#siteHeader"
@@ -191,9 +190,9 @@ var AppView = Backbone.View.extend({
                 that.showHidden();
                 that.dataReady = true;
                     
-                if (ScrollHelper.shouldRefresh() && that.collection.hasMore()) {
+                /*if (ScrollHelper.shouldRefresh() && that.collection.hasMore()) {
                     that.getArticles(false);
-                }
+                }*/
             }, this),
 
             error: function(xhr, response, error) {
@@ -262,6 +261,7 @@ var AppView = Backbone.View.extend({
     searchFor: function (value) {
         'use strict';
         var that = this;
+        console.log('search deep link')
         if (value && value !== '') {
             if (this.dataReady) {
                 that.searchView.searchFor(value);
@@ -279,12 +279,14 @@ var AppView = Backbone.View.extend({
         'use strict';
         var that = this;
         if (this.dataReady) {
+                console.log('>>>>>> dataReady')
             this.articleView.showDetail(id);
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
+                    console.log('>>>>>> promise')
 
-                NortonApp.router.navigateToID(id, true);
+                //NortonApp.router.navigateToID(id, true);
                 that.articleView.showDetail(id);
             });
         }        

@@ -17,7 +17,14 @@ var AppRouter = Backbone.Router.extend({
         "page/:id": "page",
         "favs/": "favs",
         "filters/": "filter",
-        "": "index"
+        "": "rootPath"
+    },
+
+    execute: function(callback, args, name) {
+        'use strict';
+        console.log(callback, args, name)
+        args.push(args.pop());
+        if (callback) callback.apply(this, args);
     },
 
     initialize: function() {
@@ -40,6 +47,7 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         var type;
         if (state) {
+            console.log('state : ', state)
             if (state.page) {
                 this.navigateToID(state.page);
             } else if (state.search) {
@@ -56,7 +64,7 @@ var AppRouter = Backbone.Router.extend({
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
             var state = e.originalEvent.state;
-            console.log(state)
+            console.log(e)
             that.switchState(state);
             if (window.location.href === Norton.baseUrl) {
                 try {
@@ -103,23 +111,34 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         'use strict';
-        window.history.pushState({}, null,  Norton.baseUrl);
+        console.log(Norton.baseUrl)
+        this.navigate('', {
+            trigger: true
+        });
     },
 
     navigateToID: function (id, pushOnly) {
         'use strict';
 
         if (id && id !== '') {
-            var page = "#/page/" + id;
-            if (!pushOnly) {
-                this.navigate(page);
-            }
-            window.history.replaceState({page: id}, null,  page);
+            var page = "page/" + id;
+            console.log(page)
+            this.navigate(page, {
+                trigger: true
+            });
         }
     }, 
 
+
+    rootPath: function() {
+        'use strict';
+        console.log('rootPath');
+        this.returnHome();
+    },
+
     index: function() {
         'use strict';
+        console.log('index');
     },
 
     search: function (value) {
@@ -129,7 +148,8 @@ var AppRouter = Backbone.Router.extend({
 
     page: function(id) {
         'use strict';
-        this.appView.showDetailPage(id, true);
+        console.log('deeplink', id)
+        this.appView.showDetailPage(id);
     },
     filter: function() {
         'use strict';
@@ -141,7 +161,8 @@ var AppRouter = Backbone.Router.extend({
     },
     start: function() {
         'use strict';
-        Backbone.history.start();
+        var result =  Backbone.history.start({pushState: true, root: "/" + Norton.siteCode + "/" + Norton.version});
+        console.log('history start : ' + result)
     },
     handleSiteConfig: function() {
         'use strict';
