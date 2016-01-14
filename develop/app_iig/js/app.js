@@ -69,28 +69,14 @@ $(function() {
      */
     Norton.isLoggedIn = (Norton.Utils.getCookie('ecm2')) ? true : false;
 
-    Norton.baseUrl = window.location.href.replace(window.location.hash, ''); // Everything before the hash
-
     /**
      * Get Site Code and version
      */
     var paths = window.location.pathname.split("/");
-    if ($(location).attr("href").indexOf("nortonreader.") >= 0) {
-        Norton.siteCode = "nortonreader";
-        if (!paths[1]) {
-            Norton.version = "full";
-            Norton.baseUrl += "full";
-            //window.history.pushState(null,null,Norton.baseUrl);
-        } else {
-            Norton.version = paths[1];
-        }
-    } else {
-        Norton.siteCode = paths[1];
-        Norton.version = paths[2];
-    }
 
-
-    //window.history.replaceState({path: ''},null,Norton.baseUrl);
+    Norton.siteCode = paths[1];
+    Norton.version = paths[2];
+    Norton.baseUrl = window.location.protocol + "//" + window.location.host + "/" + Norton.siteCode + "/" + Norton.version;
 
     // Can't allow IIG URL without a site code and version.
     if (!Norton.siteCode || !Norton.version) {

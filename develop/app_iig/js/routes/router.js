@@ -20,12 +20,12 @@ var AppRouter = Backbone.Router.extend({
         "": "rootPath"
     },
 
-    execute: function(callback, args, name) {
+    /*execute: function(callback, args, name) {
         'use strict';
         console.log(callback, args, name)
         args.push(args.pop());
         if (callback) callback.apply(this, args);
-    },
+    },*/
 
     initialize: function() {
         'use strict';
@@ -63,9 +63,6 @@ var AppRouter = Backbone.Router.extend({
         var that = this;
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
-            var state = e.originalEvent.state;
-            console.log(e)
-            that.switchState(state);
             if (window.location.href === Norton.baseUrl) {
                 try {
                     ModalManager.hide();
@@ -111,29 +108,48 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         'use strict';
-        console.log(Norton.baseUrl)
-        this.navigate('', {
-            trigger: true
+        this.navigate('/', {
+            trigger: true,
+            replace: false
         });
     },
 
-    navigateToID: function (id, pushOnly) {
+    navigateToID: function (id, params) {
+        'use strict';
+
+        var options;
+        if (id && id !== '') {
+            if (params === undefined) {
+                // default behavior
+                options = {
+                    trigger: true
+                }
+            }
+            var page = "page/" + id;
+            this.navigate(page, options);
+        }
+    }, 
+
+    Deeplinked: function (id) {
         'use strict';
 
         if (id && id !== '') {
             var page = "page/" + id;
-            console.log(page)
+            console.log('Deeplinked', page)
             this.navigate(page, {
-                trigger: true
+                trigger: false,
+                replace: true
             });
         }
     }, 
 
-
     rootPath: function() {
         'use strict';
         console.log('rootPath');
-        this.returnHome();
+        this.navigate('', {
+            trigger: true,
+            replace: true
+        });
     },
 
     index: function() {

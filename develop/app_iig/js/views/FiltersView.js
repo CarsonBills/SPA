@@ -276,7 +276,7 @@ var FiltersView = Backbone.View.extend({
             url = this.buildFilterUrl(window.location.href.substr(0, window.location.href.indexOf("#")));
         }
         
-        window.history.pushState(null,null,url);
+        //window.history.pushState(null,null,url);
 
         this.postActionCheck();
     },

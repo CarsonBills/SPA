@@ -284,9 +284,11 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
-                    console.log('>>>>>> promise')
-
-                //NortonApp.router.navigateToID(id, true);
+                console.log('>>>>>> promise')
+                NortonApp.router.navigateToID(id, {
+                    trigger: false,
+                    replace: true
+                });
                 that.articleView.showDetail(id);
             });
         }        
