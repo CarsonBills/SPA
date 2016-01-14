@@ -47,7 +47,6 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         var type;
         if (state) {
-            console.log('state : ', state)
             if (state.page) {
                 this.navigateToID(state.page);
             } else if (state.search) {
@@ -130,23 +129,9 @@ var AppRouter = Backbone.Router.extend({
         }
     }, 
 
-    Deeplinked: function (id) {
-        'use strict';
-
-        if (id && id !== '') {
-            var page = "page/" + id;
-            console.log('Deeplinked', page)
-            this.navigate(page, {
-                trigger: false,
-                replace: true
-            });
-        }
-    }, 
-
     rootPath: function() {
         'use strict';
-        console.log('rootPath');
-        this.navigate('', {
+        this.navigate('/', {
             trigger: true,
             replace: true
         });
@@ -154,7 +139,6 @@ var AppRouter = Backbone.Router.extend({
 
     index: function() {
         'use strict';
-        console.log('index');
     },
 
     search: function (value) {
@@ -164,7 +148,6 @@ var AppRouter = Backbone.Router.extend({
 
     page: function(id) {
         'use strict';
-        console.log('deeplink', id)
         this.appView.showDetailPage(id);
     },
     filter: function() {
@@ -178,7 +161,6 @@ var AppRouter = Backbone.Router.extend({
     start: function() {
         'use strict';
         var result =  Backbone.history.start({pushState: true, root: "/" + Norton.siteCode + "/" + Norton.version});
-        console.log('history start : ' + result)
     },
     handleSiteConfig: function() {
         'use strict';

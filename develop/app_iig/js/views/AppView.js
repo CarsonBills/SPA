@@ -261,7 +261,6 @@ var AppView = Backbone.View.extend({
     searchFor: function (value) {
         'use strict';
         var that = this;
-        console.log('search deep link')
         if (value && value !== '') {
             if (this.dataReady) {
                 that.searchView.searchFor(value);
@@ -279,12 +278,10 @@ var AppView = Backbone.View.extend({
         'use strict';
         var that = this;
         if (this.dataReady) {
-                console.log('>>>>>> dataReady')
             this.articleView.showDetail(id);
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
-                console.log('>>>>>> promise')
                 NortonApp.router.navigateToID(id, {
                     trigger: false,
                     replace: true

@@ -46,8 +46,6 @@ var FiltersView = Backbone.View.extend({
     preRender: function(collection, options) {
         'use strict';
 
-        console.log(collection, options)
-
         if (this.collection.isNotValid()) {
             return false;
         }
@@ -124,7 +122,6 @@ var FiltersView = Backbone.View.extend({
 
     postActionCheck: function () {
         'use strict';
-        console.log('filters: postActionCheck')
         this.evtMgr.trigger(EventManager.SEARCH_CLEAR, {});
     },
 
