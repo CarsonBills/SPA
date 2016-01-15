@@ -6,6 +6,7 @@ var Backbone = require('backbone'),
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
+    SITE: 'IIG -- ',
     MODULE: 'headerView',
     ACCOUNT: '.my-account',
     templateNR: require('../../templates/modules/NortonReaderHeaderTemplate.hbs'),
@@ -15,9 +16,13 @@ var HeaderConfigView = Backbone.View.extend({
         'use strict';
 
         var that = this,
+            title = this.model.get('displayTitle'),
             css = Norton.Constants.siteAssetsUrl + '/css/sites/' + Norton.siteCode + '.css';
 
         $('html').addClass(Norton.siteCode);
+        if (title) {
+            document.title = this.SITE + title;
+        }
 
         HeaderLoader.load(css).then(function(mesg) {
             Logger.get(that.MODULE).info(mesg);
