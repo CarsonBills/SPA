@@ -1,6 +1,6 @@
 {
   "name": "norton_reader",
-  "version": "1.0.0",
+  "version": "0001",
   "description": "Norton Reader",
   "main": "app.js",
   "scripts": {
