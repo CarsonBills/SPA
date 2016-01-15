@@ -287,6 +287,7 @@ var AppRouter = Backbone.Router.extend({
             return paths.pop();
         }
     }
+        return false;
 }
 });
 
