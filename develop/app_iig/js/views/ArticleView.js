@@ -85,7 +85,7 @@ var ArticleView = Backbone.View.extend({
         }
 
         if (this.collection.isNotValid() || noresults) {
-            $articles.append(this.templateNoResults);
+            //$articles.append(this.templateNoResults);
             return false;
         }
 

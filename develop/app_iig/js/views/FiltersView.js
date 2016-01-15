@@ -274,6 +274,9 @@ var FiltersView = Backbone.View.extend({
         }
         
         //window.history.pushState(null,null,url);
+        if (e) {
+            NortonApp.router.checkFilter(url);
+        }
 
         this.postActionCheck();
     },

@@ -44,6 +44,17 @@ var AppRouter = Backbone.Router.extend({
 
     },
 
+        /*
+     * return a copy of an object with only non-object keys
+     * we need this to avoid circular references
+     */
+    simpleKeys: function (original) {
+      return Object.keys(original).reduce(function (obj, key) {
+        obj[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
+        return obj;
+      }, {});
+    },
+
     switchState: function (state) {
         'use strict';
         var type;
@@ -63,6 +74,8 @@ var AppRouter = Backbone.Router.extend({
         var that = this;
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
+            //console.log('popstate', JSON.stringify(that.simpleKeys(e)), e)
+            //console.log(e.originalEvent)
             if (window.location.href === Norton.baseUrl) {
                 try {
                     ModalManager.hide();
@@ -95,28 +108,29 @@ var AppRouter = Backbone.Router.extend({
         return this.deferred.promise();
     },
 
-    searchFor: function (value) {
-        'use strict';
-        var page = "#/search/",
-            value;
-        if (value && value !== '') {
-            page += encodeURIComponent(value);
-            this.navigate(page);
-            window.history.replaceState({search: value}, null, page);
-        }
-    },
-
     returnHome: function () {
         'use strict';
+        console.log('returnHome')
         this.navigate('/', {
             trigger: true,
             replace: false
         });
+    }, 
+
+    rootPath: function() {
+        'use strict';
+        console.log('rootPath')
+        this.navigate('/', {
+            trigger: true,
+            replace: true
+        });
+        //TrackManager.doPageview('home');
     },
 
     navigateToID: function (id, params) {
         'use strict';
 
+        console.log('navigateToID')
         var options;
         if (id && id !== '') {
             if (params === undefined) {
@@ -128,15 +142,41 @@ var AppRouter = Backbone.Router.extend({
             var page = "page/" + id;
             this.navigate(page, options);
         }
-    }, 
+    },
 
-    rootPath: function() {
+    searchFor: function (value, params) {
         'use strict';
-        this.navigate('/', {
-            trigger: true,
-            replace: true
-        });
-        TrackManager.doPageview('home');
+        var page = "search/",
+            options;
+        console.log('searchFor')
+        if (value && value !== '') {
+            if (params === undefined) {
+                // default behavior
+                options = {
+                    trigger: true
+                }
+            }
+            page += encodeURIComponent(value);
+            this.navigate(page, options);
+        }
+    },
+
+    checkFilter: function (value, params) {
+        'use strict';
+        var page = "filter/",
+            options;
+        console.log('checkFilter')
+        if (value && value !== '') {
+            if (params === undefined) {
+                // default behavior
+                options = {
+                    trigger: true
+                }
+            }
+            page += encodeURIComponent(value);
+            this.navigate(page, options);
+        }
+
     },
 
     index: function() {
@@ -150,8 +190,8 @@ var AppRouter = Backbone.Router.extend({
 
     page: function(id) {
         'use strict';
-        TrackManager.doPageview('deeplink:' + id);
         this.appView.showDetailPage(id);
+        //TrackManager.doPageview('deeplink:' + id);
     },
     filter: function() {
         'use strict';

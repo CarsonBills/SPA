@@ -13,7 +13,7 @@ var SearchView = Backbone.View.extend({
         this.app = params.app;
 
         this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
-        this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
+        //this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
     },
 
     events: {
@@ -53,7 +53,7 @@ var SearchView = Backbone.View.extend({
          */
         if (value !== '') {
             Norton.searchQuery = value.toLowerCase();
-            this.collection.cleanupAndReset();
+            //this.collection.cleanupAndReset();
             this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
             // record history when triggered by events
             if (e) {
