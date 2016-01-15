@@ -70,9 +70,18 @@ var gulp = require('gulp'),
         dev: '_dev'
     };
 
-
+function getTimeStamp() {
+    var result;
+    if (isProd()) {
+        result = '_' + new Date().getTime();
+    } else {
+        result = '';
+    }
+    return result;
+}
 
 function getHTMLAssets(path) {
+    var ts = getTimeStamp();
     return {
         css: {
             src: path +'/css/app.css',
@@ -81,7 +90,7 @@ function getHTMLAssets(path) {
         js: {
             src: [
                 //path + '/js/vendor/modernizr.js',
-                path + '/js/bundle.min.js'],
+                path + '/js/bundle' + ts + '.min.js'],
             tpl: '<script src="%s"></script>'
         }/*,
         icon: {
@@ -116,6 +125,7 @@ var site = process.env.SITE || 'iig',
 
 gulp.task('echo', function () {
     console.log(getVersion(process.env.VERSION));
+    console.log(getTimeStamp());
 });
 
 gulp.task('fileinclude', function () {
@@ -380,7 +390,8 @@ gulp.task('customize:modernizr', function() {
 });
 
 gulp.task('browserify', function () {
-    var logger = ifElse(isProd(),
+    var ts = getTimeStamp(),
+        logger = ifElse(isProd(),
         function () { 
            return 'production.js';
         },
@@ -417,7 +428,7 @@ gulp.task('browserify', function () {
             transform: ['debowerify', hbsfy]
         }))
         .pipe(gulpif(isProd(), $.uglify()))
-        .pipe($.rename({basename: 'bundle', extname: '.min.js'}))
+        .pipe($.rename({basename: 'bundle' + ts, extname: '.min.js'}))
         .pipe(gulpif(isDev(), $.livereload()))
 
         .pipe($.notify({
