@@ -7,7 +7,8 @@ var Backbone = require('backbone'),
     'use strict';
 
 
-        var save = function(id) {
+        var CODE = Norton.siteCode + '.' + Norton.version + '.',
+            save = function(id) {
 
             var postdata = {
                 sitecode: Norton.siteCode,
@@ -27,10 +28,22 @@ var Backbone = require('backbone'),
                     Logger.error("Save Tracking request failed.");
                 }
             });
+        },
+
+        doPageview = function (value) {
+            dataLayer.push({'site': 'pageview.' + CODE + value});
+            console.log(dataLayer);
+        },
+
+        doEvent = function (value) {
+            dataLayer.push({'events': 'click.' + CODE + value});
+            console.log(dataLayer);
         };
 
         return {
-            save: save
+            save: save,
+            doPageview: doPageview,
+            doEvent: doEvent
         };
 }());
 

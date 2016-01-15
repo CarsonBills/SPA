@@ -9,7 +9,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     EventManager = require('../modules/event_manager'),
     ResizeHelper = require('../modules/resize_helper'),
-    ScrollHelper = require('../modules/scroll_helper');
+    ScrollHelper = require('../modules/scroll_helper'),
+    TrackManager = require('../modules/track_manager');
 
 var AppView = Backbone.View.extend({
     MODULE: 'AppView',
@@ -108,14 +109,21 @@ var AppView = Backbone.View.extend({
     toggleFilter: function (e) {
         'use strict';
 
+        var status;
+
         if (this.$('#filters').hasClass('off-screen')) {
             this.$('#filters').removeClass('off-screen');
             this.$('.results-bar').removeClass('full-screen');
             this.$('.content').removeClass('full-screen');
+            status = 'open';
         } else {
             this.$('#filters').addClass('off-screen');
             this.$('.results-bar').addClass('full-screen');
             this.$('.content').addClass('full-screen');
+            status = 'close';
+        }
+        if (e !== undefined) {
+            TrackManager.doEvent('filters.toggle.' + status);
         }
 
         return false;
@@ -282,6 +290,7 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
+
                 NortonApp.router.navigateToID(id, {
                     trigger: false,
                     replace: true

@@ -2,7 +2,8 @@ var Backbone = require("backbone"),
     $ = require('jquery'),
     Refinements = require('../modules/refinements'),
     ErrorsManager = require('../modules/errors_manager'),
-    ModalManager = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    TrackManager = require('../modules/track_manager');
 
 var AppRouter = Backbone.Router.extend({
 
@@ -135,6 +136,7 @@ var AppRouter = Backbone.Router.extend({
             trigger: true,
             replace: true
         });
+        TrackManager.doPageview('home');
     },
 
     index: function() {
@@ -148,6 +150,7 @@ var AppRouter = Backbone.Router.extend({
 
     page: function(id) {
         'use strict';
+        TrackManager.doPageview('deeplink:' + id);
         this.appView.showDetailPage(id);
     },
     filter: function() {

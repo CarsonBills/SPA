@@ -189,7 +189,7 @@ var YourFavsView = Backbone.View.extend({
             this.saveLocalStorage();
         }
 
-        TrackManager.save(articleData.id);
+        //TrackManager.save(articleData.id);
 
         return false;
     },
