@@ -17,7 +17,7 @@
         <div class="modal-utils" data-item-id='{{id}}'>
             <button data-save="Save to list" data-remove="Remove list" data-type="reader-button" class="savelist-lnk" data-item-id='{{id}}'><span class=" glyphicon {{HBFaved faved 'glyphicon-minus' 'glyphicon-plus'}}"></span><span class="button-label">{{HBFaved faved "Remove list" "Save to list"}}</span></button>
             {{#if data.ebookLink}}
-                <button data-type="reader-button" class="ebook-lnk" href="{{data.ebookLink}}" target="_blank"><span class="icon"></span><span class="button-label">View Ebook</span></button>
+                <a href="{{data.ebookLink}}" target="_blank"><button data-type="reader-button" class="ebook-lnk"><span class="icon"></span><span class="button-label">View Ebook</span></button></a>
             {{/if}}
         </div>
 

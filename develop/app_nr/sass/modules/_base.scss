@@ -91,21 +91,15 @@ button[data-type="reader-button"] {
 	padding: 0 1rem;
 	margin: 0;
 
-	/* .icon {
-		@include vertical-align(absolute);
-		left: 1.2rem;
-	} */
-
 	a {
 		text-decoration: none;
 		color: $dark-grey;
 	}
 
-
 	&.ebook-lnk {
 		.icon {
 			@include svg-sprite(ebook_icon);
-
+			@include vertical-align(absolute);
 		}
 	}
 }

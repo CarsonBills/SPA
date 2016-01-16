@@ -198,7 +198,7 @@
 					font-size: 1.2rem;
 
 					&.button-label {
-						margin-left: 1rem;
+						margin-left: 2rem;
 					}
 				}
 
@@ -206,10 +206,9 @@
 					margin-right: 1rem;
 
 					.glyphicon {
-						line-height: 4rem;
 						font-size: 1.5rem;
 						color: $reader-blue;
-						top: 0;
+						@include vertical-align(absolute);
 					}
 				}
 			}
