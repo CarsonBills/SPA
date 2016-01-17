@@ -15,7 +15,7 @@
 	height: inherit;
 }
 .modal-arrow-container {
-	@include vertical-align();
+	top: 35vh;
 	margin: 1rem;
 	font-size: 3rem;
 	color: #666;
@@ -481,6 +481,11 @@
 				.modal-utils {
 					margin: 2rem auto;
 					text-align: center;
+
+					.savelist-lnk {
+						margin-right: 0;
+						margin-bottom: 1rem;
+					}
 				}
 
 				.moreinfo-lnk {
