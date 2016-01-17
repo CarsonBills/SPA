@@ -92,7 +92,7 @@ function getHTMLAssets(path) {
 
 function getVersionNumber() {
     var json = JSON.parse(fs.readFileSync('./package.json'));
-    return '_' + json.version
+    return '_' + json[site + 'Version'];
 }
 
 function getVersion (version) {
