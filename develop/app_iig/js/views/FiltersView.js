@@ -71,6 +71,7 @@ var FiltersView = Backbone.View.extend({
 
             for (i=0; i<filter.refs.length; i++) {
                 filter.refs[i].cat_display = filter.displayName;
+                filter.refs[i].subCatName = filter.catName + i;
             }
 
             filterTemplate = this.template(filter);
