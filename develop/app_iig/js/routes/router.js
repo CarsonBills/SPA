@@ -12,7 +12,7 @@ var AppRouter = Backbone.Router.extend({
     HOME: 'homepage',
     PAGE: 'page',
     SEARCH: 'search',
-    FILTER: 'filter',
+    FILTER: 'filters',
     appView: null,
     deferred: $.Deferred(),
     refinements: Refinements.getInstance(),
@@ -25,7 +25,7 @@ var AppRouter = Backbone.Router.extend({
         "page/:id": "page",
         "favs/": "favs",
         "filters/": "filter",
-        "": "rootPath"
+        "": "homepage"
     },
 
     /*execute: function(callback, args, name) {
@@ -54,8 +54,10 @@ var AppRouter = Backbone.Router.extend({
 
     switchState: function () {
         'use strict';
+        console.log(this.state)
         switch (this.state) {
             case this.HOME:
+                this.returnHome();
             break;
             case this.PAGE:
             break;
@@ -72,6 +74,7 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         var that = this,
             pathname,
+            search,
             slugs,
             action,
             id;
@@ -79,18 +82,18 @@ var AppRouter = Backbone.Router.extend({
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
             pathname = window.location.pathname;
+            search = window.location.search;
             slugs = pathname.split('/');
             if (pathname === that.rootPath) {
                 if (ModalManager.shown()) {
                     ModalManager.hide();
                 } else {
                     that.switchState();
-
                 }
             } else {
                 if (slugs.length === 5) {
                     this.state = slugs[3];
-                    that.navigateToPath(slugs[3] + '/' + slugs[4]);
+                    that.navigateToPath(slugs[3] + '/' + slugs[4] + search);
                 }
             }
         });
@@ -127,14 +130,11 @@ var AppRouter = Backbone.Router.extend({
         });
     }, 
 
-    rootPath: function() {
+    homepage: function() {
         'use strict';
-        //this.state = this.HOME;
-
-        this.navigate('/', {
+        this.navigate('', {
             trigger: true
         });
-        //TrackManager.doPageview('home');
     },
 
     navigateToPath: function (path, params) {
@@ -154,7 +154,7 @@ var AppRouter = Backbone.Router.extend({
     navigateToID: function (id, params) {
         'use strict';
 
-        var page = 'page/',
+        var action = 'page/',
             options;
         if (id && id !== '') {
             this.state = this.PAGE;
@@ -164,9 +164,8 @@ var AppRouter = Backbone.Router.extend({
                     trigger: true
                 }
             }
-            page = "page/" + id;
-            this.navigate(page, options);
-            //widnow.history.pushState({page: id}, '', page);
+            action += id;
+            this.navigate(action, options);
         }
     },
 
@@ -189,7 +188,7 @@ var AppRouter = Backbone.Router.extend({
 
     checkFilter: function (value, params) {
         'use strict';
-        var page = "filter/",
+        var action = "filters/",
             options;
         if (value && value !== '') {
             this.state = this.FILTER;
@@ -199,8 +198,8 @@ var AppRouter = Backbone.Router.extend({
                     trigger: true
                 }
             }
-            page += encodeURIComponent(value);
-            this.navigate(page, options);
+            action += value;
+            this.navigate(action, options);
         }
 
     },
@@ -217,9 +216,8 @@ var AppRouter = Backbone.Router.extend({
     page: function(id) {
         'use strict';
         this.appView.showDetailPage(id);
-        //TrackManager.doPageview('deeplink:' + id);
     },
-    filter: function() {
+    filter: function(value) {
         'use strict';
         this.appView.filtersView.buildRefinementsFromUrl();
     },

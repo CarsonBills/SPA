@@ -84,7 +84,6 @@ var ArticleView = Backbone.View.extend({
 
         $articles.empty();
 
-
         /**
          * Hide the Load More button if we are at the end of current collection
          */
