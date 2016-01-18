@@ -202,7 +202,6 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         var page = "filter/",
             options;
-        console.log('checkFilter')
         if (value && value !== '') {
             this.state = this.FILTER;
             if (params === undefined) {
@@ -246,10 +245,24 @@ var AppRouter = Backbone.Router.extend({
     handleSiteConfig: function() {
         'use strict';
         var that = this,
-            dfd = $.Deferred();
+            dfd = $.Deferred(),
+            lsSiteConfig = false,
+            lsConfigId = 'config_' + Norton.siteCode + "_" + Norton.version,
+            lsBundleCheck = false,
+            lsBundleId = 'bundle_' + Norton.siteCode + "_" + Norton.version,
+            bundleName;
 
-        var lsSiteConfig = false;
-        var lsConfigId = 'config_' + Norton.siteCode + "_" + Norton.version;
+        bundleName = this.getBundleName();
+        try {
+            // compare bundle name in lS with current
+            if (localStorage.getItem(lsBundleId) == bundleName) {
+                lsBundleCheck = true;
+            } else {
+                try {
+                    localStorage.setItem(lsBundleId, bundleName);
+                } catch (e) { }
+            }
+        } catch(e) {}
 
         try {
             lsSiteConfig = localStorage.getItem(lsConfigId);
@@ -259,7 +272,7 @@ var AppRouter = Backbone.Router.extend({
             }
         } catch(e) {}
 
-        if (lsSiteConfig) {
+        if (lsSiteConfig && lsBundleCheck) {
             NortonApp.headerConfigItem.attributes = JSON.parse(localStorage.getItem(lsConfigId));
             Norton.discipline = NortonApp.headerConfigItem.attributes.disciplineId;
             Norton.searchRepo = NortonApp.headerConfigItem.attributes.searchRepo;
@@ -302,7 +315,18 @@ var AppRouter = Backbone.Router.extend({
         if (NortonApp.headerConfigItem.attributes.siteMode === "protected" && !Norton.isLoggedIn) {
             window.location.href = Norton.Constants.loginUrl;
         }
+    },
+    getBundleName: function() {
+    var scripts = document.getElementsByTagName("script"),
+        paths;
+    for (var i=0;i<scripts.length;i++) {
+        if (scripts[i].src && scripts[i].src.indexOf("/js/bundle_") >= 0 ) {
+            paths = scripts[i].src.split("/");
+            return paths.pop();
+        }
     }
+        return false;
+}
 });
 
 module.exports = AppRouter;
