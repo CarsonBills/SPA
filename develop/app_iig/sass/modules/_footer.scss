@@ -1,10 +1,18 @@
 
-.footer {
 
-	//@include locked();
-	
-    height: 75px;
-    display: block;
-    text-align: center;
-    width:100%;
+.page-footer {
+    padding: 0 4rem;
+
+    &.sticky {
+    	position: fixed;
+    	bottom: 1rem;
+    }
+
+	.footer {
+		
+	    height: 75px;
+	    display: block;
+	    text-align: center;
+	    width:100%;
+	}
 }

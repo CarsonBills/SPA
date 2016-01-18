@@ -54,18 +54,15 @@ var AppRouter = Backbone.Router.extend({
 
     switchState: function () {
         'use strict';
-        console.log('switchState', this.state)
         switch (this.state) {
             case this.HOME:
             break;
             case this.PAGE:
             break;
             case this.SEARCH:
-                console.log('reset search')
                 this.appView.resetSearch();
             break;
             case this.FILTER:
-                console.log('reset filter')
                 this.appView.resetFilters();
             break;
         }
@@ -83,11 +80,8 @@ var AppRouter = Backbone.Router.extend({
         $(window).on("popstate", function(e) {
             pathname = window.location.pathname;
             slugs = pathname.split('/');
-            console.log( window.location.pathname, 'pageName:' + window.location.pathname.split('/').length)
             if (pathname === that.rootPath) {
-                console.log('xxx', that.state)
                 if (ModalManager.shown()) {
-                    console.log('hide')
                     ModalManager.hide();
                 } else {
                     that.switchState();
@@ -95,7 +89,6 @@ var AppRouter = Backbone.Router.extend({
                 }
             } else {
                 if (slugs.length === 5) {
-                    console.log('tttt', slugs[4])
                     this.state = slugs[3];
                     that.navigateToPath(slugs[3] + '/' + slugs[4]);
                 }
@@ -128,7 +121,6 @@ var AppRouter = Backbone.Router.extend({
     returnHome: function () {
         'use strict';
         this.state = this.HOME;
-        console.log('returnHome')
         this.navigate('', {
             trigger: true,
             replace: false
@@ -139,7 +131,6 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         //this.state = this.HOME;
 
-        console.log('rootPath')
         this.navigate('/', {
             trigger: true
         });
@@ -163,7 +154,6 @@ var AppRouter = Backbone.Router.extend({
     navigateToID: function (id, params) {
         'use strict';
 
-        console.log('navigateToID')
         var page = 'page/',
             options;
         if (id && id !== '') {
@@ -193,7 +183,6 @@ var AppRouter = Backbone.Router.extend({
                 }
             }
             action += encodeURIComponent(value);
-            console.log('searchFor', action)
             this.navigate(action, options);
         }
     },

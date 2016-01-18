@@ -81,6 +81,7 @@ var AppView = Backbone.View.extend({
 
         this.footerView = new NortonApp.Views.Footer({
             model: NortonApp.headerConfigItem,
+            collection: this.collection,
             el: ".page-footer"
         });
 
@@ -153,8 +154,8 @@ var AppView = Backbone.View.extend({
         this.dataReady = false;
         nextItemID = this.articleView.getLastItemID();
 
-        this.loadingView.show();
-
+        //this.loadingView.show();
+        this.evtMgr.trigger(EventManager.APP_LOADING, {});
 
 		if (Norton.searchQuery) {
             postdata.query = Norton.searchQuery;
@@ -185,7 +186,8 @@ var AppView = Backbone.View.extend({
             remove: false,
             success: $.proxy (function(data) {
                 
-                that.loadingView.hide();
+                that.evtMgr.trigger(EventManager.APP_READY, {});
+                //that.loadingView.hide();
                 that.showResultsTotals();
 
                 that.articleView.showHighlight({

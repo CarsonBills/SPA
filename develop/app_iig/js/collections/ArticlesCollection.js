@@ -1,11 +1,13 @@
 var Backbone = require('backbone'),
     _ = require('underscore'),
-    ErrorsManager = require('../modules/errors_manager');
+    ErrorsManager = require('../modules/errors_manager'),
+    EventManager = require('../modules/event_manager');
 
 var ArticlesCollection = Backbone.Collection.extend({
     MODULE: 'ArticlesCollection',
     model: NortonApp.Models.Article,
     url: Norton.Constants.searchUrl,
+    evtMgr: EventManager.getInstance(),
     totalRecords: 0,
     recordStart: 0,
     recordEnd: 0,
@@ -28,6 +30,7 @@ var ArticlesCollection = Backbone.Collection.extend({
             Logger.get(this.MODULE).error(res);
             return false;
         }
+
 
         // Inject return data to collection for later use in view
         this.totalRecords = response.totalRecordCount;
@@ -52,6 +55,10 @@ var ArticlesCollection = Backbone.Collection.extend({
             record.baseUrl = Norton.baseUrl;
 
         });
+
+        if (response.totalRecordCount === 0) {
+            this.evtMgr.trigger(EventManager.EMPTY_RESULTS, {});
+        }
 
         return response.records;
     },

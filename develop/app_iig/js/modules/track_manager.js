@@ -32,12 +32,10 @@ var Backbone = require('backbone'),
 
         doPageview = function (value) {
             dataLayer.push({'site': 'pageview.' + CODE + value});
-            console.log(dataLayer);
         },
 
         doEvent = function (value) {
             dataLayer.push({'events': 'click.' + CODE + value});
-            console.log(dataLayer);
         };
 
         return {

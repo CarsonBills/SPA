@@ -29,6 +29,7 @@ var ArticleView = Backbone.View.extend({
 
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onModuleUpdate, this);
+        this.evtMgr.on(EventManager.EMPTY_RESULTS, this.onEmptyResults, this);
         this.favorites.on('update', this.onModuleUpdate, this);
 
         this.app = params.app;
@@ -64,6 +65,15 @@ var ArticleView = Backbone.View.extend({
         }
     },
 
+    onEmptyResults: function() {
+        'use strict';
+        var $articles = this.$(this.container);
+        if(this.collection.isEmpty()) {
+            $articles.empty();
+            $articles.append(this.templateNoResults);
+        }
+    },
+
     render: function(noresults) {
         'use strict';
 
@@ -85,7 +95,6 @@ var ArticleView = Backbone.View.extend({
         }
 
         if (this.collection.isNotValid() || noresults) {
-            //$articles.append(this.templateNoResults);
             return false;
         }
 

@@ -1,9 +1,11 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    EventManager = require('../modules/event_manager');
 
 var LoadingView = Backbone.View.extend({
 
+    evtMgr: EventManager.getInstance(),
     loadingTemplate: require("../../templates/modules/LoadingTemplate.hbs"),
     $el: null, // load more container
     $button: null, // load more button
@@ -24,6 +26,9 @@ var LoadingView = Backbone.View.extend({
         this.loading = false;
 
         this.$button.text(this.$el.data('default'));
+
+        this.evtMgr.on(EventManager.APP_LOADING, this.show, this);
+        this.evtMgr.on(EventManager.APP_READY, this.hide, this);
 
     },
 

@@ -49,6 +49,10 @@ ul.card {
     $card-gutter: 1rem;
     transition: all 1s ease-out;
 
+    .empty-results {
+        @include athelas($size: 2rem);
+    }
+
     li.grid-format {
         position: relative;
         margin: 1.8rem 2rem;
@@ -277,10 +281,6 @@ ul.card {
     .anim & {
         animation: rotate-360 0.8s infinite steps(12, end);
     }
-}
-
-.page-footer {
-    padding: 0 4rem;
 }
 
 // used to prevent clicking when loading
