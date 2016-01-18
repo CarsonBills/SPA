@@ -53,12 +53,13 @@ var SearchView = Backbone.View.extend({
          */
         if (value !== '') {
             Norton.searchQuery = value.toLowerCase();
-            //this.collection.cleanupAndReset();
-            this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
+            this.collection.cleanupAndReset();
+            //this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
             // record history when triggered by events
             if (e) {
                 NortonApp.router.searchFor(value);
             }
+            this.app.getArticles();
         } else {
             $('#searchTextInput').val(Norton.Constants.emptySeach);
             setTimeout(function () {

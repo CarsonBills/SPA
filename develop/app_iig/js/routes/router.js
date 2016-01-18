@@ -1,5 +1,6 @@
 var Backbone = require("backbone"),
     $ = require('jquery'),
+    _ = require('underscore'),
     Refinements = require('../modules/refinements'),
     ErrorsManager = require('../modules/errors_manager'),
     ModalManager = require('../modules/modal_manager'),
@@ -8,9 +9,15 @@ var Backbone = require("backbone"),
 var AppRouter = Backbone.Router.extend({
 
     MODULE: 'router',
+    HOME: 'homepage',
+    PAGE: 'page',
+    SEARCH: 'search',
+    FILTER: 'filter',
     appView: null,
     deferred: $.Deferred(),
     refinements: Refinements.getInstance(),
+    rootPath: '',
+    state: '',
 
     routes: {
         "/^(?!page|favs|search!filter)([\w]+(\/*))$/": "index",
@@ -41,46 +48,56 @@ var AppRouter = Backbone.Router.extend({
             that.start();
             that.initEvent();
         });
-
+        this.rootPath = '/' + Norton.siteCode + '/' + Norton.version;
+        this.state = this.HOME;
     },
 
-        /*
-     * return a copy of an object with only non-object keys
-     * we need this to avoid circular references
-     */
-    simpleKeys: function (original) {
-      return Object.keys(original).reduce(function (obj, key) {
-        obj[key] = typeof original[key] === 'object' ? '{ ... }' : original[key];
-        return obj;
-      }, {});
-    },
-
-    switchState: function (state) {
+    switchState: function () {
         'use strict';
-        var type;
-        if (state) {
-            if (state.page) {
-                this.navigateToID(state.page);
-            } else if (state.search) {
-                this.searchFor(state.search);
-            }
-        } else {
-            this.appView.resetSearch();
+        console.log('switchState', this.state)
+        switch (this.state) {
+            case this.HOME:
+            break;
+            case this.PAGE:
+            break;
+            case this.SEARCH:
+                console.log('reset search')
+                this.appView.resetSearch();
+            break;
+            case this.FILTER:
+                console.log('reset filter')
+                this.appView.resetFilters();
+            break;
         }
     },
 
     initEvent: function () {
         'use strict';
-        var that = this;
+        var that = this,
+            pathname,
+            slugs,
+            action,
+            id;
+
         // modals don't detect close event from back button so use event handler to close with popstate change
         $(window).on("popstate", function(e) {
-            //console.log('popstate', JSON.stringify(that.simpleKeys(e)), e)
-            //console.log(e.originalEvent)
-            if (window.location.href === Norton.baseUrl) {
-                try {
+            pathname = window.location.pathname;
+            slugs = pathname.split('/');
+            console.log( window.location.pathname, 'pageName:' + window.location.pathname.split('/').length)
+            if (pathname === that.rootPath) {
+                console.log('xxx', that.state)
+                if (ModalManager.shown()) {
+                    console.log('hide')
                     ModalManager.hide();
-                } catch(e) {
+                } else {
+                    that.switchState();
 
+                }
+            } else {
+                if (slugs.length === 5) {
+                    console.log('tttt', slugs[4])
+                    this.state = slugs[3];
+                    that.navigateToPath(slugs[3] + '/' + slugs[4]);
                 }
             }
         });
@@ -110,8 +127,9 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         'use strict';
+        this.state = this.HOME;
         console.log('returnHome')
-        this.navigate('/', {
+        this.navigate('', {
             trigger: true,
             replace: false
         });
@@ -119,45 +137,64 @@ var AppRouter = Backbone.Router.extend({
 
     rootPath: function() {
         'use strict';
+        //this.state = this.HOME;
+
         console.log('rootPath')
         this.navigate('/', {
-            trigger: true,
-            replace: true
+            trigger: true
         });
         //TrackManager.doPageview('home');
+    },
+
+    navigateToPath: function (path, params) {
+        'use strict';
+        var options;
+        if (path && path !== '') {
+            if (params === undefined) {
+                // default behavior
+                options = {
+                    trigger: true
+                }
+            }
+            this.navigate(path, options);
+        }
     },
 
     navigateToID: function (id, params) {
         'use strict';
 
         console.log('navigateToID')
-        var options;
+        var page = 'page/',
+            options;
         if (id && id !== '') {
+            this.state = this.PAGE;
             if (params === undefined) {
                 // default behavior
                 options = {
                     trigger: true
                 }
             }
-            var page = "page/" + id;
+            page = "page/" + id;
             this.navigate(page, options);
+            //widnow.history.pushState({page: id}, '', page);
         }
     },
 
     searchFor: function (value, params) {
         'use strict';
-        var page = "search/",
+        var action = "search/",
             options;
-        console.log('searchFor')
         if (value && value !== '') {
+            this.state = this.SEARCH;
             if (params === undefined) {
                 // default behavior
                 options = {
                     trigger: true
                 }
             }
-            page += encodeURIComponent(value);
-            this.navigate(page, options);
+            action += encodeURIComponent(value);
+            console.log('searchFor', action)
+            this.navigate(action, options);
         }
     },
 
@@ -167,6 +204,7 @@ var AppRouter = Backbone.Router.extend({
             options;
         console.log('checkFilter')
         if (value && value !== '') {
+            this.state = this.FILTER;
             if (params === undefined) {
                 // default behavior
                 options = {

@@ -259,6 +259,11 @@ var AppView = Backbone.View.extend({
         this.getArticles();
     },
 
+    resetFilters: function () {
+        'use strict';
+        this.filtersView.resetFilters();
+    },
+
     /* deep link callback */
     resetSearch: function () {
         'use strict';
