@@ -4,6 +4,12 @@
 	transform: translateY(-$top);
 }
 
+@mixin horizontal-align($position: relative, $left: 50%) {
+    position: $position;
+    left: $left;
+    transform: translateX(-$left);
+}
+
 @mixin center($position: relative, $top: 50%, $left: 50%) {
 	position: $position;
 	top: $top;

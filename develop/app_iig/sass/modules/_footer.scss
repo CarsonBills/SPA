@@ -2,14 +2,13 @@
 
 .page-footer {
     padding: 0 4rem;
+    position: relative;
 
     &.sticky {
-    	position: fixed;
-    	bottom: 1rem;
+    	margin: 50vh auto 0;
     }
 
 	.footer {
-		
 	    height: 75px;
 	    display: block;
 	    text-align: center;
