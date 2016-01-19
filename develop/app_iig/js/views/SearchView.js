@@ -12,16 +12,17 @@ var SearchView = Backbone.View.extend({
         'use strict';
         this.app = params.app;
 
-        var $f = this.$('#resetSearch');
+        var $f = this.$('#resetSearch'),
+            that = this;
 
         this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
         //this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
         $('#searchTextInput').on('input', function (e) {
 
             if ($(e.target).val() === '') {
-                this.hideRemove();
+                that.hideRemove();
             } else {
-                this.showRemove();
+                that.showRemove();
             }
         });
     },
@@ -51,9 +52,9 @@ var SearchView = Backbone.View.extend({
 
     tagLinkClicked: function (params) {
         'use strict';
-        if (params.tag || params.tag !== '') {
+        if (params.tag && params.tag !== '') {
             $('#searchTextInput').val(decodeURIComponent(params.tag));
-            this.searchArticles(params.tag);
+            this.searchArticles();
         }
     },
 
