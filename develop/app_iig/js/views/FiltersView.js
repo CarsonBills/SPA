@@ -51,9 +51,7 @@ var FiltersView = Backbone.View.extend({
         }
 
         // Update the filter counts
-        //this.filterContent = this.refinements.getSavedFilters();
-        this.filterContent = this.collection.filters;
-        console.log(this.collection.filters)
+        this.filterContent = this.refinements.getSavedFilters(this.collection.filters);
 
         this.render();
         this.adjustHieght();
@@ -77,6 +75,7 @@ var FiltersView = Backbone.View.extend({
             }
 
             filterTemplate = this.template(filter);
+
             this.$el.append(filterTemplate);
         }, this);
 

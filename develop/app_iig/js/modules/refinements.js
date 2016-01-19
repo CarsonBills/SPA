@@ -66,8 +66,9 @@ Navigation.prototype = {
         return result;
     },
 
-    getSavedFilters: function() {
+    getSavedFilters: function(filters) {
         // cloning object: http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
+        this.savedFilters = filters;
         var savedRefs = (Norton.savedRefinements == undefined) ? [] : Norton.savedRefinements,
             originalNav = JSON.parse(JSON.stringify(this.savedFilters)),
             selRefs = [];
