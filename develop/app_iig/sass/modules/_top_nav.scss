@@ -100,8 +100,14 @@ nav {
         opacity: 0.5;
         font-size: 2rem;
 
-        &:hover {
-            opacity: 1;
+        &.off {
+            opacity: 0;
+        }        
+
+        &:not(.off) {
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }
