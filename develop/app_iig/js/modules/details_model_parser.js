@@ -20,7 +20,6 @@ var Backbone = require('backbone'),
             if (src === undefined) {
                 return false;
             }
-
             nodes = src.split('/');
 
             url = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=";
@@ -30,6 +29,18 @@ var Backbone = require('backbone'),
                 url += "/" + nodes[i].replace("+", "%2b");
             }
             return url;
+        },
+
+        replaceURL = function (text) {
+            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
+                matched = text.match(exp),
+                frag = text;
+
+                _.each(matched, function (item) {
+                    frag = frag.replace(exp, parseUrl(item));
+                })
+
+            return frag;
         },
 
         parseBlock = function (block) {
@@ -46,6 +57,10 @@ var Backbone = require('backbone'),
 
         process = function(raw) {
             // download aset
+            if (raw.data.introCopy) {
+                raw.data.introCopy = replaceURL(raw.data.introCopy);
+            }
+
             if (raw.data.downloads.src) {
                 raw.data.downloads.src = parseUrl(raw.data.downloads.src);
             }

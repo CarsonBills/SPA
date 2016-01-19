@@ -129,6 +129,12 @@
 				position: relative;
 				text-align: left;
 				@include opensans($size: 1.5rem, $height: 1.4);
+
+				// embedded image
+				img {
+					width: 100%;
+					height: auto;
+				}
 			}
 
 			.header-img {
