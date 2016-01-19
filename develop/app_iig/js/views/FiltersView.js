@@ -51,7 +51,9 @@ var FiltersView = Backbone.View.extend({
         }
 
         // Update the filter counts
-        this.filterContent = this.refinements.getSavedFilters();
+        //this.filterContent = this.refinements.getSavedFilters();
+        this.filterContent = this.collection.filters;
+        console.log(this.collection.filters)
 
         this.render();
         this.adjustHieght();
@@ -123,7 +125,7 @@ var FiltersView = Backbone.View.extend({
 
     postActionCheck: function () {
         'use strict';
-        this.evtMgr.trigger(EventManager.SEARCH_CLEAR, {});
+        //this.evtMgr.trigger(EventManager.SEARCH_CLEAR, {});
     },
 
     checkSelected: function () {
