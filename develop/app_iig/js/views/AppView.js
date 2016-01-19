@@ -171,7 +171,7 @@ var AppView = Backbone.View.extend({
 
         postdata.sitecode = Norton.siteCode;
         postdata.siteversion = Norton.version;
-        postdata.siteRepo = Norton.searchRepo;
+        postdata.searchRepo = Norton.searchRepo;
         postdata.skip = this.collection.recordEnd;
         postdata.pageSize = Norton.perPage;
         postdata.navMetadata = Norton.navMetadata;
