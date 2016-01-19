@@ -1,4 +1,4 @@
-var Backbone = require("backbone"),
+    var Backbone = require("backbone"),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     EventManager = require('../modules/event_manager');
@@ -12,8 +12,18 @@ var SearchView = Backbone.View.extend({
         'use strict';
         this.app = params.app;
 
+        var $f = this.$('#resetSearch');
+
         this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
         //this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
+        $('#searchTextInput').on('input', function (e) {
+
+            if ($(e.target).val() === '') {
+                this.hideRemove();
+            } else {
+                this.showRemove();
+            }
+        });
     },
 
     events: {
@@ -25,6 +35,18 @@ var SearchView = Backbone.View.extend({
                 this.searchArticles(e);
             }
         }
+    },
+
+    showRemove: function () {
+        'use strict';
+        if (this.$('#resetSearch').hasClass('off')) {
+            this.$('#resetSearch').removeClass('off');
+        }
+    },
+
+    hideRemove: function () {
+        'use strict';
+        this.$('#resetSearch').addClass('off');
     },
 
     tagLinkClicked: function (params) {
@@ -45,7 +67,8 @@ var SearchView = Backbone.View.extend({
              * Clear out collection, reset "skip" to zero, then run search query.
              */
             this.collection.cleanupAndReset();
-            this.app.getArticles();
+            this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
+            //this.app.getArticles();
         }
     },
 
@@ -56,6 +79,8 @@ var SearchView = Backbone.View.extend({
 
         if (value !== '') {
             // record history when triggered by events
+
+            this.showRemove();
             NortonApp.router.searchFor(value);
         } else {
             $('#searchTextInput').val(Norton.Constants.emptySeach);
@@ -84,6 +109,7 @@ var SearchView = Backbone.View.extend({
         }
         if ($('#searchTextInput').val() !== '') {
             $('#searchTextInput').val('');
+            this.hideRemove();
         }
         return false;
     }
