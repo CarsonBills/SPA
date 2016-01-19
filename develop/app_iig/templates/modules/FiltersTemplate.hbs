@@ -6,7 +6,7 @@
     <div class="filter-item collapse" id="{{catName}}">
     {{#each refs}}
         {{#if name}}
-            {{#if count}}
+            {{#HBCount count}}
                 {{#HBFilterHasSubnav ../nested "1" this}}
                 <div class="filter-item-name nested">
                     <a href="#/filter/" data-target="#{{subCatName}}" data-toggle="collapse" data-parent="#{{subCatName}}">
@@ -25,11 +25,11 @@
                     {{> HBFiltersCatCheckboxDisabled}}
                     {{> HBFiltersCount}}
                 </div>
-            {{/if}}
+            {{/HBCount}}
             {{#HBFilterHasSubnav ../nested "1" this}}
             <div class="filter-item-group collapse{{HBFilterChecked checked}}" data-parent="#{{@root.catName}}" id="{{@root.catName}}{{@index}}">
             {{#each subnav}}
-                {{#if count}}
+                {{#HBCount count}}
                     <div class="filter-item-name">
                         {{> HBFiltersSubCatCheckbox catName=../subCatName subName=../name }}
                         {{> HBFiltersCount}}
@@ -39,7 +39,7 @@
                         {{> HBFiltersSubCatCheckboxDisabled}}
                         {{> HBFiltersCount}}
                     </div>
-                {{/if}}
+                {{/HBCount}}
             {{/each}}
             </div>
             {{/HBFilterHasSubnav}}
