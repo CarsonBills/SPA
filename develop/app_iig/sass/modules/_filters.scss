@@ -93,6 +93,10 @@
 
         &.nested {
             background-color: rgba(230, 230, 230, 0.3);
+
+            div[data-toggle="collapse"] {
+                cursor: pointer;
+            }
         }
 
         &:not('.filter-greyed-out') {
