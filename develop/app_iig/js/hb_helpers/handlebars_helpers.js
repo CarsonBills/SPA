@@ -134,6 +134,13 @@ module.exports = (function() {
         } else {
             return options.inverse(this);
         }
-    });   
+    });
+    Handlebars.registerHelper('HBCount', function(count, options) {
+        if (count > 0) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+    });    
 
 })();
