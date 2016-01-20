@@ -31,20 +31,22 @@ var Backbone = require('backbone'),
             return url;
         },
 
+        // https://s3.amazonaws.com/nortoniigprotectedassets/econ/images/TIP_035.jpg
         replaceURL = function (text) {
-            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
-                matched = text.match(exp),
-                frag = text;
+            var prefix = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
+                exp = /http(s?):\/\/s3.amazonaws.com/ig,
+                frag;
 
-                _.each(matched, function (item) {
-                    frag = frag.replace(exp, parseUrl(item));
-                })
+                frag = text.replace(exp, prefix);
 
             return frag;
         },
 
         parseBlock = function (block) {
             switch (block.type) {
+                case 'text only':
+                    block.copy = replaceURL(block.copy);
+                break;
                 case 'image':
                     block.imageSrc = parseUrl(block.imageSrc);
                 break;
