@@ -25,7 +25,8 @@
     "modernizr": "~3.0.0",
     "respond": "~1.4.2",
     "skeleton-sass": "~2.5.1",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "jPlayer": "jplayer#~2.9.2"
   },
   "devDependencies": {}
 }

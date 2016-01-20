@@ -16,7 +16,8 @@
     "CSSPlugin": "./bower_components/gsap/src/uncompressed/plugins/CSSPlugin.js",
     "ScrollToPlugin": "./bower_components/gsap/src/uncompressed/plugins/ScrollToPlugin.js",
     "EasePack": "./bower_components/gsap/src/uncompressed/easing/EasePack.js",
-    "TimelineLite": "./bower_components/gsap/src/uncompressed/TimelineLite.js"
+    "TimelineLite": "./bower_components/gsap/src/uncompressed/TimelineLite.js",
+    "jplayer": "./bower_components/jPlayer/dist/jplayer/jquery.jplayer.js"
   },
   "author": "",
   "license": "ISC",
@@ -62,7 +63,6 @@
     "gulp-util": "^3.0.6",
     "gulp.spritesmith": "^6.0.0",
     "handlebars": "^4.0.3",
-    "jplayer": "^2.9.2",
     "js-logger": "^1.2.0",
     "jshint-stylish": "^2.0.1",
     "merge-stream": "^1.0.0",
