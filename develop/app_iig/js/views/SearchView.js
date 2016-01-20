@@ -12,8 +12,7 @@ var SearchView = Backbone.View.extend({
         'use strict';
         this.app = params.app;
 
-        var $f = this.$('#resetSearch'),
-            that = this;
+        var that = this;
 
         this.evtMgr.on(EventManager.TAG_LINK_CLICK, this.tagLinkClicked, this);
         //this.evtMgr.on(EventManager.SEARCH_CLEAR, this.clearSearch, this);
@@ -52,10 +51,17 @@ var SearchView = Backbone.View.extend({
 
     tagLinkClicked: function (params) {
         'use strict';
-        if (params.tag && params.tag !== '') {
-            $('#searchTextInput').val(decodeURIComponent(params.tag));
-            this.searchArticles();
+        //$('#searchTextInput').val(decodeURIComponent(params.tag));
+            //this.searchArticles();
+        //var value = $('#searchTextInput').val();
+
+        if (params.tag !== '') {
+            // record history when triggered by events
+            console.log('xxxxx')
+            this.showRemove();
+            NortonApp.router.searchFor(params.tag);
         }
+        return false;
     },
 
     /* triggered from router */
@@ -67,6 +73,7 @@ var SearchView = Backbone.View.extend({
             /**
              * Clear out collection, reset "skip" to zero, then run search query.
              */
+            console.log('=====', value)
             this.collection.cleanupAndReset();
             this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
             //this.app.getArticles();
@@ -80,7 +87,7 @@ var SearchView = Backbone.View.extend({
 
         if (value !== '') {
             // record history when triggered by events
-
+            console.log('xxxxx')
             this.showRemove();
             NortonApp.router.searchFor(value);
         } else {
@@ -100,7 +107,7 @@ var SearchView = Backbone.View.extend({
     },
 
     onResetSearch: function (e) {
-        'use strict';       
+        'use strict';     
         if (Norton.searchQuery !== '') {
             Norton.searchQuery = '';
             this.collection.cleanupAndReset();

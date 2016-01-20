@@ -72,10 +72,12 @@ var PageView = Backbone.View.extend({
         return this;
     },
 
-    tagLinkClicked: function (params, e) {
+    tagLinkClicked: function (params) {
         'use strict';
         if (params.tag !== undefined || params.tag !== '') {
-            ModalManager.hide();
+            if (ModalManager.shown()) {
+                ModalManager.hide();
+            }
         }
     },
 
