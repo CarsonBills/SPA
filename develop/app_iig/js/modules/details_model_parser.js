@@ -57,6 +57,10 @@ var Backbone = require('backbone'),
 
         process = function(raw) {
             // download aset
+            if (raw.data.abstract) {
+                raw.data.abstract = replaceURL(raw.data.abstract);
+            }
+
             if (raw.data.introCopy) {
                 raw.data.introCopy = replaceURL(raw.data.introCopy);
             }
