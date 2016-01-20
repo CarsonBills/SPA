@@ -49,10 +49,12 @@ var Backbone = require('backbone'),
                 break;
                 case 'image':
                     block.imageSrc = parseUrl(block.imageSrc);
+                    block.copy = replaceURL(block.copy);
                 break;
                 case 'video':
                     block.stillImageSrc = parseUrl(block.stillImageSrc);
                     block.videoSrc = parseUrl(block.videoSrc);
+                    block.blurb = replaceURL(block.blurb);
                 break;
             }
         },
