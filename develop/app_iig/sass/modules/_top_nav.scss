@@ -184,15 +184,19 @@ nav {
         font-size: 2rem;
 
         span {
+            color: #999;
             &.active {
-                color: #999;
+                color: #222;
                 cursor: default;
+            }
+            &:hover {
+                color: #333;
             }
         }
 
         .icon-grid-view {
             margin-right: 1rem;
-            color: #60605e;
+            top: 2px;
         }
     }
 }
