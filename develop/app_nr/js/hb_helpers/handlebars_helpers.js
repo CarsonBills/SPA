@@ -95,5 +95,10 @@ module.exports = (function() {
             return options.fn(this);
         }
     });
+    Handlebars.registerHelper('HBShowEBook', function(ebook, version, options) {
+        if (ebook !== undefined && version === 'full') {
+            return options.fn(this);
+        }
+    });
 
 })();
