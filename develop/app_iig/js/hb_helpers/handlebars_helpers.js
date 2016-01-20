@@ -114,7 +114,7 @@ module.exports = (function() {
         return (bool) ? saved : unsaved;
     });    
     Handlebars.registerHelper('HBPageLinkWithPname', function(url, pname) {
-        return url + "#/page/" + pname;
+        return url + "page/" + pname;
     }); 
     Handlebars.registerHelper('HBNotEmpty', function(obj, options) {
         if (!_.isEmpty(obj) && _.isObject(obj)) {

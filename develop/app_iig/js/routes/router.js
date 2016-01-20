@@ -54,7 +54,6 @@ var AppRouter = Backbone.Router.extend({
 
     switchState: function () {
         'use strict';
-        console.log(this.state)
         switch (this.state) {
             case this.HOME:
                 this.returnHome();

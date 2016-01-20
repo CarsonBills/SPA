@@ -57,7 +57,6 @@ var SearchView = Backbone.View.extend({
 
         if (params.tag !== '') {
             // record history when triggered by events
-            console.log('xxxxx')
             this.showRemove();
             NortonApp.router.searchFor(params.tag);
         }
@@ -73,7 +72,6 @@ var SearchView = Backbone.View.extend({
             /**
              * Clear out collection, reset "skip" to zero, then run search query.
              */
-            console.log('=====', value)
             this.collection.cleanupAndReset();
             this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
             //this.app.getArticles();
@@ -87,7 +85,6 @@ var SearchView = Backbone.View.extend({
 
         if (value !== '') {
             // record history when triggered by events
-            console.log('xxxxx')
             this.showRemove();
             NortonApp.router.searchFor(value);
         } else {

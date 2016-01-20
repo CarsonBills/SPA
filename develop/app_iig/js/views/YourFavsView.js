@@ -48,6 +48,7 @@ var YourFavsView = Backbone.View.extend({
         "click #navYourFavs": "showYourFavs",
         "click .button-container a": "saveYourFavs",
         "click .list-format .remove": "removeYourFavs",
+        "click .favs-title a": "triggerPage"
     },
 
     render: function() {
@@ -89,6 +90,12 @@ var YourFavsView = Backbone.View.extend({
         this.$("div[data-module=favorites] .modal-body").sortable();
 
         return this;
+    },
+
+    triggerPage: function (e) {
+        'use strict';
+        NortonApp.router.navigateToID($(e.currentTarget).data('id'));
+        return false;
     },
 
     removeItem: function (model) {
