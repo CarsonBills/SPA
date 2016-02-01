@@ -58,7 +58,10 @@ var SearchView = Backbone.View.extend({
         if (params.tag !== '') {
             // record history when triggered by events
             this.showRemove();
-            NortonApp.router.searchFor(params.tag);
+            NortonApp.router.searchFor({
+                tag: params.tag,
+                stopPropagate: true
+            });
         }
         return false;
     },
@@ -86,7 +89,9 @@ var SearchView = Backbone.View.extend({
         if (value !== '') {
             // record history when triggered by events
             this.showRemove();
-            NortonApp.router.searchFor(value);
+            NortonApp.router.searchFor({
+                tag: value
+            });
         } else {
             $('#searchTextInput').val(Norton.Constants.emptySeach);
             setTimeout(function () {

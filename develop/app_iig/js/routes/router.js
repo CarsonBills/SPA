@@ -18,6 +18,7 @@ var AppRouter = Backbone.Router.extend({
     refinements: Refinements.getInstance(),
     rootPath: '',
     state: '',
+    stopPropagate: false,
 
     routes: {
         "/^(?!page|favs|search!filter)([\w]+(\/*))$/": "index",
@@ -122,11 +123,14 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         'use strict';
-        this.state = this.HOME;
-        this.navigate('/', {
-            trigger: true,
-            replace: false
-        });
+        if (this.stopPropagate) {
+            this.stopPropagate = false;
+        } else {
+            this.state = this.HOME;
+            this.navigate('/', {
+                trigger: true
+            });     
+        }
     }, 
 
     homepage: function() {
@@ -138,15 +142,17 @@ var AppRouter = Backbone.Router.extend({
 
     navigateToPath: function (path, params) {
         'use strict';
-        var options;
+        var opt;
         if (path && path !== '') {
             if (params === undefined) {
                 // default behavior
-                options = {
+                opt = {
                     trigger: true
                 }
+            } else {
+                opt = params;
             }
-            this.navigate(path, options);
+            this.navigate(path, opt);
         }
     },
 
@@ -154,51 +160,60 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
 
         var action = 'page/',
-            options;
+            opt;
         if (id && id !== '') {
             this.state = this.PAGE;
             if (params === undefined) {
                 // default behavior
-                options = {
+                opt = {
                     trigger: true
                 }
+            } else {
+                opt = params;
             }
             action += id;
-            this.navigate(action, options);
+            this.navigate(action, opt);
         }
     },
 
-    searchFor: function (value, params) {
+    searchFor: function (options, params) {
         'use strict';
         var action = "search/",
-            options;
-        if (value && value !== '') {
+            opt;
+        if (options.tag && options.tag !== '') {
+            if (options.stopPropagate) {
+                this.stopPropagate = true;
+            }
             this.state = this.SEARCH;
             if (params === undefined) {
                 // default behavior
-                options = {
+                opt = {
                     trigger: true
                 }
+            } else {
+                opt = params;
             }
-            action += encodeURIComponent(value);
-            this.navigate(action, options);
+            action += encodeURIComponent(options.tag);
+            this.navigate(action, opt);
         }
     },
 
     checkFilter: function (value, params) {
         'use strict';
         var action = "filters/",
-            options;
+            opt;
         if (value && value !== '') {
             this.state = this.FILTER;
             if (params === undefined) {
                 // default behavior
-                options = {
+                opt = {
                     trigger: true
                 }
+            } else {
+                opt = params;
             }
             action += value;
-            this.navigate(action, options);
+            this.navigate(action, opt);
         }
 
     },
