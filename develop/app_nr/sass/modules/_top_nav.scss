@@ -70,7 +70,7 @@ nav {
         border: 3px solid #eee;
         border-radius: 0;
         padding-right: 40px;
-        @include athelas($size: 1.8rem);
+        @include opensans($size: 1.8rem, $height: 1.3);
         color: #000;
         margin: 0;
     }
