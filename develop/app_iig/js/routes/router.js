@@ -123,7 +123,7 @@ var AppRouter = Backbone.Router.extend({
     returnHome: function () {
         'use strict';
         this.state = this.HOME;
-        this.navigate('', {
+        this.navigate('/', {
             trigger: true,
             replace: false
         });

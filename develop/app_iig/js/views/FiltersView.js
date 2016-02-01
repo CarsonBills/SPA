@@ -45,7 +45,6 @@ var FiltersView = Backbone.View.extend({
     },
     preRender: function(collection, options) {
         'use strict';
-
         if (this.collection.isNotValid()) {
             return false;
         }
@@ -153,6 +152,7 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         this.$('.filter-item-cat').addClass('collapsed');
         this.$('.filter-item').removeClass('in');
+        this.$('.filter-item-group').removeClass('in');
     },
 
     toggleChecked: function () {
@@ -327,6 +327,11 @@ var FiltersView = Backbone.View.extend({
     resetFilters: function (params, e) {
         'use strict';
         this.clearFilters();
+        
+        this.collapseAll();
+        this.active = this.ACTIVE;
+        this.showActive(this.ACTIVE);
+
         this.app.formatRefinements();
     },
 

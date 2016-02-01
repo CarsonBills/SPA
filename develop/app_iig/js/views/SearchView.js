@@ -66,6 +66,7 @@ var SearchView = Backbone.View.extend({
     /* triggered from router */
     searchFor: function (value) {
         'use strict';
+        console.log(value)
         if (value && value !== '') {
             $('#searchTextInput').val(decodeURIComponent(value));
             Norton.searchQuery = value.toLowerCase();
