@@ -328,11 +328,10 @@ var FiltersView = Backbone.View.extend({
         'use strict';
         this.clearFilters();
         
+        this.app.formatRefinements(); // call getArticles() in AppView
         this.collapseAll();
         this.active = this.ACTIVE;
         this.showActive(this.ACTIVE);
-
-        this.app.formatRefinements();
     },
 
     /**
@@ -340,14 +339,9 @@ var FiltersView = Backbone.View.extend({
      */
     removeAllFilters: function(e) {
         'use strict';
-        this.clearFilters();
-
+        
+        this.resetFilters();
         NortonApp.router.returnHome();
-        this.app.formatRefinements();   // call getArticles() in AppView
-
-        this.collapseAll();
-        this.active = this.ACTIVE;
-        this.showActive(this.ACTIVE);
 
         this.postActionCheck();
 
