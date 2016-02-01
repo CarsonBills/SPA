@@ -1,7 +1,11 @@
 <div data-type="{{type}}">
 	<h2>{{videoTitle}}</h2>
-	<div>{{HBHTMLContent transcript}}</div>
-	<div>{{HBHTMLContent blurb}}</div>
+	{{#if transcript}}
+		<div>{{HBHTMLContent transcript}}</div>
+    {{/if}}
+	{{#if blurb}}
+		<div>{{HBHTMLContent blurb}}</div>
+    {{/if}}
 	
 	{{> HBPageVideoPLayer}}
 

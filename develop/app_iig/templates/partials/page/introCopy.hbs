@@ -1,1 +1,3 @@
-        <div data-type="intro">{{{HBHTMLContent data.introCopy}}}</div>
+        {{#if data.introCopy}}
+        	<div data-type="intro">{{{HBHTMLContent data.introCopy}}}</div>
+        {{/if}}

@@ -7,9 +7,11 @@ div[data-type="video-player"] {
 
 	&.jp-video {
 		width: 100%;
+		height: auto;
 		position: relative;
+		// assuming 3/4
 		padding-top: 75%;
-		background-color: $bg-color;
+		background-color: #000;
 		text-align: center;
 
 		img {
@@ -19,9 +21,8 @@ div[data-type="video-player"] {
 		}
 
 		video {
-			position: absolute;
-		    top: 0;
-		    left: 0;
+			@include vertical-align($position: absolute, $top: 40%);
+			left: 0;
 			width: 100% !important;
 		}
 	}
