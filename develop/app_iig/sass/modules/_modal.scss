@@ -111,10 +111,7 @@
 			position: relative;
 			text-align: left;
 
-			a:not(.close)  {
-				color: #2196F3;
-				text-decoration: underline;
-			}
+			@include content-link();
 
 			p {
 				padding: 0;
