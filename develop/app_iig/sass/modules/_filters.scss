@@ -20,6 +20,12 @@
     height: 100vh;
     overflow-y: auto;
 
+    // when modal open disable overflow (chrome bug)
+    .modal-open & {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
     &.off-screen {
         left: -$filter-width;
     }
