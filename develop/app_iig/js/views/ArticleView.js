@@ -2,7 +2,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     _ = require('underscore'),
     EventManager = require('../modules/event_manager'),
-    ScrollHelper = require('../modules/scroll_helper');
+    ScrollHelper = require('../modules/scroll_helper'),
+    ModalManager = require('../modules/modal_manager');
 
 var ArticleView = Backbone.View.extend({
     TAG_LABEL: 'Tags:',
@@ -131,8 +132,18 @@ var ArticleView = Backbone.View.extend({
 
     onTagClick: function (e) {
         'use strict';
+
+        var bool;
+
+        if (ModalManager.shown()) {
+            bool = true;
+        } else {
+            bool = false;
+        }
+
         this.evtMgr.trigger(EventManager.TAG_LINK_CLICK, {
-            tag: $(e.currentTarget).text()
+            tag: $(e.currentTarget).text(),
+            stopPropagate: bool
         });
         return false;
     },

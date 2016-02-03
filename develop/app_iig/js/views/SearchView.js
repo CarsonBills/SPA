@@ -60,7 +60,7 @@ var SearchView = Backbone.View.extend({
             this.showRemove();
             NortonApp.router.searchFor({
                 tag: params.tag,
-                stopPropagate: true
+                stopPropagate: params.stopPropagate
             });
         }
         return false;
@@ -70,6 +70,7 @@ var SearchView = Backbone.View.extend({
     searchFor: function (value) {
         'use strict';
         if (value && value !== '') {
+            this.showRemove();
             $('#searchTextInput').val(decodeURIComponent(value));
             Norton.searchQuery = value.toLowerCase();
             /**
@@ -105,22 +106,26 @@ var SearchView = Backbone.View.extend({
         'use strict';       
         if ($('#searchTextInput').val() !== '') {
             $('#searchTextInput').val('');
+            this.hideRemove();
         }
+    },
+
+    resetSearch: function () {
+        'use strict';
+        this.clearSearch();
+        if (Norton.searchQuery !== '') {
+            Norton.searchQuery = '';    
+            this.collection.cleanupAndReset();
+            this.app.getArticles();
+        } 
     },
 
     onResetSearch: function (e) {
         'use strict';     
-        if (Norton.searchQuery !== '') {
-            Norton.searchQuery = '';
-            this.collection.cleanupAndReset();
-
-            NortonApp.router.returnHome();
-            this.app.getArticles();
-        }
-        if ($('#searchTextInput').val() !== '') {
-            $('#searchTextInput').val('');
-            this.hideRemove();
-        }
+        this.resetSearch();
+        NortonApp.router.returnHome();
+        
+        this.clearSearch();
         return false;
     }
 });

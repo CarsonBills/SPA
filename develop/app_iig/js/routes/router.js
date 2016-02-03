@@ -53,26 +53,39 @@ var AppRouter = Backbone.Router.extend({
         this.state = this.HOME;
     },
 
-    switchState: function () {
+    switchState: function (state) {
         'use strict';
+
+        if (state === this.state) {
+            return false;
+        }
         switch (this.state) {
             case this.HOME:
-                this.returnHome();
+                //this.returnHome();
             break;
             case this.PAGE:
+                if (ModalManager.shown()) {
+                    this.stopPropagate = true;
+                    ModalManager.hide();
+                }
             break;
             case this.SEARCH:
                 this.appView.resetSearch();
             break;
             case this.FILTER:
-                this.appView.resetFilters();
+                // don't reset
+                if (state !== this.SEARCH) {
+                    this.appView.resetFilters();
+                }
             break;
         }
+        this.state = state;
     },
 
     initEvent: function () {
         'use strict';
         var that = this,
+            state,
             pathname,
             search,
             slugs,
@@ -85,17 +98,18 @@ var AppRouter = Backbone.Router.extend({
             search = window.location.search;
             slugs = pathname.split('/');
             if (pathname === that.rootPath) {
+                state = that.HOME;
                 if (ModalManager.shown()) {
                     ModalManager.hide();
-                } else {
-                    that.switchState();
                 }
             } else {
                 if (slugs.length === 5) {
-                    this.state = slugs[3];
+                    state = slugs[3];
                     that.navigateToPath(slugs[3] + '/' + slugs[4] + search);
                 }
             }
+
+            that.switchState(state);
         });
     },
 
@@ -126,8 +140,7 @@ var AppRouter = Backbone.Router.extend({
         if (this.stopPropagate) {
             this.stopPropagate = false;
         } else {
-            this.state = this.HOME;
-            this.navigate('/', {
+            this.navigate('', {
                 trigger: true
             });     
         }
@@ -135,6 +148,7 @@ var AppRouter = Backbone.Router.extend({
 
     homepage: function() {
         'use strict';
+        this.switchState(this.HOME);
         this.navigate('', {
             trigger: true
         });
@@ -158,22 +172,10 @@ var AppRouter = Backbone.Router.extend({
 
     navigateToID: function (id, params) {
         'use strict';
+        this.switchState(this.PAGE);
 
-        var action = 'page/',
-            opt;
-        if (id && id !== '') {
-            this.state = this.PAGE;
-            if (params === undefined) {
-                // default behavior
-                opt = {
-                    trigger: true
-                }
-            } else {
-                opt = params;
-            }
-            action += id;
-            this.navigate(action, opt);
-        }
+        var path = 'page/' + id;
+        this.navigateToPath(path, params);
     },
 
     searchFor: function (options, params) {
@@ -184,7 +186,6 @@ var AppRouter = Backbone.Router.extend({
             if (options.stopPropagate) {
                 this.stopPropagate = true;
             }
-            this.state = this.SEARCH;
             if (params === undefined) {
                 // default behavior
                 opt = {
@@ -193,6 +194,7 @@ var AppRouter = Backbone.Router.extend({
             } else {
                 opt = params;
             }
+            this.switchState(this.SEARCH);
             action += encodeURIComponent(options.tag);
             this.navigate(action, opt);
         }
@@ -203,7 +205,7 @@ var AppRouter = Backbone.Router.extend({
         var action = "filters/",
             opt;
         if (value && value !== '') {
-            this.state = this.FILTER;
+            this.switchState(this.FILTER);
             if (params === undefined) {
                 // default behavior
                 opt = {

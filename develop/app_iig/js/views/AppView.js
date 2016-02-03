@@ -263,13 +263,13 @@ var AppView = Backbone.View.extend({
 
     resetFilters: function () {
         'use strict';
-        this.filtersView.resetFilters();
+        this.filtersView.resetFilters(true);
     },
 
     /* deep link callback */
     resetSearch: function () {
         'use strict';
-        this.searchView.onResetSearch();
+        this.searchView.resetSearch(true);
     },
 
     /* deep link callback */
@@ -297,11 +297,6 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
-
-                NortonApp.router.navigateToID(id, {
-                    trigger: false,
-                    replace: true
-                });
                 that.articleView.showDetail(id);
             });
         }        

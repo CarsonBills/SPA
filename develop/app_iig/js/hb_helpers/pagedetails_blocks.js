@@ -37,9 +37,10 @@ module.exports = (function() {
 
     Handlebars.registerHelper('HBEach', function(context, options) {
         var result = "";
-
-        for(var i=0, j=context.length; i<j; i++) {
-            result = result + options.fn(context[i]);
+        if (context) {
+            for(var i=0, j=context.length; i<j; i++) {
+                result = result + options.fn(context[i]);
+            }
         }
         return result;
     });

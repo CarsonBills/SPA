@@ -1,4 +1,4 @@
-'use strict';
+    'use strict';
 
 var gulp = require('gulp'),
 	// gulp shorthand
@@ -192,7 +192,7 @@ gulp.task('sass:production', function () {
         .pipe($.postcss([
             require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
-        .pipe($.csso())
+        //.pipe(minifyCss({keepBreaks: true}))
         .pipe(gulp.dest(deploy + site + version + settings.css))
         .pipe($.size());
 });
