@@ -78,8 +78,6 @@ var FiltersView = Backbone.View.extend({
             this.$el.append(filterTemplate);
         }, this);
 
-        //this.showActive();
-        this.toggleChecked();
         this.checkSelected();
         this.showSelectedFilter(null, true);
 
@@ -139,7 +137,13 @@ var FiltersView = Backbone.View.extend({
         if (checked.length > 0 ) {
             _.each(checked, function (item) {
                 cat = $(item).data('target');
-                that.showActive('#' + cat);
+                if (cat) {
+                    // nested=1
+                    that.showActive('#' + cat);
+                } else {
+                    // nested=0
+                    that.showActive('#' + $(item).data('parent'));
+                }
             });
         } else {
             // if nothing checked expand the first one
@@ -155,21 +159,6 @@ var FiltersView = Backbone.View.extend({
         this.$('.filter-item-group').removeClass('in');
     },
 
-    toggleChecked: function () {
-        'use strict';
-
-        var group;
-
-        _.each(this.$('.filter-checkbox'), function (item) {
-            if ($(item).data('parent') !== undefined && $(item).data('filter-cat') === 'dimChapters') {
-                if ($(item).is(":checked") === true) {
-                    group = $(item).data('parent');
-                    $(group).addClass('in');
-                }
-            }
-        });
-    },
-
     showActive: function (category) {
         'use strict';
 
@@ -180,7 +169,7 @@ var FiltersView = Backbone.View.extend({
             $cat.addClass('in');
         }
         // expand parent
-        if (parent) {
+        if (parent && !this.$(parent).is('in')) {
             this.$(parent).addClass('in');
         }
 

@@ -50,6 +50,7 @@ module.exports = (function() {
 
         // filters
         'HBFiltersCount': require('../../templates/partials/filters/count.hbs'),
+        'HBFiltersCatCheckboxNested': require('../../templates/partials/filters/catCheckboxNested.hbs'),
         'HBFiltersCatCheckbox': require('../../templates/partials/filters/catCheckbox.hbs'),
         'HBFiltersCatCheckboxDisabled': require('../../templates/partials/filters/catCheckboxDisabled.hbs'),
         'HBFiltersSubCatCheckbox': require('../../templates/partials/filters/subCatCheckbox.hbs'),

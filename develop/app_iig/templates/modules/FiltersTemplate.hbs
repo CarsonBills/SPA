@@ -10,13 +10,13 @@
                 {{#HBFilterHasSubnav ../nested "1" this}}
                 <div class="filter-item-name nested">
                     <div data-target="#{{subCatName}}" data-toggle="collapse" data-parent="#{{subCatName}}">
-                        {{> HBFiltersCatCheckbox catName=@root.catName}}
+                        {{> HBFiltersCatCheckboxNested catName=@root.catName}}
                         {{> HBFiltersCount}}
                     </div>
                 </div>
                 {{else}}
                 <div class="filter-item-name">
-                    {{> HBFiltersCatCheckbox catName=@root.catName}}
+                    {{> HBFiltersCatCheckbox catName=@root.catName parent=@root.catName}}
                     {{> HBFiltersCount}}
                 </div>
                 {{/HBFilterHasSubnav}}
