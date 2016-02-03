@@ -113,6 +113,7 @@
 
 			//@include content-link();
 
+			/* generic content style override */
 			p {
 				padding: 0;
 			}
@@ -121,6 +122,11 @@
 				margin-right: 1rem;
 			}
 
+			table {
+				width: 100%;
+			}
+
+			/* end generic content style override */
 			.modal-title {
 				@include athelas($size: 2rem, $height: 1.1, $style:italic, $weight: 400);
 				width: 90%;
