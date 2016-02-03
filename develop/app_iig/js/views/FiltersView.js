@@ -388,6 +388,8 @@ var FiltersView = Backbone.View.extend({
             //this.showSelectedFilter(null, 'fromUrl');
         } else {
             this.app.deferred.promise().done(function () {
+                // pass this in when direct linked
+                NortonApp.router.switchState(NortonApp.router.FILTER);
                 that.app.formatRefinements();   // call getArticles() in AppView
                 //that.showSelectedFilter(null, 'fromUrl');
             });

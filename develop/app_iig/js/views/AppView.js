@@ -282,6 +282,9 @@ var AppView = Backbone.View.extend({
             } else {
                 // Deeplinked content here
                 this.deferred.promise().done(function () {
+
+                    // pass this in when direct linked
+                    NortonApp.router.switchState(NortonApp.router.SEARCH);
                     that.searchView.searchFor(value);
                 });
             }  
