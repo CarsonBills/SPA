@@ -56,8 +56,6 @@ var AppRouter = Backbone.Router.extend({
     switchState: function (state) {
         'use strict';
 
-        console.log('this.state: ', this.state, ' state :', state)
-
         if (state === this.state) {
             return false;
         }
@@ -206,7 +204,6 @@ var AppRouter = Backbone.Router.extend({
         'use strict';
         var action = "filters/",
             opt;
-        console.log('checkFilter', this.state)
         if (value && value !== '') {
             this.switchState(this.FILTER);
             if (params === undefined) {
