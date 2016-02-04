@@ -1,0 +1,53 @@
+@import "../mixins/utils";
+
+$site-code: "psysci5";
+$bg-color: #ccc;
+$fg-color: #fff;
+$topbar-color: #999;
+
+.#{$site-code} {
+
+	div[data-type="iig-hero"] {
+		width: 100%;
+		height: 100%;
+		background-color: $bg-color;
+	}
+
+	.header {
+		.cover {
+		}
+
+		.top-bar {
+
+			.bg {
+				background: $topbar-color ;
+	    		@include one-sided-shadow($offset-y: 1px);
+				opacity: 0.9;
+			}
+
+			div {
+				a {
+					color: $fg-color;
+				}
+			}
+			.signed-in {
+				color: $fg-color;
+			}
+
+			.glyphicon {
+			}
+
+			.norton-logo {
+				color: $fg-color;
+				svg {
+					fill: currentColor;
+				}
+			}
+
+			.header-title {
+			}
+
+		}
+	}
+
+}
