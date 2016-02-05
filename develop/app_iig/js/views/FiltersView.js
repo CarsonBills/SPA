@@ -337,6 +337,7 @@ var FiltersView = Backbone.View.extend({
         return false;
 
     },
+
     buildFilterUrl: function() {
         'use strict';
         var cats = [],
@@ -362,10 +363,16 @@ var FiltersView = Backbone.View.extend({
         }
 
         // query will be empty when last filter is removed
-        //return url + ((query) ? "/filters/?" + query.slice(0, -1) : "");
-        return ((query) ? "?" + query.slice(0, -1) : "");
+        query = ((query) ? "?" + query.slice(0, -1) : "");
+
+        if (Norton.searchQuery !== '') {
+            query += ('&searchTerm=' + encodeURIComponent(Norton.searchQuery));
+        }
+
+        return query;
     },
-    buildRefinementsFromUrl: function() {
+    
+    /*buildRefinementsFromUrl: function() {
         'use strict';
         var refs = [],
             cats,
@@ -378,7 +385,9 @@ var FiltersView = Backbone.View.extend({
 
         for (var cat in cats) {
             splt = cats[cat].split("=");
-            refs[splt[0]] = cats[cat];
+            if (splt[0] !== 'searchTerm') {
+                refs[splt[0]] = cats[cat];
+            }
         }
 
         Norton.savedRefinements = refs;
@@ -394,7 +403,14 @@ var FiltersView = Backbone.View.extend({
                 //that.showSelectedFilter(null, 'fromUrl');
             });
         }
-    },
+    },*/
+
+    /*buildRefinementsFromUrl: function(refs) {
+        'use strict';
+
+        Norton.savedRefinements = refs;
+    },*/
+
     findParentFilter: function(subFilter) {
         'use strict';
         var originalNav = JSON.parse(JSON.stringify(this.refinements.savedFilters)),

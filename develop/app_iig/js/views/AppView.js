@@ -273,26 +273,25 @@ var AppView = Backbone.View.extend({
     },
 
     /* deep link callback */
-    searchFor: function (value) {
+    deeplinkSearch: function (value) {
         'use strict';
         var that = this;
         if (value && value !== '') {
             if (this.dataReady) {
-                that.searchView.searchFor(value);
+                that.searchView.deeplinkSearch(value);
             } else {
                 // Deeplinked content here
                 this.deferred.promise().done(function () {
 
                     // pass this in when direct linked
                     NortonApp.router.switchState(NortonApp.router.SEARCH);
-                    that.searchView.searchFor(value);
+                    that.searchView.deeplinkSearch(value);
                 });
             }  
         }
     },
 
-    // called from router
-    showDetailPage: function(id) {
+    deeplinkDetailPage: function(id) {
         'use strict';
         var that = this;
         if (this.dataReady) {
@@ -304,6 +303,44 @@ var AppView = Backbone.View.extend({
             });
         }        
     },
+
+    deeplinkFilter: function () {
+        'use strict';
+
+        var refs = [],
+            cats,
+            splt,
+            that = this;
+
+        var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
+
+        cats = (qs) ? qs.split("&") : ""; // don't want cat's to be 1 element array with empty key-val
+
+        for (var cat in cats) {
+            splt = cats[cat].split("=");
+            if (splt[0] !== 'searchTerm') {
+                refs[splt[0]] = cats[cat];
+            } else {
+                this.searchView.showSearch(splt[1]);
+            }
+        }
+
+        Norton.savedRefinements = refs;
+
+        if (this.dataReady) {
+            this.formatRefinements();   // call getArticles() in AppView
+            //this.showSelectedFilter(null, 'fromUrl');
+        } else {
+            this.deferred.promise().done(function () {
+                // pass this in when direct linked
+                NortonApp.router.switchState(NortonApp.router.FILTER);
+                that.formatRefinements();   // call getArticles() in AppView
+            });
+        }
+
+    },
+    /* end deeep link callback */
+
     showResultsTotals: function() {
         'use strict';
         if (this.collection.totalRecords < Norton.perPage) {

@@ -16,7 +16,7 @@ var Backbone = require('backbone'),
             initialize = function () {
                 $(modal).on('hide.bs.modal', function (e) {
                     reset();
-                    NortonApp.router.returnHome();
+                    NortonApp.router.closeModal();
                 });
             },
 

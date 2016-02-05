@@ -67,12 +67,10 @@ var SearchView = Backbone.View.extend({
     },
 
     /* triggered from router */
-    searchFor: function (value) {
+    deeplinkSearch: function (value) {
         'use strict';
         if (value && value !== '') {
-            this.showRemove();
-            $('#searchTextInput').val(decodeURIComponent(value));
-            Norton.searchQuery = value.toLowerCase();
+            this.showSearch(value);
             /**
              * Clear out collection, reset "skip" to zero, then run search query.
              */
@@ -94,12 +92,23 @@ var SearchView = Backbone.View.extend({
                 tag: value
             });
         } else {
-            $('#searchTextInput').val(Norton.Constants.emptySeach);
+            $('#searchTextInput').val(Norton.Constants.emptySearch);
             setTimeout(function () {
                 $('#searchTextInput').val('');
             }, 1500);
         }
         return false;
+    },
+
+    showSearch: function (value) {
+        'use strict';
+        if (value && value !== '') {
+            value = decodeURIComponent(value);
+            $('#searchTextInput').val(value);
+            this.showRemove();
+            Norton.searchQuery = value.toLowerCase();
+        }       
+
     },
 
     clearSearch: function () {

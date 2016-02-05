@@ -19,6 +19,7 @@ var AppRouter = Backbone.Router.extend({
     rootPath: '',
     state: '',
     stopPropagate: false,
+    fragments: '',
 
     routes: {
         "/^(?!page|favs|search!filter)([\w]+(\/*))$/": "index",
@@ -53,6 +54,15 @@ var AppRouter = Backbone.Router.extend({
         this.state = this.HOME;
     },
 
+    closeModal: function () {
+        'use strict';
+        if (this.fragments !== '') {
+            this.navigateToPath(this.fragments, {
+                trigger: false
+            })
+        }
+    },
+
     switchState: function (state) {
         'use strict';
 
@@ -70,16 +80,35 @@ var AppRouter = Backbone.Router.extend({
                 }
             break;
             case this.SEARCH:
-                this.appView.resetSearch();
+                //this.appView.resetSearch();
             break;
             case this.FILTER:
                 // don't reset
                 if (state !== this.SEARCH) {
-                    this.appView.resetFilters();
+                    //this.appView.resetFilters();
                 }
             break;
         }
+        this.getSlugs();
+        if (state === this.HOME) {
+            this.appView.resetSearch();
+        }
         this.state = state;
+    },
+
+    getSlugs: function () {
+        'use strict';
+        var pathname,
+            search,
+            slugs;
+
+        pathname = window.location.pathname;
+        search = window.location.search;
+        slugs = pathname.split('/');
+
+        if (slugs[3] === this.SEARCH || slugs[3] === this.FILTER) {
+            this.fragments = slugs[3] + '/' + slugs[4] + search;
+        }
     },
 
     initEvent: function () {
@@ -98,7 +127,7 @@ var AppRouter = Backbone.Router.extend({
             search = window.location.search;
             slugs = pathname.split('/');
             if (pathname === that.rootPath) {
-                state = that.HOME;
+                this.fragments = '';
                 if (ModalManager.shown()) {
                     ModalManager.hide();
                 }
@@ -226,16 +255,16 @@ var AppRouter = Backbone.Router.extend({
 
     search: function (value) {
         'use strict';
-        this.appView.searchFor(value);
+        this.appView.deeplinkSearch(value);
     },
 
     page: function(id) {
         'use strict';
-        this.appView.showDetailPage(id);
+        this.appView.deeplinkDetailPage(id);
     },
     filter: function(value) {
         'use strict';
-        this.appView.filtersView.buildRefinementsFromUrl();
+        this.appView.deeplinkFilter();
     },
     favs: function() {
         'use strict';
