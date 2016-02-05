@@ -318,12 +318,15 @@ var AppView = Backbone.View.extend({
 
         for (var cat in cats) {
             splt = cats[cat].split("=");
-            if (splt[0] !== 'searchTerm') {
+            if (splt[0] !== NortonApp.Views.Search.SEARCH_TERM) {
                 refs[splt[0]] = cats[cat];
             } else {
                 this.searchView.showSearch(splt[1]);
             }
         }
+
+        
+        console.log(NortonApp.Views.Search.SEARCH_TERM)
 
         Norton.savedRefinements = refs;
 

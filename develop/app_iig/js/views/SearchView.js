@@ -137,6 +137,8 @@ var SearchView = Backbone.View.extend({
         this.clearSearch();
         return false;
     }
+}, {
+    SEARCH_TERM: 'searchTerm'
 });
 
 module.exports = SearchView;

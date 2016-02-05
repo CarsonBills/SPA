@@ -366,7 +366,7 @@ var FiltersView = Backbone.View.extend({
         query = ((query) ? "?" + query.slice(0, -1) : "");
 
         if (Norton.searchQuery !== '') {
-            query += ('&searchTerm=' + encodeURIComponent(Norton.searchQuery));
+            query += ('&' + NortonApp.Views.Search.SEARCH_TERM + '=' + encodeURIComponent(Norton.searchQuery));
         }
 
         return query;
@@ -385,7 +385,7 @@ var FiltersView = Backbone.View.extend({
 
         for (var cat in cats) {
             splt = cats[cat].split("=");
-            if (splt[0] !== 'searchTerm') {
+            if (splt[0] !== NortonApp.Views.Search.SEARCH_TERM) {
                 refs[splt[0]] = cats[cat];
             }
         }

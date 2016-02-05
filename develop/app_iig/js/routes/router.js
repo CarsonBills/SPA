@@ -59,7 +59,7 @@ var AppRouter = Backbone.Router.extend({
         if (this.fragments !== '') {
             this.navigateToPath(this.fragments, {
                 trigger: false
-            })
+            });
         }
     },
 
@@ -84,9 +84,9 @@ var AppRouter = Backbone.Router.extend({
             break;
             case this.FILTER:
                 // don't reset
-                if (state !== this.SEARCH) {
-                    //this.appView.resetFilters();
-                }
+                /*if (state !== this.SEARCH) {
+                    this.appView.resetFilters();
+                }*/
             break;
         }
         this.getSlugs();
@@ -191,7 +191,7 @@ var AppRouter = Backbone.Router.extend({
                 // default behavior
                 opt = {
                     trigger: true
-                }
+                };
             } else {
                 opt = params;
             }
@@ -219,7 +219,7 @@ var AppRouter = Backbone.Router.extend({
                 // default behavior
                 opt = {
                     trigger: true
-                }
+                };
             } else {
                 opt = params;
             }
@@ -239,7 +239,7 @@ var AppRouter = Backbone.Router.extend({
                 // default behavior
                 opt = {
                     trigger: true
-                }
+                };
             } else {
                 opt = params;
             }
@@ -349,14 +349,15 @@ var AppRouter = Backbone.Router.extend({
         }
     },
     getBundleName: function() {
-    var scripts = document.getElementsByTagName("script"),
-        paths;
-    for (var i=0;i<scripts.length;i++) {
-        if (scripts[i].src && scripts[i].src.indexOf("/js/bundle_") >= 0 ) {
-            paths = scripts[i].src.split("/");
-            return paths.pop();
+        'use strict';
+        var scripts = document.getElementsByTagName("script"),
+            paths;
+        for (var i=0;i<scripts.length;i++) {
+            if (scripts[i].src && scripts[i].src.indexOf("/js/bundle_") >= 0 ) {
+                paths = scripts[i].src.split("/");
+                return paths.pop();
+            }
         }
-    }
         return false;
 }
 });
