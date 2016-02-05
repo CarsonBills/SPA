@@ -325,9 +325,6 @@ var AppView = Backbone.View.extend({
             }
         }
 
-        
-        console.log(NortonApp.Views.Search.SEARCH_TERM)
-
         Norton.savedRefinements = refs;
 
         if (this.dataReady) {

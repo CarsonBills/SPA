@@ -346,7 +346,7 @@ var FiltersView = Backbone.View.extend({
             key,
             name;
 
-        $( "input[data-filter-name]" ).each(function() {
+        $("input[data-filter-name]").each(function() {
             if ($(this).prop('checked')) {
                 name = $( this ).attr('data-filter-name');
                 cat = $( this ).attr('data-filter-cat');
@@ -365,7 +365,7 @@ var FiltersView = Backbone.View.extend({
         // query will be empty when last filter is removed
         query = ((query) ? "?" + query.slice(0, -1) : "");
 
-        if (Norton.searchQuery !== '') {
+        if (Norton.searchQuery !== '' && query !== '') {
             query += ('&' + NortonApp.Views.Search.SEARCH_TERM + '=' + encodeURIComponent(Norton.searchQuery));
         }
 
