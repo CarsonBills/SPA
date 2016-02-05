@@ -124,8 +124,9 @@ var SearchView = Backbone.View.extend({
         this.clearSearch();
         if (Norton.searchQuery !== '') {
             Norton.searchQuery = '';    
-            this.collection.cleanupAndReset();
-            this.app.getArticles();
+            //this.collection.cleanupAndReset();
+            //this.app.getArticles();
+            this.evtMgr.trigger(EventManager.FILTERS_RESET, {});
         } 
     },
 
