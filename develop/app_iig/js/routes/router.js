@@ -60,6 +60,8 @@ var AppRouter = Backbone.Router.extend({
             this.navigateToPath(this.fragments, {
                 trigger: false
             });
+        } else {
+            this.returnHome();
         }
     },
 
