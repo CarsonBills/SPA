@@ -5,7 +5,8 @@ var Backbone = require('backbone'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager'),
     FavoritesData = require('../modules/favorites_data'),
-    DetailsParser = require('../modules/details_model_parser');
+    DetailsParser = require('../modules/details_model_parser'),
+    TrackManager = require('../modules/track_manager');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -168,10 +169,13 @@ var YourFavsView = Backbone.View.extend({
             favs,
             article = this.articles.getModelByAttribute("pname", id),
             articleData,
-            model = this.collection.getModelByAttribute("pname", id);
+            model = this.collection.getModelByAttribute("pname", id),
+            action;
 
         // Don't add again
         if ( model !== undefined) {
+
+            TrackManager.doEvent('removeFromFavorites', id);
             this.showPopover($target, "Item Removed");
             this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
@@ -196,6 +200,8 @@ var YourFavsView = Backbone.View.extend({
             this.saveLocalStorage();
         }
 
+        TrackManager.doEvent('addToFavorites', id);
+
         TrackManager.save(articleData.id);
 
         return false;
@@ -203,7 +209,9 @@ var YourFavsView = Backbone.View.extend({
 
     showYourFavs: function() {
         'use strict';
+
         this.render();
+        TrackManager.doEvent('showFavs', 'on')
 
         return false;
     },

@@ -2,7 +2,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
     CookieHelper = require('../modules/cookie_helper'),
-    HeaderLoader = require('../modules/header_loader');
+    HeaderLoader = require('../modules/header_loader'),
+    TrackManager = require('../modules/track_manager');
 
 var HeaderConfigView = Backbone.View.extend({
     el: '#siteHeader',
@@ -57,7 +58,9 @@ var HeaderConfigView = Backbone.View.extend({
 
     events: {
         //'click .links a': 'onLinks',
-        'click .sign-in': 'onSignIn'
+        'click .sign-in': 'onSignIn',
+        'click .header-title a': 'onClickLink',
+        'click .links a': 'onClickLink'
     },
 
     onSignIn: function (e) {
@@ -67,6 +70,12 @@ var HeaderConfigView = Backbone.View.extend({
         window.location = Norton.Constants.loginUrl;
 
         return false;
+    },
+
+    onClickLink: function (e) {
+        'use strict';
+        var url = $(e.currentTarget).attr('href');
+        TrackManager.doEvent('headerLink', url);
     },
 
     onLinks: function (e) {

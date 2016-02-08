@@ -7,7 +7,7 @@ var Backbone = require('backbone'),
     'use strict';
 
 
-        var CODE = Norton.siteCode + '.' + Norton.version + '.',
+        var CODE = Norton.siteCode + '.' + Norton.version,
             save = function(id) {
 
                 var postdata = {
@@ -30,17 +30,27 @@ var Backbone = require('backbone'),
                 });
             },
 
-            doPageview = function (value) {
-                dataLayer.push({'site': 'pageview.' + CODE + value});
+            doDeeplink = function (label) {
+                var params = {
+                    'event': 'deeplink',
+                    'label': label
+                };
+                dataLayer.push(params);
             },
-
-            doEvent = function (value) {
-                dataLayer.push({'events': 'click.' + CODE + value});
+            
+            doEvent = function (value, label) {
+                var params = {
+                    'event': 'click.' + CODE  + '.' + value
+                };
+                if (label) {
+                    params.label = label;
+                }
+                dataLayer.push(params);
             };
 
         return {
             save: save,
-            doPageview: doPageview,
+            doDeeplink: doDeeplink,
             doEvent: doEvent
         };
 }());

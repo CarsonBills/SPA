@@ -3,7 +3,8 @@ var Backbone = require('backbone'),
     _ = require('underscore'),
     EventManager = require('../modules/event_manager'),
     ScrollHelper = require('../modules/scroll_helper'),
-    ModalManager = require('../modules/modal_manager');
+    ModalManager = require('../modules/modal_manager'),
+    TrackManager = require('../modules/track_manager');
 
 var ArticleView = Backbone.View.extend({
     TAG_LABEL: 'Tags:',
@@ -127,7 +128,8 @@ var ArticleView = Backbone.View.extend({
 
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
-        "click #nextArticle": "getNextPrevFromPage"
+        "click #nextArticle": "getNextPrevFromPage",
+        "click .download a": 'onDownload'
     },
 
     onTagClick: function (e) {
@@ -148,6 +150,12 @@ var ArticleView = Backbone.View.extend({
         return false;
     },
 
+    onDownload: function (e) {
+        'use strict';
+        var track = $(e.currentTarget).data('track');
+        TrackManager.doEvent('download', track);
+    },
+
     /* Grid/List view toggle */
     toggleView: function(type) {
         'use strict';
@@ -161,15 +169,19 @@ var ArticleView = Backbone.View.extend({
     onGrid: function(e) {
         'use strict';
         if (!this.collection.showGrid()) {
+            TrackManager.doEvent('contentViewChange', EventManager.GRID_VIEW);
             this.toggleView(EventManager.GRID_VIEW);
         }
+        return false;
     },
 
     onList: function(e) {
         'use strict';
         if (this.collection.showGrid()) {
+            TrackManager.doEvent('contentViewChange', EventManager.LIST_VIEW);
             this.toggleView(EventManager.LIST_VIEW);
         }
+        return false;
     },
 
     isfaved: function (id) {
@@ -299,13 +311,18 @@ var ArticleView = Backbone.View.extend({
          * Otherwise, they are determined above in getNextPrevFromList
          */
         Norton.pageClick = "page";
-        var id;
+        var id,
+            action;
 
         if ($(e.currentTarget).attr('data-next-id') !== undefined) {
             id = $(e.currentTarget).attr('data-next-id');
+            action = 'nextDetialPage';
         } else {
             id = $(e.currentTarget).attr('data-prev-id');
+            action = 'previousDetialPage';
         }
+
+        TrackManager.doEvent(action, id);
 
         NortonApp.router.navigateToID(id);
 
@@ -314,8 +331,10 @@ var ArticleView = Backbone.View.extend({
 
     getNextPrevFromList: function(e) {
         'use strict';
+        var id = $(e.currentTarget).attr('data-id');
+        TrackManager.doEvent('openDetailPage', id);
         Norton.pageClick = "list";
-        NortonApp.router.navigateToID($(e.currentTarget).attr('data-id'));
+        NortonApp.router.navigateToID(id);
         return false;
     },
     

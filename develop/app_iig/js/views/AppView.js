@@ -103,6 +103,8 @@ var AppView = Backbone.View.extend({
         'click #load-more': function() {
             'use strict';
             // pass true to show hint
+
+            TrackManager.doEvent('loadMore', '');
             this.getArticles(true);
         }
     },
@@ -124,7 +126,7 @@ var AppView = Backbone.View.extend({
             status = 'close';
         }
         if (e !== undefined) {
-            TrackManager.doEvent('filters.toggle.' + status);
+            TrackManager.doEvent('filtersPanelToggle', status);
         }
 
         return false;
@@ -256,6 +258,7 @@ var AppView = Backbone.View.extend({
             field: sortby[0],
             order: sortby[1]
         };
+        TrackManager.doEvent('sortbyChange', sortby[1]);
 
         this.collection.cleanupAndReset();
         this.getArticles();
@@ -284,6 +287,7 @@ var AppView = Backbone.View.extend({
                 this.deferred.promise().done(function () {
 
                     // pass this in when direct linked
+                    TrackManager.doDeeplink('search');
                     NortonApp.router.switchState(NortonApp.router.SEARCH);
                     that.searchView.deeplinkSearch(value);
                 });
@@ -299,6 +303,7 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
+                TrackManager.doDeeplink('pageDetail');
                 that.articleView.showDetail(id);
             });
         }        
@@ -314,6 +319,7 @@ var AppView = Backbone.View.extend({
 
         var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
 
+        console.log('qs', qs)
         cats = (qs) ? qs.split("&") : ""; // don't want cat's to be 1 element array with empty key-val
 
         for (var cat in cats) {
@@ -324,7 +330,6 @@ var AppView = Backbone.View.extend({
                 this.searchView.showSearch(splt[1]);
             }
         }
-
         Norton.savedRefinements = refs;
 
         if (this.dataReady) {
@@ -333,6 +338,7 @@ var AppView = Backbone.View.extend({
         } else {
             this.deferred.promise().done(function () {
                 // pass this in when direct linked
+                TrackManager.doDeeplink('filters');
                 NortonApp.router.switchState(NortonApp.router.FILTER);
                 that.formatRefinements();   // call getArticles() in AppView
             });

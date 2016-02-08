@@ -70,7 +70,7 @@ var Backbone = require('backbone'),
             }
 
             if (raw.data.downloads.src) {
-                raw.data.downloads.src = parseUrl(raw.data.downloads.src);
+                raw.data.downloads.href = replaceURL(raw.data.downloads.src);
             }
 
             if (raw.data.headerImage.videoSrc) {

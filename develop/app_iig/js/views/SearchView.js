@@ -87,6 +87,8 @@ var SearchView = Backbone.View.extend({
 
         if (value !== '') {
             // record history when triggered by events
+
+            TrackManager.doEvent('searchQuery', value);
             this.showRemove();
             NortonApp.router.searchFor({
                 tag: value
@@ -131,7 +133,8 @@ var SearchView = Backbone.View.extend({
     },
 
     onResetSearch: function (e) {
-        'use strict';     
+        'use strict';
+        TrackManager.doEvent('clearSearch', '');     
         this.resetSearch();
         NortonApp.router.returnHome();
         
