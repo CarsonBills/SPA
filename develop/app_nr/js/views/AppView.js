@@ -9,7 +9,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     EventManager = require('../modules/event_manager'),
     ResizeHelper = require('../modules/resize_helper'),
-    ScrollHelper = require('../modules/scroll_helper');
+    ScrollHelper = require('../modules/scroll_helper'),
+    TrackManager = require('../modules/track_manager');
 
 var AppView = Backbone.View.extend({
 
@@ -115,6 +116,7 @@ var AppView = Backbone.View.extend({
         'click #load-more': function() {
             'use strict';
             // pass true to show hint
+            TrackManager.doEvent('loadMore', '');
             this.getArticles(true);
         }
     },
@@ -139,6 +141,9 @@ var AppView = Backbone.View.extend({
             this.$('#filters').addClass('off-screen');
             this.$('.results-bar').addClass('full-screen');
             this.$('.content').addClass('full-screen');
+        }
+        if (e !== undefined) {
+            TrackManager.doEvent('filtersPanelToggle', status);
         }
 
         return false;
@@ -265,6 +270,7 @@ var AppView = Backbone.View.extend({
             field: sortby[0],
             order: sortby[1]
         };
+        TrackManager.doEvent('sortbyChange', sortby[0]+ '.' + sortby[1]);
 
         this.collection.cleanupAndReset();
         this.getArticles();
@@ -298,6 +304,7 @@ var AppView = Backbone.View.extend({
         } else {
             // Deeplinked content here
             this.deferred.promise().done(function () {
+                TrackManager.doDeeplink('/page/' + id);
                 that.articleView.showDetail(id);
             });
         }        

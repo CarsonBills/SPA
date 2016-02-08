@@ -36,6 +36,7 @@ var HeaderConfigView = Backbone.View.extend({
     },
 
     events: {
+        'click .header-label a': 'onLinks',
         'click .links a': 'onLinks'
     },
 
@@ -70,13 +71,21 @@ var HeaderConfigView = Backbone.View.extend({
 
     },
 
+    onClickLink: function (e) {
+        'use strict';
+        var url = $(e.currentTarget).attr('href');
+        TrackManager.doEvent('headerLink', url);
+    },
+
     onLinks: function (e) {
         'use strict';
-
         var $target = $(e.currentTarget);
         if ($target.prop('target') === 'modal') {
-            this.getCredits($target.prop('href'));
+            TrackManager.doEvent('credits', $target.attr('href'));
+            this.getCredits($target.attr('href'));
             return false;
+        } else {
+            TrackManager.doEvent('headerLink', $target.attr('href'));
         }
     }
 }); 

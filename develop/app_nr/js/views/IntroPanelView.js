@@ -1,7 +1,8 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
-    ResizeHelper = require('../modules/resize_helper');
+    ResizeHelper = require('../modules/resize_helper'),
+    TrackManager = require('../modules/track_manager');
 
 var IntroPanelView = Backbone.View.extend({
     MODULE: 'introduction',
@@ -44,9 +45,12 @@ var IntroPanelView = Backbone.View.extend({
 
     showTour: function (e) {
         'use strict';
+        var show;
         ModalManager.hide();
         if (ResizeHelper.winWidth() >= Norton.Constants.tabletPortaitWidth) {
+            show = 'shown successfully';
             this.app.showTour();
+            TrackManager.doEvent('showTour', show);
         }
         return false;
     }

@@ -124,6 +124,8 @@ var YourFavsView = Backbone.View.extend({
             model = this.collection.getModelByAttribute("id", id);
 
         if (model !== undefined) {
+
+            TrackManager.doEvent('removeFromSavedList', model.get('pname'));
             this.showPopover($target, "Item Removed");
             this.removeItem(model);
         }
@@ -211,7 +213,7 @@ var YourFavsView = Backbone.View.extend({
         'use strict';
 
         this.render();
-        TrackManager.doEvent('showFavs', 'on')
+        TrackManager.doEvent('showFavs', 'on');
 
         return false;
     },

@@ -1,37 +1,58 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
-	_ = require('underscore');
+    _ = require('underscore');
 
-	TrackManager = (function() {
+    TrackManager = (function() {
     'use strict';
 
 
-        var MODUE = 'TrackManager',
+        var CODE = Norton.siteCode + '.' + Norton.version,
             save = function(id) {
 
-            var postdata = {
-                sitecode: Norton.siteCode,
-                asset: id,
-                eventType: 1
+                var postdata = {
+                    sitecode: Norton.siteCode,
+                    siteversion: Norton.version,
+                    asset_id: id
+                };
+
+                $.ajax({
+                    type:'POST',
+                    url: Norton.Constants.saveTrackingUrl,
+                    data: postdata,
+                    dataType: "json",
+                    success: function(response) {
+                        // eventually, update some popularity indicator somewhere on the site; for now, do nothing
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        Logger.error("Save Tracking request failed.");
+                    }
+                });
+            },
+
+            doDeeplink = function (label) {
+                var params = {
+                    'event': 'deeplink',
+                    'label': label
+                };
+                dataLayer.push(params);
+            },
+            
+            doEvent = function (value, label) {
+                var params = {
+                    'event': 'click.' + CODE  + '.' + value
+                };
+                console.log(label)
+                if (label && label !== '') {
+                    params.label = label;
+                }
+                dataLayer.push(params);
             };
 
-            $.ajax({
-                type:'POST',
-                url: Norton.Constants.saveTrackingUrl,
-                data: JSON.stringify(postdata),
-                dataType: "json",
-                success: function(response) {
-                    // eventually, update some popularity indicator somewhere on the site; for now, do nothing
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    Logger.get(MODULE).error("Save Tracking request failed.");
-                }
-            });
-        };
-
         return {
-            save: save
+            save: save,
+            doDeeplink: doDeeplink,
+            doEvent: doEvent
         };
 }());
 

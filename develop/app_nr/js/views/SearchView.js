@@ -27,7 +27,10 @@ var SearchView = Backbone.View.extend({
         /**
          * Clear out collection, reset "skip" to zero, then run search query.
          */
-        if ($('#searchTextInput').val() !== '') {
+        var value = $('#searchTextInput').val();
+
+        if (value !== '') {
+            TrackManager.doEvent('searchQuery', value);
             Norton.searchQuery = $('#searchTextInput').val().toLowerCase();
             this.collection.cleanupAndReset();
             this.app.getArticles();
@@ -43,6 +46,7 @@ var SearchView = Backbone.View.extend({
     onResetSearch: function (e) {
         'use strict';       
         if (Norton.searchQuery !== '') {
+            TrackManager.doEvent('clearSearch', '');  
             Norton.searchQuery = '';
             this.collection.cleanupAndReset();
             this.app.getArticles();

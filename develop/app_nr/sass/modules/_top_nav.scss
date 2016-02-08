@@ -167,9 +167,13 @@ nav {
         font-size: 2rem;
 
         span {
+            color: #999;
             &.active {
-                color: #999;
+                color: #222;
                 cursor: default;
+            }
+            &:hover {
+                color: #333;
             }
         }
 

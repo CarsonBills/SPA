@@ -1,7 +1,8 @@
     var Backbone = require("backbone"),
     $ = require('jquery'),
     ModalManager = require('../modules/modal_manager'),
-    EventManager = require('../modules/event_manager');
+    EventManager = require('../modules/event_manager'),
+    TrackManager = require('../modules/track_manager');
 
 var SearchView = Backbone.View.extend({
 

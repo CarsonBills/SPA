@@ -5,7 +5,8 @@ var Backbone = require('backbone'),
     ErrorsManager = require('../modules/errors_manager'),
     TrackManager = require('../modules/track_manager'),
     Favorites = require('../modules/favorites_helper'),
-    FavoritesData = require('../modules/favorites_data');
+    FavoritesData = require('../modules/favorites_data'),
+    TrackManager = require('../modules/track_manager');
 
 var YourFavsView = Backbone.View.extend({
     MODULE: 'favorites',
@@ -41,7 +42,7 @@ var YourFavsView = Backbone.View.extend({
     events: {
         "click .savelist-lnk": "toggleYourFavs",
         "click #navYourFavs": "showYourFavs",
-        "click .button-container a": "saveYourFavs",
+        "click .download-csv a": "saveYourFavs",
         "click .list-format .remove": "removeYourFavs"
     },
 
@@ -94,6 +95,8 @@ var YourFavsView = Backbone.View.extend({
             model = this.collection.getModelByAttribute("id", id);
 
         if (model !== undefined) {
+
+            TrackManager.doEvent('removeFromSavedList', model.get('pname'));
             this.showPopover($target, "Item Removed");
             this.removeItem(model);
         }
@@ -142,6 +145,8 @@ var YourFavsView = Backbone.View.extend({
 
         // Don't add again
         if ( model !== undefined) {
+            
+            TrackManager.doEvent('removeFromFavorites', id);
             this.showPopover($target, "Item Removed");
             this.updateButtonLabel($target, this.SAVE);
             this.removeItem(model);
@@ -169,6 +174,8 @@ var YourFavsView = Backbone.View.extend({
 
         this.saveLocalStorage();
         this.updateCount();
+
+        TrackManager.doEvent('addToFavorites', id);
         TrackManager.save(id);
 
         return false;
@@ -177,6 +184,7 @@ var YourFavsView = Backbone.View.extend({
     showYourFavs: function() {
         'use strict';
         this.render();
+        TrackManager.doEvent('showFavs', 'on');
 
         return false;
     },
@@ -192,6 +200,8 @@ var YourFavsView = Backbone.View.extend({
         'use strict';
         var $target = $(e.currentTarget),
             type = $target.data('type');
+
+        TrackManager.doEvent('downloadCSV', this.collection.length + ' item(s)');
 
         Favorites.save({
             title: $('#yourFavsTitle').text(),

@@ -42,7 +42,7 @@ var Backbone = require('backbone'),
                 var params = {
                     'event': 'click.' + CODE  + '.' + value
                 };
-                if (label) {
+                if (label && label !== '') {
                     params.label = label;
                 }
                 dataLayer.push(params);

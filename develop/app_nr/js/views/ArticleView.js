@@ -2,7 +2,8 @@ var Backbone = require('backbone'),
     $ = require('jquery'),
     _ = require('underscore'),
     EventManager = require('../modules/event_manager'),
-    ScrollHelper = require('../modules/scroll_helper');
+    ScrollHelper = require('../modules/scroll_helper'),
+    TrackManager = require('../modules/track_manager');
 
 var ArticleView = Backbone.View.extend({
     container: '#articlesContainer',
@@ -105,6 +106,8 @@ var ArticleView = Backbone.View.extend({
     events: {
         'click .icon-grid-view': 'onGrid',
         'click .icon-list-view': 'onList',
+        'click .moreinfo-lnk a': 'onMoreInfo',
+        'click .ebook-lnk a': 'onEBook',
         
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
@@ -121,18 +124,34 @@ var ArticleView = Backbone.View.extend({
         });
     },
 
+    onMoreInfo: function(e) {
+        'use strict';
+        var href = $(e.currentTarget).attr('href');
+        TrackManager.doEvent('moreOnTheAuthor', href);
+    },
+
+    onEBook: function(e) {
+        'use strict';
+        var href = $(e.currentTarget).attr('href');
+        TrackManager.doEvent('viewEBook', href);
+    },
+
     onGrid: function(e) {
         'use strict';
         if (!this.collection.showGrid()) {
+            TrackManager.doEvent('contentViewChange', EventManager.GRID_VIEW);
             this.toggleView(EventManager.GRID_VIEW);
         }
+        return false;
     },
 
     onList: function(e) {
         'use strict';
         if (this.collection.showGrid()) {
+            TrackManager.doEvent('contentViewChange', EventManager.LIST_VIEW);
             this.toggleView(EventManager.LIST_VIEW);
         }
+        return false;
     },
 
     isfaved: function (id) {
@@ -256,13 +275,18 @@ var ArticleView = Backbone.View.extend({
          */
         Norton.pageClick = "page";
         var page,
-            id;
+            id,
+            action;
 
         if ($(e.currentTarget).attr('data-next-id') !== undefined) {
             id = $(e.currentTarget).attr('data-next-id');
+            action = 'nextDetialPage';
         } else {
             id = $(e.currentTarget).attr('data-prev-id');
+            action = 'previousDetialPage';
         }
+
+        TrackManager.doEvent(action, id);
 
         page = "page/" + id;
 
@@ -280,9 +304,13 @@ var ArticleView = Backbone.View.extend({
          * Force route to refire because Modal may have been closed then clicked again and pushState does not update Backbone
          */
 
+        var id = $(e.currentTarget).attr('data-id');
 
         Norton.pageClick = "list";
-        var page = "page/" + $(e.currentTarget).attr('data-id');
+        var page = "page/" + id;
+
+
+        TrackManager.doEvent('openDetailPage', id);
 
         if (Backbone.history.fragment === page) {
             NortonApp.router.navigate('#/' + page, true);

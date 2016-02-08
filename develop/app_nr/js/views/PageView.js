@@ -53,7 +53,6 @@ var PageView = Backbone.View.extend({
             context = this.model.toJSON();
 
         context.siteVersion = Norton.version;
-        console.log(context)
         $div.html(this.template(context));
 
         ModalManager.show({

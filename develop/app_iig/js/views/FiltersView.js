@@ -365,8 +365,6 @@ var FiltersView = Backbone.View.extend({
         // query will be empty when last filter is removed
         query = ((query) ? "?" + query.slice(0, -1) : "");
 
-        console.log(query)
-
         if (Norton.searchQuery !== '' && query !== '') {
             query += ('&' + NortonApp.Views.Search.SEARCH_TERM + '=' + encodeURIComponent(Norton.searchQuery));
         }
