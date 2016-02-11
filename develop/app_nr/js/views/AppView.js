@@ -133,14 +133,18 @@ var AppView = Backbone.View.extend({
     toggleFilter: function (e) {
         'use strict';
 
+        var status;
+
         if (this.$('#filters').hasClass('off-screen')) {
             this.$('#filters').removeClass('off-screen');
             this.$('.results-bar').removeClass('full-screen');
             this.$('.content').removeClass('full-screen');
+            status = 'open';
         } else {
             this.$('#filters').addClass('off-screen');
             this.$('.results-bar').addClass('full-screen');
             this.$('.content').addClass('full-screen');
+            status = 'close';
         }
         if (e !== undefined) {
             TrackManager.doEvent('filtersPanelToggle', status);
