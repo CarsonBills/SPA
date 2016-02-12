@@ -1,6 +1,6 @@
 {
   "name": "norton_reader",
-  "iigVersion": "0004",
+  "iigVersion": "0005",
   "nrVersion": "0001",
   "description": "Norton Reader",
   "main": "app.js",
@@ -36,6 +36,7 @@
     "gulp-connect-php": "0.0.5",
     "gulp-csso": "^1.0.1",
     "gulp-file-include": "^0.13.7",
+    "gulp-filter": "^3.0.1",
     "gulp-html-replace": "^1.5.4",
     "gulp-if": "^2.0.0",
     "gulp-if-else": "^1.0.3",

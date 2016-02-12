@@ -74,7 +74,7 @@ var gulp = require('gulp'),
 function getHTMLAssets(path) {
     return {
         css: {
-            src: path +'/css/app.css',
+            src: path +'/css/app' + getVersionNumber() + '.css',
             tpl: '<link rel="stylesheet" href="%s">'
         },
         js: {
@@ -177,8 +177,17 @@ gulp.task('sass:develop', function () {
         .pipe($.livereload())
 });
 
+function isApp(file) {
+    console.log(file)
+    return file.match(/app.scss/);
+}
+
 gulp.task('sass:production', function () {
-    gulp.src([app + site + settings.sass + '**/*.scss'])
+    var f = $.filter(['app.*'], {restore: true});
+    gulp.src([
+            app + site + settings.sass + '**/*.scss',
+            '!' + app + site + settings.sass_sprite + '**/*.scss'
+        ])
         .pipe($.sass({
             precision: 6,
             outputStyle: 'compact'
@@ -193,6 +202,10 @@ gulp.task('sass:production', function () {
             require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
         //.pipe(minifyCss({keepBreaks: true}))
+
+        .pipe(f)
+        .pipe($.rename({basename: 'app' + getVersionNumber(), extname: '.css'}))
+        .pipe(f.restore)
         .pipe(gulp.dest(deploy + site + version + settings.css))
         .pipe($.size());
 });
@@ -512,7 +525,6 @@ gulp.task('build', function () {
         .pipe($.shell([
             'gulp wiredep',
             'gulp copy_data',
-            'gulp copy_php',
             'gulp png_sprite',
             'gulp svg2png',
             'gulp copy_images',
@@ -526,7 +538,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_php', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_assets', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
+gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_assets', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
 
     $.livereload.listen();
 
