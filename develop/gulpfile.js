@@ -153,6 +153,7 @@ gulp.task('fileinclude', function () {
 });
 
 gulp.task('sass:develop', function () {
+    var f = $.filter(['app.*'], {restore: true});
     gulp.src([
             app + site + settings.sass + '**/*.scss',
             '!' + app + site + settings.sass_sprite + '**/*.scss'
@@ -169,6 +170,9 @@ gulp.task('sass:develop', function () {
             require('autoprefixer')({browsers: ['ie >= 9', 'last 2 version']})
         ]))
         .pipe($.sourcemaps.write())
+        .pipe(f)
+        .pipe($.rename({basename: 'app' + getVersionNumber(), extname: '.css'}))
+        .pipe(f.restore)
         .pipe(gulp.dest(deploy + site + settings.dev + settings.css))
         .pipe($.notify({
             message: 'site: ' + site + ' Sass:Develop done'
@@ -176,11 +180,6 @@ gulp.task('sass:develop', function () {
         .pipe($.size())
         .pipe($.livereload())
 });
-
-function isApp(file) {
-    console.log(file)
-    return file.match(/app.scss/);
-}
 
 gulp.task('sass:production', function () {
     var f = $.filter(['app.*'], {restore: true});
