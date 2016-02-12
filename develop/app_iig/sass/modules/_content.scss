@@ -101,7 +101,7 @@ ul.card {
             font-size: 1.3rem;
             line-height: 2.1rem;
             padding: $card-gutter;
-            @include clearfix();
+            clear: both;
         }
 
         .content-tags {
