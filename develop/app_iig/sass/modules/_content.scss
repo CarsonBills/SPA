@@ -86,7 +86,7 @@ ul.card {
             font-size: 2rem;
             @include opensans($size: 1.4rem);
             a {
-                color: #777;
+                color: $iig-link;
                 text-decoration: none;
             }
         }
@@ -143,7 +143,7 @@ ul.card {
         width: 95%;
 
         div {
-            padding: 0 1rem;
+            padding: 0.5rem 1rem;
             display: inline-block;
         }
 
@@ -153,11 +153,11 @@ ul.card {
         }
 
         .content-title {
-            width: 40%;
+            width: 50%;
         }
 
         .content-tags {
-            width: 40%;
+            width: 30%;
         }
 
         .savelist,
@@ -177,16 +177,28 @@ ul.card {
             @include content-type($length:45px);
         }
 
+        a {
+            color: $iig-link;
+            text-decoration: none;
+        }
+
         .content-title {
             display: block;
-            color: transparent;
             @include ellipsis();
+            @include opensans($size: 1.4rem);
+            color: $iig-link;
 
             & > a {
-                color: $iig-link;
-                @include athelas($size: 1.8rem, $style: italic, $weight: 400);
+                font-weight: 700;
+                //@include athelas($size: 1.6rem, $height: 1.6rem, $style: italic, $weight: 400);
                 @include ellipsis();
                 display: block;
+                margin-bottom: 0.3rem;
+            }
+
+            & > span {
+                white-space: pre-line;
+                @include opensans($size: 1.3rem, $height: 1.2);
             }
         }
 
