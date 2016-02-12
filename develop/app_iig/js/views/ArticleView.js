@@ -23,11 +23,16 @@ var ArticleView = Backbone.View.extend({
     favorites: null, // favorites list
     lastItemID: '',
     hasRefreshed: false,
+    tagLimit: -1,
 
     initialize: function(params) {
         'use strict';
         this.collection.on('reset update', this.renderIfEmpty, this);
         this.favorites = params.favorites;
+
+        if (this.tagLimit === -1 && NortonApp.headerConfigItem.get('tagLimit') !== undefined) {
+            this.tagLimit = NortonApp.headerConfigItem.get('tagLimit');
+        }
 
         // event listeners
         this.evtMgr.on(EventManager.CONTENT_VIEW_CHANGE, this.onModuleUpdate, this);
@@ -76,6 +81,17 @@ var ArticleView = Backbone.View.extend({
         }
     },
 
+    getTagLimit: function () {
+        'use strict';
+        var bool;
+        if (this.tagLimit === -1) {
+            bool = false;
+        } else {
+            bool = true;
+        }
+        return bool;
+    },
+
     render: function(noresults) {
         'use strict';
 
@@ -106,6 +122,9 @@ var ArticleView = Backbone.View.extend({
         this.collection.each(function(record) {
             article = record.toJSON();
             article.faved = this.isfaved(article.allMeta.pname);
+            if (this.getTagLimit()) {
+                article.tagLimit = this.tagLimit;
+            }
             if (showGrid) {
                 articleTemplate = this.templateGrid(article);
             } else {
@@ -129,7 +148,7 @@ var ArticleView = Backbone.View.extend({
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage",
-        "click .download a": 'onDownload'
+        "click .download": 'onDownload'
     },
 
     onTagClick: function (e) {
@@ -153,6 +172,7 @@ var ArticleView = Backbone.View.extend({
     onDownload: function (e) {
         'use strict';
         var track = $(e.currentTarget).data('track');
+        console.log(track)
         TrackManager.doEvent('download', track);
     },
 

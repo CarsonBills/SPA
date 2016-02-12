@@ -47,16 +47,24 @@ module.exports = (function() {
     Handlebars.registerHelper('HBContentItemTags', function(data, options) {
         var result = '',
             tags = data.tags,
-            link = require('../../templates/partials/content/types/tagLink.hbs');
+            link = require('../../templates/partials/content/types/tagLink.hbs'),
+            limit = (options.hash.tagLimit) ? options.hash.tagLimit: tags.length,
+            lists;
+        lists = _.filter(tags, function (num, index) {
+            return (index < limit);
+        });
 
-        _.each(tags, function (tag, index) {
+        _.each(lists, function (tag, index) {
             if (tag !== '') {
                 result += link({tag: tag});
-                if (index < tags.length - 1) {
+                if (index < lists.length - 1) {
                     result += " | ";
                 }
             }
-        });
+        });        
+        if (lists.length < tags.length) {
+            result += " ...";
+        }
         return result;
     });
 })();
