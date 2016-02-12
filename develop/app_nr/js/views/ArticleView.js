@@ -106,8 +106,8 @@ var ArticleView = Backbone.View.extend({
     events: {
         'click .icon-grid-view': 'onGrid',
         'click .icon-list-view': 'onList',
-        'click .moreinfo-lnk a': 'onMoreInfo',
-        'click .ebook-lnk a': 'onEBook',
+        'click .moreinfo-lnk': 'onMoreInfo',
+        'click .ebook-lnk': 'onEBook',
         
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
@@ -132,7 +132,7 @@ var ArticleView = Backbone.View.extend({
 
     onEBook: function(e) {
         'use strict';
-        var href = $(e.currentTarget).attr('href');
+        var href = $(e.currentTarget).data('href');
         TrackManager.doEvent('viewEBook', href);
     },
 

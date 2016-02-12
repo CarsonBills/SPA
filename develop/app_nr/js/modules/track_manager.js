@@ -42,7 +42,6 @@ var Backbone = require('backbone'),
                 var params = {
                     'event': 'click.' + CODE  + '.' + value
                 };
-                console.log(label)
                 if (label && label !== '') {
                     params.label = label;
                 }

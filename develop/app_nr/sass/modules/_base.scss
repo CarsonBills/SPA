@@ -83,13 +83,48 @@ $modal-header-height: 52px;
 	}
 }
 
-button[data-type="reader-button"] {
+%reader-button {
 	position: relative;
 	min-width: 130px;
 	height: 42px;
 	line-height: 42px;
 	padding: 0 1rem;
 	margin: 0;
+	color: $dark-grey;
+	vertical-align: top;
+}
+
+a[data-type="reader-button"] {
+	@extend %reader-button;
+	line-height: 38px;
+
+	display: inline-block;
+    text-align: center;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {    
+    	border-color: #888;
+    	outline: 0;
+	}
+
+	&.ebook-lnk {
+		.icon {
+			@include svg-sprite(ebook_icon);
+			@include vertical-align(absolute);
+		}
+	}
+}
+
+button[data-type="reader-button"] {
+	@extend %reader-button;
 
 	a {
 		text-decoration: none;
