@@ -17,7 +17,7 @@ var JSConstants = {
     tabletPortaitWidth: 768,
     mobileWidth: 480,
     mobileWidthSM: 320,
-    defaultPageSize: 10
+    defaultPageSize: 24
 };
 
 module.exports = JSConstants;
