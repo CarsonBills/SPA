@@ -50,6 +50,7 @@ var YourFavsView = Backbone.View.extend({
         "click .button-container a": "saveYourFavs",
         "click .list-format .remove": "removeYourFavs",
         "click .favs-title a": "triggerPage"
+        //"click .remove-all-items": "removeAll"
     },
 
     render: function() {
@@ -97,6 +98,18 @@ var YourFavsView = Backbone.View.extend({
         'use strict';
         NortonApp.router.navigateToID($(e.currentTarget).data('id'));
         return false;
+    },
+
+    removeAll: function () {
+        'use strict';
+        this.collection.reset();
+
+        this.updateCount();
+        if (Norton.isLoggedIn) {
+            this.likeOrUnlikeYourFavs(cloned, 'unlike');
+        } else {
+            this.saveLocalStorage();
+        }
     },
 
     removeItem: function (model) {

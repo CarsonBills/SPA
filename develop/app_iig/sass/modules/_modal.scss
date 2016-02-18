@@ -244,6 +244,19 @@
 			}
 		}
 
+		&[data-module=thumbnailVideo] {
+			height: auto;
+			.modal-body {
+				min-height: inherit;
+				padding: 0;
+			}
+			div[data-type="video-player"] {
+				margin: 0;
+				border: none;
+				padding-top: 71%;
+			}
+		}
+
 		&[data-module=favorites] {
 			min-height: 600px;
 			height: auto;
@@ -252,6 +265,15 @@
 				text-align: center;
 				font-size: 1.8rem;
 				margin-top: 5rem;
+			}
+
+			.modal-footer {
+    			text-align: center;
+    			border-top: none;
+				.remove-all-items {
+					border-radius: 0.2rem;
+					margin: 0 auto;
+				}
 			}
 
 
@@ -267,11 +289,6 @@
 				overflow-y: scroll;
 				min-height: 0;
 				height: 548px;
-			}
-
-			.modal-footer {
-				padding: 0;
-    			text-align: center;
 			}
 			.button-container {
 				position: relative;
@@ -410,22 +427,7 @@
 				width: 90%;
 			}
 
-			&[data-module=introduction] {
-				width: 90%;
-
-				.modal-copy {
-					width: 90%;
-					text-align: center;
-				}
-
-				.intro-bg {
-					position: relative;
-					width: 95%;
-					margin: 0 auto;
-					top: 0;
-				}
-			}
-
+			&[data-module=thumbnailVideo],
 			&[data-module=errors],
 			&[data-module=details] {
 				width: 90%;
@@ -456,6 +458,12 @@
 				}
 			}
 
+			&[data-module=thumbnailVideo] {
+				div[data-type="video-player"] {
+					padding-top: 66%;
+				}
+			}
+
 			&[data-module=favorites] {
 				.modal-body {
 					padding: 0;
@@ -472,34 +480,6 @@
 @media only screen and (max-width: $mobile-width) {
 	#modal-container {
 		.modal-dialog {
-			&[data-module=introduction] {
-				height: auto;
-
-				.modal-title {
-					font-size: 3.5rem;
-				}
-				.modal-copy {
-					font-size: 1.5rem;
-				}
-				.modal-links {
-					position: relative;
-					float: none;
-					right: 0;
-					margin: 0 auto;
-
-					a,
-					a:hover {
-						text-decoration: none;
-					}
-
-					button {
-						width: 170px;
-						display: block;
-						margin: 0 auto;
-					}
-				}
-			}
-
 			&[data-module=errors],
 			&[data-module=details] {
 

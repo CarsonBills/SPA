@@ -14,6 +14,8 @@ var ArticleView = Backbone.View.extend({
     templateGrid: require('../../templates/modules/ArticlesGridTemplate.hbs'),
     templateList: require('../../templates/modules/ArticlesListTemplate.hbs'),
     templateListHead: require('../../templates/modules/ArticlesListHeadTemplate.hbs'),
+    ThumbnailVideoView: require('./ThumbnailVideoView'),
+    thumbnailVideo: null,
     app: null,
     stickScroll: null,
     shouldRefresh: null,
@@ -44,6 +46,8 @@ var ArticleView = Backbone.View.extend({
         this.shouldRefresh = this.shouldRefreshWrapper();
         /* window scroll callbacks */
         this.stickScroll = this.stickScrollWrapper();
+
+        this.thumbnailVideo = new this.ThumbnailVideoView();
 
         ScrollHelper.setQue({
             func: this.stickScroll
@@ -148,7 +152,8 @@ var ArticleView = Backbone.View.extend({
         "click .details": "getNextPrevFromList",
         "click #prevArticle": "getNextPrevFromPage",
         "click #nextArticle": "getNextPrevFromPage",
-        "click .download": 'onDownload'
+        "click .download": "onDownload",
+        "click .content-thumbnail": "onThumbnailVideo"
     },
 
     onTagClick: function (e) {
@@ -169,10 +174,17 @@ var ArticleView = Backbone.View.extend({
         return false;
     },
 
+    onThumbnailVideo: function (e) {
+        'use strict';
+        var pname = $(e.currentTarget).data('pname'),
+            model = this.collection.getModelByAttribute('pname', pname);
+        this.thumbnailVideo.show(model.get('allMeta'));
+        TrackManager.doEvent('showThumbnailVideo', pname);
+    },
+
     onDownload: function (e) {
         'use strict';
         var track = $(e.currentTarget).data('track');
-        console.log(track)
         TrackManager.doEvent('download', track);
     },
 

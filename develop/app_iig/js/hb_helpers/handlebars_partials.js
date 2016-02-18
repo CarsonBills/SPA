@@ -39,6 +39,7 @@ module.exports = (function() {
         'HBContentTitle': require('../../templates/partials/content/title.hbs'),
         'HBContentTitleAbstract': require('../../templates/partials/content/titleAbstract.hbs'),
         'HBContentTags': require('../../templates/partials/content/tags.hbs'),
+        'HBContentThumbnail': require('../../templates/partials/content/thumbnail.hbs'),
         'HBContentSavelist': require('../../templates/partials/content/savelist.hbs'),
         'HBContentAbstract': require('../../templates/partials/content/abstract.hbs'),
 

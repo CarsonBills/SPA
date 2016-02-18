@@ -44,6 +44,15 @@ module.exports = (function() {
         }
         return icon;
     });
+
+    Handlebars.registerHelper('HBContentSignedUrl', function(url, options) {
+        var surl;
+        if (url !== undefined) {
+            surl = DetailsParser.parseUrl(url);
+        }
+        return surl;
+    });
+
     Handlebars.registerHelper('HBContentItemTags', function(data, options) {
         var result = '',
             tags = data.tags,

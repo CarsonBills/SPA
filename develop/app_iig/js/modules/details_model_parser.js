@@ -92,7 +92,8 @@ var Backbone = require('backbone'),
 
         return {
             process: process,
-            parseUrl: parseUrl
+            parseUrl: parseUrl,
+            replaceURL: replaceURL
         };
 }());
 
