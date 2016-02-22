@@ -337,6 +337,8 @@ var FiltersView = Backbone.View.extend({
                 trigger: false,
                 replace: false  
             });
+        } else {
+            NortonApp.router.returnHome();
         }
 
         this.postActionCheck();
