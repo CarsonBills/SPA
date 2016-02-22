@@ -224,8 +224,8 @@ var YourFavsView = Backbone.View.extend({
 
     showYourFavs: function() {
         'use strict';
-
         this.render();
+        NortonApp.router.navigateToModal();
         TrackManager.doEvent('showFavs', 'on');
 
         return false;

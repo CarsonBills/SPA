@@ -315,6 +315,7 @@ var FiltersView = Backbone.View.extend({
      */
     resetFilters: function (params, e) {
         'use strict';
+        console.log('resetFilters')
         this.clearFilters();
         
         this.app.formatRefinements(); // call getArticles() in AppView
@@ -328,9 +329,15 @@ var FiltersView = Backbone.View.extend({
      */
     removeAllFilters: function(e) {
         'use strict';
-        
         this.resetFilters();
-        NortonApp.router.returnHome();
+        if (Norton.searchQuery !== '') {
+            NortonApp.router.searchFor({
+                tag: Norton.searchQuery
+            }, {
+                trigger: false,
+                replace: false  
+            });
+        }
 
         this.postActionCheck();
 

@@ -70,6 +70,7 @@ var SearchView = Backbone.View.extend({
     /* triggered from router */
     deeplinkSearch: function (value) {
         'use strict';
+        console.log('deeplinkSearch')
         if (value && value !== '') {
             this.showSearch(value);
             /**
@@ -115,7 +116,8 @@ var SearchView = Backbone.View.extend({
     },
 
     clearSearch: function () {
-        'use strict';       
+        'use strict'; 
+        console.log('clearSearch')      
         if ($('#searchTextInput').val() !== '') {
             $('#searchTextInput').val('');
             this.hideRemove();
@@ -125,6 +127,7 @@ var SearchView = Backbone.View.extend({
     resetSearch: function () {
         'use strict';
         this.clearSearch();
+        console.log('resetSearch')
         if (Norton.searchQuery !== '') {
             Norton.searchQuery = '';    
             //this.collection.cleanupAndReset();
@@ -138,8 +141,6 @@ var SearchView = Backbone.View.extend({
         TrackManager.doEvent('clearSearch', '');     
         this.resetSearch();
         NortonApp.router.returnHome();
-        
-        this.clearSearch();
         return false;
     }
 }, {
