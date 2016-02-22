@@ -318,8 +318,6 @@ var AppView = Backbone.View.extend({
             that = this;
 
         var qs = window.location.href.substr( (window.location.href.indexOf("?") + 1) , window.location.href.length);
-
-        console.log('qs', qs)
         cats = (qs) ? qs.split("&") : ""; // don't want cat's to be 1 element array with empty key-val
 
         for (var cat in cats) {
