@@ -75,24 +75,31 @@ ul.card {
         }
 
         .content-thumbnail {
-            position: absolute;
+            position: relative;
             width: 100%;
-            height: 60%;
+            height: 30%;
             background-color: #fff;
             text-align: center;
             cursor: pointer;
-            filter: blur(2px) opacity(50%);
-            opacity: 0.5;
-            transition: all 0.2s ease-in-out;
+
+            .glyphicon {
+                position: absolute;
+                font-size: 4rem;
+                @include center($position: absolute);
+                opacity: 0.7;
+                transition: all 0.2s ease-in-out;
+            }
 
             &:hover {
                 filter: blur(0) opacity(100%);
-                opacity: 1;
+                .glyphicon {
+                    opacity: 1;
+                }
             }
             img {
                 display: inline-block;
-                max-width: 100%;
-                height: auto;
+                max-height: 100%;
+                width: auto;
             }
         }
 
