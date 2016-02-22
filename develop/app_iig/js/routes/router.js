@@ -62,7 +62,6 @@ var AppRouter = Backbone.Router.extend({
 
     checkFragments: function () {
         'use strict';
-        console.log('current state: ' + this.state, this.fragments)
         if (this.fragments !== '') {
             this.navigateToPath(this.fragments, {
                 trigger: false
@@ -89,8 +88,6 @@ var AppRouter = Backbone.Router.extend({
 
     switchState: function (state) {
         'use strict';
-
-        console.log('current state: ', state, 'previous state: ', this.state);
 
         if (state === this.state) {
             return false;
@@ -124,7 +121,6 @@ var AppRouter = Backbone.Router.extend({
         }
         // new state
         if (state === this.HOME) {
-            console.log('state === home, appview resetSearch()')
             this.clearFragments();
             if (this.state === this.FILTER) {
                 this.appView.resetFilters();
@@ -154,14 +150,12 @@ var AppRouter = Backbone.Router.extend({
             search = window.location.search;
             slugs = pathname.split('/');
             if (pathname === that.rootPath) {
-                console.log('popstate ===> rootpath')
                 state = that.HOME;
                 //this.fragments = '';
                 /*if (ModalManager.shown()) {
                     ModalManager.hide();
                 }*/
             } else {
-                console.log('popstate ===>', slugs)
                 if (slugs.length === 5) {
                     state = slugs[3];
                     that.navigateToPath(slugs[3] + '/' + slugs[4] + search);
@@ -195,7 +189,6 @@ var AppRouter = Backbone.Router.extend({
 
     returnHome: function () {
         'use strict';
-        console.log('returnHome', this.state)
         if (this.stopPropagate) {
             this.stopPropagate = false;
         } else {
@@ -207,7 +200,6 @@ var AppRouter = Backbone.Router.extend({
 
     homepage: function() {
         'use strict';
-        console.log('homepage')
         /*this.switchState(this.HOME);
         this.navigate('', {
             trigger: true
@@ -232,14 +224,13 @@ var AppRouter = Backbone.Router.extend({
 
     navigateToModal: function () {
         'use strict';
-        console.log('navigateToModal')
-        this.switchState(this.MODAL);
+        /*this.switchState(this.MODAL);
 
         var path = this.MODAL + '/',
         opt = {
             trigger: true
         };
-        this.navigateToPath(path, opt);
+        this.navigateToPath(path, opt);*/
     },
 
     navigateToID: function (id, params) {
@@ -252,7 +243,6 @@ var AppRouter = Backbone.Router.extend({
 
     searchFor: function (options, params) {
         'use strict';
-        console.log('router -> searchFor')
         var action = "search/",
             opt;
         if (options.tag && options.tag !== '') {
@@ -275,7 +265,6 @@ var AppRouter = Backbone.Router.extend({
 
     checkFilter: function (value, params) {
         'use strict';
-        console.log('router -> checkFilter')
         var action = "filters/",
             opt;
         if (value && value !== '') {
@@ -305,7 +294,6 @@ var AppRouter = Backbone.Router.extend({
 
     search: function (value) {
         'use strict';
-        console.log('search')
         this.appView.deeplinkSearch(value);
     },
 

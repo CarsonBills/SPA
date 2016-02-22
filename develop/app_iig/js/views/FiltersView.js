@@ -315,7 +315,6 @@ var FiltersView = Backbone.View.extend({
      */
     resetFilters: function (params, e) {
         'use strict';
-        console.log('resetFilters')
         this.clearFilters();
         
         this.app.formatRefinements(); // call getArticles() in AppView
