@@ -57,16 +57,18 @@ var PageView = Backbone.View.extend({
         'use strict';
         var $div = $('<div></div>');
 
-        $div.html(this.template(this.model.toJSON()));
-        
-        ModalManager.show({
-            content: $div,
-            module: this.MODULE,
-            loading: false
-        });
-
+        // if modal is closed before data ready, block redner()
         if (ModalManager.shown()) {
-            TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
+            $div.html(this.template(this.model.toJSON()));    
+            ModalManager.show({
+                content: $div,
+                module: this.MODULE,
+                loading: false
+            });
+
+            if (ModalManager.shown()) {
+                TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
+            }
         }
 
         return this;
