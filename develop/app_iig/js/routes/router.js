@@ -224,13 +224,13 @@ var AppRouter = Backbone.Router.extend({
 
     navigateToModal: function () {
         'use strict';
-        /*this.switchState(this.MODAL);
+        this.switchState(this.MODAL);
 
         var path = this.MODAL + '/',
         opt = {
             trigger: true
         };
-        this.navigateToPath(path, opt);*/
+        this.navigateToPath(path, opt);
     },
 
     navigateToID: function (id, params) {
