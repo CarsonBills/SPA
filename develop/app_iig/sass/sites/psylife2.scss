@@ -69,4 +69,10 @@ $topbar-color: #de1f26;
 		}
 	}
 
+	/* use background color */
+	.content-thumbnail .glyphicon {
+		color: $bg-color;
+		filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.6))
+	}
+
 }
