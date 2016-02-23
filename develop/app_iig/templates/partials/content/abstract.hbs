@@ -1,3 +1,8 @@
 <div class="content-abstract">
-	<a  class="details" href="{{baseUrl}}/page/{{allMeta.pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">{{{HBTrim allMeta.abstract 140}}}</a>
+	<a  class="details" href="{{baseUrl}}/page/{{allMeta.pname}}" data-id="{{allMeta.pname}}" data-prev-id="{{prevId}}" data-next-id="{{nextId}}">
+	{{#if allMeta.thumbnail}}
+		{{{HBTrim allMeta.abstract 100}}}
+	{{else}}
+		{{{HBTrim allMeta.abstract 200}}}
+	{{/if}}</a>
 </div>
