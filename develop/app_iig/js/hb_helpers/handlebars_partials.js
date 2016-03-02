@@ -20,8 +20,13 @@ module.exports = (function() {
     'use strict';
     Handlebars.registerPartial({
         // header
+        'HBHeaderTitleScreenNR': require('../../templates/partials/header/titleScreenNR.hbs'),
+        'HBHeaderHeroNR': require('../../templates/partials/header/heroNR.hbs'),
+        'HBHeaderOtherVersion': require('../../templates/partials/header/otherVersion.hbs'),
+
+
+        'HBHeaderHeroIIG': require('../../templates/partials/header/heroIIG.hbs'),
         'HBHeaderLogo': require('../../templates/partials/header/logo.hbs'),
-        'HBHeaderHero': require('../../templates/partials/header/hero.hbs'),
         'HBHeaderBg': require('../../templates/partials/header/bg.hbs'),
         'HBHeaderTitle': require('../../templates/partials/header/title.hbs'),
         'HBHeaderAccount': require('../../templates/partials/header/account.hbs'),

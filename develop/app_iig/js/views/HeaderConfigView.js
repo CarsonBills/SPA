@@ -10,8 +10,8 @@ var HeaderConfigView = Backbone.View.extend({
     SITE: 'IIG -- ',
     MODULE: 'headerView',
     ACCOUNT: '.my-account',
-    templateNR: require('../../templates/modules/NortonReaderHeaderTemplate.hbs'),
-    templateIig: require('../../templates/modules/IigHeaderTemplate.hbs'),
+    templateNR: require('../../templates/modules/NRHeaderTemplate.hbs'),
+    templateIIG: require('../../templates/modules/IIGHeaderTemplate.hbs'),
 
     initialize: function() {
         'use strict';
@@ -50,7 +50,7 @@ var HeaderConfigView = Backbone.View.extend({
             }
             context.user = CookieHelper.getUser('ecm2:username');
             context.signedIn = (context.user !== CookieHelper.ANON);
-            headerConfigTemplate = this.templateIig(context);
+            headerConfigTemplate = this.templateIIG(context);
             
         }
         this.$el.append(headerConfigTemplate);
