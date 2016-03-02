@@ -405,9 +405,9 @@ gulp.task('inline', function () {
             debug : false,
             transform: [hbsfy]
         }))
-        .pipe($.uglify({
+        /*.pipe($.uglify({
             mangle: false
-        }))
+        }))*/
         .pipe($.rename({extname: '.hbs'}))
         .pipe(gulp.dest(app + site + settings.hbs_inline))
         .pipe($.notify("Inline Script Task Completed!"));

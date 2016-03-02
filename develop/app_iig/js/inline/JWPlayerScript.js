@@ -1,7 +1,8 @@
 'use strict';
 jwplayer.key = "IAnTXUOVov4d9Q1UI0zaycdQi/g6KXCIenM3Girr/B4=";
 
-var loadPlayer = function (captionUrl) {
+var loadPlayer = function (captionSrc) {
+	console.log(captionSrc)
 	var image_src = '{{{stillImageSrc}}}',
 		autoplay = '{{autoplay}}',
 		defaults = {
@@ -41,9 +42,9 @@ var loadPlayer = function (captionUrl) {
 	if (image_src) {
 		track.image = image_src;
 	}
-	if (captionUrl) {
+	if (captionSrc) {
 		track.tracks = [{
-            file: captionUrl, 
+            file: captionSrc, 
             kind: "captions", 
             label:"English",
             default: true,
@@ -57,9 +58,13 @@ var loadPlayer = function (captionUrl) {
 
 	jwplayer('{{playerID}}').on('error', function(e) {
 		if (e.message) {
-			//showError(e.message);
+			showError(e.message);
 		}
 	});
+},
+
+showError = function (mesg) {
+	console.log(mesg);
 },
 
 getURL = function (params) {
@@ -87,13 +92,13 @@ getURL = function (params) {
 };
 
 $(function(){
-	var captions = '{{{captions}}}';
-	if (captions !== '') {
+	var captionSrc = '{{{captionSrc}}}';
+	if (captionSrc !== '') {
 		getURL({
 			options: {
             	withCredentials: true
 			},
-			url : captions,
+			url : captionSrc,
 			callback: loadPlayer
 		});
 	} else {

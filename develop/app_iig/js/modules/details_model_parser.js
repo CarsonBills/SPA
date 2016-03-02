@@ -32,13 +32,17 @@ var Backbone = require('backbone'),
         },
 
         // https://s3.amazonaws.com/nortoniigprotectedassets/econ/images/TIP_035.jpg
-        replaceURL = function (text) {
+        replaceURL = function (text, urlOnly) {
             var prefix = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
                 exp = /http(s?):\/\/s3.amazonaws.com/ig,
                 frag = '';
 
                 if (text && text !== '') {
                     frag = text.replace(exp, prefix);
+
+                    if (urlOnly) {
+                        frag += '&url=1';
+                    }
                 }
 
             return frag;
@@ -54,8 +58,9 @@ var Backbone = require('backbone'),
                     block.copy = replaceURL(block.copy);
                 break;
                 case 'video':
-                    block.stillImageSrc = parseUrl(block.stillImageSrc);
-                    block.videoSrc = parseUrl(block.videoSrc);
+                    block.stillImageSrc = replaceURL(block.stillImageSrc);
+                    block.videoSrc = replaceURL(block.videoSrc);
+                    block.ccSrc = replaceURL(block.ccSrc, true);
                     block.blurb = replaceURL(block.blurb);
                 break;
             }
