@@ -57,6 +57,8 @@ var gulp = require('gulp'),
         php: '/php/',
         css: '/css/',
         js: '/js/',
+        js_inline: '/js/inline/',
+        hbs_inline: '/templates/partials/inline/',
         js_dynamic: '/js/dynamic/',
         js_logger: '/js/logger/',
         js_vendor: '/js/vendor/',
@@ -396,6 +398,21 @@ gulp.task('customize:modernizr', function() {
     .pipe(gulp.dest(app + site + settings.js_vendor));
 });
 
+gulp.task('inline', function () {
+    return gulp.src([app + site + settings.js_inline + '**/*.js'])
+        .pipe($.browserify({
+            insertGlobals : false,
+            debug : false,
+            transform: [hbsfy]
+        }))
+        .pipe($.uglify({
+            mangle: false
+        }))
+        .pipe($.rename({extname: '.hbs'}))
+        .pipe(gulp.dest(app + site + settings.hbs_inline))
+        .pipe($.notify("Inline Script Task Completed!"));
+});
+
 gulp.task('browserify', function () {
     var logger = ifElse(isProd(),
         function () { 
@@ -530,6 +547,7 @@ gulp.task('build', function () {
             'gulp copy_images',
             'gulp copy_fonts',
             'gulp copy_assets',
+            'gulp inline',
             'gulp browserify',
             'gulp fileinclude',
             'gulp sass:production'
@@ -538,7 +556,7 @@ gulp.task('build', function () {
         }));
 });
 
-gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_assets', 'copy_fonts', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
+gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'png_sprite', 'svg2png', 'copy_assets', 'copy_fonts', 'inline', 'browserify', 'fileinclude', 'sass:develop'], function (e) {
 
     $.livereload.listen();
 
@@ -547,7 +565,11 @@ gulp.task('watch', ['wiredep', 'copy_data', 'copy_images', 'png_sprite', 'svg2pn
     gulp.watch([app + site + settings.sass + '**/*.scss'], ['sass:develop']);
     gulp.watch([app + site + settings.js_inject + '**/*.js'], ['browserify']);
     gulp.watch([app + site + settings.site_assets + '**/*'], ['copy_assets']);
-    gulp.watch([app + site + settings.js + '**/*.js'], ['browserify']);
+    gulp.watch([
+        app + site + settings.js + '**/*.js',
+        '!' + app + site + settings.js_inline + '**/*.js'
+    ], ['browserify']);
+    gulp.watch([app + site + settings.js_inline + '**/*.js'], ['inline']);
     gulp.watch([app + site + settings.php + '**/*.php'], ['copy_php']);
     gulp.watch([app + site + settings.images + '**', '!' + settings.svg + '*.svg'], ['png_sprite', 'copy_images']);
 

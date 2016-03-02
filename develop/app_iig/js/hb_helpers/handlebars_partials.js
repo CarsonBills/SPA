@@ -26,7 +26,7 @@ module.exports = (function() {
         'HBJPlayerScript': require('../../templates/partials/player/JPlayerScript.hbs'),
         // jwplayer
         'HBJWPlayerMarkup': require('../../templates/partials/player/JWPlayerMarkup.hbs'),
-        'HBJWPlayerScript': require('../../templates/partials/player/JWPlayerScript.hbs'),
+        'HBJWPlayerScript': require('../../templates/partials/inline/JWPlayerScript.hbs'),
 
         // page details
         'HBPageArrowPrev': require('../../templates/partials/page/arrowPrev.hbs'),
