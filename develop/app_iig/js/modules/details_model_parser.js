@@ -60,7 +60,8 @@ var Backbone = require('backbone'),
                 case 'video':
                     block.stillImageSrc = replaceURL(block.stillImageSrc);
                     block.videoSrc = replaceURL(block.videoSrc);
-                    block.ccSrc = replaceURL(block.ccSrc, true);
+                    block.captionSrc = replaceURL(block.vttSrc, true);
+                    block.autoPlay = false;
                     block.blurb = replaceURL(block.blurb);
                 break;
             }

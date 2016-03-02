@@ -2,9 +2,8 @@
 jwplayer.key = "IAnTXUOVov4d9Q1UI0zaycdQi/g6KXCIenM3Girr/B4=";
 
 var loadPlayer = function (captionSrc) {
-	console.log(captionSrc)
 	var image_src = '{{{stillImageSrc}}}',
-		autoplay = '{{autoplay}}',
+		autoplay = '{{autoPlay}}',
 		defaults = {
         width: "100%",
         aspectratio: "4:3",
@@ -49,7 +48,6 @@ var loadPlayer = function (captionSrc) {
             label:"English",
             default: true,
             option: {
-            	//withCredentials: true
             }
         }]
 	}
