@@ -80,7 +80,9 @@ function getHTMLAssets(path) {
         js: {
             src: [
                 //path + '/js/vendor/modernizr.js',
-                path + '/js/bundle' + getVersionNumber() + '.min.js'],
+                path + '/js/bundle' + getVersionNumber() + '.min.js',
+                "//dsbst55b1909i.cloudfront.net/player/js/vendor/jwplayer.js"
+            ],
             tpl: '<script src="%s"></script>'
         }/*,
         icon: {
