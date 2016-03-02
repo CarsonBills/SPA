@@ -33,6 +33,14 @@ module.exports = (function() {
         'HBJWPlayerMarkup': require('../../templates/partials/player/JWPlayerMarkup.hbs'),
         'HBJWPlayerScript': require('../../templates/partials/inline/JWPlayerScript.hbs'),
 
+        // navBar
+        'HBNavBarFilters': require('../../templates/partials/navBar/filters.hbs'),
+        'HBNavBarSearch': require('../../templates/partials/navBar/search.hbs'),
+        'HBNavBarYourFavs': require('../../templates/partials/navBar/yourFavs.hbs'),
+        'HBNavBarResult': require('../../templates/partials/navBar/result.hbs'),
+        'HBNavBarSortBy': require('../../templates/partials/navBar/sortBy.hbs'),
+        'HBNavBarToggleView': require('../../templates/partials/navBar/toggleView.hbs'),
+
         // page details
         'HBPageArrowPrev': require('../../templates/partials/page/arrowPrev.hbs'),
         'HBPageArrowNext': require('../../templates/partials/page/arrowNext.hbs'),
