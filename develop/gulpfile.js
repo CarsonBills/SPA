@@ -79,8 +79,8 @@ function getHTMLAssets(path) {
         },
         js: {
             src: [
-                path + '/js/bundle' + getVersionNumber() + '.min.js',
-                "//dsbst55b1909i.cloudfront.net/player/js/vendor/jwplayer.js"
+                "//dsbst55b1909i.cloudfront.net/player/js/vendor/jwplayer.js",
+                path + '/js/bundle' + getVersionNumber() + '.min.js'
             ],
             tpl: '<script src="%s"></script>'
         }/*,
