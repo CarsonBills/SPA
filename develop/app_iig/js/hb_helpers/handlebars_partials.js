@@ -23,7 +23,7 @@ module.exports = (function() {
         'HBLogo': require('../../templates/partials/header/logo.hbs'),
         // jplayer
         'HBJPlayerMarkup': require('../../templates/partials/player/JPlayerMarkup.hbs'),
-        'HBJPlayerScript': require('../../templates/partials/player/JPlayerScript.hbs'),
+        'HBJPlayerScript': require('../../templates/partials/inline/JPlayerScript.hbs'),
         // jwplayer
         'HBJWPlayerMarkup': require('../../templates/partials/player/JWPlayerMarkup.hbs'),
         'HBJWPlayerScript': require('../../templates/partials/inline/JWPlayerScript.hbs'),
