@@ -67,6 +67,7 @@ var AppRouter = Backbone.Router.extend({
                 trigger: false
             });
         } else {
+            this.state = this.HOME;
             this.returnHome();
         }
     },
