@@ -17,6 +17,7 @@ var ThumbnailVideoView = Backbone.View.extend({
         var context = {
             videoSrc: DetailsParser.replaceURL(data.thumbnailVideo),
             stillImageSrc: DetailsParser.replaceURL(data.thumbnail),
+            caption: DetailsParser.replaceURL(data.ccSrc),
             title: data.title
         }
         var $div = $('<div></div>');

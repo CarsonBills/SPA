@@ -21,6 +21,12 @@ module.exports = (function() {
     Handlebars.registerPartial({
         // header
         'HBLogo': require('../../templates/partials/header/logo.hbs'),
+        // jplayer
+        'HBJPlayerMarkup': require('../../templates/partials/player/JPlayerMarkup.hbs'),
+        'HBJPlayerScript': require('../../templates/partials/player/JPlayerScript.hbs'),
+        // jwplayer
+        'HBJWPlayerMarkup': require('../../templates/partials/player/JWPlayerMarkup.hbs'),
+        'HBJWPlayerScript': require('../../templates/partials/player/JWPlayerScript.hbs'),
 
         // page details
         'HBPageArrowPrev': require('../../templates/partials/page/arrowPrev.hbs'),
@@ -31,8 +37,6 @@ module.exports = (function() {
         'HBPageMeta': require('../../templates/partials/page/meta.hbs'),
         'HBPageSections': require('../../templates/partials/page/sections.hbs'),
         'HBPageUtils': require('../../templates/partials/page/utils.hbs'),
-        'HBPageVideoPLayer': require('../../templates/partials/page/videoPlayer.hbs'),
-        'HBPageJplayer': require('../../templates/partials/page/jplayer.hbs'),
 
         // content list/grid view items
         'HBContentType': require('../../templates/partials/content/type.hbs'),

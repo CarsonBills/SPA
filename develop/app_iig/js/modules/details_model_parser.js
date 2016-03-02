@@ -35,9 +35,11 @@ var Backbone = require('backbone'),
         replaceURL = function (text) {
             var prefix = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
                 exp = /http(s?):\/\/s3.amazonaws.com/ig,
-                frag;
+                frag = '';
 
-                frag = text.replace(exp, prefix);
+                if (text && text !== '') {
+                    frag = text.replace(exp, prefix);
+                }
 
             return frag;
         },

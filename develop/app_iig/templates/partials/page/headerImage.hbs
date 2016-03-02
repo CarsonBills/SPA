@@ -1,8 +1,8 @@
         {{#HBHasVideo videoSrc}}
-	        {{> HBPageVideoPLayer}}
+	        {{> HBJWPlayerMarkup playerID="iig-player"}}
 
 			<script>
-			{{> HBPageJplayer}}
+			{{> HBJWPlayerScript playerID="iig-player"}}
 			</script>
 
 		{{else HBHasVideo stillImageSrc}}
