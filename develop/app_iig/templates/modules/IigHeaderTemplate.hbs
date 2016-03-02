@@ -1,27 +1,11 @@
-<div data-type="iig-hero">
-    <div class="hero-container">
-        <div class="book-cover"></div>
-        <div class="hero-title"></div>
-    </div>
-</div>
+ {{> HBHeaderHero}}
 <div class="cover">
     <div class="top-bar">
-        <div class="bg"></div>
-        {{> HBLogo }}
-        <div class="header-title"><a href="{{baseUrl}}">{{displayTitle}}</a></div>
+        {{> HBHeaderBg}}
+        {{> HBHeaderLogo }}
+        {{> HBHeaderTitle }}
 
-        <div class="my-account {{hide}}">
-            <span class="glyphicon glyphicon-user"></span>
-            {{#if signedIn}}
-                <span class="signed-in" icon-label">{{user}}</span>
-            {{else}}
-                <a class="sign-in" href="#" ><span icon-label">Sgin in</span></a>
-            {{/if}}
-        </div>  
-        <div class="links">
-        {{#each headerLinks}}
-            <a href="{{link}}" target="{{target}}">{{label}}</a>
-        {{/each}}
-        </div>
+        {{> HBHeaderAccount }}
+        {{> HBHeaderLinks }}
     </div>
 </div>

@@ -20,7 +20,12 @@ module.exports = (function() {
     'use strict';
     Handlebars.registerPartial({
         // header
-        'HBLogo': require('../../templates/partials/header/logo.hbs'),
+        'HBHeaderLogo': require('../../templates/partials/header/logo.hbs'),
+        'HBHeaderHero': require('../../templates/partials/header/hero.hbs'),
+        'HBHeaderBg': require('../../templates/partials/header/bg.hbs'),
+        'HBHeaderTitle': require('../../templates/partials/header/title.hbs'),
+        'HBHeaderAccount': require('../../templates/partials/header/account.hbs'),
+        'HBHeaderLinks': require('../../templates/partials/header/links.hbs'),
         // jplayer
         'HBJPlayerMarkup': require('../../templates/partials/player/JPlayerMarkup.hbs'),
         'HBJPlayerScript': require('../../templates/partials/inline/JPlayerScript.hbs'),
