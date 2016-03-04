@@ -154,6 +154,13 @@
 				border: 1px solid $grey;
 			}
 
+			.player-loading {
+				min-height: 200px;
+				@include opensans($size: 1.4rem, $height: 1.4, $weight: 600);
+				text-align: center;
+				margin-top: 5rem;
+			}
+
 			.header-img {
 				margin-top: 2rem;
 				display: block;
