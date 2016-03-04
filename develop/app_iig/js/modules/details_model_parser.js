@@ -81,12 +81,17 @@ var Backbone = require('backbone'),
                 raw.data.downloads.href = replaceURL(raw.data.downloads.src);
             }
 
+            /* header image */
             if (raw.data.headerImage.videoSrc) {
-                raw.videoSrc = parseUrl(raw.data.headerImage.videoSrc);
+                raw.videoSrc = replaceURL(raw.data.headerImage.videoSrc);
             }
 
             if (raw.data.headerImage.src) {
-                raw.stillImageSrc = parseUrl(raw.data.headerImage.src);
+                raw.stillImageSrc = replaceURL(raw.data.headerImage.src);
+            }
+
+            if (raw.data.headerImage.ccSrc) {
+                raw.captionSrc = replaceURL(raw.data.headerImage.ccSrc, true);
             }
 
             // blocks

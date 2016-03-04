@@ -141,6 +141,9 @@ module.exports = (function() {
         } else {
             return options.inverse(this);
         }
+    });
+    Handlebars.registerHelper('HBPlayerID', function(prefix) {
+        return (prefix + new Date().getTime());
     });    
 
 })();

@@ -7,9 +7,9 @@
 		<div>{{HBHTMLContent blurb}}</div>
     {{/if}}
 	
-	{{> HBJWPlayerMarkup playerID="iig-player"}}
+	{{> HBJWPlayerMarkup playerID=(HBPlayerID "iig-player")}}
 
 	<script>
-	{{> HBJWPlayerScript playerID="iig-player"}}
+	{{> HBJWPlayerScript playerID=(HBPlayerID "iig-player")}}
 	</script>
 </div>

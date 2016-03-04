@@ -1,8 +1,8 @@
         {{#HBHasVideo videoSrc}}
-	        {{> HBJWPlayerMarkup playerID="iig-player"}}
+	        {{> HBJWPlayerMarkup playerID=(HBPlayerID "iig-player")}}
 
 			<script>
-			{{> HBJWPlayerScript playerID="iig-player"}}
+			{{> HBJWPlayerScript playerID=(HBPlayerID "iig-player")}}
 			</script>
 
 		{{else HBHasVideo stillImageSrc}}
