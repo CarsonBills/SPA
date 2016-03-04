@@ -406,7 +406,7 @@ gulp.task('inline', function () {
             transform: [hbsfy]
         }))
         .pipe($.uglify({
-            mangle: false
+            //mangle: false
         }))
         .pipe($.rename({extname: '.hbs'}))
         .pipe(gulp.dest(app + site + settings.hbs_inline))
