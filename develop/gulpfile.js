@@ -405,9 +405,9 @@ gulp.task('inline', function () {
             debug : false,
             transform: [hbsfy]
         }))
-        .pipe($.uglify({
+        /*.pipe($.uglify({
             //mangle: false
-        }))
+        }))*/
         .pipe($.rename({extname: '.hbs'}))
         .pipe(gulp.dest(app + site + settings.hbs_inline))
         .pipe($.notify("Inline Script Task Completed!"));
@@ -448,7 +448,8 @@ gulp.task('browserify', function () {
             }
         ))
         .pipe($.browserify({
-            transform: ['debowerify', hbsfy]
+            transform: ['debowerify', hbsfy],
+            debug: isDev()
         }))
         .pipe(gulpif(isProd(), $.uglify()))
         .pipe($.rename({basename: 'bundle' + getVersionNumber(), extname: '.min.js'}))

@@ -59,7 +59,8 @@ var Backbone = require('backbone'),
                 break;
                 case 'video':
                     block.stillImageSrc = replaceURL(block.stillImageSrc);
-                    block.videoSrc = replaceURL(block.videoSrc);
+                    block.videoSrc = replaceURL(block.videoSrc);                    
+                    block.playerID = Norton.siteCode + '_block' + new Date().getTime();
                     block.captionSrc = replaceURL(block.vttSrc, true);
                     block.autoPlay = false;
                     block.blurb = replaceURL(block.blurb);
@@ -83,7 +84,8 @@ var Backbone = require('backbone'),
 
             /* header image */
             if (raw.data.headerImage.videoSrc) {
-                raw.videoSrc = replaceURL(raw.data.headerImage.videoSrc);
+                raw.videoSrc = replaceURL(raw.data.headerImage.videoSrc);                   
+                raw.playerID = Norton.siteCode + new Date().getTime();
             }
 
             if (raw.data.headerImage.src) {

@@ -178,6 +178,7 @@ var ArticleView = Backbone.View.extend({
         'use strict';
         var pname = $(e.currentTarget).data('pname'),
             model = this.collection.getModelByAttribute('pname', pname);
+        console.log(model.get('allMeta'))
         this.thumbnailVideo.show(model.get('allMeta'));
         NortonApp.router.navigateToModal();
         TrackManager.doEvent('showThumbnailVideo', pname);

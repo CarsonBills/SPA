@@ -1,1 +1,107 @@
-!function t(r,e,o){function n(i,s){if(!e[i]){if(!r[i]){var l="function"==typeof require&&require;if(!s&&l)return l(i,!0);if(a)return a(i,!0);throw new Error("Cannot find module '"+i+"'")}var u=e[i]={exports:{}};r[i][0].call(u.exports,function(t){var e=r[i][1][t];return n(e?e:t)},u,u.exports,t,r,e,o)}return e[i].exports}for(var a="function"==typeof require&&require,i=0;i<o.length;i++)n(o[i]);return n}({1:[function(t,r,e){"use strict";jwplayer.key="IAnTXUOVov4d9Q1UI0zaycdQi/g6KXCIenM3Girr/B4=";var o=function(t){var r="{{{stillImageSrc}}}",e="{{autoPlay}}",o={width:"100%",aspectratio:"4:3",autostart:!1,controls:!0,primary:"html5",skin:{name:"six"},abouttext:"Norton Media Player, v0.1",aboutlink:"//www.wwnorton.com",logo:{file:"//dsbst55b1909i.cloudfront.net/player/assets/norton_logo.svg",link:"//wwnorton.com",hide:!1},events:{onPlay:function(t){}}},a={file:"{{{videoSrc}}}",startparam:"starttime"};o.autostart="true"===e?!0:!1,r&&(a.image=r),t&&(a.tracks=[{file:t,kind:"captions",label:"English","default":!0,option:{}}]),o.playlist=[a],jwplayer("{{playerID}}").setup(o),jwplayer("{{playerID}}").on("error",function(t){t.message&&n(t.message)})},n=function(t){console.log(t)},a=function(t){var r;$.ajax({type:"GET",url:t.url,xhrFields:t.options,success:function(e){/{([\s\S]+?)\}/.test(e)?(r=JSON.parse(e),401===r.code&&n("Fail to load resource! "+r.status)):t.callback(e)},error:function(t,r){(0===t.status||0===t.readyState)&&n("Ajax request aborted!")}})};$(function(){var t="{{{captionSrc}}}";""!==t?a({options:{withCredentials:!0},url:t,callback:o}):o()})},{}]},{},[1]);
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+jwplayer.key = "IAnTXUOVov4d9Q1UI0zaycdQi/g6KXCIenM3Girr/B4=";
+
+var loadPlayer = function (captionSrc) {
+	var image_src = '{{{stillImageSrc}}}',
+		autoplay = '{{autoPlay}}',
+		defaults = {
+        width: "100%",
+        aspectratio: "4:3",
+        //height: "100%",
+        autostart: false,
+		controls: true,
+		primary: 'html5',
+		skin: {"name": "six"},
+		//skin: "skin/blue.xml",
+
+        //set right-click about text and link location
+        abouttext: "Norton Media Player, v0.1",
+        aboutlink: "//www.wwnorton.com",
+        logo: {
+        	//position: "top-right", 
+        	//margin: "10", 
+            file: '//dsbst55b1909i.cloudfront.net/player/assets/norton_logo.svg',
+            link: '//wwnorton.com',
+            hide: false
+        },
+        //set sharing
+        //set Google Analytics tracking
+        //ga: {}
+		
+		events: {
+			onPlay: function (event) {
+			}				
+		}
+	},
+	track = {
+        file: '{{{videoSrc}}}',
+		startparam: "starttime",
+	}
+	defaults.autostart = (autoplay === "true") ? true: false;
+	if (image_src) {
+		track.image = image_src;
+	}
+	if (captionSrc) {
+		track.tracks = [{
+            file: captionSrc, 
+            kind: "captions", 
+            label:"English",
+            default: true,
+            option: {
+            }
+        }]
+	}
+	defaults.playlist = [track];
+	jwplayer('{{playerID}}').setup(defaults);
+
+	jwplayer('{{playerID}}').on('error', function(e) {
+		if (e.message) {
+			showError(e.message);
+		}
+	});
+},
+
+showError = function (mesg) {
+	console.log(mesg);
+},
+
+getURL = function (params) {
+	var res;
+	$.ajax({
+		type: 'GET',
+		url: params.url,
+        xhrFields: params.options,
+        success: function (data) {
+        	if ((/{([\s\S]+?)\}/).test(data)) {
+        		res = JSON.parse(data);
+        		if (res.code === 401) {
+        			showError('Fail to load resource! ' + res.status);
+        		}
+        	} else {
+        		params.callback(data);
+        	}
+        },
+        error: function(xhr, textStatus) {
+			if (xhr.status === 0 || xhr.readyState === 0) {
+        		showError('Ajax request aborted!');
+			}
+        }
+	});
+};
+
+$(function(){
+	var captionSrc = '{{{captionSrc}}}';
+	if (captionSrc !== '') {
+		getURL({
+			options: {
+            	withCredentials: true
+			},
+			url : captionSrc,
+			callback: loadPlayer
+		});
+	} else {
+		loadPlayer();
+	}
+});
+},{}]},{},[1])

@@ -18,10 +18,8 @@ var ThumbnailVideoView = Backbone.View.extend({
             videoSrc: DetailsParser.replaceURL(data.thumbnailVideo),
             stillImageSrc: DetailsParser.replaceURL(data.thumbnail),
             captionSrc: DetailsParser.replaceURL(data.captionSrc, true),
+            playerID: Norton.siteCode + new Date().getTime(),
             autoPlay: true,
-            /*videoSrc: DetailsParser.replaceURL('http://s3.amazonaws.com/nortoniigprotectedassets/dev/video/evans-long_low.mp4'),
-            stillImageSrc: DetailsParser.replaceURL('http://s3.amazonaws.com/nortoniigprotectedassets/dev/images/evans-long.jpg'),
-            captionSrc: DetailsParser.replaceURL('http://s3.amazonaws.com/nortoniigprotectedassets/dev/captions/evans-long.vtt', true),*/
             title: data.title
         }
         var $div = $('<div></div>');
