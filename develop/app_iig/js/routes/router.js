@@ -116,8 +116,13 @@ var AppRouter = Backbone.Router.extend({
             break;
         }*/
         if (this.state === this.MODAL || this.state === this.PAGE) {
+            console.log('state', this.state)
             if (ModalManager.shown()) {
-                ModalManager.hide();
+                if (this.state === this.MODAL && state == this.PAGE) {
+                    // do nothing
+                } else {
+                    ModalManager.hide();
+                }
             }          
         }
         // new state

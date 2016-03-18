@@ -96,7 +96,9 @@ var YourFavsView = Backbone.View.extend({
 
     triggerPage: function (e) {
         'use strict';
-        NortonApp.router.navigateToID($(e.currentTarget).data('id'));
+        var id = $(e.currentTarget).data('id');
+        TrackManager.doEvent('openDetailFromSavedList', id);
+        NortonApp.router.navigateToID(id);
         return false;
     },
 
