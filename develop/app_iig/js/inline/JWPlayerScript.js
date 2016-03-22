@@ -62,7 +62,7 @@ var loadPlayer = function (captionSrc) {
 },
 
 showError = function (mesg) {
-	console.log(mesg);
+	//console.log(mesg);
 },
 
 getURL = function (params) {
