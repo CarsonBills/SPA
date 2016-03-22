@@ -1,9 +1,9 @@
 @import '../mixins/utils';
 
-$site-code: "essentialecon";
-$bg-color: #474c50;
+$site-code: "esscultant";
+$bg-color: #394240;
 $fg-color: #fff;
-$topbar-color: #913c30;
+$topbar-color: #2a4247;
 
 .#{$site-code} {
 
@@ -11,22 +11,22 @@ $topbar-color: #913c30;
 		width: 100%;
 		height: 100%;
 		background-color: $bg-color;
-		
+
 		.book-cover {
 			margin: 6rem 2rem 0;
 			display: block;
 			background: url(/site_assets/#{$site-code}/book_cover.png) no-repeat;
 			background-size: cover;
-			width: 158px;
+			width: 143px;
 			height: 198px;
 			box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
 		}
 		.hero-title {
 			display: block;
-			margin: 4rem 2rem 2rem;
+			margin: 1rem 5rem 2rem;
 			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
-			width: 359px;
-			height: 112px;
+			width: 260px;
+			height: 100px;
 		}
 	}
 
@@ -37,7 +37,9 @@ $topbar-color: #913c30;
 		.top-bar {
 
 			.bg {
-				background-color: $topbar-color;
+				background: $topbar-color ;
+	    		@include one-sided-shadow($offset-y: 1px);
+				opacity: 0.9;
 			}
 
 			div {
@@ -45,7 +47,10 @@ $topbar-color: #913c30;
 					color: $fg-color;
 				}
 			}
-			.signed-in,
+			.signed-in {
+				color: $fg-color;
+			}
+
 			.glyphicon {
 				color: $fg-color;
 			}

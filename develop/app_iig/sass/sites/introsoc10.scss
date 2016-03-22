@@ -1,4 +1,4 @@
-@import "../mixins/utils";
+@import '../mixins/utils';
 
 $site-code: "introsoc10";
 $bg-color: #849fab;
@@ -25,8 +25,8 @@ $topbar-color: #78a6bc;
 			display: block;
 			margin: 2rem 5rem 3rem;
 			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
-			width: 321px;
-			height: 73px;
+			width: 300px;
+			height: 95px;
 		}
 	}
 

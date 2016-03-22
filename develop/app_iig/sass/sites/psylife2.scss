@@ -1,4 +1,4 @@
-@import "../mixins/utils";
+@import '../mixins/utils';
 
 $site-code: "psylife2";
 $bg-color: #912428;
@@ -27,7 +27,7 @@ $topbar-color: #de1f26;
 			display: block;
 			margin: 3rem 5rem 3rem;
 			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
-			width: 321px;
+			width: 320px;
 			height: 73px;
 		}
 	}

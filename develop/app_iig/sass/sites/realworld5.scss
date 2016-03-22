@@ -13,17 +13,17 @@ $topbar-color: #4c446d;
 		background-color: $bg-color;
 
 		.book-cover {
-			margin: 6rem 2rem 0;
+			margin: 7rem 2rem 0;
 			display: block;
 			background: url(/site_assets/#{$site-code}/book_cover.jpg) no-repeat;
 			background-size: cover;
-			width: 154px;
+			width: 164px;
 			height: 198px;
 			box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
 		}
 		.hero-title {
 			display: block;
-			margin: 2rem 5rem 3rem;
+			margin: 3rem 5rem 3rem;
 			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
 			width: 321px;
 			height: 73px;
