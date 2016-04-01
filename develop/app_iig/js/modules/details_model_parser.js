@@ -85,7 +85,7 @@ var Backbone = require('backbone'),
             /* header image */
             if (raw.data.headerImage.videoSrc) {
                 raw.videoSrc = replaceURL(raw.data.headerImage.videoSrc);                   
-                raw.playerID = Norton.siteCode + new Date().getTime();
+                raw.playerID = Norton.siteCode + '_' + new Date().getTime();
             }
 
             if (raw.data.headerImage.src) {
