@@ -1,3 +1,4 @@
+{{#if videoSrc}}
 <div data-type="{{type}}">
 	<h2>{{videoTitle}}</h2>
 	{{#if transcript}}
@@ -13,3 +14,4 @@
 	{{> HBJWPlayerScript playerID="iig-player"}}
 	</script>
 </div>
+{{/if}}
