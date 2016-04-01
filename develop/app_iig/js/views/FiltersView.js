@@ -19,10 +19,23 @@ var FiltersView = Backbone.View.extend({
     filterContent: "",
     delay: true,
     app: null,
-    ACTIVE: "#dimChapters",
+    ACTIVE: "",
     active: "",
     adjustHieght: null,
     currentHeight: 0,
+
+    getDefault: function () {
+        'use strict';
+        var meta = Norton.navMetadata,
+            dim,
+            label;
+
+        dim = _.find(meta, function (item) {
+            return (item.nested === "1");
+        })
+        label = '#' + ((dim === undefined) ? meta[0].level1 : dim.level1);
+        return label;
+    },
 
     initialize: function(params) {
         'use strict';
@@ -31,6 +44,7 @@ var FiltersView = Backbone.View.extend({
         this.evtMgr.on(EventManager.FILTERS_RESET, this.resetFilters, this);
         this.app = params.app;
 
+        this.ACTIVE = this.getDefault();
         this.active = this.ACTIVE;
 
         this.adjustHieght = this.adjustHieghtWrapper();
