@@ -49,6 +49,12 @@ var Backbone = require('backbone'),
                     module = params.module;
                 }
             },
+
+            hasMathExpr = function () {
+                if ($content ) {
+                    return ($content.find('math').length > 0);
+                }
+            },
             
             hide = function () {
                 $(modal).modal('hide');
@@ -69,7 +75,8 @@ var Backbone = require('backbone'),
             hide: hide,
             shown: shown,
             clear: clear,
-            runModule: runModule
+            runModule: runModule,
+            hasMathExpr: hasMathExpr
         };
 }());
 

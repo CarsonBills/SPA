@@ -10,7 +10,8 @@ var Backbone = require('backbone'),
     ModalManager = require('../modules/modal_manager'),
     ErrorsManager = require('../modules/errors_manager'),
     VideoPlayer = require('../modules/video_player'),
-    EventManager = require('../modules/event_manager');
+    EventManager = require('../modules/event_manager'),
+    MaxJax = require('../modules/mathjax');
 
 var PageView = Backbone.View.extend({
     evtMgr: EventManager.getInstance(),
@@ -65,10 +66,12 @@ var PageView = Backbone.View.extend({
                 module: this.MODULE,
                 loading: false
             });
-
-            if (ModalManager.shown()) {
-                TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
-            }
+            
+            TweenLite.from(this.body, 1, {autoAlpha: 0, ease: Quad.easeOut});
+        }
+        
+        if (ModalManager.hasMathExpr()) {
+            MaxJax.config();
         }
 
         return this;
