@@ -11,7 +11,7 @@ var Backbone = require('backbone'),
     ErrorsManager = require('../modules/errors_manager'),
     VideoPlayer = require('../modules/video_player'),
     EventManager = require('../modules/event_manager'),
-    MaxJax = require('../modules/mathjax');
+    MaxJax = require('../modules/mathjax')('modal-container');
 
 var PageView = Backbone.View.extend({
     evtMgr: EventManager.getInstance(),
@@ -57,7 +57,6 @@ var PageView = Backbone.View.extend({
     render: function() {
         'use strict';
         var $div = $('<div></div>');
-
         // if modal is closed before data ready, block redner()
         if (ModalManager.shown()) {
             $div.html(this.template(this.model.toJSON()));    
@@ -71,7 +70,7 @@ var PageView = Backbone.View.extend({
         }
         
         if (ModalManager.hasMathExpr()) {
-            MaxJax.config();
+            MaxJax.render();
         }
 
         return this;

@@ -1,43 +1,47 @@
+var Preview = {
+    delay: 150,        // delay after keystroke before updating
 
-//var Mathjax = require('mathjax');
-module.exports = (function() {
-    var MJ = { 
-        "MathML": { 
-            extensions: ["mml3.js", "content-mathml.js"]
-        },
-        "HTML-CSS": {
-            preferredFont: "STIX"
+    timeout: null,     // store setTimout id
+    mjRunning: false,  // true when MathJax is processing
+    mjPending: false,  // true when a typeset has been queued
+    container: null,
+
+    update: function () {
+        if (this.timeout) {clearTimeout(this.timeout)}
+        this.timeout = setTimeout(this.callback,this.delay);
+    },
+    createPreview: function () {
+        if (this.mjPending) return;
+        if (this.mjRunning) {
+            this.mjPending = true;
+            MathJax.Hub.Queue(["createPreview",this]);
+        } else {
+            var content = document.getElementById(this.container).innerHTML;
+            this.mjRunning = true;
+            MathJax.Hub.Queue(
+                ["Typeset", MathJax.Hub, content],
+                ["previewDone", this]
+            );
         }
     },
-
-    config = function () {
-        window.MathJax = $.extend({}, MJ);
-        var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.src  = "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-        document.getElementsByTagName("head")[0].appendChild(script);
-    };
-    /*MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true
-        },
-        "HTML-CSS": { 
-            availableFonts: ["TeX"] 
-        }
-    });*/
-    /*window.MathJax = { 
-        "MathML": { 
-            extensions: ["mml3.js", "content-mathml.js"]
-        },
-        "HTML-CSS": {
-            preferredFont: "STIX"
-        }
-    };*/
-    return {
-        config: config
+    previewDone: function () {
+        this.mjRunning = this.mjPending = false;
     }
-})();
+};
+module.exports = function(container) {
+    var initialize = function () {
+        Preview.container = container;
+        Preview.callback = MathJax.Callback(["createPreview", Preview]);
+        Preview.callback.autoReset = true;  // make sure it can run more than once
+    },
+
+    render = function () {
+        Preview.createPreview();
+    };
+
+    initialize();
+
+    return {
+        render: render
+    }
+};
