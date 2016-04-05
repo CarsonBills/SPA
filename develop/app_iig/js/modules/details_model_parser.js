@@ -48,7 +48,7 @@ var Backbone = require('backbone'),
             return frag;
         },
 
-        parseBlock = function (block) {
+        parseBlock = function (block, index) {
             switch (block.type) {
                 case 'text only':
                     block.copy = replaceURL(block.copy);
@@ -60,7 +60,7 @@ var Backbone = require('backbone'),
                 case 'video':
                     block.stillImageSrc = replaceURL(block.stillImageSrc);
                     block.videoSrc = replaceURL(block.videoSrc);                    
-                    block.playerID = Norton.siteCode + '_block' + new Date().getTime();
+                    block.playerID = Norton.siteCode + '_block' + index + '_' + new Date().getTime();
                     block.captionSrc = replaceURL(block.vttSrc, true);
                     block.autoPlay = false;
                     block.blurb = replaceURL(block.blurb);
@@ -98,8 +98,8 @@ var Backbone = require('backbone'),
 
             // blocks
             _.each(raw.data.sections, function (section) {
-                _.each(section.blocks, function (block) {
-                    parseBlock(block);
+                _.each(section.blocks, function (block, index) {
+                    parseBlock(block, index);
                 });
             });
             return raw;
