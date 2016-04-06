@@ -48,6 +48,12 @@ var Backbone = require('backbone'),
             return frag;
         },
 
+        stripS3Domain = function (url) {
+            var exp = /http(s?):\/\/s3.amazonaws.com/ig;
+
+            return url.replace(exp, '');
+        },
+
         parseBlock = function (block, index) {
             switch (block.type) {
                 case 'text only':
@@ -80,6 +86,7 @@ var Backbone = require('backbone'),
 
             if (raw.data.downloads.src) {
                 raw.data.downloads.href = replaceURL(raw.data.downloads.src);
+                raw.data.downloads.track = stripS3Domain(raw.data.downloads.src);
             }
 
             /* header image */
