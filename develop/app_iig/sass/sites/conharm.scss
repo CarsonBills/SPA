@@ -1,0 +1,77 @@
+@import '../mixins/utils';
+
+$site-code: "conharm";
+$bg-color: #336F88;
+$fg-color: #fff;
+$topbar-color: #80c9e3;
+
+.#{$site-code} {
+
+	div[data-type="iig-hero"] {
+		width: 100%;
+		height: 100%;
+		background-color: $bg-color;
+
+		.book-cover {
+			margin: 7rem 2rem 0rem;
+			display: block;
+			background: url(/site_assets/#{$site-code}/book_cover.jpg) no-repeat;
+			background-size: cover;
+			width: 162px;
+			height: 198px;
+			box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+		}
+		.hero-title {
+			display: block;
+			margin: 1.5rem 5rem 3rem;
+			background: url(/site_assets/#{$site-code}/hero_title.svg) no-repeat; 
+			width: 358px;
+			height: 82px;
+		}
+	}
+
+	.header {
+		.cover {
+		}
+
+		.top-bar {
+
+			.bg {
+				background: $topbar-color ;
+	    		@include one-sided-shadow($offset-y: 1px);
+				opacity: 0.9;
+			}
+
+			div {
+				a {
+					color: $fg-color;
+				}
+			}
+			.signed-in {
+				color: $fg-color;
+			}
+
+			.glyphicon {
+				color: $fg-color;
+			}
+
+			.norton-logo {
+				color: $fg-color;
+				svg {
+					fill: currentColor;
+				}
+			}
+
+			.header-title {
+			}
+
+		}
+	}
+
+	/* use background color */
+	.content-thumbnail .glyphicon {
+		color: $bg-color;
+		filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.6))
+	}
+
+}
