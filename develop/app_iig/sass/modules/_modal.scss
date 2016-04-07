@@ -120,6 +120,16 @@
 
 			span {
 				margin-right: 1rem;
+
+				/* MathJax span exclude */
+				&.MathJax_SVG,
+				&.MathJax_Preview,
+				&.MathJax {
+					margin: 0;
+					.math {
+						margin: 0;
+					}
+				}
 			}
 
 			table {

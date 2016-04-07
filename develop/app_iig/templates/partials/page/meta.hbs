@@ -6,7 +6,7 @@
 
             {{#if data.filters}}
                 {{#each data.filters}}
-                    <span>{{{HBDetailFilters this}}}</span>
+                    <span>{{{HBHTMLContent (HBDetailFilters this)}}}</span>
                 {{/each}}
             {{/if}}
         </div>
