@@ -638,7 +638,7 @@ gulp.task('upload:s3', [], function() {
     .pipe($.s3(nortonappreaderiig, {
         uploadPath: '/' + site + '/',
         headers: awsHeaders
-    }));
+    }));    
     gulp.src([
         deploy + site + settings.prod + settings.images + 'intro_bg.jpg',
         deploy + site + settings.prod + settings.images + 'header*.jpg'
