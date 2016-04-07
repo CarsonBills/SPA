@@ -16,6 +16,10 @@ module.exports = (function() {
         return new Handlebars.SafeString(convert(data));
     });
 
+    Handlebars.registerHelper('HBMathMLContent', function(data, options) {
+        return convert(data);
+    });
+
     Handlebars.registerHelper('HBBlocks', function(context, options) {
         var result; 
         switch (context.type) {
@@ -62,6 +66,43 @@ module.exports = (function() {
         } else {
             return options.inverse(this);
         }
+    });
+    Handlebars.registerHelper('HBDetailFilters', function(data) {
+        var node = "";
+        if (data.type !== undefined && data.type !== "Keyword") {
+            node += "<strong>" + data.type + ": </strong>";
+            if (_.isString(data.value)) {
+                node += convert(data.value);
+            }
+            if (_.isArray(data.value)) {
+                _.each(data.value, function (val, index) {
+                    if (val !== "") {
+                        node += convert(val);
+                        // don't append the last one
+                        if (index < data.value.length - 1) {
+                            node += "|";
+                        } else {
+                            //node += "</br>";
+                        }
+                    }
+                });
+            }
+        }
+        return node;
+    });
+
+    Handlebars.registerHelper('HBDetailTags', function(data) {
+        var node = "";
+         _.each(data, function (val, index) {
+            if (val !== "") {
+                node += (val);
+                // don't append the last one
+                if (index < data.length - 1) {
+                    node += " | ";
+                }
+            }
+         });
+        return node;
     });
 
 })();
