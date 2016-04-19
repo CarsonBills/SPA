@@ -21,6 +21,10 @@ var ThumbnailVideoView = Backbone.View.extend({
             playerID: Norton.siteCode + new Date().getTime(),
             autoPlay: true,
             title: data.title
+        };
+
+        if (context.videoSrc === '' || context.videoSrc === undefined) {
+            return false;
         }
         var $div = $('<div></div>');
         $div.html(this.template(context));

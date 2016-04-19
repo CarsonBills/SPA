@@ -1,7 +1,8 @@
 
 var Backbone = require('backbone'),
     $ = require('jquery'),
-	_ = require('underscore');
+	_ = require('underscore'),
+    S3_EXP = exp = /(https?:){0,5}(\/\/)?s3.amazonaws.com/ig,
 
 	DetailsParser = (function() {
     'use strict';
@@ -48,10 +49,21 @@ var Backbone = require('backbone'),
             return frag;
         },
 
-        stripS3Domain = function (url) {
-            var exp = /http(s?):\/\/s3.amazonaws.com/ig;
+        isS3Asset = function (src) {
+            return S3_EXP.test(src);
+        },
 
-            return url.replace(exp, '');
+        stripS3Domain = function (src) {
+           
+            var url;
+
+            if (isS3Asset(src)) {
+                url = src.replace(S3_EXP, '')
+            } else {
+                url = src;
+            }
+
+            return url;
         },
 
         parseBlock = function (block, index) {

@@ -38,7 +38,7 @@ module.exports = (function() {
     Handlebars.registerHelper('HBContentItemIcon', function(data, options) {
         var icon;
         if (data.customIcon !== undefined) {
-            icon = require('../../templates/partials/content/types/custom.hbs')({customIcon: DetailsParser.parseUrl(data.customIcon)});
+            icon = require('../../templates/partials/content/types/custom.hbs')({customIcon: DetailsParser.replaceURL(data.customIcon)});
         } else {
             icon = require('../../templates/partials/content/types/glyphicon.hbs')({type: getGlyph(data.downloads.format)});
         }
@@ -48,7 +48,7 @@ module.exports = (function() {
     Handlebars.registerHelper('HBContentSignedUrl', function(url, options) {
         var surl;
         if (url !== undefined) {
-            surl = DetailsParser.parseUrl(url);
+            surl = DetailsParser.replaceURL(url);
         }
         return surl;
     });

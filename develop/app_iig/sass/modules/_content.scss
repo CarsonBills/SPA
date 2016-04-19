@@ -80,7 +80,10 @@ ul.card {
             height: 30%;
             background-color: #eee;
             text-align: center;
-            cursor: pointer;
+            
+            &.has-video {
+                cursor: pointer;
+            }
 
             .glyphicon {
                 position: absolute;
