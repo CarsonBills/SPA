@@ -110,9 +110,10 @@ var FiltersView = Backbone.View.extend({
                 this.removeSelectedFilter(e, "cb");
             }
         },
-        "click .clear-filter": function(e) {
+        "click .selected-filters": function(e) {
             'use strict';
             this.removeSelectedFilter(e, "X");
+            return false;
         }
     },
 
@@ -246,11 +247,14 @@ var FiltersView = Backbone.View.extend({
 
                 // chapters: 010_The Five Foundation of Economics_3b0540f9265bcbff096e
                 // subchapters: 3b0540f9265bcbff096e_030_Big Question: What Are the Five Foundations of Economics?
-                if ($(this).attr('data-filter-name').indexOf("_") >= 0) {
+                /* if ($(this).attr('data-filter-name').indexOf("_") >= 0) {
                     nameParts = $(this).attr('data-filter-name').split("_");
                     displayName = (nameParts[0].length == 3) ? nameParts[1] : nameParts[2] ;
                 } else {
                     displayName = $(this).attr('data-filter-name');
+                }*/
+                if ($(this).next('.filter-name').text() !== '') {
+                    displayName = $(this).next('.filter-name').text();
                 }
 
                 html += that.selectedTemplate({
@@ -304,9 +308,9 @@ var FiltersView = Backbone.View.extend({
             sel = "input[data-filter-name='" + tgt.attr('data-close-filter-name') + "']" +
                 "[data-filter-cat='" + tgt.attr('data-close-filter-cat') + "']";
             $(sel).attr('checked', false);
-            if ($(sel).attr("data-filter-is-parent")) {
+            /*if ($(sel).attr("data-filter-is-parent")) {
                 $( "input[data-filter-parent='" + $(sel).attr("data-filter-name") + "']" ).attr('checked', false);
-            }
+            }*/
         }
 
         if (e) {
