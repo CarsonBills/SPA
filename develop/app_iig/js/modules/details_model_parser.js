@@ -2,7 +2,7 @@
 var Backbone = require('backbone'),
     $ = require('jquery'),
 	_ = require('underscore'),
-    S3_EXP = exp = /(https?:){0,5}(\/\/)?s3.amazonaws.com/ig,
+    S3_EXP = /(https?:){0,1}(\/\/)?s3.amazonaws.com/ig,
 
 	DetailsParser = (function() {
     'use strict';
@@ -35,11 +35,10 @@ var Backbone = require('backbone'),
         // https://s3.amazonaws.com/nortoniigprotectedassets/econ/images/TIP_035.jpg
         replaceURL = function (text, urlOnly) {
             var prefix = Norton.Constants.awsContentUrl + "sitecode=" + Norton.siteCode + "&siteversion=" + Norton.version+ "&file=",
-                exp = /http(s?):\/\/s3.amazonaws.com/ig,
                 frag = '';
 
                 if (text && text !== '') {
-                    frag = text.replace(exp, prefix);
+                    frag = text.replace(S3_EXP, prefix);
 
                     if (urlOnly) {
                         frag += '&url=1';
