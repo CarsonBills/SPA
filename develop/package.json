@@ -1,6 +1,6 @@
 {
   "name": "norton_reader",
-  "iigVersion": "0007",
+  "iigVersion": "0008",
   "nrVersion": "0002",
   "description": "Norton Reader",
   "main": "app.js",
