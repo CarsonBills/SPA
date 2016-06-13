@@ -181,7 +181,7 @@ var ArticleView = Backbone.View.extend({
             hasVideo;
         hasVideo = this.thumbnailVideo.show(model.get('allMeta'));
         if (hasVideo) {
-            this.appView.viewController.navigateToModal();
+            NortonApp.router.navigateToModal();
             TrackManager.doEvent('showThumbnailVideo', pname);
         }
     },
