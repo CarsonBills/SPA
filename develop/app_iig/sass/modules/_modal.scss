@@ -1,3 +1,9 @@
+%jw-logo {
+	.jw-logo {
+		width: 49px !important;
+		height: 23px !important;
+	}
+}
 
 // flattened
 .modal-dialog {
@@ -165,6 +171,8 @@
 				border: 1px solid $grey;
 				width: 100%;
 				height: auto;
+
+				@extend %jw-logo;
 			}
 
 			.player-loading {
@@ -272,6 +280,10 @@
 			.modal-body {
 				min-height: inherit;
 				padding: 0;
+
+				.jwplayer {
+					@extend %jw-logo;
+				}
 			}
 			div[data-type="video-player"] {
 				margin: 0;
